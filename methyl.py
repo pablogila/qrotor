@@ -1,6 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.sparse.linalg import eigsh
+from scipy.integrate import solve_bvp
+from scipy.integrate import solve_ivp
+from scipy.sparse import diags
+from scipy.optimize import root
+
+
+
 
 
 # potential from titov2023
@@ -11,10 +18,7 @@ C3 = [5.9109, 0.0258, -7.0152, -0.0168, 1.0213]
 C4 = [1.4526, 0.0134, -0.3196, 0.0005, -1.1461]
 constants = [C0, C1, C2, C3, C4]
 
-# hydrogen mass
-m = 1.00784  # amu
-# Methyl radious
-r = 1.0  # Angstrom
+
 
 
 def potential(angle, C = C0):
@@ -27,7 +31,6 @@ for constant in constants:
     potentials = potential(angles, constant)
     plt.plot(angles, potentials)
 
-
 plt.xlabel('Angle / radians')
 plt.ylabel('Potential / meV')
 plt.title('Hindered methyl rotor potential')
@@ -35,34 +38,65 @@ plt.legend(['0', '1', '2', '3', '4']).set_title('From titov2023')
 plt.show()
 
 
+# Inertia: B=1/2I
+m = 1.00784
+r = 1.0  # CHECK
 B = 1.0 / 2 * 3*(m * r**2)
-
-
 # Grid parameters
-a = 2*np.pi  # Periodic boundary condition: length of the box
+L = 2*np.pi  # Periodicity
 N = 200  # Number of grid points
-dx = a / (N - 1)  # Grid spacing
+dx = L / N  # Grid spacing
+x = np.linspace(0, L, N)  # Create grid
 
-# Create grid
-x = np.linspace(0, a, N)
+
+
+
+
+
+'''
+
+
 
 # Discretize kinetic energy operator using second-order central difference
 d2psi = -B / (dx**2) * (np.roll(np.eye(N), -1, axis=0) + np.roll(np.eye(N), 1, axis=0) - 2*np.eye(N))
 
-# Build Hamiltonian matrix (including potential)
-H = d2psi + np.diag(potential(x))
+for i, constant in enumerate(constants):
+    # Create a new figure for each constant
+    plt.figure(i)
+    
+    # Calculate and plot potentials
+    angles = np.linspace(-np.pi, np.pi, 1000)
+    potentials = potential(angles, constant)
+    plt.plot(angles, potentials)
+    
+    # Build Hamiltonian matrix (including potential)
+    H = d2psi + np.diag(potential(x, constant))
 
-# Solve eigenvalue problem with periodic boundary conditions
-# Enforce zero derivative at boundaries (Neumann)
-d2psi_ends = np.zeros((2, N))
-d2psi_ends[0, 1:-1] = -2*B/dx**2
-d2psi_ends[1, :-1] = 2*B/dx**2
-H_periodic = H - d2psi_ends[0] - d2psi_ends[1]
+    # Solve eigenvalue problem with periodic boundary conditions
+    # Enforce zero derivative at boundaries (Neumann)
+    d2psi_ends = np.zeros((2, N))
+    d2psi_ends[0, 1:-1] = -2*B/dx**2
+    d2psi_ends[1, :-1] = 2*B/dx**2
+    H_periodic = H - d2psi_ends[0] - d2psi_ends[1]
 
-# Find a few lowest eigenvalues and eigenvectors
-eigenvalues, eigenvectors = eigsh(H_periodic, k=5, which='SM')
+    # Find a few lowest eigenvalues and eigenvectors
+    eigenvalues, eigenvectors = eigsh(H_periodic, k=5, which='SM')
 
-# Print results
-print("Eigenvalues (first 5):", eigenvalues)
-# You can analyze the eigenvectors for the wave function information
+    energies = []
+    for eigenvalue in eigenvalues:
+        energies.append(eigenvalue / B)
 
+    # Plot energies as horizontal lines on the same graph
+    for energy in energies:
+        plt.axhline(y=energy, color='r', linestyle='--')
+
+    plt.xlabel('Angle / radians')
+    plt.ylabel('Energy / meV')
+    plt.title('Hindered methyl rotor potential')
+    plt.legend(['Potential ' + str(i), 'Energies']).set_title('')
+
+plt.show()
+
+
+
+'''
