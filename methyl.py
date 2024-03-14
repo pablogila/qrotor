@@ -1,10 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.sparse.linalg import eigsh
-from scipy.integrate import solve_bvp
 from scipy.integrate import solve_ivp
-from scipy.sparse import diags
-from scipy.optimize import root
+
 
 
 
@@ -34,7 +31,7 @@ for constant in constants:
 plt.xlabel('Angle / radians')
 plt.ylabel('Potential / meV')
 plt.title('Hindered methyl rotor potential')
-plt.legend(['0', '1', '2', '3', '4']).set_title('From titov2023')
+plt.legend(['0', '1', '2', '3', '4']).set_title('Potentials\ntitov2023')
 plt.show()
 
 
@@ -51,52 +48,35 @@ x = np.linspace(0, L, N)  # Create grid
 
 
 
+def harmonic_oscillator (t, Y, omega):
+    y, ydot = Y
+    return ydot, -omega**2 * y
 
 
-'''
+# For the Harmonic Oscillator
+L = 2*np.pi  # Size / Periodicity
+N = 200  # Number of grid points
+dt = L / N  # Grid spacing
+t = np.linspace(0, L, N)  # Create grid
 
+# solve for omega=2
+sol = solve_ivp(harmonic_oscillator, [0,2*np.pi], [1,0], t_eval=t, args=(2,))
 
+print(sol)
 
-# Discretize kinetic energy operator using second-order central difference
-d2psi = -B / (dx**2) * (np.roll(np.eye(N), -1, axis=0) + np.roll(np.eye(N), 1, axis=0) - 2*np.eye(N))
-
-for i, constant in enumerate(constants):
-    # Create a new figure for each constant
-    plt.figure(i)
-    
-    # Calculate and plot potentials
-    angles = np.linspace(-np.pi, np.pi, 1000)
-    potentials = potential(angles, constant)
-    plt.plot(angles, potentials)
-    
-    # Build Hamiltonian matrix (including potential)
-    H = d2psi + np.diag(potential(x, constant))
-
-    # Solve eigenvalue problem with periodic boundary conditions
-    # Enforce zero derivative at boundaries (Neumann)
-    d2psi_ends = np.zeros((2, N))
-    d2psi_ends[0, 1:-1] = -2*B/dx**2
-    d2psi_ends[1, :-1] = 2*B/dx**2
-    H_periodic = H - d2psi_ends[0] - d2psi_ends[1]
-
-    # Find a few lowest eigenvalues and eigenvectors
-    eigenvalues, eigenvectors = eigsh(H_periodic, k=5, which='SM')
-
-    energies = []
-    for eigenvalue in eigenvalues:
-        energies.append(eigenvalue / B)
-
-    # Plot energies as horizontal lines on the same graph
-    for energy in energies:
-        plt.axhline(y=energy, color='r', linestyle='--')
-
-    plt.xlabel('Angle / radians')
-    plt.ylabel('Energy / meV')
-    plt.title('Hindered methyl rotor potential')
-    plt.legend(['Potential ' + str(i), 'Energies']).set_title('')
-
+plt.plot(sol.t, sol.y[0], label=r'$y$')
+plt.plot(sol.t, sol.y[1], label=r'$\dot {y }$')
+plt.xlabel('t')
+plt.title('Harmonic Oscillator:  $\ddot {y } (t) + \omega² y(t) = 0$,  $\omega = 2$')
+plt.legend()
 plt.show()
 
 
 
-'''
+
+
+
+
+
+
+
