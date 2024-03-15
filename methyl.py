@@ -34,14 +34,13 @@ filename = os.path.join(os.getcwd(), 'methyl_potentials.png')
 plt.savefig(filename)
 '''
 
-
 # Inertia: B=1/2I
 m = 1.00784
-r = 1.0  # CHECK
+r = 1.0  # THIS VALUE IS A PLACEHOLODER, NEEDS TO BE CHANGED
 B = 1.0 / 2 * 3*(m * r**2)
 # Grid parameters
 L = 2*np.pi  # Periodicity
-N = 10  # Number of grid points
+N = 500  # Number of grid points
 dx = L / N  # Grid spacing
 x = np.linspace(0, L, N)  # Create grid
 
@@ -71,11 +70,11 @@ print('C done')
 
 time_start = time.time()
 
-
-
-
 C_inverse = C**-1
 print('C_inv done')
+
+time_elapsed = time.time() - time_start
+print('Time elapsed to compute the inverse matrix of dimension ' + str(N) + ': ' + str(time_elapsed))
 
 E = -12*B/(dx**2) * C_inverse * A + V_matrix
 print('E done')
@@ -83,9 +82,15 @@ print('E done')
 eigenvalues = E.eigenvals()
 eigenvalues_list = list(eigenvalues)
 eigenvalues_sorted = sorted(eigenvalues_list)
-print('Eigenvalues done')
+print('Eigenvalues:')
 print(eigenvalues_sorted)
 
-time_end = time.time()
-print('Time elapsed: ', time_end - time_start, 's')
 
+print('Data saved to eigenvalues.txt')
+eigenvalues_str = '\n'.join(map(str, eigenvalues_sorted))
+time_elapsed_str = str(time_elapsed)
+out_file = os.path.join(os.getcwd(), 'eigenvalues.txt')
+with open(out_file, 'w') as f:
+    f.write('Time elapsed to compute the inverse matrix of dimension ' + str(N) + ': ' + time_elapsed_str + '\n')
+    f.write('Eigenvalues:\n' + eigenvalues_str)
+print('Data saved to output.txt')
