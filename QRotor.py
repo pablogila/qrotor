@@ -1,15 +1,30 @@
-import os
 import numpy as np
+from scipy.sparse import diags
+from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp
-from sympy import *
+import os
 import time
 
 
-# Potential for the hindered methyl rotor
-def potential(angle, C):
-    V = C[0] + C[1] * np.sin(3*angle) + C[2] * np.cos(3*angle) + C[3] * np.sin(6*angle) + C[4] * np.cos(6*angle)
-    return V
+def time_formatted(time_seconds):
+    time_days = time_seconds // 86400
+    time_hours = (time_seconds % 86400) // 3600
+    time_minutes = (time_seconds % 3600) // 60
+    time_secs = int(time_seconds % 60)
+    if time_days > 0:
+        time_message = f'{time_days} days, {time_hours} hours, {time_minutes} minutes, {time_secs} seconds'
+    elif time_hours > 0:
+        time_message = f'{time_hours} hours, {time_minutes} minutes, {time_secs} seconds'
+    elif time_minutes > 0:
+        time_message = f'{time_minutes} minutes, {time_secs} seconds'
+    else:
+        time_message = f'{time_secs} seconds'
+    return time_message
+
+
+# Potential energy function
+def U(x, C):
+    return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
 # potential constants from titov2023
@@ -20,77 +35,93 @@ C3 = [5.9109, 0.0258, -7.0152, -0.0168, 1.0213]
 C4 = [1.4526, 0.0134, -0.3196, 0.0005, -1.1461]
 constants = [C0, C1, C2, C3, C4]
 
-'''
-# Plot all the potentials
-for constant in constants:
-    angles = np.linspace(-np.pi, np.pi, 1000)
-    potentials = potential(angles, constant)
-    plt.plot(angles, potentials)
-plt.xlabel('Angle / radians')
-plt.ylabel('Potential / meV')
-plt.title('Hindered methyl rotor potential')
-plt.legend(['0', '1', '2', '3', '4']).set_title('Potentials\ntitov2023')
-filename = os.path.join(os.getcwd(), 'methyl_potentials.png')
-plt.savefig(filename)
-'''
 
 # Inertia: B=1/2I
-m = 1.00784
-r = 1.0  # THIS VALUE IS A PLACEHOLODER, NEEDS TO BE CHANGED
+m = 1.00784  # H
+r = 0.6  # APROX... NEEDS TO BE CHANGED
 B = 1.0 / 2 * 3*(m * r**2)
-# Grid parameters
-L = 2*np.pi  # Periodicity
-N = 500  # Number of grid points
-dx = L / N  # Grid spacing
-x = np.linspace(0, L, N)  # Create grid
+N = 100
+x = np.linspace(0, 2*np.pi, N)
+dx = x[1] - x[0]
+
+V = 0  # not sure about this...
 
 
-# Potential energy vector
-V = []
-for angle in x:
-    V.append(potential(angle, constants[0]))
-V = Matrix(V)
+start_time = time.time()
 
-V_matrix = Matrix(N, N, lambda i, j: V[i] if i == j else 0)
-print('V_matrix done')
+C = constants[0]
 
-#  A =
-# -2  1  0  0  1
-#  1 -2  1  0  0
-#  0  1 -2  1  0
-#  0  0  1 -2  1
-#  1  0  0  1 -2
-A = Matrix(N, N, lambda i, j: 1 if abs(i-j) == 1 else -2 if i == j else 1 if abs(i-j) == N-1 else 0)
-print('A done')
+# Hamiltonian matrix
+diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
+H = -B * diags(diagonals, [0, -1, 1]) / dx**2 + diags(U(x, C))
 
-C = Matrix(N, N, lambda i, j: 1 if abs(i-j) == 1 else 10 if i == j else 1 if abs(i-j) == N-1 else 0)
-print('C done')
+print(diagonals)
 
+# Solve for eigenvalues and eigenvectors
+energies, _ = eigsh(H, 8, which='SM')
 
+# Energy transitions
+entrans1 = [(energies[1] - energies[0]) * 0.655]
+entrans2 = [(energies[3] - energies[1]) * 0.655]
+Vlist = [V * 0.655]
+eigenvalues = list(energies)
 
-time_start = time.time()
+# Increase potential and recalculate
+while V < 50:
+    V += 0.01
+    Vlist.append(V * 0.655)
+    H = -B * diags(diagonals, [0, -1, 1]) / dx**2 + diags(U(x, C))
+    energies, _ = eigsh(H, 8, which='SM')
+    transone = (energies[1] - energies[0]) * 0.655
+    transtwo = (energies[3] - energies[1]) * 0.655
+    entrans1.append(transone)
+    entrans2.append(transtwo)
+    eigenvalues.extend(energies)
 
-C_inverse = C**-1
-print('C_inv done')
-
-time_elapsed = time.time() - time_start
-print('Time elapsed to compute the inverse matrix of dimension ' + str(N) + ': ' + str(time_elapsed))
-
-E = -12*B/(dx**2) * C_inverse * A + V_matrix
-print('E done')
-
-eigenvalues = E.eigenvals()
-eigenvalues_list = list(eigenvalues)
-eigenvalues_sorted = sorted(eigenvalues_list)
-print('Eigenvalues:')
-print(eigenvalues_sorted)
+# Create matrices
+#entransfer1matrix = np.array([Vlist, entrans1])
+#entransfer2matrix = np.array([Vlist, entrans2])
+#eigenvaluesmatrix = np.array(eigenvalues).reshape(-1, 8)
 
 
-print('Data saved to eigenvalues.txt')
-eigenvalues_str = '\n'.join(map(str, eigenvalues_sorted))
-time_elapsed_str = str(time_elapsed)
-out_file = os.path.join(os.getcwd(), 'eigenvalues.txt')
+time_elapsed = time.time() - start_time
+
+
+# Plot energy transitions
+plt.plot(entrans1)
+plt.plot(entrans2)
+plt.show()
+
+print(energies)
+
+# Plot potential energy
+plt.figure(figsize=(10, 6))
+plt.plot(x, U(x, C), label='Potential')
+plt.xlabel('Angle / radians')
+plt.ylabel('Energy / meV')
+plt.title('Hindered methyl rotor potential')
+
+# Plot energy eigenvalues
+for i in range(len(energies)):
+    plt.axhline(y=energies[i], color='r', linestyle='--')
+
+plt.legend()
+plt.show()
+
+# Export matrices
+#sio.savemat("entr1.mat", {'entransfer1matrix': entransfer1matrix})
+#sio.savemat("entr2.mat", {'entransfer2matrix': entransfer2matrix})
+#sio.savemat("eigenvalues.mat", {'eigenvaluesmatrix': eigenvaluesmatrix})
+
+
+
+elapsed_message = 'Computation time: ' + time_formatted(time_elapsed)
+print(elapsed_message)
+script_dir = os.path.dirname(os.path.abspath(__file__))
+out_file = os.path.join(script_dir, 'eigenvalues.txt')
 with open(out_file, 'w') as f:
-    f.write('Time elapsed to compute the inverse matrix of dimension ' + str(N) + ': ' + time_elapsed_str + '\n')
-    f.write('Eigenvalues:\n' + eigenvalues_str)
-print('Data saved to output.txt')
+    f.write(elapsed_message + '\n')
+    f.write('Eigenvalues:\n')
+    f.write(str(energies))
+print('Data saved to eigenvalues.txt')
+
