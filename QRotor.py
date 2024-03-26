@@ -34,10 +34,10 @@ constants = constants_1
 # Number of energy levels to calculate
 number_of_energies = 7
 # Inertia: B=1/2I
-m = 1.00784     # H mass
-m_D = 2.014102  # D mass
+m_H = 1.00784      # H mass
+m_D = 2.014102     # D mass
 r = 0.62  # 1.035  # Measured value??  # It should be around 0.6 ???
-B = 1.0 / 2 * 3*(m * r**2)
+B = 1.0 / 2 * 3*(m_H * r**2)
 #B = 0.574  # From titov2023
 # Grid
 N = 500
@@ -51,7 +51,7 @@ dx = x[1] - x[0]
 # H = -B * [  0 -1  2 -1  0 ] / dx**2 + [        V(2)         ]
 #          [  0  0 -1  2 -1 ]           [            V(3)     ]
 #          [  1  0  0 -1  2 ]           [                V(4) ]
-diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
+diagonals = [-2*np.ones(N), np.ones(N-1), np.ones(N-1)]
 finite_difference_matrix = diags(diagonals, [0, -1, 1]).toarray()
 # And the periodic boundary conditions
 finite_difference_matrix[0, -1] = 1
