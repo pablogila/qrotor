@@ -2,16 +2,17 @@ import numpy as np
 from scipy.sparse import diags
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
+import os
 import time
-import matplotlib.ticker as ticker
+from sympy import *
 
 
-# Potential energy function of the hindered methyl rotor, from titov2023
+# Potential energy function
 def V(x, C):
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
-# Potential constants from titov2023 [C1, C2, C3, C4, C5]
+# potential constants from titov2023
 constants_1 = [
     [2.7860, 0.0130,-1.5284,-0.0037,-1.2791],
     [2.6507, 0.0158,-1.4111,-0.0007,-1.2547],
@@ -27,68 +28,63 @@ constants_2 = [
     [3.2497, 0.0088, 2.3223,-0.0069,-0.8778],
     [4.4449, 0.0091, 4.8613,-0.0138, 0.5910]
     ]
-# Choose the set of constants to use
 constants = constants_1
 
 
-# Number of energy levels to calculate
-number_of_energies = 7
 # Inertia: B=1/2I
-m = 1.00784     # H mass
-m_D = 2.014102  # D mass
-r = 0.62  # 1.035  # Measured value??  # It should be around 0.6 ???
+m = 1.00784  # H
+r = 0.6  # APROX... NEEDS TO BE CHANGED
 B = 1.0 / 2 * 3*(m * r**2)
-#B = 0.574  # From titov2023
 # Grid
-N = 500
+N = 30
 x = np.linspace(0, 2*np.pi, N)
 dx = x[1] - x[0]
 
 
-# The Hamiltonian is built via finite difference method, with periodic B.C.
+# Hamiltonian built by finite difference method, with periodic B.C.
 #          [  2 -1  0  0  1 ]           [ V(0)                ]
 #          [ -1  2 -1  0  0 ]           [    V(1)             ]
 # H = -B * [  0 -1  2 -1  0 ] / dx**2 + [        V(2)         ]
 #          [  0  0 -1  2 -1 ]           [            V(3)     ]
 #          [  1  0  0 -1  2 ]           [                V(4) ]
-diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
-finite_difference_matrix = diags(diagonals, [0, -1, 1]).toarray()
-# And the periodic boundary conditions
-finite_difference_matrix[0, -1] = 1
-finite_difference_matrix[-1, 0] = 1
+finite_difference_matrix = Matrix(N, N, lambda i, j: 1 if abs(i-j) == 1 else -2 if i == j else 1 if abs(i-j) == N-1 else 0)
+#print(finite_difference_matrix)
 
 
 time_start = time.time()
 
 energies = []
 for C in constants:
-    # Solve Hamiltoninan eigenvalues
-    U = V(x, C)
-    H = -B * finite_difference_matrix / dx**2 + diags(U)
-    eigenvalues, _ = eigsh(H, number_of_energies, which='SM')  # Omit the eigenvectors with '_'
-    print(eigenvalues)
-    energies.append(eigenvalues)
-
-    energy_barrier = max(U) - min(eigenvalues)
-    print(f'Energy barrier: {energy_barrier:.4f} meV')
+    # Potential energy vector
+    U_list = []
+    for angle in x:
+        U_list.append(V(angle, C))
+    U = Matrix(N, N, lambda i, j: U_list[i] if i == j else 0)
+    # Solve Hamiltoninan eigenvalues and eigenvectors
+    H = -B * finite_difference_matrix / dx**2 + U
+    eigenvalues = H.eigenvals()
+    eigenvalues_list = list(eigenvalues)
+    eigenvalues_sorted = sorted(eigenvalues_list)
+    print('Eigenvalues:')
+    print(eigenvalues_sorted)
+    energies.append(eigenvalues_sorted)
 
 time_end = time.time() - time_start
 print(f'Computation time: {time_end:.2f} seconds')
 
 
-# Plots
+# Plot potential energy and energy eigenvalues
 for C, eigenvalues in zip(constants, energies):
     # Plot potential energy
     plt.figure(figsize=(10, 6))
-    plt.plot(x, V(x, C))
+    plt.plot(x, V(x, C), label='Potential')
     plt.xlabel('Angle / radians')
     plt.ylabel('Energy / meV')
-    plt.title('Hindered methyl rotor potential (#' + str(constants.index(C)+1) + ')' )
+    plt.title('Hindered methyl rotor potential')
     # Plot energy eigenvalues
     for i in range(len(eigenvalues)):
-        plt.axhline(y=eigenvalues[i], color='r')
-        plt.text(i%3, eigenvalues[i], f'E$_{i}$ = {eigenvalues[i]:.4f}', va='center', bbox=dict(edgecolor='lightgrey', boxstyle='round,pad=0.2', facecolor='white', alpha=1))
-    plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
-               ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+        plt.axhline(y=eigenvalues[i], color='r', linestyle='-')
+        plt.text(i%2, eigenvalues[i], f'E = {eigenvalues[i]:.4f}', va='bottom')
+    plt.legend()
     plt.show()
 
