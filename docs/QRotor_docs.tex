@@ -1,0 +1,53 @@
+\documentclass[12pt,a4paper]{article}
+
+\PassOptionsToPackage{hyphens}{url} % \sloppy\url{}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=blue]{hyperref} % \href{https://www.youtube.com/}{Youtube} or \url{}
+
+\usepackage{multicol}
+
+\parindent =0cm % No indentation
+
+\title{Solving the time-independent Schrödinger equation for a hindered methyl rotor potential with \textit{QRotor.py}}
+\author{Pablo Gila-Herranz}
+\date{2024-03-27}
+
+\begin{document}
+\maketitle
+
+
+\section*{Time-independent Schrödinger equation for a hindered rotor}
+
+The time-independent Schrödinger equation is
+$$
+H\Psi(\varphi)=E\Psi(\varphi)
+$$
+
+The hamiltonian for a hindered methyl rotor can be expressed as a sum of the kinetic rotational energy and the potential energy,
+$$
+H = -B \frac{d^2\Psi}{d\varphi^2} - V(\varphi)
+$$
+
+with
+$$
+B = \frac{1}{2I}=\frac{1}{2\sum_{i}m_{i}r_{i}^{2}}
+$$
+
+The potential can be adjusted to the following form, where the coefficients are calculated via electronic calculation methods \cite{titov2023},
+$$
+V(\varphi)=c_{0}+c_{1}\sin(3\varphi)+c_{2}\cos(3\varphi)+c_{3}\sin(6\varphi)+c_{4}\cos(6\varphi)
+$$
+
+
+\section*{Finite Difference Method}
+
+The time-independent Schrödinger equation is a second-order differential equation. It can be solved numerically using the finite difference method. The first derivative can be approximated as
+$$
+\frac{d\Psi}{d\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi}
+$$
+
+
+\bibliographystyle{IEEEtran} % Estilo
+\bibliography{QRotor_refs} % documento .bib
+
+\end{document}
+
