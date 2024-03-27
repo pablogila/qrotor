@@ -26,7 +26,7 @@ $$
 The hamiltonian for a hindered methyl rotor can be expressed as a function of the angle $\varphi$.
 It can be written as a sum of the kinetic rotational energy and the potential energy,
 $$
-H = -B \frac{d^2\Psi}{d\varphi^2} - V(\varphi)
+H = -B \frac{d^2}{d\varphi^2} - V(\varphi)
 $$
 
 with
@@ -44,12 +44,12 @@ $$
 
 The time-independent Schrödinger equation is a second-order differential equation.
 It can be solved numerically by discretizing it with the finite difference method.
-This way, the first derivative can be approximated as
+This way, with a fine enough grid, the first derivative can be approximated as the slope,
 $$
 \frac{d\Psi}{d\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi}
 $$
 
-And the second derivative as
+Following the same procedure, the second derivative is
 $$
 \frac{d^2\Psi}{d\varphi^2} = \nabla^2\Psi = \frac{\frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi} - \frac{\Psi(\varphi)-\Psi(\varphi-\Delta\varphi)}{\Delta\varphi}}{\Delta\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-2\Psi(\varphi)+\Psi(\varphi-\Delta\varphi)}{\Delta\varphi^2}
 $$
@@ -67,9 +67,8 @@ This second derivative can be expressed in matrix form as
     \end{array} } \right] / \Delta\varphi^2
 \]
 
-The multiplication of this operator and the wavefunction vector yields the second derivative at every grid point.\\
-
-Finally, imposing periodic boundary conditions, the first and last grid points must be connected with an off-diagonal term,
+The multiplication of this operator and the wavefunction vector yields the second derivative at every grid point.
+Finally, imposing periodic boundary conditions, the first and last grid points are connected with an off-diagonal term,
 \[
     \nabla^2 =
     \left[ {\begin{array}{cccccc}
@@ -83,7 +82,7 @@ Finally, imposing periodic boundary conditions, the first and last grid points m
 \]
 
 To build the potential energy operator, the energy at each grid point is set to equal the potential energy.
-This results in a diagonal matix, with the potential energy at each point along the diagonal:
+This results in a diagonal matrix, with the potential energy at each point along the diagonal:
 \[
     V(\varphi) =
     \left[ {\begin{array}{cccc}
@@ -94,7 +93,7 @@ This results in a diagonal matix, with the potential energy at each point along 
     \end{array} } \right]
 \]
 
-This way, the energy eigenvalues of this system can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix. QRotor solves this eigenvalue problem with the SciPy package.
+This way, the energy eigenvalues of the hindered methyl rotor can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix. QRotor solves this eigenvalue problem with the SciPy package.
 
 \bibliographystyle{IEEEtran} % Estilo
 \bibliography{QRotor_refs} % documento .bib
