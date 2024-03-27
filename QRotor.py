@@ -6,9 +6,37 @@ import time
 import matplotlib.ticker as ticker
 
 
+# The Hamiltonian is built via finite difference method, with periodic B.C.
+#          [  2 -1  0  0  1 ]           [ V(0)                ]
+#          [ -1  2 -1  0  0 ]           [    V(1)             ]
+# H = -B * [  0 -1  2 -1  0 ] / dx**2 + [        V(2)         ]
+#          [  0  0 -1  2 -1 ]           [            V(3)     ]
+#          [  1  0  0 -1  2 ]           [                V(4) ]
+
+
 # Potential energy function of the hindered methyl rotor, from titov2023
 def V(x, C):
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
+
+
+# Second derivative matrix, according to the finite difference method
+def second_derivative_matrix(x):
+    diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
+    second_derivative_matrix = diags(diagonals, [0, -1, 1]).toarray()
+    # Periodic boundary conditions
+    second_derivative_matrix[0, -1] = 1
+    second_derivative_matrix[-1, 0] = 1
+    dx = x[1] - x[0]
+    second_derivative_matrix /= dx**2
+    return second_derivative_matrix
+
+
+# Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation
+def solve_energies(potential, B, x, searched_energies=5):
+    # Solve Hamiltoninan eigenvalues
+    H = -B * second_derivative_matrix(x) + diags(potential)
+    eigenvalues, _ = eigsh(H, searched_energies, which='SM')  # Omit the eigenvectors with '_'
+    return eigenvalues
 
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
@@ -32,45 +60,29 @@ constants = constants_1
 
 
 # Number of energy levels to calculate
-number_of_energies = 7
+searched_energies = 7
 # Inertia: B=1/2I
 m_H = 1.00784      # H mass
 m_D = 2.014102     # D mass
 r = 0.62  # 1.035  # Measured value??  # It should be around 0.6 ???
 B = 1.0 / 2 * 3*(m_H * r**2)
 #B = 0.574  # From titov2023
-# Grid
+# Grid size
 N = 500
 x = np.linspace(0, 2*np.pi, N)
-dx = x[1] - x[0]
-
-
-# The Hamiltonian is built via finite difference method, with periodic B.C.
-#          [  2 -1  0  0  1 ]           [ V(0)                ]
-#          [ -1  2 -1  0  0 ]           [    V(1)             ]
-# H = -B * [  0 -1  2 -1  0 ] / dx**2 + [        V(2)         ]
-#          [  0  0 -1  2 -1 ]           [            V(3)     ]
-#          [  1  0  0 -1  2 ]           [                V(4) ]
-diagonals = [-2*np.ones(N), np.ones(N-1), np.ones(N-1)]
-finite_difference_matrix = diags(diagonals, [0, -1, 1]).toarray()
-# And the periodic boundary conditions
-finite_difference_matrix[0, -1] = 1
-finite_difference_matrix[-1, 0] = 1
 
 
 time_start = time.time()
 
 energies = []
 for C in constants:
-    # Solve Hamiltoninan eigenvalues
     U = V(x, C)
-    H = -B * finite_difference_matrix / dx**2 + diags(U)
-    eigenvalues, _ = eigsh(H, number_of_energies, which='SM')  # Omit the eigenvectors with '_'
-    print(eigenvalues)
-    energies.append(eigenvalues)
-
+    eigenvalues = solve_energies(U, B, x, searched_energies)
     energy_barrier = max(U) - min(eigenvalues)
+
+    print(eigenvalues)
     print(f'Energy barrier: {energy_barrier:.4f} meV')
+    energies.append(eigenvalues)
 
 time_end = time.time() - time_start
 print(f'Computation time: {time_end:.2f} seconds')
