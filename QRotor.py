@@ -3,7 +3,7 @@ from scipy.sparse import diags
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
 import time
-import matplotlib.ticker as ticker
+import os
 
 
 # The Hamiltonian is built via finite difference method, with periodic B.C.
@@ -65,16 +65,17 @@ searched_energies = 7
 m_H = 1.00784      # H mass
 m_D = 2.014102     # D mass
 r = 0.62  # 1.035  # Measured value??  # It should be around 0.6 ???
-B = 1.0 / 2 * 3*(m_H * r**2)
+B = 1.0 / 2 * 3*(m_D * r**2)
 #B = 0.574  # From titov2023
 # Grid size
-N = 500
+N = 1000
 x = np.linspace(0, 2*np.pi, N)
 
 
 time_start = time.time()
 
 energies = []
+energy_barriers = []
 for C in constants:
     U = V(x, C)
     eigenvalues = solve_energies(U, B, x, searched_energies)
@@ -83,9 +84,24 @@ for C in constants:
     print(eigenvalues)
     print(f'Energy barrier: {energy_barrier:.4f} meV')
     energies.append(eigenvalues)
+    energy_barriers.append(energy_barrier)
 
-time_end = time.time() - time_start
-print(f'Computation time: {time_end:.2f} seconds')
+time_elapsed = time.time() - time_start
+print(f'Computation time: {time_elapsed:.2f} seconds')
+
+
+# Save data
+filename = 'eigenvalues.txt'
+script_dir = os.path.dirname(os.path.abspath(__file__))
+out_file = os.path.join(script_dir, filename)
+with open(out_file, 'w') as f:
+    f.write(f'Computation time for {len(energies)} potentials of grid size {N}:  {time_elapsed:.1f} s\n\n')
+    for eigenvalues, energy_barrier in zip(energies, energy_barriers):
+        f.write('Eigenvalues [meV]:    ')
+        for value in eigenvalues:
+            f.write(f'{value:.4f} ')
+        f.write(f'\nEnergy barrier [meV]: {energy_barrier:.4f}\n\n')
+    print(f'Data saved to {filename}')
 
 
 # Plots
@@ -95,7 +111,7 @@ for C, eigenvalues in zip(constants, energies):
     plt.plot(x, V(x, C))
     plt.xlabel('Angle / radians')
     plt.ylabel('Energy / meV')
-    plt.title('Hindered methyl rotor potential (#' + str(constants.index(C)+1) + ')' )
+    plt.title('Hindered D-methyl rotor potential (#' + str(constants.index(C)+1) + ')' )
     # Plot energy eigenvalues
     for i in range(len(eigenvalues)):
         plt.axhline(y=eigenvalues[i], color='r')

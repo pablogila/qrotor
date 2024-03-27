@@ -91,5 +91,5 @@ time_elapsed_str = str(time_elapsed)
 out_file = os.path.join(os.getcwd(), 'eigenvalues.txt')
 with open(out_file, 'w') as f:
     f.write('Time elapsed to compute the inverse matrix of dimension ' + str(N) + ': ' + time_elapsed_str + '\n')
-    f.write('Eigenvalues:\n' + eigenvalues_str)
+    f.write('\nEigenvalues:\n' + eigenvalues_str)
 print('Data saved to eigenvalues.txt')
