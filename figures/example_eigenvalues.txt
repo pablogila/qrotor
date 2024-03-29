@@ -1,0 +1,80 @@
+Potential constants:    [2.786, 0.013, -1.5284, -0.0037, -1.2791]
+Eigenvalues [meV]:      2.4867 2.8980 2.9107 5.3446 5.3473 7.5784 8.5917 
+Max potential [meV]:    4.3078
+Energy barrier [meV]:   1.8211
+E1-E0 transition [meV]: 0.4113
+
+Potential constants:    [2.6507, 0.0158, -1.4111, -0.0007, -1.2547]
+Eigenvalues [meV]:      2.3901 2.8195 2.8315 5.1724 5.1747 7.4234 8.4507 
+Max potential [meV]:    4.1192
+Energy barrier [meV]:   1.7291
+E1-E0 transition [meV]: 0.4294
+
+Potential constants:    [2.1852, 0.0164, -1.0017, 0.0003, -1.2061]
+Eigenvalues [meV]:      2.0355 2.5257 2.5351 4.5896 4.5901 6.8894 7.9793 
+Max potential [meV]:    3.5111
+Energy barrier [meV]:   1.4756
+E1-E0 transition [meV]: 0.4902
+
+Potential constants:    [5.9109, 0.0258, -7.0152, -0.0168, 1.0213]
+Eigenvalues [meV]:      2.9838 3.0526 3.0679 9.0323 9.0630 9.8824 13.6238 
+Max potential [meV]:    13.9475
+Energy barrier [meV]:   10.9636
+E1-E0 transition [meV]: 0.0687
+
+Potential constants:    [1.4526, 0.0134, -0.3196, 0.0005, -1.1461]
+Eigenvalues [meV]:      1.4079 1.9720 1.9768 3.7300 3.7329 6.1000 7.2340 
+Max potential [meV]:    2.6231
+Energy barrier [meV]:   1.2152
+E1-E0 transition [meV]: 0.5640
+
+
+Hindered methyl rotor with H atoms
+Time elapsed: 51.7 s
+Potentials computed: 5
+Energy levels computed: 7
+Grid size: 1000
+B value: 0.5811
+
+------------------------------------
+
+Potential constants:    [2.786, 0.013, -1.5284, -0.0037, -1.2791]
+Eigenvalues [meV]:      2.6415 3.7006 3.7118 7.5426 7.5441 12.6744 13.8288 
+Max potential [meV]:    4.3078
+Energy barrier [meV]:   1.6663
+E1-E0 transition [meV]: 1.0591
+
+Potential constants:    [2.6507, 0.0158, -1.4111, -0.0007, -1.2547]
+Eigenvalues [meV]:      2.5251 3.5973 3.6077 7.3863 7.3874 12.5361 13.6846 
+Max potential [meV]:    4.1192
+Energy barrier [meV]:   1.5942
+E1-E0 transition [meV]: 1.0722
+
+Potential constants:    [2.1852, 0.0164, -1.0017, 0.0003, -1.2061]
+Eigenvalues [meV]:      2.1129 3.2243 3.2324 6.8578 6.8584 12.0515 13.2040 
+Max potential [meV]:    3.5111
+Energy barrier [meV]:   1.3982
+E1-E0 transition [meV]: 1.1114
+
+Potential constants:    [5.9109, 0.0258, -7.0152, -0.0168, 1.0213]
+Eigenvalues [meV]:      3.9822 4.4406 4.4614 11.8382 11.8659 15.4400 18.3368 
+Max potential [meV]:    13.9475
+Energy barrier [meV]:   9.9653
+E1-E0 transition [meV]: 0.4584
+
+Potential constants:    [1.4526, 0.0134, -0.3196, 0.0005, -1.1461]
+Eigenvalues [meV]:      1.4300 2.5805 2.5847 6.0646 6.0678 11.3095 12.4503 
+Max potential [meV]:    2.6231
+Energy barrier [meV]:   1.1932
+E1-E0 transition [meV]: 1.1505
+
+
+Hindered methyl rotor with D atoms
+Time elapsed: 60.9 s
+Potentials computed: 5
+Energy levels computed: 7
+Grid size: 1000
+B value: 1.1613
+
+------------------------------------
+
