@@ -2,9 +2,6 @@
 
 \PassOptionsToPackage{hyphens}{url} % \sloppy\url{}
 \usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=blue]{hyperref} % \href{https://www.youtube.com/}{Youtube} or \url{}
-
-\usepackage{multicol}
-
 \parindent =0cm % No indentation
 \usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
 
@@ -24,9 +21,9 @@ H\Psi(\varphi)=E\Psi(\varphi)
 $$
 
 The hamiltonian for a hindered methyl rotor can be expressed as a function of the angle $\varphi$.
-It can be written as a sum of the kinetic rotational energy and the potential energy,
+It depends of the kinetic rotational energy and the potential energy:
 $$
-H = -B \frac{d^2}{d\varphi^2} - V(\varphi)
+H = -B \frac{d^2}{d\varphi^2} + V(\varphi)
 $$
 
 with
@@ -43,7 +40,7 @@ $$
 \section*{Finite Difference Method}
 
 The time-independent Schrödinger equation is a second-order differential equation.
-It can be solved numerically by discretizing it with the finite difference method.
+It can be solved numerically by discretizing it with the finite difference method \cite{finite_diff_python}.
 This way, with a fine enough grid, the first derivative can be approximated as the slope,
 $$
 \frac{d\Psi}{d\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi}
@@ -56,7 +53,7 @@ $$
 
 This second derivative can be expressed in matrix form as
 \[
-    \nabla^2 =
+    \nabla^2 = \frac{1}{\Delta\varphi^2}
     \left[ {\begin{array}{cccccc}
     -2      &  1     &  0     & \cdots &  0    &  0      \\
      1      & -2     &  1     &        &  0    &  0      \\
@@ -64,13 +61,13 @@ This second derivative can be expressed in matrix form as
      \vdots &        &        & \ddots &  1    &  0      \\
      0      &  0     &        &  1     & -2    &  1      \\
      0      &  0     & \cdots &  0     &  1    & -2      \\
-    \end{array} } \right] / \Delta\varphi^2
+    \end{array} } \right]
 \]
 
 The multiplication of this operator and the wavefunction vector yields the second derivative at every grid point.
 Finally, imposing periodic boundary conditions, the first and last grid points are connected with an off-diagonal term,
 \[
-    \nabla^2 =
+    \nabla^2 = \frac{1}{\Delta\varphi^2}
     \left[ {\begin{array}{cccccc}
     -2      &  1     &  0     & \cdots &  0    &  \bf{1} \\
      1      & -2     &  1     &        &  0    &  0      \\
@@ -78,7 +75,7 @@ Finally, imposing periodic boundary conditions, the first and last grid points a
      \vdots &        &        & \ddots &  1    &  0      \\
      0      &  0     &        &  1     & -2    &  1      \\
      \bf{1} &  0     & \cdots &  0     &  1    & -2      \\
-    \end{array} } \right] / \Delta\varphi^2
+    \end{array} } \right]
 \]
 
 To build the potential energy operator, the energy at each grid point is set to equal the potential energy.

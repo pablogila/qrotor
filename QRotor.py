@@ -59,59 +59,83 @@ constants_2 = [
 constants = constants_1
 
 
+# Atom type of the methyl rotor: 'H' or 'D'
+atom_type = 'H'
 # Number of energy levels to calculate
 searched_energies = 7
 # Inertia: B=1/2I
 m_H = 1.00784      # H mass
 m_D = 2.014102     # D mass
+if atom_type == 'D':
+    m = m_D
+else:
+    m = m_H
 r = 0.62  # 1.035  # Measured value??  # It should be around 0.6 ???
-B = 1.0 / 2 * 3*(m_D * r**2)
+B = 1.0 / 2 * 3*(m * r**2)
 #B = 0.574  # From titov2023
 # Grid size
 N = 1000
 x = np.linspace(0, 2*np.pi, N)
 
 
-time_start = time.time()
-
-energies = []
-energy_barriers = []
-for C in constants:
-    U = V(x, C)
-    eigenvalues = solve_energies(U, B, x, searched_energies)
-    energy_barrier = max(U) - min(eigenvalues)
-
-    print(eigenvalues)
-    print(f'Energy barrier: {energy_barrier:.4f} meV')
-    energies.append(eigenvalues)
-    energy_barriers.append(energy_barrier)
-
-time_elapsed = time.time() - time_start
-print(f'Computation time: {time_elapsed:.2f} seconds')
-
-
-# Save data
+# Output file
+plot_results = True
 filename = 'eigenvalues.txt'
 script_dir = os.path.dirname(os.path.abspath(__file__))
 out_file = os.path.join(script_dir, filename)
-with open(out_file, 'w') as f:
-    f.write(f'Computation time for {len(energies)} potentials of grid size {N}:  {time_elapsed:.1f} s\n\n')
-    for eigenvalues, energy_barrier in zip(energies, energy_barriers):
-        f.write('Eigenvalues [meV]:    ')
-        for value in eigenvalues:
-            f.write(f'{value:.4f} ')
-        f.write(f'\nEnergy barrier [meV]: {energy_barrier:.4f}\n\n')
-    print(f'Data saved to {filename}')
+
+
+time_start = time.time()
+
+energies = []
+for C in constants:
+    U = V(x, C)
+    eigenvalues = solve_energies(U, B, x, searched_energies)
+    max_potential = max(U)
+    energy_barrier = max(U) - min(eigenvalues)
+    first_transition = eigenvalues[1] - eigenvalues[0]
+
+    energies.append(eigenvalues)
+
+    output = f'Potential constants:    {C}\n'
+    output += f'Eigenvalues [meV]:      '
+    for value in eigenvalues:
+        output += f'{value:.4f} '
+    output += '\n'
+    output += f'Max potential [meV]:    {max_potential:.4f}\n'
+    output += f'Energy barrier [meV]:   {energy_barrier:.4f}\n'
+    output += f'E1-E0 transition [meV]: {first_transition:.4f}\n'
+    output += '\n'
+
+    print(output)
+    with open(out_file, 'a') as f:
+        f.write(output)
+
+time_elapsed = time.time() - time_start
+
+summary = f'\nHindered methyl rotor with {atom_type} atoms\n'
+summary += f'Time elapsed: {time_elapsed:.1f} s\n'
+summary += f'Potentials computed: {len(energies)}\n'
+summary += f'Energy levels computed: {searched_energies}\n'
+summary += f'Grid size: {N}\n'
+summary += f'B value: {B:.4f}\n\n'
+print(summary)
+with open(out_file, 'a') as f:
+    f.write(summary)
+    f.write('------------------------------------\n\n')
+print(f'Data saved to {filename}')
 
 
 # Plots
+if not plot_results:
+    exit()
 for C, eigenvalues in zip(constants, energies):
     # Plot potential energy
     plt.figure(figsize=(10, 6))
     plt.plot(x, V(x, C))
     plt.xlabel('Angle / radians')
     plt.ylabel('Energy / meV')
-    plt.title('Hindered D-methyl rotor potential (#' + str(constants.index(C)+1) + ')' )
+    plt.title(f'Hindered {atom_type}-methyl rotor potential (#' + str(constants.index(C)+1) + ')' )
     # Plot energy eigenvalues
     for i in range(len(eigenvalues)):
         plt.axhline(y=eigenvalues[i], color='r')
