@@ -108,13 +108,13 @@ def print_solutions(solutions:Solutions, out_file=None):
 
 
 def print_variables(variables:Variables, out_file=None):
-    output = variables.comment + '\n'
+    output = '\n' + variables.comment + '\n'
     output += f'Atom type:              {variables.atom_type}\n'
     output += f'Inertia B [meV]:        {variables.B:.4f}\n'
     output += f'Grid size N:            {variables.N}\n'
     output += f'Energy levels computed: {variables.searched_energies}\n'
     output += f'Runtime [s]:            {variables.runtime:.2f}\n'
-    output += '\n'
+    output += '\n\n'
     output += '------------------------------------\n\n'
 
     print(output)
@@ -168,7 +168,8 @@ def plot_solutions(solutions:Solutions, variables:Variables):
                 plt.axhline(y=energy, color = D_color, linestyle=D_linestyle)
                 plt.text(4+j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=D_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             plt.plot([], [], color=D_color, linestyle=D_linestyle, label=D_label)  # Add to legend
-        plt.legend()
+        plt.subplots_adjust(right=0.85)
+        plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
         plt.show()
 
 
@@ -243,7 +244,7 @@ variables.comment = f'Summary of the last {len(solutions.set_of_energies_D)} cal
 print_variables(variables, out_file)
 
 
-print(f'Data saved to {filename}')
+print(f'Data saved to {filename}\n')
 
 
 # Plots
