@@ -16,11 +16,13 @@ import os
 
 class Solutions:
     def __init__(self):
+        # Temporary values
         self.comment = None
         self.eigenvalues = None
         self.max_potential = None
         self.energy_barrier = None
         self.first_transition = None
+        # Stored values for plotting
         self.set_of_energies = None
         self.set_of_energies_H = None
         self.set_of_energies_D = None
@@ -60,7 +62,7 @@ def second_derivative_matrix(x):
 
 
 # Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation.
-# Returns a Solutions object.
+# Takes a Variables object, returns a Solutions object.
 def solve_energies(variables:Variables):
     potential = V(variables.x, variables.constants)
     B = variables.B
@@ -77,7 +79,7 @@ def solve_energies(variables:Variables):
     return solutions
 
 
-# Solve for a set of potential constants, and print the solutions.
+# Recurrently solve the energies for a set of potential constants, and print the solutions.
 # Returns a list of eigenvalues for each set of constants.
 def solve_variables(variables:Variables, out_file):
     set_of_energies = []
@@ -184,6 +186,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 out_file = os.path.join(script_dir, filename)
 
 
+# Instantiate objects. These are used to pass data between functions.
 solutions = Solutions()
 variables = Variables()
 
@@ -217,7 +220,7 @@ variables.searched_energies = 5
 variables.N = 1000
 variables.x = np.linspace(0, 2*np.pi, variables.N)
 # Methyl rotor radius
-variables.r = 0.62  # 1.035  # ?? which value??
+variables.r = 0.62  # meV  # 1.035 angstroms for MAI
 
 
 # Solve for HYDROGEN and print the results
