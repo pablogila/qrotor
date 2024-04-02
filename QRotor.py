@@ -45,8 +45,18 @@ class Variables:
         self.x = None
 
 
-# Potential energy function of the hindered methyl rotor, from titov2023
+# Redirect to the desired potential energy function
 def V(x, C):
+    return potential_titov2023(x, C)
+
+
+# Zero potential
+def potential_0(x, C):
+    return 0 * x
+
+
+# Potential energy function of the hindered methyl rotor, from titov2023
+def potential_titov2023(x, C):
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
@@ -82,7 +92,7 @@ def solve_energies(variables:Variables):
 
 
 # Recurrently solve the energies for a set of potential constants, and print the solutions.
-# Returns a list of eigenvalues for each set of constants.
+# Takes a Variables object, returns a list of eigenvalues for each set of constants.
 def solve_variables(variables:Variables, out_file):
     set_of_energies = []
     set_of_eigenvectors = []
@@ -98,7 +108,7 @@ def solve_variables(variables:Variables, out_file):
     return set_of_energies, set_of_eigenvectors
 
 
-def print_solutions(solutions:Solutions, out_file=None):
+def print_solutions(solutions:Solutions, out_file=None, print_eigenvectors=False):
     output = solutions.comment + '\n'
     output += f'Eigenvalues [meV]:      '
     for value in solutions.eigenvalues:
@@ -107,10 +117,11 @@ def print_solutions(solutions:Solutions, out_file=None):
     output += f'Max potential [meV]:    {solutions.max_potential:.4f}\n'
     output += f'Energy barrier [meV]:   {solutions.energy_barrier:.4f}\n'
     output += f'E1-E0 transition [meV]: {solutions.first_transition:.4f}\n'
-#    output += f'Eigenvectors [meV]:\n'
-#    for value in solutions.eigenvectors:
-#        output += f'{value}\n'
-#    output += '\n'
+    if print_eigenvectors:
+        output += f'Eigenvectors [meV]:\n'
+        for value in solutions.eigenvectors:
+            output += f'{value}\n'
+        output += '\n'
 
     print(output)
     if out_file:
@@ -134,7 +145,7 @@ def print_variables(variables:Variables, out_file=None):
             f.write(output)
 
 
-def plot_solutions(solutions:Solutions, variables:Variables):
+def plot_energies_and_potentials(solutions:Solutions, variables:Variables):
 
     xlabel = 'Angle / radians'
     ylabel = 'Energy / meV'
@@ -266,5 +277,5 @@ print(f'Data saved to {filename}\n')
 
 # Plots
 if plot_results:
-    plot_solutions(solutions, variables)
+    plot_energies_and_potentials(solutions, variables)
 
