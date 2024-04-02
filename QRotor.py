@@ -19,6 +19,7 @@ class Solutions:
         # Temporary values
         self.comment = None
         self.eigenvalues = None
+        self.eigenvectors = None
         self.max_potential = None
         self.energy_barrier = None
         self.first_transition = None
@@ -70,9 +71,10 @@ def solve_energies(variables:Variables):
     searched_energies = variables.searched_energies
     # Solve Hamiltoninan eigenvalues
     H = -B * second_derivative_matrix(x) + diags(potential)
-    eigenvalues, _ = eigsh(H, searched_energies, which='SM')  # Omit the eigenvectors with '_'
+    eigenvalues, eigenvectors = eigsh(H, searched_energies, which='SM')
     solutions = Solutions()
     solutions.eigenvalues = eigenvalues
+    solutions.eigenvectors = eigenvectors
     solutions.max_potential = max(potential)
     solutions.energy_barrier = max(potential) - min(eigenvalues)
     solutions.first_transition = eigenvalues[1] - eigenvalues[0]
@@ -83,13 +85,17 @@ def solve_energies(variables:Variables):
 # Returns a list of eigenvalues for each set of constants.
 def solve_variables(variables:Variables, out_file):
     set_of_energies = []
+    set_of_eigenvectors = []
     for C in variables.set_of_constants:
         variables.constants = C
         solutions = solve_energies(variables)
         solutions.comment = f'Potential constants:    {C}'
         set_of_energies.append(solutions.eigenvalues)
+        # CHECK THIS for set_of_eigenvectors:
+        # I want: [[set_1],[set_2],...]
+        set_of_eigenvectors.append(solutions.eigenvectors)
         print_solutions(solutions, out_file)
-    return set_of_energies
+    return set_of_energies, set_of_eigenvectors
 
 
 def print_solutions(solutions:Solutions, out_file=None):
@@ -101,7 +107,10 @@ def print_solutions(solutions:Solutions, out_file=None):
     output += f'Max potential [meV]:    {solutions.max_potential:.4f}\n'
     output += f'Energy barrier [meV]:   {solutions.energy_barrier:.4f}\n'
     output += f'E1-E0 transition [meV]: {solutions.first_transition:.4f}\n'
-    output += '\n'
+#    output += f'Eigenvectors [meV]:\n'
+#    for value in solutions.eigenvectors:
+#        output += f'{value}\n'
+#    output += '\n'
 
     print(output)
     if out_file:
@@ -133,13 +142,18 @@ def plot_solutions(solutions:Solutions, variables:Variables):
     V_color = 'C0'
     V_label = 'Potential'
 
-    H_color = 'C1'
-    H_edgecolor = 'pink'
+    default_color = 'red'
+    default_edgecolor = 'tomato'
+    default_linestyle = '-'
+    default_label = 'Energies'
+
+    H_color = 'orange'
+    H_edgecolor = 'peachpuff'
     H_linestyle = ':'
     H_label = 'H energies'
 
-    D_color = 'C4'
-    D_edgecolor = 'lightblue'
+    D_color = 'purple'
+    D_edgecolor = 'lavender'
     D_linestyle = 'dashed'
     D_label = 'D energies'
 
@@ -155,9 +169,9 @@ def plot_solutions(solutions:Solutions, variables:Variables):
         # Plot default set_of_energies
         if solutions.set_of_energies:
             for j, energy in enumerate(solutions.set_of_energies[i]):
-                plt.axhline(y=energy, color='grey')
-                plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor='lightgrey', boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-            plt.plot([], [], color='grey', label='Energies')  # Add to legend
+                plt.axhline(y=energy, color=default_color, linestyle=default_linestyle)
+                plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=default_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+            plt.plot([], [], color=default_color, label=default_label)  # Add to legend
         # Plot HYDROGEN set_of_energies_H
         if solutions.set_of_energies_H:
             for j, energy in enumerate(solutions.set_of_energies_H[i]):
@@ -217,7 +231,7 @@ variables.set_of_constants = constants_1
 # Number of energy levels to calculate
 variables.searched_energies = 5
 # Grid size
-variables.N = 1000
+variables.N = 100
 variables.x = np.linspace(0, 2*np.pi, variables.N)
 # Methyl rotor radius
 variables.r = 0.62  # meV  # 1.035 angstroms for MAI
@@ -229,7 +243,7 @@ variables.m = m_H
 variables.B = 1.0 / 2 * 3*(variables.m * variables.r**2)  # Inertia, 0.574 From titov2023
 
 time_start = time.time()
-solutions.set_of_energies_H = solve_variables(variables, out_file)
+solutions.set_of_energies_H, _ = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
 variables.comment = f'Summary of the last {len(solutions.set_of_energies_H)} calculations for a hindered methyl rotor:'
 print_variables(variables, out_file)
@@ -241,7 +255,7 @@ variables.m = m_D
 variables.B = 1.0 / 2 * 3*(variables.m * variables.r**2)
 
 time_start = time.time()
-solutions.set_of_energies_D = solve_variables(variables, out_file)
+solutions.set_of_energies_D, _ = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
 variables.comment = f'Summary of the last {len(solutions.set_of_energies_D)} calculations for a hindered methyl rotor:'
 print_variables(variables, out_file)
