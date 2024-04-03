@@ -16,17 +16,26 @@ import os
 
 class Solutions:
     def __init__(self):
-        # Temporary values
         self.comment = None
         self.eigenvalues = None
         self.eigenvectors = None
         self.max_potential = None
         self.energy_barrier = None
         self.first_transition = None
-        # Stored values for plotting
+
+
+class Data:
+    def __init__(self):
+        self.title = None
+        self.comment = None
+        self.x = None
+        self.set_of_constants = None
         self.set_of_energies = None
         self.set_of_energies_H = None
         self.set_of_energies_D = None
+        self.set_of_eigenvectors = None
+        self.set_of_eigenvectors_H = None
+        self.set_of_eigenvectors_D = None
 
 
 class Variables:
@@ -92,7 +101,7 @@ def solve_energies(variables:Variables):
 
 
 # Recurrently solve the energies for a set of potential constants, and print the solutions.
-# Takes a Variables object, returns a list of eigenvalues for each set of constants.
+# Takes a Variables object, returns a Data object with the set of energies and eigenvectors.
 def solve_variables(variables:Variables, out_file):
     set_of_energies = []
     set_of_eigenvectors = []
@@ -105,7 +114,12 @@ def solve_variables(variables:Variables, out_file):
         # I want: [[set_1],[set_2],...]
         set_of_eigenvectors.append(solutions.eigenvectors)
         print_solutions(solutions, out_file)
-    return set_of_energies, set_of_eigenvectors
+
+    data = Data()
+    data.set_of_energies = set_of_energies
+    data.set_of_eigenvectors = set_of_eigenvectors
+
+    return data
 
 
 def print_solutions(solutions:Solutions, out_file=None, print_eigenvectors=False):
@@ -145,11 +159,11 @@ def print_variables(variables:Variables, out_file=None):
             f.write(output)
 
 
-def plot_energies_and_potentials(solutions:Solutions, variables:Variables):
+def plot_energies_and_potentials(data:Data):
 
     xlabel = 'Angle / radians'
     ylabel = 'Energy / meV'
-    title = 'Hindered methyl rotor potential'
+    title = data.title
     V_color = 'C0'
     V_label = 'Potential'
 
@@ -163,35 +177,35 @@ def plot_energies_and_potentials(solutions:Solutions, variables:Variables):
     H_linestyle = ':'
     H_label = 'H energies'
 
-    D_color = 'purple'
+    D_color = 'orchid'
     D_edgecolor = 'lavender'
     D_linestyle = 'dashed'
     D_label = 'D energies'
 
-    for i, C in enumerate(variables.set_of_constants):
+    for i, C in enumerate(data.set_of_constants):
         # Plot potential energy
         plt.figure(figsize=(10, 6))
-        plt.plot(variables.x, V(variables.x, C), color=V_color, label=V_label)
+        plt.plot(data.x, V(data.x, C), color=V_color, label=V_label)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
-        plt.title(f'{title} (#' + str(variables.set_of_constants.index(C)+1) + ')' )
+        plt.title(f'{title} (#' + str(data.set_of_constants.index(C)+1) + ')' )
         plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
                    ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
         # Plot default set_of_energies
-        if solutions.set_of_energies:
-            for j, energy in enumerate(solutions.set_of_energies[i]):
+        if data.set_of_energies:
+            for j, energy in enumerate(data.set_of_energies[i]):
                 plt.axhline(y=energy, color=default_color, linestyle=default_linestyle)
                 plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=default_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             plt.plot([], [], color=default_color, label=default_label)  # Add to legend
         # Plot HYDROGEN set_of_energies_H
-        if solutions.set_of_energies_H:
-            for j, energy in enumerate(solutions.set_of_energies_H[i]):
+        if data.set_of_energies_H:
+            for j, energy in enumerate(data.set_of_energies_H[i]):
                 plt.axhline(y=energy, color=H_color, linestyle=H_linestyle)
                 plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=H_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             plt.plot([], [], color=H_color, linestyle=H_linestyle, label=H_label)
         # Plot DEUTERIUM set_of_energies_D
-        if solutions.set_of_energies_D:
-            for j, energy in enumerate(solutions.set_of_energies_D[i]):
+        if data.set_of_energies_D:
+            for j, energy in enumerate(data.set_of_energies_D[i]):
                 plt.axhline(y=energy, color = D_color, linestyle=D_linestyle)
                 plt.text(4+j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=D_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             plt.plot([], [], color=D_color, linestyle=D_linestyle, label=D_label)  # Add to legend
@@ -200,19 +214,73 @@ def plot_energies_and_potentials(solutions:Solutions, variables:Variables):
         plt.show()
 
 
-####################################
-##########  MAIN PROGRAM  ##########
-####################################
+##### TO-DO
+def plot_eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
+
+    xlabel = 'Angle / radians'
+    ylabel = 'Energy / meV'
+    title = data.title
+    V_color = 'lightblue'
+    V_label = 'Potential'
+
+    #energy_color = 'red'
+    energy_edgecolor = 'lightgrey'
+    energy_linestyle = ':'
+    energy_label = 'E'
+
+    eigenvector_linestyle = '--'
+    eigenvector_label = 'Eigenvect '
+
+    # To square the eigenvectors
+    if squared:
+        square = 2
+    else: square = 1
+    
+    for i, C in enumerate(data.set_of_constants):
+
+        # Transpose the 2D array so that each inner array represents a different eigenvector
+        eigenvectors_transposed = np.transpose(data.set_of_eigenvectors[i])
+
+        # Plot potential energy
+        plt.figure(figsize=(10, 6))
+        plt.plot(data.x, V(data.x, C), color=V_color, label=V_label)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(f'{title} (#' + str(data.set_of_constants.index(C)+1) + ')' )
+        if len(data.set_of_constants) == 1:
+            plt.title(f'{title}')
+        plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
+                   ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+        for j, energy in enumerate(data.set_of_energies[i]):
+            if levels is not None and j not in levels:
+                continue
+
+            color = 'C' + str(j)
+
+            E_label = energy_label + str(j)
+            plt.axhline(y=energy, linestyle=energy_linestyle, color=color, label=E_label)
+            plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=energy_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+
+            eigenvect_label = eigenvector_label + str(j)
+            eigenvector = scaling_factor*eigenvectors_transposed[j]**square
+            plt.plot(data.x, eigenvector, linestyle=eigenvector_linestyle, label=eigenvect_label, color=color)
+
+        plt.subplots_adjust(right=0.85)
+        plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
+        plt.show()
+
+
+#################################
+##########  CONSTANTS  ##########
+#################################
 
 # Output file
-plot_results = True
 filename = 'eigenvalues.txt'
 script_dir = os.path.dirname(os.path.abspath(__file__))
 out_file = os.path.join(script_dir, filename)
 
 
 # Instantiate objects. These are used to pass data between functions.
-solutions = Solutions()
 variables = Variables()
 
 # Atomic masses
@@ -248,15 +316,20 @@ variables.x = np.linspace(0, 2*np.pi, variables.N)
 variables.r = 0.62  # meV  # 1.035 angstroms for MAI
 
 
+####################################
+##########  MAIN PROGRAM  ##########
+####################################
+
+
 # Solve for HYDROGEN and print the results
 variables.atom_type = 'H'
 variables.m = m_H
 variables.B = 1.0 / 2 * 3*(variables.m * variables.r**2)  # Inertia, 0.574 From titov2023
 
 time_start = time.time()
-solutions.set_of_energies_H, _ = solve_variables(variables, out_file)
+data_H = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
-variables.comment = f'Summary of the last {len(solutions.set_of_energies_H)} calculations for a hindered methyl rotor:'
+variables.comment = f'Summary of the last {len(data_H.set_of_energies)} calculations for a hindered methyl rotor:'
 print_variables(variables, out_file)
 
 
@@ -266,16 +339,30 @@ variables.m = m_D
 variables.B = 1.0 / 2 * 3*(variables.m * variables.r**2)
 
 time_start = time.time()
-solutions.set_of_energies_D, _ = solve_variables(variables, out_file)
+data_D = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
-variables.comment = f'Summary of the last {len(solutions.set_of_energies_D)} calculations for a hindered methyl rotor:'
+variables.comment = f'Summary of the last {len(data_D.set_of_energies)} calculations for a hindered methyl rotor:'
 print_variables(variables, out_file)
 
 
 print(f'Data saved to {filename}\n')
 
 
-# Plots
-if plot_results:
-    plot_energies_and_potentials(solutions, variables)
+# Group H and D data in the same object, to plot it together
+data = Data()
+data.title = 'Hindered methyl rotor potential'
+data.set_of_energies_H = data_H.set_of_energies
+data.set_of_eigenvectors_H = data_H.set_of_eigenvectors
+data.set_of_energies_D = data_D.set_of_energies
+data.set_of_eigenvectors_D = data_D.set_of_eigenvectors
+data.set_of_constants = variables.set_of_constants
+data.x = variables.x
+plot_energies_and_potentials(data)
+
+
+# Plot the eigenvalues for Hydrogen
+data.title = 'Hyndered methyl rotor eigenvalues'
+data.set_of_energies = data.set_of_energies_H
+data.set_of_eigenvectors = data.set_of_eigenvectors_H
+plot_eigenvectors(data, [0,1,2], True, 100)
 
