@@ -46,7 +46,7 @@ class Variables:
         self.constants = None
         self.set_of_constants = None
         self.searched_energies = None
-        self.potential = None
+        self.potential = None  # Unused
         self.m = None
         self.r = None
         self.B = None
@@ -229,12 +229,14 @@ def plot_eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
     energy_label = 'E'
 
     eigenvector_linestyle = '--'
-    eigenvector_label = 'Eigenvect '
 
     # To square the eigenvectors
     if squared:
+        eigenvector_label = 'Eigenvect$^2$ '
         square = 2
-    else: square = 1
+    else:
+        eigenvector_label = 'Eigenvect '
+        square = 1
     
     for i, C in enumerate(data.set_of_constants):
 
@@ -267,6 +269,7 @@ def plot_eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
 
         plt.subplots_adjust(right=0.85)
         plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
+        plt.text(1.03, 0.9, f'Eigenvects\nscaled x{scaling_factor}', transform=plt.gca().transAxes)
         plt.show()
 
 
@@ -348,7 +351,7 @@ print_variables(variables, out_file)
 print(f'Data saved to {filename}\n')
 
 
-# Group H and D data in the same object, to plot it together
+# Group H and D data in the same object, to plot them together
 data = Data()
 data.title = 'Hindered methyl rotor potential'
 data.set_of_energies_H = data_H.set_of_energies
@@ -361,7 +364,7 @@ plot_energies_and_potentials(data)
 
 
 # Plot the eigenvalues for Hydrogen
-data.title = 'Hyndered methyl rotor eigenvalues'
+data.title = 'Hindered methyl rotor eigenvalues'
 data.set_of_energies = data.set_of_energies_H
 data.set_of_eigenvectors = data.set_of_eigenvectors_H
 plot_eigenvectors(data, [0,1,2], True, 100)
