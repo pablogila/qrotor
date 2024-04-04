@@ -60,25 +60,31 @@ class Data:
 # Redirect to the desired potential energy function
 def V(variables:Variables):
     if variables.potential_name == 'titov2023':
-        return potential_titov2023(variables.x, variables.constants)
+        return potential_titov2023(variables)
     elif variables.potential_name == 'zero':
-        return potential_zero(variables.x)
+        return potential_zero(variables)
     else:
         return potential_custom(variables)
 
 
 # Potential energy function of the hindered methyl rotor, from titov2023
-def potential_titov2023(x, C):
+def potential_titov2023(variables:Variables):
+    x = variables.x
+    C = variables.constants
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
 # Zero potential
-def potential_zero(x):
+def potential_zero(variables:Variables):
+    x = variables.x
     return 0 * x
 
 
 def potential_custom(variables:Variables):
-    return  # A potential as an array resulting from DFT calculations, etc.
+    x = variables.x
+    C = variables.constants
+    phase = 0
+    return C[0] + C[1] * np.cos(3*x + phase)  # A potential as an array resulting from DFT calculations, etc.
 
 
 # Second derivative matrix, according to the finite difference method
@@ -348,7 +354,7 @@ variables = Variables()
 
 
 # Choose the set of constants to use
-variables.set_of_constants = constants_titov_1
+variables.set_of_constants = constants_titov_1 #constants_titov_1
 variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
 # Number of energy levels to calculate
 variables.searched_E_levels = 5
@@ -362,13 +368,29 @@ variables.x = np.linspace(0, 2*np.pi, variables.N)
 ####################################
 
 
+########################################################################
 # WE CAN JUST SOLVE IT ONCE, AND MULTIPLY BY B. WE NEED TO TEST IT.
+# GENERIC WITH B=1 ??
+variables.atom_type = 'Generic case'
+variables.B = 1.0
+time_start = time.time()
+data_generic = solve_variables(variables, out_file)
+variables.runtime = time.time() - time_start
+variables.comment = f'Summary of the last {len(data_generic.set_of_energies)} calculations for a hindered methyl rotor:'
+print_variables(variables, out_file)
+#
+print(f'Now lets multiply by B_Hydrogen: {B_Hydrogen}')
+for energy in data_generic.set_of_energies:
+    print(f'generic: {energy}')
+    test = energy * B_Hydrogen
+    print(f'test energies:    {test}')
+#########  THIS IS A FAIL....
+########################################################################
 
 
 # Solve for HYDROGEN and print the results
 variables.atom_type = 'H'
 variables.B = B_Hydrogen
-
 time_start = time.time()
 data_H = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
@@ -379,7 +401,6 @@ print_variables(variables, out_file)
 # Change the atom type to DEUTERIUM and solve again
 variables.atom_type = 'D'
 variables.B = B_Deuterium
-
 time_start = time.time()
 data_D = solve_variables(variables, out_file)
 variables.runtime = time.time() - time_start
