@@ -104,7 +104,7 @@ def hamiltonian_matrix(variables:Variables):
     B = variables.B
     x = variables.x
     H = -B * laplacian_matrix(x) + diags(potential)  # Original Hamiltonian
-    # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B
+    # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
 
 
