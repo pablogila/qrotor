@@ -49,6 +49,7 @@ def solve_variables(variables:Variables, out_file=None):
     set_of_energies = []
     set_of_eigenvectors = []
     set_of_potentials = []
+    # Iterate over the potential constants inside the Variables object, and solve the Hamiltonian for each one.
     for C in variables.set_of_constants:
         variables.constants = C
         solutions = solve_hamiltonian(variables)
