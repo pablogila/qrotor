@@ -14,6 +14,11 @@ import os
 #          [  1  0  0 -1  2 ]           [                V(4) ]
 
 
+##############################################################################################
+###########  CLASSES  ###########
+#################################
+
+
 class Variables:
     def __init__(self):
         self.comment = None
@@ -57,6 +62,11 @@ class Data:
         self.set_of_eigenvectors_D = None
 
 
+##############################################################################################
+##########  POTENTIALS  #########
+#################################
+
+
 # Redirect to the desired potential energy function
 def V(variables:Variables):
     if variables.potential_name == 'titov2023':
@@ -87,6 +97,11 @@ def potential_custom(variables:Variables):
     return C[0] + C[1] * np.cos(3*x + phase)  # A potential as an array resulting from DFT calculations, etc.
 
 
+##############################################################################################
+##########  SCHRODINGER  ########
+#################################
+
+
 # Second derivative matrix, according to the finite difference method
 def laplacian_matrix(x):
     diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
@@ -109,7 +124,7 @@ def hamiltonian_matrix(variables:Variables):
 
 
 # Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation.
-def solve_energies(variables:Variables):
+def solve_hamiltonian(variables:Variables):
     potential = V(variables)
     offset = min(potential)
     potential = potential - offset
@@ -137,7 +152,7 @@ def solve_variables(variables:Variables, out_file=None):
     set_of_potentials = []
     for C in variables.set_of_constants:
         variables.constants = C
-        solutions = solve_energies(variables)
+        solutions = solve_hamiltonian(variables)
         solutions.comment = f'Potential constants:    {C}\n'
         print_solutions(solutions, out_file)
 
@@ -151,6 +166,11 @@ def solve_variables(variables:Variables, out_file=None):
     data.set_of_potentials = set_of_potentials
 
     return data
+
+
+##############################################################################################
+#######  PRINTS & PLOTS  ########
+#################################
 
 
 def print_solutions(solutions:Solutions, out_file=None, print_eigenvectors=False):
@@ -308,7 +328,7 @@ def plot_eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
         plt.show()
 
 
-#################################
+##############################################################################################
 ##########  CONSTANTS  ##########
 #################################
 
@@ -322,7 +342,7 @@ out_file = os.path.join(script_dir, filename)
 m_H = 1.00784      # H mass
 m_D = 2.014102     # D mass
 # Methyl rotor radius
-r = 0.537  # in meV  # 1.035 angstroms for MAI... CHECK UNITS
+r = 0.537  # in ¿meV?  # 1.035 angstroms for MAI... CHECK UNITS
 # Inertia. Should be 0.574 for H, according to titov2023
 B_Hydrogen = 1.0 / (2 * 3*(m_H * r**2))
 B_Deuterium = 1.0 / (2 * 3*(m_D * r**2))
@@ -363,7 +383,7 @@ variables.N = 100
 variables.x = np.linspace(0, 2*np.pi, variables.N)
 
 
-####################################
+##############################################################################################
 ##########  MAIN PROGRAM  ##########
 ####################################
 
