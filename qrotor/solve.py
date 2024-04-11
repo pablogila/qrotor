@@ -1,4 +1,6 @@
-from qrotor.core import *
+from .common import *
+from . import potential
+from . import write
 
 
 # Second derivative matrix, according to the finite difference method
@@ -14,51 +16,52 @@ def laplacian_matrix(x):
 
 
 def hamiltonian_matrix(variables:Variables):
-    potential = variables.potential
+    V = variables.potential_values
     B = variables.B
     x = variables.x
-    H = -B * laplacian_matrix(x) + diags(potential)  # Original Hamiltonian
+    H = -B * laplacian_matrix(x) + diags(V)  # Original Hamiltonian
     # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
 
 
 # Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation.
-def solve_hamiltonian(variables:Variables):
-    potential = V(variables)
-    offset = min(potential)
-    potential = potential - offset
-    variables.potential = potential
+def schrodinger(variables:Variables):
+    V = potential.V(variables)
+    offset = min(V)
+    V = V - offset
+    variables.potential_values = V
     
     H = hamiltonian_matrix(variables)
 
     eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='SM')
     solutions = Solutions()
-    solutions.potential = potential
-    solutions.max_potential = max(potential)
-    solutions.min_potential = min(potential)
+    solutions.potential_values = V
+    solutions.max_potential = max(V)
+    solutions.min_potential = min(V)
     solutions.corrected_offset_potential = offset
     solutions.eigenvalues = eigenvalues
     solutions.eigenvectors = eigenvectors
-    solutions.energy_barrier = max(potential) - min(eigenvalues)
+    solutions.energy_barrier = max(V) - min(eigenvalues)
     solutions.first_transition = eigenvalues[1] - eigenvalues[0]
     return solutions
 
 
 # Recurrently solve the energies for a set of potential constants, and print the solutions.
-def solve_variables(variables:Variables, out_file=None):
+def energies(variables:Variables, out_file=None):
     set_of_energies = []
     set_of_eigenvectors = []
     set_of_potentials = []
     # Iterate over the potential constants inside the Variables object, and solve the Hamiltonian for each one.
-    for C in variables.set_of_constants:
+    for i, C in enumerate(variables.set_of_constants):
         variables.constants = C
-        solutions = solve_hamiltonian(variables)
-        solutions.comment = f'Potential constants:    {C}\n'
-        print_solutions(solutions, out_file)
+        solutions = schrodinger(variables)
+        solutions.constants = variables.constants
+        solutions.comment = f'{i+1}'
+        write.solutions(solutions, out_file)
 
         set_of_energies.append(solutions.eigenvalues)
         set_of_eigenvectors.append(solutions.eigenvectors)
-        set_of_potentials.append(solutions.potential)
+        set_of_potentials.append(solutions.potential_values)
 
     data = Data()
     data.set_of_energies = set_of_energies

@@ -1,4 +1,5 @@
-from qrotor.core import *
+import qrotor as qr
+import time
 
 '''
 ########################################################################
@@ -21,32 +22,32 @@ for energy in data_generic.set_of_energies:
 ########################################################################
 '''
 
+variables = qr.variables
 
 # Solve for HYDROGEN and print the results
 variables.atom_type = 'H'
-variables.B = B_Hydrogen
+variables.B = qr.B_Hydrogen
 time_start = time.time()
-data_H = solve_variables(variables, out_file)
+data_H = qr.solve.energies(variables, qr.out_file)
 variables.runtime = time.time() - time_start
 variables.comment = f'Summary of the last {len(data_H.set_of_energies)} calculations for a hindered methyl rotor:'
-print_variables(variables, out_file)
+qr.write.variables(variables, qr.out_file)
 
 
 # Change the atom type to DEUTERIUM and solve again
 variables.atom_type = 'D'
-variables.B = B_Deuterium
+variables.B = qr.B_Deuterium
 time_start = time.time()
-data_D = solve_variables(variables, out_file)
+data_D = qr.solve.energies(variables, qr.out_file)
 variables.runtime = time.time() - time_start
 variables.comment = f'Summary of the last {len(data_D.set_of_energies)} calculations for a hindered methyl rotor:'
-print_variables(variables, out_file)
+qr.write.variables(variables, qr.out_file)
 
 
-print(f'Data saved to {filename}\n')
 
 
 # Group H and D data in the same object, to plot them together
-data = Data()
+data = qr.Data()
 data.title = 'Hindered methyl rotor potential'
 data.set_of_potentials = data_H.set_of_potentials  # Both are the same
 data.set_of_energies_H = data_H.set_of_energies
@@ -55,12 +56,12 @@ data.set_of_energies_D = data_D.set_of_energies
 data.set_of_eigenvectors_D = data_D.set_of_eigenvectors
 data.set_of_constants = variables.set_of_constants
 data.x = variables.x
-plot_energies_and_potentials(data)
+qr.plot.energies(data)
 
 
 # Plot the eigenvalues for Hydrogen
 data.title = 'Hindered methyl rotor eigenvalues'
 data.set_of_energies = data.set_of_energies_H
 data.set_of_eigenvectors = data.set_of_eigenvectors_H
-plot_eigenvectors(data, [0,1,2,3,4], True, 100)
+qr.plot.eigenvectors(data, [0,1,2,3,4], True, 100)
 
