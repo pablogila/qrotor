@@ -48,3 +48,13 @@ class Data:
         self.set_of_eigenvectors_H = None
         self.set_of_eigenvectors_D = None
 
+
+class Convergence:
+    def __init__(self):
+        self.title = None
+        self.gridsizes = None
+        self.energies = None
+        self.runtimes = None
+        self.energy_level = None
+        self.ideal = None
+
