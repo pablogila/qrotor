@@ -4,8 +4,10 @@
 
 /.venv/
 /.vscode/
-output*
 /results/
+/test/
+*.json
+*.txt
 
 
 ######################################

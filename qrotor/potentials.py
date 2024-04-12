@@ -2,7 +2,7 @@ from .common import *
 
 
 # Redirect to the desired potential energy function
-def V(variables:Variables):
+def solve(variables:Variables):
     if variables.potential_name == 'titov2023':
         return titov2023(variables)
     elif variables.potential_name == 'zero':

@@ -1,7 +1,7 @@
 from .common import *
 
 
-def json_file(input_file):
+def data(input_file):
     if not os.path.exists(input_file):
         if not input_file.endswith('.json'):
             input_file += '.json'

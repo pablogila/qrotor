@@ -77,17 +77,22 @@ variables.atom_type = 'H'
 variables.B = qr.B_Hydrogen
 variables.comment = 'Hindered methyl rotor potential'
 
-print(variables.set_of_constants)
-
-filename = 'TESTING.json'
+filename = 'test.json'
 out_file = os.path.join(os.getcwd(), filename)
 
 data = qr.solve.energies(variables, out_file)
 
-# DEBUG
-for var in data.variables:
-    print(var.potential_constants)
-    print('--------------------------------------------------------------')
-
 qr.plot.energies(data)
+
+'''
+datatest = qr.read.data('test.json')
+
+print(datatest.solutions[0].eigenvalues)
+print(datatest.variables[0].N)
+print(datatest.variables[3].N)
+
+qr.plot.energies(datatest)
+
+
+'''
 

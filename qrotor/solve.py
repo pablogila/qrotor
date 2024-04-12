@@ -1,5 +1,5 @@
 from .common import *
-from . import potential
+from . import potentials
 from . import write
 
 
@@ -26,7 +26,7 @@ def hamiltonian_matrix(variables:Variables):
 
 # Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation.
 def schrodinger_OLD(variables:Variables):
-    V = potential.V(variables)
+    V = potentials.solve(variables)
     offset = min(V)
     V = V - offset
     variables.potential_values = V
@@ -94,7 +94,7 @@ def schrodinger(variables:Variables):
     solutions.first_transition = eigenvalues[1] - eigenvalues[0]
 
     solutions.runtime = time.time() - time_start
-    return solutions, variables
+    return solutions
 
 
 def energies(variables:Variables, out_file=None):
@@ -107,29 +107,32 @@ def energies(variables:Variables, out_file=None):
 
     for i, constants in enumerate(variables.set_of_constants):
         variables.potential_constants = constants
+        variables = potential(variables)
 
-        V = potential.V(variables)
-        if variables.leave_potential_offset is not True:
-            offset = min(V)
-            V = V - offset
-            variables.corrected_potential_offset = offset
-        variables.potential_values = V
-
-        solutions, new_variables = schrodinger(variables)
-
+        solutions = schrodinger(variables)
         solutions.comment = f'{i+1}'
 
-        data_temp = Data()
-        data_temp.variables.append(new_variables)
-        data_temp.solutions.append(solutions)
-        write.data(data_temp, out_file)
+        # Instantiate the variables object to store the data
+        stored_variables = deepcopy(variables)
 
-        data.variables.append(new_variables)
+        data.variables.append(stored_variables)
         data.solutions.append(solutions)
 
-        # DEBUG
-        print(new_variables.potential_constants)
-        # For some weird reason, the potential constants are not being saved in the data object as they should.
+        if out_file:
+            stored_data = Data()
+            stored_data.variables.append(stored_variables)
+            stored_data.solutions.append(solutions)
+            write.data(stored_data, out_file)
 
     return data
+
+
+def potential(variables:Variables):
+    V = potentials.solve(variables)
+    if variables.leave_potential_offset is not True:
+        offset = min(V)
+        V = V - offset
+        variables.corrected_potential_offset = offset
+    variables.potential_values = V
+    return variables
 

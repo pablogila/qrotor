@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import os
 import json
 import time
+from copy import deepcopy
 
 
 class Variables_OLD:
@@ -63,10 +64,6 @@ class Convergence:
         self.difference = None
 
 
-###############################
-# TESTING
-
-
 class Variables:
     def __init__(self):
         self.comment = None
@@ -85,7 +82,8 @@ class Variables:
         self.leave_potential_offset = None
         self.corrected_potential_offset = None
 
-        self.write_summary = None
+        self.save_summary = None
+        self.print_summary = None
     
     def to_dict(self):
         return {
@@ -93,15 +91,16 @@ class Variables:
             'atom_type': self.atom_type,
             'B': self.B,
             'N': self.N,
-            'x': self.x.tolist() if isinstance(self.x, np.ndarray) else self.x,
+            'x': self.x.tolist(),# if isinstance(self.x, np.ndarray) else self.x,
             'potential_name': self.potential_name,
             'potential_constants': self.potential_constants,
-            'potential_values': self.potential_values.tolist() if isinstance(self.potential_values, np.ndarray) else self.potential_values,
-            'set_of_constants': self.set_of_constants.tolist() if isinstance(self.set_of_constants, np.ndarray) else self.set_of_constants,
+            'potential_values': self.potential_values.tolist(),# if isinstance(self.potential_values, np.ndarray) else self.potential_values,
+            'set_of_constants': self.set_of_constants,#.tolist(),# if isinstance(self.set_of_constants, np.ndarray) else self.set_of_constants,
             'searched_E_levels': self.searched_E_levels,
             'leave_potential_offset': self.leave_potential_offset,
             'corrected_potential_offset': self.corrected_potential_offset,
-            'write_summary': self.write_summary,
+            'save_summary': self.save_summary,
+            'print_summary': self.print_summary,
         }
     
     @classmethod
@@ -131,8 +130,10 @@ class Solutions:
             'runtime': self.runtime,
             'max_potential': self.max_potential,
             'min_potential': self.min_potential,
-            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
+#           'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
+            'eigenvalues': self.eigenvalues.tolist(),
+#           'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
+            'eigenvectors': self.eigenvectors.tolist(),
             'energy_barrier': self.energy_barrier,
             'first_transition': self.first_transition,
         }
@@ -141,8 +142,10 @@ class Solutions:
     def from_dict(cls, data):
         obj = cls()
         obj.__dict__.update(data)
-        obj.eigenvalues = np.array(obj.eigenvalues) if isinstance(obj.eigenvalues, list) else obj.eigenvalues
-        obj.eigenvectors = np.array(obj.eigenvectors) if isinstance(obj.eigenvectors, list) else obj.eigenvectors
+#       obj.eigenvalues = np.array(obj.eigenvalues) if isinstance(obj.eigenvalues, list) else obj.eigenvalues
+        obj.eigenvalues = np.array(obj.eigenvalues)
+#       obj.eigenvectors = np.array(obj.eigenvectors) if isinstance(obj.eigenvectors, list) else obj.eigenvectors
+        obj.eigenvectors = np.array(obj.eigenvectors)
         return obj
 
 
@@ -160,7 +163,9 @@ class Data:
     @classmethod
     def from_dict(cls, data):
         obj = cls()
-        obj.variables = [Variables.from_dict(v) if isinstance(v, dict) else v for v in data['variables']]
-        obj.solutions = [Solutions.from_dict(s) if isinstance(s, dict) else s for s in data['solutions']]
+#       obj.variables = [Variables.from_dict(v) if isinstance(v, dict) else v for v in data['variables']]
+        obj.variables = [Variables.from_dict(v) for v in data['variables']]# if isinstance(v, dict) else v for v in data['variables']]
+#       obj.solutions = [Solutions.from_dict(s) if isinstance(s, dict) else s for s in data['solutions']]
+        obj.solutions = [Solutions.from_dict(s) for s in data['solutions']]# if isinstance(s, dict) else s for s in data['solutions']]
         return obj
 

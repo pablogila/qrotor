@@ -47,16 +47,36 @@ def variables(variables:Variables, out_file=None):
 
 
 def data(data:Data, out_file=None):
-    json_file(data, out_file)
+    data_json(data, out_file)
+    data_summary(data, out_file)
 
 
-def summary(data:Data, out_file=None):
-    # Write an easily readible output file
+# Write a human-readable output file
+def data_summary(data:Data, out_file=None):
+
+    if out_file:       # Maybe if not out_file I can just print on screen...
+        if not out_file.endswith('.txt'):
+            if out_file.endswith('.json'):
+                out_file = out_file[:-5]
+            out_file += '.txt'
+    else:
+        out_file = constants.out_file
+
+    for i, variable in enumerate(data.variables):
+        if not variable.save_summary or not variable.print_summary:
+            return
+        summary = ''
+        if variable.save_summary:
+            # write variables and solutions ########## TO-DO
+            pass
+        if variable.print_summary:
+            print(summary)
     return
 
 
-def json_file(data:Data, out_file=None):
+def data_json(data:Data, out_file=None):
     if not out_file:
+        # return                     # Maybe??? so that I can print just the results without saving the json...
         out_file = constants.out_file
     if not out_file.endswith('.json'):
         out_file += '.json'
@@ -68,5 +88,4 @@ def json_file(data:Data, out_file=None):
     data_list.append(data.to_dict())
     with open(out_file, 'w') as f:
         json.dump(data_list, f)
-        print(f'Data saved at {out_file}\n')
 
