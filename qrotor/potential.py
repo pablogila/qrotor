@@ -3,11 +3,11 @@ from .common import *
 
 # Redirect to the desired potential energy function
 def V(variables:Variables):
-    if variables.potential == 'titov2023':
+    if variables.potential_name == 'titov2023':
         return titov2023(variables)
-    elif variables.potential == 'zero':
+    elif variables.potential_name == 'zero':
         return zero(variables)
-    elif variables.potential == 'test':
+    elif variables.potential_name == 'test':
         return test(variables)
     else:
         return custom(variables)
@@ -16,7 +16,7 @@ def V(variables:Variables):
 # Potential energy function of the hindered methyl rotor, from titov2023
 def titov2023(variables:Variables):
     x = variables.x
-    C = variables.constants
+    C = variables.potential_constants
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
@@ -28,7 +28,7 @@ def zero(variables:Variables):
 
 def test(variables:Variables):
     x = variables.x
-    C = variables.constants
+    C = variables.potential_constants
     phase = 0
     return C[0] + C[1] * np.cos(3*x + phase)  # A potential as an array resulting from DFT calculations, etc.
 

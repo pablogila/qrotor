@@ -1,7 +1,7 @@
 from .common import *
 
 
-def energies(data:Data):
+def energies_OLD(data:Data):
 
     xlabel = 'Angle / radians'
     ylabel = 'Energy / meV'
@@ -168,4 +168,38 @@ def energy_convergence(convergence:Convergence):
 
     plt.title(convergence.title)
     plt.show()
+
+
+
+
+def energies(data:Data):
+
+    xlabel = 'Angle / radians'
+    ylabel = 'Energy / meV'
+    V_color = 'C0'
+    V_label = 'Potential'
+
+    default_color = 'red'
+    default_edgecolor = 'tomato'
+    default_linestyle = '-'
+    default_label = 'Energies'
+
+    for i, (variables, solutions) in enumerate(zip(data.variables, data.solutions)):
+        # Plot potential energy
+        plt.figure(figsize=(10, 6))
+        plt.plot(variables.x, variables.potential_values, color=V_color, label=V_label)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
+        plt.title(f'{variables.comment} (#' + str(i+1) + ')' )
+        plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
+                   ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+        # Plot eigenvalues
+        if solutions.eigenvalues is not None:
+            for j, energy in enumerate(solutions.eigenvalues):
+                plt.axhline(y=energy, color=default_color, linestyle=default_linestyle)
+                plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=default_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+            plt.plot([], [], color=default_color, label=default_label)  # Add to legend
+        plt.subplots_adjust(right=0.85)
+        plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
+        plt.show()
 

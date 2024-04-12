@@ -2,9 +2,8 @@ from .common import *
 
 
 # Output file
-filename = 'output.txt'
-#out_file = os.path.join(os.getcwd(), filename)
-out_file = os.path.join(os.getcwd(), 'output.txt')
+filename = 'output'
+out_file = os.path.join(os.getcwd(), filename)
 
 
 # Atomic masses
@@ -35,7 +34,7 @@ constants_titov2023 = [
 variables = Variables()
 # Choose the default set of constants to use
 variables.set_of_constants = constants_titov2023 #constants_titov_1
-variables.potential = 'titov2023'  # 'titov2023' or 'zero'
+variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
 # Number of energy levels to calculate
 variables.searched_E_levels = 5
 # Grid size

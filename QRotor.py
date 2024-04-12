@@ -1,5 +1,6 @@
 import qrotor as qr
-import time
+import os
+
 
 '''
 ########################################################################
@@ -20,7 +21,7 @@ for energy in data_generic.set_of_energies:
     print(f'test energies:    {test}')
 #########  THIS IS A FAIL....
 ########################################################################
-'''
+
 
 variables = qr.variables
 
@@ -64,4 +65,29 @@ data.title = 'Hindered methyl rotor eigenvalues'
 data.set_of_energies = data.set_of_energies_H
 data.set_of_eigenvectors = data.set_of_eigenvectors_H
 qr.plot.eigenvectors(data, [0,1,2,3,4], True, 100)
+
+
+'''
+
+
+variables = qr.variables
+
+# Solve for HYDROGEN and print the results
+variables.atom_type = 'H'
+variables.B = qr.B_Hydrogen
+variables.comment = 'Hindered methyl rotor potential'
+
+print(variables.set_of_constants)
+
+filename = 'TESTING.json'
+out_file = os.path.join(os.getcwd(), filename)
+
+data = qr.solve.energies(variables, out_file)
+
+# DEBUG
+for var in data.variables:
+    print(var.potential_constants)
+    print('--------------------------------------------------------------')
+
+qr.plot.energies(data)
 

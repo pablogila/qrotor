@@ -1,7 +1,8 @@
 from .common import *
+from . import constants
 
 
-def solutions(solutions:Solutions, out_file=None, print_eigenvectors=False):
+def solutions(solutions:Solutions, out_file=None):
     output = solutions.comment + '\n'
     output += f'Potential constants:    {solutions.constants}\n'
     output += f'Max potential [meV]:    {solutions.max_potential:.4f}\n'
@@ -13,7 +14,7 @@ def solutions(solutions:Solutions, out_file=None, print_eigenvectors=False):
     output += '\n'
     output += f'Energy barrier [meV]:   {solutions.energy_barrier:.4f}\n'
     output += f'E1-E0 transition [meV]: {solutions.first_transition:.4f}\n'
-    if print_eigenvectors:
+    if solutions.write_eigenvectors:
         output += f'Eigenvectors [meV]:\n'
         for value in solutions.eigenvectors:
             output += f'{value}\n'
@@ -43,4 +44,29 @@ def variables(variables:Variables, out_file=None):
         with open(out_file, 'a') as f:
             f.write(output)
             print(f'Data saved at {out_file}\n')
+
+
+def data(data:Data, out_file=None):
+    json_file(data, out_file)
+
+
+def summary(data:Data, out_file=None):
+    # Write an easily readible output file
+    return
+
+
+def json_file(data:Data, out_file=None):
+    if not out_file:
+        out_file = constants.out_file
+    if not out_file.endswith('.json'):
+        out_file += '.json'
+    try:
+        with open(out_file, 'r') as f:
+            data_list = json.load(f)
+    except:
+        data_list = []
+    data_list.append(data.to_dict())
+    with open(out_file, 'w') as f:
+        json.dump(data_list, f)
+        print(f'Data saved at {out_file}\n')
 
