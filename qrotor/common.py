@@ -57,4 +57,5 @@ class Convergence:
         self.runtimes = None
         self.energy_level = None
         self.ideal = None
+        self.difference = None
 

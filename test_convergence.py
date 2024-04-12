@@ -12,7 +12,7 @@ variables.B = 1
 convergence_test = qr.Convergence()
 convergence_test.energies = []
 convergence_test.runtimes = []
-convergence_test.gridsizes = [100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 5000, 7500, 10000]
+convergence_test.gridsizes = [100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000]  # sccipy has convergence problems with matrices bigger than 5000-7500
 
 convergence_test.energy_level = 9
 

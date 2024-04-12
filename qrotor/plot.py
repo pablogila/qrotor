@@ -114,64 +114,58 @@ def eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
         plt.show()
 
 
-def energy_convergence_OLD(convergence:Convergence):
-    plt.figure(figsize=(10, 6))
-    energies_transposed = np.transpose(convergence.energies)
-    selected_energies = energies_transposed[convergence.energy_level][0]
-    plt.plot(convergence.gridsizes, selected_energies, marker='o', linestyle='-')
-    textstr = '\n'.join([f'N={convergence.gridsizes[i]}, E={energy:.4f}, t={convergence.runtimes[i]:.2f}' for i, energy in enumerate(selected_energies)])
-    props = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
-    plt.gcf().text(0.95, 0.15, textstr, fontsize=10, verticalalignment='bottom', horizontalalignment='right', bbox=props)
-    plt.title(convergence.title)
-    plt.xlabel('Grid Size')
-    plt.ylabel('Energy / meV')
-    plt.tight_layout()
-    plt.show()
-
-
-
-def energy_convergence_OLD(convergence:Convergence):
-    plt.figure(figsize=(10, 6))
-    energies_transposed = np.transpose(convergence.energies)
-    selected_energies = energies_transposed[convergence.energy_level][0]
-    plt.plot(convergence.gridsizes, selected_energies, marker='o', linestyle='-')
-    plt.axhline(y=convergence.ideal, color='grey', linestyle='--')
-    textstr = f'Ideal  E={convergence.ideal:.4f}\n'
-    textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}   t={convergence.runtimes[i]:.2f}' for i, energy in enumerate(selected_energies)])
-    props = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
-    plt.gcf().text(0.95, 0.15, textstr, fontsize=10, verticalalignment='bottom', horizontalalignment='right', bbox=props)
-    plt.title(convergence.title)
-    plt.xlabel('Grid Size')
-    plt.ylabel('Energy / meV')
-    plt.tight_layout()
-    plt.show()
-
-
 def energy_convergence(convergence:Convergence):
     fig, ax1 = plt.subplots(figsize=(10, 6))
 
     energies_transposed = np.transpose(convergence.energies)
-    selected_energies = energies_transposed[convergence.energy_level][0]
+    calculated_energies = energies_transposed[convergence.energy_level][0]
+    plotted_energies = calculated_energies
 
+    ylabel_text = 'Energy / meV'
+    xlabel_text = 'Grid Size'
     color = 'tab:blue'
-    ax1.set_xlabel('Grid Size')
-    ax1.set_ylabel('Energy / meV', color=color)
-    ax1.plot(convergence.gridsizes, selected_energies, marker='o', linestyle='-', color=color)
-    ax1.tick_params(axis='y', labelcolor=color)
-    ax1.axhline(y=convergence.ideal, color='grey', linestyle='--')
+    yaxes_color = color
+    textstr_position_x = 0.88
+    textstr_position_y = 0.15
+    textstr_alignment_v = 'bottom'
+    textstr_alignment_h = 'right'
+    ideal = convergence.ideal
 
-    ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
-    color = 'tab:red'
-    ax2.set_ylabel('Runtime / s', color=color)  # we already handled the x-label with ax1
-    ax2.plot(convergence.gridsizes, convergence.runtimes, marker='o', linestyle='-', color=color)
-    ax2.tick_params(axis='y', labelcolor=color)
+    if convergence.difference is not False:
+        plotted_energies = np.abs(plotted_energies - convergence.ideal)
+        ylabel_text = 'Energy offset / |meV|'
+        ideal = 0
+        textstr_position_x = 0.5
+        textstr_position_y = 0.85
+        textstr_alignment_v = 'top'
+        textstr_alignment_h = 'center'
+    
+    if not convergence.runtimes:
+        yaxes_color = 'black'
 
-    textstr = f'Ideal  E={convergence.ideal:.4f}\n'
-    textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}   t={convergence.runtimes[i]:.2f}' for i, energy in enumerate(selected_energies)])
+    ax1.plot(convergence.gridsizes, plotted_energies, marker='o', linestyle='-', color=color)
+    ax1.set_xlabel(xlabel_text)
+    ax1.set_ylabel(ylabel_text, color=yaxes_color)
+    ax1.tick_params(axis='y', labelcolor=yaxes_color)
+    ax1.axhline(y=ideal, color='grey', linestyle='--')
+
     props = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
-    fig.text(0.88, 0.15, textstr, fontsize=10, verticalalignment='bottom', horizontalalignment='right', bbox=props)
+    textstr = f'Ideal  E={convergence.ideal:.4f}\n'
+
+
+    if convergence.runtimes:
+        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+        color = 'tab:red'
+        ax2.set_ylabel('Runtime / s', color=color)  # we already handled the x-label with ax1
+        ax2.plot(convergence.gridsizes, convergence.runtimes, marker='o', linestyle='-', color=color)
+        ax2.tick_params(axis='y', labelcolor=color)
+        textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}   t={convergence.runtimes[i]:.2f}' for i, energy in enumerate(calculated_energies)])
+
+    else:
+        textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}' for i, energy in enumerate(calculated_energies)])
+
+    fig.text(textstr_position_x, textstr_position_y, textstr, fontsize=10, verticalalignment=textstr_alignment_v, horizontalalignment=textstr_alignment_h, bbox=props)
 
     plt.title(convergence.title)
-    fig.subplots_adjust(top=0.88)  # adjust the top spacing
     plt.show()
 
