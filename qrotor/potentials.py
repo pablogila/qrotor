@@ -15,14 +15,14 @@ def solve(variables:Variables):
 
 # Potential energy function of the hindered methyl rotor, from titov2023
 def titov2023(variables:Variables):
-    x = variables.x
+    x = variables.grid
     C = variables.potential_constants
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 
 # Zero potential
 def zero(variables:Variables):
-    x = variables.x
+    x = variables.grid
     return 0 * x
 
 
@@ -34,6 +34,6 @@ def test(variables:Variables):
 
 
 def custom(variables:Variables):
-    x = variables.x
+    x = variables.grid
     return 0 * x
 

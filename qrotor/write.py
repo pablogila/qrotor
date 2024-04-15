@@ -2,7 +2,7 @@ from .common import *
 from . import constants
 
 
-def solutions(solutions:Solutions, out_file=None):
+def solutions_OLD(solutions:Solutions, out_file=None):
     output = solutions.comment + '\n'
     output += f'Potential constants:    {solutions.constants}\n'
     output += f'Max potential [meV]:    {solutions.max_potential:.4f}\n'
@@ -27,12 +27,12 @@ def solutions(solutions:Solutions, out_file=None):
             f.write(output)
 
 
-def variables(variables:Variables, out_file=None):
+def variables_OLD(variables:Variables, out_file=None):
     output = '\n' + variables.comment + '\n'
     output += f'Potential name:         {variables.potential}\n'
     output += f'Atom type:              {variables.atom_type}\n'
     output += f'Inertia B [meV]:        {variables.B:.4f}\n'
-    output += f'Grid size N:            {variables.N}\n'
+    output += f'Grid size N:            {variables.grifsize}\n'
     output += f'Energy levels computed: {variables.searched_E_levels}\n'
     if variables.runtime:
         output += f'Runtime [s]:            {variables.runtime:.2f}\n'
@@ -46,6 +46,20 @@ def variables(variables:Variables, out_file=None):
             print(f'Data saved at {out_file}\n')
 
 
+###########################
+
+
+def fix_extension(out_file, good_extension, bad_extensions=['.txt', '.json', '.csv', '.dat', '.out']):
+    if not out_file:
+        return None
+    if out_file.endswith(good_extension):
+        return out_file
+    for bad_extension in bad_extensions:
+        if out_file.endswith(bad_extension):
+            return out_file[:-len(bad_extension)] + good_extension
+    return out_file + good_extension
+
+
 def data(data:Data, out_file=None):
     data_json(data, out_file)
     data_summary(data, out_file)
@@ -53,31 +67,34 @@ def data(data:Data, out_file=None):
 
 # Write a human-readable output file
 def data_summary(data:Data, out_file=None):
-
-    if out_file:       # Maybe if not out_file I can just print on screen...
-        if not out_file.endswith('.txt'):
-            if out_file.endswith('.json'):
-                out_file = out_file[:-5]
-            out_file += '.txt'
-    else:
-        out_file = constants.out_file
+    summary = ''
+    if data.comment:
+        summary += data.comment + '\n\n'
 
     for i, variable in enumerate(data.variables):
-        if not variable.save_summary or not variable.print_summary:
-            return
-        summary = ''
-        if variable.save_summary:
-            # write variables and solutions ########## TO-DO
-            pass
-        if variable.print_summary:
-            print(summary)
-    return
+        var_summary_dict = variable.summary()
+        for key, value in var_summary_dict.items():
+            summary += f'{key:<28}  {value}\n'
+        summary += '\n'
+        
+        sol_summary_dict = data.solutions[i].summary()
+        for key, value in sol_summary_dict.items():
+            summary += f'{key:<28}  {value}\n'
+
+        summary += '\n\n------------------------------------\n\n'
+
+        print(summary)
+
+    if data.variables[0].write_summary and out_file:
+        out_file = fix_extension(out_file, '.txt')
+        with open(out_file, 'a') as f:
+            f.write(summary)
+            print(f'Summary saved at {out_file}\n')
 
 
 def data_json(data:Data, out_file=None):
     if not out_file:
-        # return                     # Maybe??? so that I can print just the results without saving the json...
-        out_file = constants.out_file
+        return
     if not out_file.endswith('.json'):
         out_file += '.json'
     try:

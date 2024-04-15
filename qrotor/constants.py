@@ -38,6 +38,6 @@ variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
 # Number of energy levels to calculate
 variables.searched_E_levels = 5
 # Grid size
-variables.N = 100
-variables.x = np.linspace(0, 2*np.pi, variables.N)
+variables.gridsize = 100
+variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
 

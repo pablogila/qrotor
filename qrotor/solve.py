@@ -18,7 +18,7 @@ def laplacian_matrix(x):
 def hamiltonian_matrix(variables:Variables):
     V = variables.potential_values
     B = variables.B
-    x = variables.x
+    x = variables.grid
     H = -B * laplacian_matrix(x) + diags(V)  # Original Hamiltonian
     # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
@@ -134,5 +134,10 @@ def potential(variables:Variables):
         V = V - offset
         variables.corrected_potential_offset = offset
     variables.potential_values = V
+    return variables
+
+
+def grid_2pi(variables:Variables):
+    variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
     return variables
 

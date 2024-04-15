@@ -179,12 +179,21 @@ def energies(data:Data):
     V_color = 'C0'
     V_label = 'Potential'
 
+    E_color_list = ['red', 'purple', 'grey']  # To extend...
+
     default_color = 'red'
     default_edgecolor = 'tomato'
     default_linestyle = '-'
     default_label = 'Energies'
 
+    atoms_identified = []
+
     for i, (variables, solutions) in enumerate(zip(data.variables, data.solutions)):
+
+        if variables.atom_type not in atoms_identified:
+            atoms_identified.append(variables.atom_type)
+        atom_index = atoms_identified.index(variables.atom_type)
+
         # Plot potential energy
         plt.figure(figsize=(10, 6))
         plt.plot(variables.x, variables.potential_values, color=V_color, label=V_label)
