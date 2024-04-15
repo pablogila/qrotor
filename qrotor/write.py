@@ -61,8 +61,8 @@ def fix_extension(out_file, good_extension, bad_extensions=['.txt', '.json', '.c
 
 
 def data(data:Data, out_file=None):
-    data_json(data, out_file)
     data_summary(data, out_file)
+    data_json(data, out_file)
 
 
 # Write a human-readable output file
@@ -81,7 +81,7 @@ def data_summary(data:Data, out_file=None):
         for key, value in sol_summary_dict.items():
             summary += f'{key:<28}  {value}\n'
 
-        summary += '\n\n------------------------------------\n\n'
+        summary += '\n------------------------------------\n\n'
 
         print(summary)
 

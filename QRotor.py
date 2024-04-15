@@ -1,5 +1,5 @@
 import qrotor as qr
-import os
+import numpy as np
 
 
 '''
@@ -22,19 +22,35 @@ for energy in data_generic.set_of_energies:
 #########  THIS IS A FAIL....
 ########################################################################
 
+'''
 
-variables = qr.variables
+# Solve for B=1 at zero potential and print the results
 
-# Solve for HYDROGEN and print the results
+variables = qr.Variables()
+variables.separate_plots = False
+variables.write_summary = True
+variables.potential_name = 'titov2023'
+variables.searched_E_levels = 5
+variables.gridsize = 100
+variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
+variables.set_of_constants = qr.constants_titov2023
 variables.atom_type = 'H'
 variables.B = qr.B_Hydrogen
-time_start = time.time()
+variables.comment = 'HYDROGEN'
 data_H = qr.solve.energies(variables, qr.out_file)
-variables.runtime = time.time() - time_start
-variables.comment = f'Summary of the last {len(data_H.set_of_energies)} calculations for a hindered methyl rotor:'
-qr.write.variables(variables, qr.out_file)
+data_H.comment = 'data H comment'
 
+variables.atom_type = 'D'
+variables.B = qr.B_Deuterium
+variables.comment = 'DEUTERIUM'
+data_D = qr.solve.energies(variables, qr.out_file)
+data_D.comment = 'data D comment'
 
+data = qr.Data()
+data.add(data_H, data_D)
+qr.plot.energies(data)
+
+'''
 # Change the atom type to DEUTERIUM and solve again
 variables.atom_type = 'D'
 variables.B = qr.B_Deuterium
@@ -66,30 +82,26 @@ data.set_of_energies = data.set_of_energies_H
 data.set_of_eigenvectors = data.set_of_eigenvectors_H
 qr.plot.eigenvectors(data, [0,1,2,3,4], True, 100)
 
-
+'''
 '''
 
 
-variables = qr.variables
-
-# Solve for HYDROGEN and print the results
-variables.atom_type = 'H'
-variables.B = qr.B_Hydrogen
+variables = qr.test_variables
 variables.comment = 'Hindered methyl rotor potential'
 
-filename = 'test.json'
+filename = 'TEST.json'
 out_file = os.path.join(os.getcwd(), filename)
 
 data = qr.solve.energies(variables, out_file)
 
 qr.plot.energies(data)
 
-'''
-datatest = qr.read.data('test.json')
+
+datatest = qr.read.data('TEST.json')
 
 print(datatest.solutions[0].eigenvalues)
-print(datatest.variables[0].N)
-print(datatest.variables[3].N)
+print(datatest.variables[0].gridsize)
+print(datatest.variables[3].gridsize)
 
 qr.plot.energies(datatest)
 

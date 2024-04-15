@@ -110,7 +110,7 @@ def energies(variables:Variables, out_file=None):
         variables = potential(variables)
 
         solutions = schrodinger(variables)
-        solutions.comment = f'{i+1}'
+        # solutions.comment = f'{i+1}'
 
         # Instantiate the variables object to store the data
         stored_variables = deepcopy(variables)

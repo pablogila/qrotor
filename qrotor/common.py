@@ -8,74 +8,11 @@ import time
 from copy import deepcopy
 
 
-class Variables_OLD:
-    def __init__(self):
-        self.comment = None
-        self.runtime = None
-        self.atom_type = None
-        self.constants = None
-        self.set_of_constants = None
-        self.searched_E_levels = None
-        self.potential = None
-        self.potential_values = None
-        self.B = None
-        self.N = None
-        self.x = None
-
-
-class Solutions_OLD:
-    def __init__(self):
-        self.comment = None
-        self.potential_values = None
-        self.constants = None
-        self.max_potential = None
-        self.min_potential = None
-        self.corrected_offset_potential = None
-        self.eigenvalues = None
-        self.eigenvectors = None
-        self.energy_barrier = None
-        self.first_transition = None
-        self.write_eigenvectors = None
-
-
-class Data_OLD:
-    def __init__(self):
-        self.title = None
-        self.comment = None
-        self.x = None
-        self.set_of_potentials = None
-        self.set_of_constants = None  # I want to get rid of this
-        self.set_of_energies = None
-        self.set_of_energies_H = None
-        self.set_of_energies_D = None
-        self.set_of_eigenvectors = None
-        self.set_of_eigenvectors_H = None
-        self.set_of_eigenvectors_D = None
-
-
-class Convergence:
-    def __init__(self):
-        self.title = None
-        self.gridsizes = None
-        self.energies = None
-        self.runtimes = None
-        self.energy_level = None
-        self.ideal = None
-        self.difference = None
-
-
-
-
 class Variables:
     def __init__(self):
         self.comment = None
         self.atom_type = None
         self.searched_E_levels = None
-
-        # Convergence test
-        self.check_E_level = None
-        self.check_E_difference = None # if True...
-        self.ideal_E = None
 
         self.gridsize = None
         self.grid = None
@@ -90,17 +27,19 @@ class Variables:
         self.corrected_potential_offset = None
 
         self.write_summary = None
-    
+        self.separate_plots = None
+
+        # Convergence test
+        self.check_E_level = None
+        self.check_E_difference = None # if True...
+        self.ideal_E = None
+
 
     def to_dict(self):
         return {
             'comment': self.comment,
             'atom_type': self.atom_type,
             'searched_E_levels': self.searched_E_levels,
-
-            'check_E_level': self.check_E_level,
-            'check_E_difference': self.check_E_difference,
-            'ideal_E': self.ideal_E,
 
             'gridsize': self.gridsize,
             'grid': self.grid.tolist() if isinstance(self.grid, np.ndarray) else self.grid,
@@ -115,6 +54,11 @@ class Variables:
             'corrected_potential_offset': self.corrected_potential_offset,
 
             'write_summary': self.write_summary,
+            'separate_plots': self.separate_plots,
+
+            'check_E_level': self.check_E_level,
+            'check_E_difference': self.check_E_difference,
+            'ideal_E': self.ideal_E,
         }
 
 
@@ -142,8 +86,6 @@ class Variables:
         return obj
 
 
-
-
 class Solutions:
     def __init__(self):
         self.comment = None
@@ -163,7 +105,7 @@ class Solutions:
             'comment': self.comment,
 
             # 'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvalues': self.eigenvalues,
+            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
             'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
             'energy_barrier': self.energy_barrier,
             'first_transition': self.first_transition,
@@ -173,7 +115,7 @@ class Solutions:
 
             'runtime': self.runtime,
         }
-    
+
 
     def summary(self):
         summary_dict = {
@@ -189,7 +131,7 @@ class Solutions:
             'runtime': self.runtime,
         }
         return summary_dict
-    
+
 
     @classmethod
     def from_dict(cls, data):
@@ -202,20 +144,64 @@ class Solutions:
         return obj
 
 
-
-
 class Data:
     def __init__(self):
         self.comment = None
         self.variables = []
         self.solutions = []
-    
+
+
     def to_dict(self):
         return {
             'comment': self.comment,
             'variables': [v.to_dict() for v in self.variables],
             'solutions': [s.to_dict() for s in self.solutions],
         }
+
+
+    # Returns an array of grouped Data objects with the same potential_values and different atom_type
+    def classify(self):
+        grouped_data = []
+
+        for new_variables, new_solutions in zip(self.variables, self.solutions):
+            new_data = Data()
+            new_data.comment = self.comment
+            new_data.variables.append(new_variables)
+            new_data.solutions.append(new_solutions)
+
+            has_been_grouped = False
+            for group in grouped_data:
+                can_be_grouped = True
+                for variable in group.variables:
+                    if not np.array_equal(new_variables.potential_values, variable.potential_values) or (new_variables.atom_type == variable.atom_type):
+                        can_be_grouped = False
+                        break
+                if can_be_grouped:
+                    group.variables.append(new_variables)
+                    group.solutions.append(new_solutions)
+                    has_been_grouped = True
+                    break
+            if not has_been_grouped:
+                grouped_data.append(new_data)
+
+        return grouped_data
+
+
+    def add(self, *args):
+        for data in args:
+            if self.comment is None:
+                self.comment = data.comment
+            self.variables.extend(data.variables)
+            self.solutions.extend(data.solutions)
+
+
+    def atom_types(self):
+        atom_types = []
+        for variable in self.variables:
+            if variable.atom_type not in atom_types:
+                atom_types.append(variable.atom_type)
+        return atom_types
+
     
     @classmethod
     def from_dict(cls, data):

@@ -2,7 +2,7 @@ from .common import *
 
 
 # Output file
-filename = 'output'
+filename = 'OUTPUT'
 out_file = os.path.join(os.getcwd(), filename)
 
 
@@ -30,14 +30,14 @@ constants_titov2023 = [
     ]
 
 
-# Default variables object
-variables = Variables()
-# Choose the default set of constants to use
-variables.set_of_constants = constants_titov2023 #constants_titov_1
-variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
-# Number of energy levels to calculate
-variables.searched_E_levels = 5
-# Grid size
-variables.gridsize = 100
-variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
+# Default testing variables object
+test_variables = Variables()
+test_variables.set_of_constants = constants_titov2023 #constants_titov_1
+test_variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
+test_variables.atom_type = 'H'
+test_variables.B = B_Hydrogen
+test_variables.searched_E_levels = 5
+test_variables.gridsize = 100
+test_variables.grid = np.linspace(0, 2*np.pi, test_variables.gridsize)
+test_variables.write_summary = True
 

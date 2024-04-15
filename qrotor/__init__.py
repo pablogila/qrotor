@@ -1,4 +1,4 @@
-from .common import *      # Call as  qrotor.Variables() etc
+from .common import *
 from .constants import *
 from . import potentials
 from . import write
