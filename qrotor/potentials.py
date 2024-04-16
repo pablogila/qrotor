@@ -34,6 +34,8 @@ def test(variables:Variables):
 
 
 def custom(variables:Variables):
-    x = variables.grid
-    return 0 * x
+    if variables.potential_values:
+        return variables.potential_values
+    else:
+        print('WARNING:  No potential_values found in variables')
 

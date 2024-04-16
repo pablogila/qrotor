@@ -1,43 +1,46 @@
 import qrotor as qr
 import numpy as np
 import time
+from math import sqrt
+
 
 variables = qr.Variables()
 
-variables.potential = 'zero'
-variables.searched_E_levels = 10
-variables.atom_type = 'H'
+variables.potential_name = 'zero'
+#variables.atom_type = 'H'
+variables.write_summary = True
 variables.B = 1
+variables.searched_E_levels = 5
 
-convergence_test = qr.Convergence()
-convergence_test.energies = []
-convergence_test.runtimes = []
-convergence_test.gridsizes = [6000]#[100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000]  # sccipy has convergence problems with matrices bigger than 5000-7500
+# Convergence parameters
+variables.check_E_level = 4  # Starting from 0
+variables.check_E_difference = False
+variables.plot_label = True  # Can be a bool, or a str for a label title
+print_runtime = True
+# Ideal_E is set automatically for a zero potential
+variables.get_ideal_E()
+real_E_level = int(sqrt(variables.ideal_E))
 
-convergence_test.energy_level = 9
+# SciPy seems to have convergence problems with matrices bigger than 5000-7500 ¿?
+gridsizes = [100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2500, 3000, 4000, 5000, 6000, 7000, 10000]  
 
-if convergence_test.energy_level % 2 == 0:
-    real_energy_level = convergence_test.energy_level / 2
-else: real_energy_level = (convergence_test.energy_level + 1) / 2
-convergence_test.ideal = real_energy_level ** 2
+variables.comment = f'Convergence test for the energy level {variables.check_E_level}'
+if variables.ideal_E:
+    variables.comment += f' (n={real_E_level})'
 
-convergence_test.title = f'Convergence test for the energy level {convergence_test.energy_level} (n={int(real_energy_level)})'
+data = qr.Data()
+for gridsize in gridsizes:
 
+    variables.gridsize = gridsize
+    variables.grid = np.linspace(0, 2*np.pi, gridsize)
 
-for gridsize in convergence_test.gridsizes:
+    convergence_data = qr.solve.energies(variables, qr.out_file)
+    data.add(convergence_data)
 
-    variables.N = gridsize
-    variables.x = np.linspace(0, 2*np.pi, variables.N)
+# Remove runtimes from data
+if not print_runtime:
+    for solution in data.solutions:
+        solution.runtime = None
 
-    time_start = time.time()
-    data = qr.solve.energies(variables, qr.out_file)
-    variables.runtime = time.time() - time_start
-
-    variables.comment = f'Parameters of the last convergence calculation for a grid of size N={gridsize}:'
-    qr.write.variables(variables, qr.out_file)
-
-    convergence_test.runtimes.append(variables.runtime)
-    convergence_test.energies.append(data.set_of_energies)
-
-qr.plot.energy_convergence(convergence_test)
+qr.plot.convergence(data)
 

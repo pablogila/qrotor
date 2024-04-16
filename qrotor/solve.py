@@ -24,57 +24,6 @@ def hamiltonian_matrix(variables:Variables):
     return H
 
 
-# Solve the Hamiltonian eigenvalues for the time independent Schrödinger equation.
-def schrodinger_OLD(variables:Variables):
-    V = potentials.solve(variables)
-    offset = min(V)
-    V = V - offset
-    variables.potential_values = V
-    
-    H = hamiltonian_matrix(variables)
-
-    eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='SM')
-    solutions = Solutions()
-    solutions.potential_values = V
-    solutions.max_potential = max(V)
-    solutions.min_potential = min(V)
-    solutions.corrected_offset_potential = offset
-    solutions.eigenvalues = eigenvalues
-    solutions.eigenvectors = eigenvectors
-    solutions.energy_barrier = max(V) - min(eigenvalues)
-    solutions.first_transition = eigenvalues[1] - eigenvalues[0]
-    return solutions
-
-
-# Recurrently solve the energies for a set of potential constants, and print the solutions.
-def energies_OLD(variables:Variables, out_file=None):
-    set_of_energies = []
-    set_of_eigenvectors = []
-    set_of_potentials = []
-
-    if variables.set_of_constants is None:
-        variables.set_of_constants = [[0]]
-
-    # Iterate over the potential constants inside the Variables object, and solve the Hamiltonian for each one.
-    for i, C in enumerate(variables.set_of_constants):
-        variables.potential_constants = C
-        solutions = schrodinger(variables)
-        solutions.constants = variables.potential_constants
-        solutions.comment = f'{i+1}'
-        write.solutions(solutions, out_file)
-
-        set_of_energies.append(solutions.eigenvalues)
-        set_of_eigenvectors.append(solutions.eigenvectors)
-        set_of_potentials.append(solutions.potential_values)
-
-    data = Data()
-    data.set_of_energies = set_of_energies
-    data.set_of_eigenvectors = set_of_eigenvectors
-    data.set_of_potentials = set_of_potentials
-
-    return data
-
-
 def schrodinger(variables:Variables):
     time_start = time.time()
 
@@ -105,14 +54,13 @@ def energies(variables:Variables, out_file=None):
         if variables.potential_constants is not None:
             variables.set_of_constants = [variables.potential_constants]
 
-    for i, constants in enumerate(variables.set_of_constants):
+    for constants in variables.set_of_constants:
         variables.potential_constants = constants
         variables = potential(variables)
 
         solutions = schrodinger(variables)
         # solutions.comment = f'{i+1}'
 
-        # Instantiate the variables object to store the data
         stored_variables = deepcopy(variables)
 
         data.variables.append(stored_variables)

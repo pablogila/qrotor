@@ -13,26 +13,40 @@ class Variables:
         self.comment = None
         self.atom_type = None
         self.searched_E_levels = None
+        '''Number of energy levels to search for.'''
 
         self.gridsize = None
         self.grid = None
+        '''Grid, e.g. np.linspace(min, max, gridsize).'''
         self.B = None
+        '''Inertia.'''
 
         self.potential_name = None
+        '''str: 'zero', 'titov2023', 'test'...'''
         self.potential_constants = None
         self.set_of_constants = None
+        '''List of lists with potential constants, for several calculations. Will override potential_constants.'''
         self.potential_values = None
 
         self.leave_potential_offset = None
+        '''If true, do not correct the potential offset.'''
         self.corrected_potential_offset = None
+        '''Calculated offset potential.'''
 
         self.write_summary = None
+        '''Write an additional .txt file with a summary of the calculations.'''
         self.separate_plots = None
+        '''Do not merge plots with different atoms in the same figure.'''
+        self.plot_label = None
+        '''Can be a bool, or a str for a label title.'''
 
         # Convergence test
         self.check_E_level = None
-        self.check_E_difference = None # if True...
+        '''Energy level to check in a convergence test.'''
+        self.check_E_difference = None
+        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
         self.ideal_E = None
+        '''Ideal energy level, for comparison in a convergence test.'''
 
 
     def to_dict(self):
@@ -55,6 +69,7 @@ class Variables:
 
             'write_summary': self.write_summary,
             'separate_plots': self.separate_plots,
+            'plot_label': self.plot_label,
 
             'check_E_level': self.check_E_level,
             'check_E_difference': self.check_E_difference,
@@ -73,6 +88,21 @@ class Variables:
             'corrected_potential_offset': self.corrected_potential_offset,
         }
         return summary_dict
+
+
+    def get_ideal_E(self):
+        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
+        real_E_level = None
+        if self.potential_name == 'zero':
+            if self.check_E_level % 2 == 0:
+                real_E_level = self.check_E_level / 2
+            else:
+                real_E_level = (self.check_E_level + 1) / 2
+            self.ideal_E = int(real_E_level ** 2)
+            return
+        else:
+            print("WARNING: get_ideal_E() only valid for potential_name='zero'")
+            return
 
 
     @classmethod
@@ -182,32 +212,51 @@ class Data:
             if not has_been_grouped:
                 grouped_data.append(new_data)
         return grouped_data
-    
 
-    def group_by_convergence(self):
-        return  # TO-DO
-    
 
     def add(self, *args):
         for value in args:
             if isinstance(value, Data):
                 if self.comment is None:
-                    self.comment = value.comment
+                    self.comment = value.variables[0].comment if value.comment is None else value.comment
                 self.variables.extend(value.variables)
                 self.solutions.extend(value.solutions)
-            if isinstance(value, Variables):
+            elif isinstance(value, Variables):
                 self.variables.append(value)
             elif isinstance(value, Solutions):
                 self.solutions.append(value)
             else:
-                raise ValueError('Invalid value type: Data.add() method only accepts Data, Variables or Solutions objects.')
+                raise TypeError(f'Data.add() can only add Data, Variables and Solutions objects, not {type(value)}.')
 
 
     def energies(self):
         energies = []
         for solution in self.solutions:
-            energies.append(solution.eigenvalues)
+            if all(solution.eigenvalues):
+                energies.append(solution.eigenvalues)
+            else:
+                energies.append(None)
         return energies
+    
+
+    def gridsizes(self):
+        gridsizes = []
+        for variable in self.variables:
+            if variable.gridsize:
+                gridsizes.append(variable.gridsize)
+            else:
+                gridsizes.append(None)
+        return gridsizes
+    
+
+    def runtimes(self):
+        runtimes = []
+        for solution in self.solutions:
+            if solution.runtime:
+                runtimes.append(solution.runtime)
+            else:
+                runtimes.append(None)
+        return runtimes
 
 
     def atom_types(self):
