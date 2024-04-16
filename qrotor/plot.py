@@ -10,7 +10,8 @@ def energies(data:Data):
             new_data.solutions.append(solutions)
             energy(new_data)
     else:
-        grouped_data = data.classify()
+        # Group data with the same potential_values and different atom_type
+        grouped_data = data.group_by_potential()
         for new_data in grouped_data:
             energy(new_data)
 
@@ -18,11 +19,10 @@ def energies(data:Data):
 def energy(data:Data):
     V_colors = ['C0'] #...
     E_colors = ['red', 'purple', 'grey']  # To extend...
-    E_linestyles = ['--', '-.', ':']
+    E_linestyles = ['--', ':', '-.']
     edgecolors = ['tomato', 'purple', 'grey']
 
     V_linestyle = '-'
-    
 
     xlabel = 'Angle / radians'
     ylabel = 'Energy / meV'
@@ -65,7 +65,69 @@ def energy(data:Data):
     plt.show()
 
 
+def convergence(data:Data):
+    fig, ax1 = plt.subplots(figsize=(10, 6))
 
+    energies = data.energies()
+
+    for i, variables, solutions in enumerate(zip(data.variables, data.solutions)):
+        energy = energies[i][variables.check_E_level]
+
+        ax1.plot(variables.gridsize, energy, marker='o', linestyle='-', color='C' + str(i))
+
+    ##############     ME LLEGO POR AQUÍ MAOMENO
+
+    energies_transposed = np.transpose(convergence.energies)
+    calculated_energies = energies_transposed[convergence.energy_level][0]
+    plotted_energies = calculated_energies
+
+    ylabel_text = 'Energy / meV'
+    xlabel_text = 'Grid Size'
+    color = 'tab:blue'
+    yaxes_color = color
+    textstr_position_x = 0.88
+    textstr_position_y = 0.15
+    textstr_alignment_v = 'bottom'
+    textstr_alignment_h = 'right'
+    ideal = convergence.ideal
+
+    if convergence.difference is not False:
+        plotted_energies = np.abs(plotted_energies - convergence.ideal)
+        ylabel_text = 'Energy offset / |meV|'
+        ideal = 0
+        textstr_position_x = 0.5
+        textstr_position_y = 0.85
+        textstr_alignment_v = 'top'
+        textstr_alignment_h = 'center'
+    
+    if not convergence.runtimes:
+        yaxes_color = 'black'
+
+    ax1.plot(convergence.gridsizes, plotted_energies, marker='o', linestyle='-', color=color)
+    ax1.set_xlabel(xlabel_text)
+    ax1.set_ylabel(ylabel_text, color=yaxes_color)
+    ax1.tick_params(axis='y', labelcolor=yaxes_color)
+    ax1.axhline(y=ideal, color='grey', linestyle='--')
+
+    props = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
+    textstr = f'Ideal  E={convergence.ideal:.4f}\n'
+
+
+    if convergence.runtimes:
+        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+        color = 'tab:red'
+        ax2.set_ylabel('Runtime / s', color=color)  # we already handled the x-label with ax1
+        ax2.plot(convergence.gridsizes, convergence.runtimes, marker='o', linestyle='-', color=color)
+        ax2.tick_params(axis='y', labelcolor=color)
+        textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}   t={convergence.runtimes[i]:.2f}' for i, energy in enumerate(calculated_energies)])
+
+    else:
+        textstr += '\n'.join([f'N={convergence.gridsizes[i]}   E={energy:.4f}' for i, energy in enumerate(calculated_energies)])
+
+    fig.text(textstr_position_x, textstr_position_y, textstr, fontsize=10, verticalalignment=textstr_alignment_v, horizontalalignment=textstr_alignment_h, bbox=props)
+
+    plt.title(convergence.title)
+    plt.show()
 
 
 

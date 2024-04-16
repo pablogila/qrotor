@@ -160,15 +160,13 @@ class Data:
 
 
     # Returns an array of grouped Data objects with the same potential_values and different atom_type
-    def classify(self):
+    def group_by_potential(self):
         grouped_data = []
-
         for new_variables, new_solutions in zip(self.variables, self.solutions):
             new_data = Data()
             new_data.comment = self.comment
             new_data.variables.append(new_variables)
             new_data.solutions.append(new_solutions)
-
             has_been_grouped = False
             for group in grouped_data:
                 can_be_grouped = True
@@ -183,16 +181,33 @@ class Data:
                     break
             if not has_been_grouped:
                 grouped_data.append(new_data)
-
         return grouped_data
+    
 
+    def group_by_convergence(self):
+        return  # TO-DO
+    
 
     def add(self, *args):
-        for data in args:
-            if self.comment is None:
-                self.comment = data.comment
-            self.variables.extend(data.variables)
-            self.solutions.extend(data.solutions)
+        for value in args:
+            if isinstance(value, Data):
+                if self.comment is None:
+                    self.comment = value.comment
+                self.variables.extend(value.variables)
+                self.solutions.extend(value.solutions)
+            if isinstance(value, Variables):
+                self.variables.append(value)
+            elif isinstance(value, Solutions):
+                self.solutions.append(value)
+            else:
+                raise ValueError('Invalid value type: Data.add() method only accepts Data, Variables or Solutions objects.')
+
+
+    def energies(self):
+        energies = []
+        for solution in self.solutions:
+            energies.append(solution.eigenvalues)
+        return energies
 
 
     def atom_types(self):

@@ -33,10 +33,12 @@ variables.potential_name = 'titov2023'
 variables.searched_E_levels = 5
 variables.gridsize = 100
 variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
-variables.set_of_constants = qr.constants_titov2023
+# variables.set_of_constants = qr.constants_titov2023
+variables.potential_constants = [2.7860, 0.0130,-1.5284,-0.0037,-1.2791]
 variables.atom_type = 'H'
 variables.B = qr.B_Hydrogen
 variables.comment = 'HYDROGEN'
+
 data_H = qr.solve.energies(variables, qr.out_file)
 data_H.comment = 'data H comment'
 
