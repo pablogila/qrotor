@@ -35,7 +35,12 @@ def schrodinger(variables:Variables):
     solutions.min_potential = min(V)
 
     H = hamiltonian_matrix(variables)
-    eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='SM')
+    # Solve eigenvalues with ARPACK in shift-inverse mode
+    print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
+    eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='LM', sigma=0, maxiter=10000)
+    if any(eigenvalues) is None:
+        print('WARNING:  Not all eigenvalues were found.\n')
+    else: print('Done.\n')
 
     solutions.eigenvalues = eigenvalues
     solutions.eigenvectors = eigenvectors

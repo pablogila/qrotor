@@ -43,7 +43,7 @@ def data_summary(data:Data, out_file=None):
 
     print(summary)
 
-    if data.variables[0].write_summary and out_file:
+    if (data.variables[0].write_summary is not False) and out_file:
         out_file = fix_extension(out_file, '.txt')
         with open(out_file, 'a') as f:
             f.write(summary)
@@ -63,6 +63,5 @@ def data_json(data:Data, out_file=None):
     data_list.append(data.to_dict())
     with open(out_file, 'w') as f:
         json.dump(data_list, f)
-        print(f'Data saved at {out_file}\n')
-        print('\n------------------------------------\n')
+        print(f'Data saved at {out_file}')
 

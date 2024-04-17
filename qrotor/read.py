@@ -5,9 +5,8 @@ def data(input_file):
     if not os.path.exists(input_file):
         if not input_file.endswith('.json'):
             input_file += '.json'
-        if not os.path.exists(input_file):
-            print(f"ERROR: input json not found,  {input_file}")
-            return None
+        else:
+            raise FileNotFoundError(f"Could not find input .json:  {input_file}")
 
     with open(input_file, 'r') as f:
         data_list = json.load(f)

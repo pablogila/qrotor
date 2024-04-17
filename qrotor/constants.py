@@ -2,7 +2,7 @@ from .common import *
 
 
 # Output file
-filename = 'OUTPUT'
+filename = 'QRotor_OUT'
 out_file = os.path.join(os.getcwd(), filename)
 
 

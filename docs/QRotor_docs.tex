@@ -90,7 +90,7 @@ This results in a diagonal matrix, with the potential energy at each point along
     \end{array} } \right]
 \]
 
-This way, the energy eigenvalues of the hindered methyl rotor can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix. QRotor solves this eigenvalue problem with the SciPy package.
+This way, the energy eigenvalues of the hindered methyl rotor can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix. QRotor solves this eigenvalue problem with the shift-inverted mode of the ARPACK package, provided through SciPy \cite{arpack}.
 
 \bibliographystyle{IEEEtran} % Estilo
 \bibliography{QRotor_refs} % documento .bib

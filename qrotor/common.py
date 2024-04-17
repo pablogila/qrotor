@@ -8,10 +8,14 @@ import time
 from copy import deepcopy
 
 
+version = 'vQR.2024.04.17.1800'
+
+
 class Variables:
     def __init__(self):
         self.comment = None
         self.atom_type = None
+        '''Generally 'H' or 'D'.'''
         self.searched_E_levels = None
         '''Number of energy levels to search for.'''
 
@@ -34,15 +38,17 @@ class Variables:
         '''Calculated offset potential.'''
 
         self.write_summary = None
-        '''Write an additional .txt file with a summary of the calculations.'''
+        '''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
         self.separate_plots = None
         '''Do not merge plots with different atoms in the same figure.'''
         self.plot_label = None
         '''Can be a bool, or a str for a label title.'''
+        self.plot_label_position = None
+        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
 
         # Convergence test
         self.check_E_level = None
-        '''Energy level to check in a convergence test.'''
+        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
         self.check_E_difference = None
         '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
         self.ideal_E = None
@@ -93,6 +99,9 @@ class Variables:
     def get_ideal_E(self):
         '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
         real_E_level = None
+        if not self.check_E_level:
+            print("WARNING: get_ideal_E() requires check_E_level to be set.")
+            return
         if self.potential_name == 'zero':
             if self.check_E_level % 2 == 0:
                 real_E_level = self.check_E_level / 2

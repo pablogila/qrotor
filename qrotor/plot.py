@@ -77,18 +77,28 @@ def convergence(data:Data):
     xlabel_text = 'Grid Size'
     runtime_text = 'Runtime / s'
 
-    textstr_position_x = 0.88
-    textstr_position_y = 0.15
-    textstr_alignment_v = 'bottom'
-    textstr_alignment_h = 'right'
-    textstr = ''
-    textbox = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
-
     variables_0 = data.variables[0]
+    plot_label = variables_0.plot_label
     check_E_difference = variables_0.check_E_difference
     ideal_E = variables_0.ideal_E
     check_E_level = variables_0.check_E_level
-    plot_label = variables_0.plot_label
+    if not check_E_level:
+        check_E_level = len(data.solutions[0].eigenvalues) - 1
+
+
+    textbox = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
+    textstr = ''
+
+    textstr_position_x = 0.88
+    textstr_position_y = 0.15
+    textstr_alignment_h = 'right'
+    textstr_alignment_v = 'bottom'
+
+    if variables_0.plot_label_position and isinstance(variables_0.plot_label_position, list):
+        textstr_position_x = variables_0.plot_label_position[0]
+        textstr_position_y = variables_0.plot_label_position[1]
+        textstr_alignment_h = variables_0.plot_label_position[2]
+        textstr_alignment_v = variables_0.plot_label_position[3]
 
     energies = data.energies()
     energies_transposed = np.transpose(energies)
@@ -124,7 +134,9 @@ def convergence(data:Data):
         ax2.plot(gridsizes, runtimes, marker='o', linestyle='-', color=runtime_color)
         ax2.tick_params(axis='y', labelcolor=runtime_color)
         for i, energy in enumerate(plotted_energies):
-            textstr += f'N={gridsizes[i]}   E={energy:.4f}   t={runtimes[i]:.2f}\n'
+            textstr += f'N={gridsizes[i]}   E={energy:.4f}   t={runtimes[i]:.2f}'
+            if i < len(plotted_energies) - 1:
+                textstr += '\n'
 
     else:
         for i, energy in enumerate(plotted_energies):
