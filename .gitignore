@@ -6,8 +6,11 @@
 /.vscode/
 /results/
 /test/
+*.gz
 *.json
 *.txt
+*.out
+temp_*
 
 
 ######################################
