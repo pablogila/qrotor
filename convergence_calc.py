@@ -4,18 +4,23 @@ from math import sqrt
 import os
 
 
-gridsize = 1000
-#gridsizes = [1000, 2000, 3000, 5000, 10000, 15000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 125000, 150000, 175000, 200000, 250000, 300000, 400000, 500000]
+##########  Replaced by convergence_sbatch.py  ##########
+this_script_is_a_copy=False
+gridsize=1000
+slurm_file='/path/to/slurm'
+########################################################
+
 
 file = qr.logfile + '_' + str(gridsize)
 
-
 variables = qr.Variables()
-
 variables.potential_name = 'zero'
 variables.B = 1
 variables.searched_E_levels = 10
 variables.check_E_level = 9  # Starting from 0
+
+variables.gridsize = gridsize
+variables.grid = np.linspace(0, 2*np.pi, gridsize)
 
 # Ideal_E can be set automatically for a zero potential
 variables.get_ideal_E()
@@ -25,12 +30,19 @@ variables.comment = f'Convergence test for the energy level #{variables.check_E_
 if variables.ideal_E:
     variables.comment += f' (n={real_E_level})'
 
-variables.gridsize = gridsize
-variables.grid = np.linspace(0, 2*np.pi, gridsize)
-
 data = qr.solve.energies(variables, file)
 
 qr.file.compress(file)
 
 # qr.plot.convergence(data)
+
+
+# Clean copies of this script
+if this_script_is_a_copy:
+    this_script = os.path.basename(__file__)
+    print(f'Calculation finished, removing this script:  {this_script}...')
+    os.remove(slurm_file)
+    os.remove(this_script)
+
+#qr.plot.energies(data)
 

@@ -32,6 +32,7 @@ def read(input_file):
         data.add(data_obj)
     if compressed:
         os.remove(input_file)
+        print(f'Deleted temporary decompressed file')
     return data
 
 
@@ -93,7 +94,7 @@ def compress(filename, delete_original=True, original_extension='.json'):
         if not filename.endswith(original_extension):
             filename = fix_extension(filename, original_extension)
     if not os.path.exists(filename):
-        print(f'Skipping compression of missing file  {filename}')
+        print(f'Skipped compression of missing file  {filename}')
         return None
     try:
         with open(filename, 'rb') as f_in:
@@ -110,7 +111,7 @@ def decompress(filename, delete_original=False, file_extension='.json.gz'):
     if not filename.endswith(file_extension):
         filename = fix_extension(filename, file_extension)
     if not os.path.exists(filename):
-        print(f'Skipping decompression of missing file  {filename}')
+        print(f'Skipped decompression of missing file  {filename}')
         return None
     try:
         with gzip.open(filename, 'rb') as f_in:
@@ -121,4 +122,20 @@ def decompress(filename, delete_original=False, file_extension='.json.gz'):
         print(f'File decompressed at {filename[:-3]}')
     except Exception as e:
         print(f'DECOMPRESSION ABORTED: {e}')
+
+
+################################################
+##############  From InputMaker  ###############
+################################################
+
+
+def replace_line_with_keyword(new_text, keyword, filename):
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    with open(filename, 'w') as f:
+        for line in lines:
+            if keyword in line:
+                line = new_text + '\n'
+            f.write(line)
+    return
 
