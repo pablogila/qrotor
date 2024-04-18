@@ -22,7 +22,7 @@ def read(input_file):
             decompress(file_gz, delete_original=False)
             compressed = True
     if not os.path.exists(input_file):
-        raise FileNotFoundError(f"Could not find input .json:  {input_file}")
+        raise FileNotFoundError(f"Could not find input .json or .json.gz:  {input_file}")
 
     with open(input_file, 'r') as f:
         data_list = json.load(f)
