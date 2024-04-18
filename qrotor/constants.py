@@ -3,7 +3,7 @@ from .common import *
 
 # Output file
 filename = 'QRotor_OUT'
-out_file = os.path.join(os.getcwd(), filename)
+logfile = os.path.join(os.getcwd(), filename)
 
 
 # Atomic masses

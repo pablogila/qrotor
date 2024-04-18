@@ -1,6 +1,6 @@
 from .common import *
 
-
+'''
 def data(input_file):
     if not os.path.exists(input_file):
         if not input_file.endswith('.json'):
@@ -13,7 +13,9 @@ def data(input_file):
     data = Data()
     for data_dict in data_list:
         data_obj = Data.from_dict(data_dict)
-        data.variables.extend(data_obj.variables)
-        data.solutions.extend(data_obj.solutions)
+        data.add(data_obj)
+        #data.variables.extend(data_obj.variables)
+        #data.solutions.extend(data_obj.solutions)
     return data
 
+'''

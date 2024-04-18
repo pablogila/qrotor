@@ -3,12 +3,14 @@ from scipy.sparse import diags
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
 import os
+import gzip
+import shutil
 import json
 import time
 from copy import deepcopy
 
 
-version = 'vQR.2024.04.17.1800'
+version = 'vQR.2024.04.18.1300'
 
 
 class Variables:
@@ -185,6 +187,7 @@ class Solutions:
 
 class Data:
     def __init__(self):
+        self.version = version
         self.comment = None
         self.variables = []
         self.solutions = []
@@ -192,6 +195,7 @@ class Data:
 
     def to_dict(self):
         return {
+            'version': self.version,
             'comment': self.comment,
             'variables': [v.to_dict() for v in self.variables],
             'solutions': [s.to_dict() for s in self.solutions],

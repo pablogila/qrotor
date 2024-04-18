@@ -1,6 +1,6 @@
 from .common import *
 from . import potentials
-from . import write
+from . import file
 
 
 # Second derivative matrix, according to the finite difference method
@@ -75,7 +75,7 @@ def energies(variables:Variables, out_file=None):
             stored_data = Data()
             stored_data.variables.append(stored_variables)
             stored_data.solutions.append(solutions)
-            write.data(stored_data, out_file)
+            file.write(stored_data, out_file)
 
     return data
 
