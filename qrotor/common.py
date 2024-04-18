@@ -10,7 +10,7 @@ import time
 from copy import deepcopy
 
 
-version = 'vQR.2024.04.18.1300'
+version = 'vQR.2024.04.18.1600'
 
 
 class Variables:
