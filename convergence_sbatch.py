@@ -3,8 +3,7 @@ import os
 import shutil
 
 
-#gridsizes = [1000, 2000, 3000, 5000, 10000, 15000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 125000, 150000, 175000, 200000, 250000, 300000, 400000, 500000]
-gridsizes = [1000, 2000, 3000]
+gridsizes = {1000: '10G', 2000: '10G', 3000: '10G', 5000: '10G', 10000: '20G', 15000: '20G', 20000: '20G', 30000: '50G', 40000: '50G', 50000: '50G', 60000: '100G', 70000: '100G', 80000: '200G', 90000: '300G', 100000: '400G', 125000: '500G', 150000: '500G', 175000: '1000G', 200000: '1000G', 250000: '2000G', 300000: '2000G'}
 
 script_name = 'convergence_calc.py'
 script_file = os.path.join(os.getcwd(), script_name)
@@ -12,7 +11,7 @@ script_file = os.path.join(os.getcwd(), script_name)
 slurm_name = 'convergence.slurm'
 slurm_file = os.path.join(os.getcwd(), slurm_name)
 
-for gridsize in gridsizes:
+for gridsize, memory in gridsizes.items():
     slurm_copy_name = f'temp_{gridsize}.slurm'
     slurm_copy = os.path.join(os.getcwd(), slurm_copy_name)
     shutil.copy(slurm_file, slurm_copy)
@@ -22,6 +21,7 @@ for gridsize in gridsizes:
     shutil.copy(script_file, script_copy)
 
     qr.file.replace_line_with_keyword(f'#SBATCH --job-name=QRotor_{gridsize}', '#SBATCH --job-name=', slurm_copy)
+    qr.file.replace_line_with_keyword(f'#SBATCH --mem={memory}', '#SBATCH --mem=', slurm_copy)
     qr.file.replace_line_with_keyword(f'python3 {script_copy_name}', 'python3 ', slurm_copy)
 
     qr.file.replace_line_with_keyword(f'this_script_is_a_copy=True', 'this_script_is_a_copy=', script_copy)

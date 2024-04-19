@@ -2,12 +2,12 @@ import numpy as np
 from scipy.sparse import diags
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
+from copy import deepcopy
 import os
 import gzip
 import shutil
 import json
 import time
-from copy import deepcopy
 
 
 version = 'vQR.2024.04.18.1600'
