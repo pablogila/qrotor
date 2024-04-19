@@ -2,7 +2,7 @@
 #SBATCH --partition=general
 #SBATCH --qos=regular
 #SBATCH --job-name=QRotor
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=16
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=1-00:00:00
