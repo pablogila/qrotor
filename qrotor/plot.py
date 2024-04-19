@@ -54,7 +54,7 @@ def energy(data:Data):
         if solutions.eigenvalues is not None:
             for j, energy in enumerate(solutions.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
-                plt.text(j%3*0.9, energy, f'E$_{j}$ = {round(energy,4)}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+                plt.text(j%3*0.9, energy, f'E$_{j}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             if len(data.atom_types()) > 1:
                 plt.plot([], [], color=E_color, label=f'{variables.atom_type} Energies')  # Add to legend
 
@@ -134,13 +134,13 @@ def convergence(data:Data):
         ax2.plot(gridsizes, runtimes, marker='o', linestyle='-', color=runtime_color)
         ax2.tick_params(axis='y', labelcolor=runtime_color)
         for i, energy in enumerate(plotted_energies):
-            textstr += f'N={gridsizes[i]}   E={round(energy,4)}   t={round(runtimes[i],2)}'
+            textstr += f'N={gridsizes[i]}   E={round(energy,4):.04f}   t={round(runtimes[i],2):.02f}'
             if i < len(plotted_energies) - 1:
                 textstr += '\n'
 
     else:
         for i, energy in enumerate(plotted_energies):
-            textstr += f'N={gridsizes[i]}   E={round(energy,4)}\n'
+            textstr += f'N={gridsizes[i]}   E={round(energy,4):.04f}\n'
 
     if plot_label is not False:
         if isinstance(plot_label, str):
