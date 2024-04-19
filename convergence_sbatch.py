@@ -3,9 +3,9 @@ import os
 import shutil
 
 
-gridsizes = {1000: '10G', 2000: '10G', 3000: '10G', 5000: '10G', 10000: '20G', 15000: '20G', 20000: '20G', 30000: '50G', 40000: '50G', 50000: '50G', 60000: '100G', 70000: '100G', 80000: '200G', 90000: '300G', 100000: '400G', 125000: '500G', 150000: '700G', 175000: '1000G', 200000: '1000G', 250000: '2000G', 300000: '2000G'}
+gridsizes = {1000: '10G', 2000: '10G', 3000: '10G', 5000: '10G'}#, 10000: '20G', 15000: '20G', 20000: '20G', 30000: '50G', 40000: '50G', 50000: '50G', 60000: '100G', 70000: '100G', 80000: '200G', 90000: '300G', 100000: '400G', 125000: '500G', 150000: '700G', 175000: '1000G', 200000: '1000G', 250000: '2000G', 300000: '2000G'}
 
-script_name = 'convergence_calc.py'
+script_name = 'convergence_job.py'
 script_file = os.path.join(os.getcwd(), script_name)
 
 slurm_name = 'convergence.slurm'
@@ -28,7 +28,7 @@ for gridsize, memory in gridsizes.items():
     qr.file.replace_line_with_keyword(f'gridsize={gridsize}', 'gridsize=', script_copy)
     qr.file.replace_line_with_keyword(f'slurm_file="{slurm_copy}"', 'slurm_file=', script_copy)
     
-    #os.system(f'python3 {script_copy_name}')  # DEBUG
-    os.system(f'sbatch {slurm_copy_name}')
+    os.system(f'python3 {script_copy_name}')  # DEBUG
+    #os.system(f'sbatch {slurm_copy_name}')
     print(f'Sbatched {slurm_copy_name}...')
 

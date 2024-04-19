@@ -11,7 +11,7 @@ slurm_file='/path/to/slurm'
 ########################################################
 
 
-file = qr.logfile + '_' + str(gridsize)
+file = qr.logdirfile + '_' + str(gridsize)
 
 variables = qr.Variables()
 variables.potential_name = 'zero'

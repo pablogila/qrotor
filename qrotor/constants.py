@@ -2,9 +2,14 @@ from .common import *
 
 
 # Output file
-filename = 'QRotor_OUT'
-logfile = os.path.join(os.getcwd(), filename)
-
+logname = 'out'
+logdirname = 'out'
+logfile = os.path.join(os.getcwd(), logname)
+logdir = os.path.join(os.getcwd(), logdirname)
+logdirfile = os.path.join(logdir, logname)
+# Create logdir at import if it doesn't exist
+if logdirname:
+    os.makedirs(logdir, exist_ok=True)
 
 # Atomic masses
 m_H = 1.00784      # H mass
