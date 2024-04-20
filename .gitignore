@@ -5,11 +5,13 @@
 /.venv/
 /.vscode/
 /results/
+/out*/
 /test/
 *.gz
 *.json
 *.txt
 *.out
+*.dat
 temp_*
 
 

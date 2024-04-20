@@ -45,6 +45,8 @@ def write(data:Data, out_file=None):
 def write_summary(data:Data, out_file=None):
     summary = ''
     spacer = ', '
+    if data.version:
+        summary += f'Data created on version {data.version}\n'
     if data.comment:
         summary += data.comment + '\n\n'
 
@@ -138,4 +140,10 @@ def replace_line_with_keyword(new_text, keyword, filename):
                 line = new_text + '\n'
             f.write(line)
     return
+
+
+def rename_files(old_string, new_string):
+    for file in os.listdir('.'):
+        if old_string in file:
+            os.rename(file, file.replace(old_string, new_string))
 

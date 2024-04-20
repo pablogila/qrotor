@@ -82,8 +82,10 @@ def convergence(data:Data):
     check_E_difference = variables_0.check_E_difference
     ideal_E = variables_0.ideal_E
     check_E_level = variables_0.check_E_level
-    if not check_E_level:
-        check_E_level = len(data.solutions[0].eigenvalues) - 1
+    if check_E_level is None:
+        data.variables[0].check_E_level = len(data.solutions[0].eigenvalues) - 1
+        check_E_level = data.variables[0].check_E_level
+        ideal_E = data.variables[0].get_ideal_E()
 
 
     textbox = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)

@@ -10,7 +10,7 @@ import json
 import time
 
 
-version = 'vQR.2024.04.19.1530'
+version = 'vQR.2024.04.20.2100'
 
 
 class Variables:
@@ -78,6 +78,7 @@ class Variables:
             'write_summary': self.write_summary,
             'separate_plots': self.separate_plots,
             'plot_label': self.plot_label,
+            'plot_label_position': self.plot_label_position,
 
             'check_E_level': self.check_E_level,
             'check_E_difference': self.check_E_difference,
@@ -101,7 +102,7 @@ class Variables:
     def get_ideal_E(self):
         '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
         real_E_level = None
-        if not self.check_E_level:
+        if self.check_E_level is None:
             print("WARNING: get_ideal_E() requires check_E_level to be set.")
             return
         if self.potential_name == 'zero':
@@ -110,7 +111,7 @@ class Variables:
             else:
                 real_E_level = (self.check_E_level + 1) / 2
             self.ideal_E = int(real_E_level ** 2)
-            return
+            return self.ideal_E
         else:
             print("WARNING: get_ideal_E() only valid for potential_name='zero'")
             return
@@ -144,17 +145,15 @@ class Solutions:
     def to_dict(self):
         return {
             'comment': self.comment,
-
-            # 'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
-            'energy_barrier': self.energy_barrier,
-            'first_transition': self.first_transition,
+            'runtime': self.runtime,
 
             'max_potential': self.max_potential,
             'min_potential': self.min_potential,
 
-            'runtime': self.runtime,
+            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
+            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
+            'energy_barrier': self.energy_barrier,
+            'first_transition': self.first_transition,
         }
 
 
@@ -230,6 +229,8 @@ class Data:
     def add(self, *args):
         for value in args:
             if isinstance(value, Data):
+                if len(self.solutions) == 0:
+                    self.version = value.version
                 if self.comment is None:
                     self.comment = value.variables[0].comment if value.comment is None else value.comment
                 self.variables.extend(value.variables)
@@ -283,9 +284,9 @@ class Data:
     @classmethod
     def from_dict(cls, data):
         obj = cls()
-        # obj.variables = [Variables.from_dict(v) if isinstance(v, dict) else v for v in data['variables']]
+        obj.version = data['version']
+        obj.comment = data['comment']
         obj.variables = [Variables.from_dict(v) for v in data['variables']]
-        # obj.solutions = [Solutions.from_dict(s) if isinstance(s, dict) else s for s in data['solutions']]
         obj.solutions = [Solutions.from_dict(s) for s in data['solutions']]
         return obj
 
