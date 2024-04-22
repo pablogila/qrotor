@@ -13,26 +13,29 @@ def fix_extension(out_file, good_extension, bad_extensions=['.json.gz', '.tar.gz
 
 
 def read(input_file):
-    compressed = False
-    if not os.path.exists(input_file):
+    is_compressed = False
+    if input_file.endswith('.gz'):
+        is_compressed = True
+    elif not input_file.endswith('.json'):
         input_file = fix_extension(input_file, '.json')
-    if not os.path.exists(input_file):
-        file_gz = input_file + '.gz'
-        if os.path.exists(file_gz):
-            decompress(file_gz, delete_original=False)
-            compressed = True
-    if not os.path.exists(input_file):
-        raise FileNotFoundError(f"Could not find input .json or .json.gz:  {input_file}")
+        if not os.path.exists(input_file):
+            input_file = fix_extension(input_file, '.json.gz')
+            if os.path.exists(input_file):
+                is_compressed = True
+            else:
+                raise FileNotFoundError(f"Could not find .json or .json.gz:  {input_file}")
 
-    with open(input_file, 'r') as f:
-        data_list = json.load(f)
+    if is_compressed:
+        with gzip.open(input_file, 'rt') as f:
+            data_list = json.load(f)
+    else:
+        with open(input_file, 'r') as f:
+            data_list = json.load(f)
+
     data = Data()
     for data_dict in data_list:
         data_obj = Data.from_dict(data_dict)
         data.add(data_obj)
-    if compressed:
-        os.remove(input_file)
-        print(f'Deleted temporary decompressed file')
     return data
 
 
@@ -68,7 +71,7 @@ def write_summary(data:Data, out_file=None):
 
     print(summary)
 
-    if (data.variables[0].write_summary is not False) and out_file:
+    if (data.write_summary is not False) and out_file:
         out_file = fix_extension(out_file, '.txt')
         with open(out_file, 'a') as f:
             f.write(summary)
@@ -146,4 +149,20 @@ def rename_files(old_string, new_string):
     for file in os.listdir('.'):
         if old_string in file:
             os.rename(file, file.replace(old_string, new_string))
+
+
+def get_files(folder, extensions, return_full_path=True):
+    files = os.listdir(folder)
+    target_files = []
+    if not isinstance(extensions, list):
+        extensions = [extensions]
+    for extension in extensions:
+        for file in files:
+            if file.endswith(extension):
+                if return_full_path:
+                    file = os.path.join(folder, file)
+                target_files.append(file)
+        if target_files:
+            return target_files
+    return None
 

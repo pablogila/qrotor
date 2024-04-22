@@ -39,23 +39,6 @@ class Variables:
         self.corrected_potential_offset = None
         '''Calculated offset potential.'''
 
-        self.write_summary = None
-        '''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
-        self.separate_plots = None
-        '''Do not merge plots with different atoms in the same figure.'''
-        self.plot_label = None
-        '''Can be a bool, or a str for a label title.'''
-        self.plot_label_position = None
-        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
-
-        # Convergence test
-        self.check_E_level = None
-        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
-        self.check_E_difference = None
-        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
-        self.ideal_E = None
-        '''Ideal energy level, for comparison in a convergence test.'''
-
 
     def to_dict(self):
         return {
@@ -74,15 +57,6 @@ class Variables:
             
             'leave_potential_offset': self.leave_potential_offset,
             'corrected_potential_offset': self.corrected_potential_offset,
-
-            'write_summary': self.write_summary,
-            'separate_plots': self.separate_plots,
-            'plot_label': self.plot_label,
-            'plot_label_position': self.plot_label_position,
-
-            'check_E_level': self.check_E_level,
-            'check_E_difference': self.check_E_difference,
-            'ideal_E': self.ideal_E,
         }
 
 
@@ -97,24 +71,6 @@ class Variables:
             'corrected_potential_offset': self.corrected_potential_offset,
         }
         return summary_dict
-
-
-    def get_ideal_E(self):
-        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
-        real_E_level = None
-        if self.check_E_level is None:
-            print("WARNING: get_ideal_E() requires check_E_level to be set.")
-            return
-        if self.potential_name == 'zero':
-            if self.check_E_level % 2 == 0:
-                real_E_level = self.check_E_level / 2
-            else:
-                real_E_level = (self.check_E_level + 1) / 2
-            self.ideal_E = int(real_E_level ** 2)
-            return self.ideal_E
-        else:
-            print("WARNING: get_ideal_E() only valid for potential_name='zero'")
-            return
 
 
     @classmethod
@@ -186,18 +142,52 @@ class Solutions:
 
 class Data:
     def __init__(self):
+
         self.version = version
         self.comment = None
+
         self.variables = []
         self.solutions = []
+
+        # Plotting
+        self.write_summary = None
+        '''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
+        self.separate_plots = None
+        '''Do not merge plots with different atoms in the same figure.'''
+        self.plot_label = None
+        '''Can be a bool, or a str for a label title.'''
+        self.plot_label_position = None
+        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
+        
+        # Convergence tests
+        self.check_E_level = None
+        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
+        self.check_E_diff = None
+        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
+        self.check_E_threshold = None
+        '''Energy Threshold for a convergence test.'''
+        self.ideal_E = None
+        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
 
 
     def to_dict(self):
         return {
             'version': self.version,
             'comment': self.comment,
+
             'variables': [v.to_dict() for v in self.variables],
             'solutions': [s.to_dict() for s in self.solutions],
+
+            'write_summary': self.write_summary,
+            'separate_plots': self.separate_plots,
+            'plot_label': self.plot_label,
+            'plot_label_position': self.plot_label_position,
+
+            # Convergence tests
+            'check_E_level': self.check_E_level,
+            'check_E_diff': self.check_E_diff,
+            'check_E_threshold': self.check_E_threshold,
+            'ideal_E': self.ideal_E,
         }
 
 
@@ -226,6 +216,17 @@ class Data:
         return grouped_data
 
 
+    def sort_by_gridsize(self):
+        variables = self.variables
+        solutions = self.solutions
+        paired_data = list(zip(variables, solutions))
+        paired_data.sort(key=lambda pair: pair[0].gridsize)
+        self.variables, self.solutions = zip(*paired_data)
+        self.variables = list(self.variables)
+        self.solutions = list(self.solutions)
+        return self
+
+
     def add(self, *args):
         for value in args:
             if isinstance(value, Data):
@@ -251,6 +252,24 @@ class Data:
             else:
                 energies.append(None)
         return energies
+
+
+    def get_ideal_E(self):
+        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
+        real_E_level = None
+        if self.check_E_level is None:
+            print("WARNING: get_ideal_E() requires check_E_level to be set.")
+            return
+        if self.variables[0].potential_name == 'zero':
+            if self.check_E_level % 2 == 0:
+                real_E_level = self.check_E_level / 2
+            else:
+                real_E_level = (self.check_E_level + 1) / 2
+            self.ideal_E = int(real_E_level ** 2)
+            return self.ideal_E
+        else:
+            print("WARNING: get_ideal_E() only valid for potential_name='zero'")
+            return
     
 
     def gridsizes(self):

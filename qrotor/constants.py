@@ -3,8 +3,8 @@ from .common import *
 
 # Output file
 logname = 'out'
-logdirname = 'out'
 logfile = os.path.join(os.getcwd(), logname)
+logdirname = 'out'
 logdir = os.path.join(os.getcwd(), logdirname)
 logdirfile = os.path.join(logdir, logname)
 # Create logdir at import if it doesn't exist

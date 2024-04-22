@@ -17,18 +17,11 @@ variables = qr.Variables()
 variables.potential_name = 'zero'
 variables.B = 1
 variables.searched_E_levels = 10
-variables.check_E_level = 9  # Starting from 0
 
 variables.gridsize = gridsize
 variables.grid = np.linspace(0, 2*np.pi, gridsize)
 
-# Ideal_E can be set automatically for a zero potential
-variables.get_ideal_E()
-real_E_level = int(sqrt(variables.ideal_E))
-
-variables.comment = f'Convergence test for the energy level #{variables.check_E_level}'
-if variables.ideal_E:
-    variables.comment += f' (n={real_E_level})'
+variables.comment = f'Convergence test for a grid of size {gridsize}'
 
 data = qr.solve.energies(variables, file)
 

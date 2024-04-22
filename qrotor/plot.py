@@ -2,7 +2,7 @@ from .common import *
 
 
 def energies(data:Data):
-    if data.variables[0].separate_plots:
+    if data.separate_plots:
         for variables, solutions in zip(data.variables, data.solutions):
             new_data = Data()
             new_data.comment = variables.comment
@@ -72,20 +72,24 @@ def convergence(data:Data):
     runtime_color = 'C3'
     yaxes_color = E_color
 
+    E_converged_color = 'C1'
+    converged_marker = 'D'
+
     title = data.comment
     ylabel_text = 'Energy / meV'
     xlabel_text = 'Grid Size'
     runtime_text = 'Runtime / s'
 
-    variables_0 = data.variables[0]
-    plot_label = variables_0.plot_label
-    check_E_difference = variables_0.check_E_difference
-    ideal_E = variables_0.ideal_E
-    check_E_level = variables_0.check_E_level
+    plot_label = data.plot_label
+    plot_label_position = data.plot_label_position
+    check_E_threshold = data.check_E_threshold
+    check_E_diff = data.check_E_diff
+    check_E_level = data.check_E_level
+    ideal_E = data.ideal_E
     if check_E_level is None:
-        data.variables[0].check_E_level = len(data.solutions[0].eigenvalues) - 1
-        check_E_level = data.variables[0].check_E_level
-        ideal_E = data.variables[0].get_ideal_E()
+        data.check_E_level = len(data.solutions[0].eigenvalues) - 1
+        check_E_level = data.check_E_level
+        ideal_E = data.get_ideal_E()
 
 
     textbox = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
@@ -96,11 +100,11 @@ def convergence(data:Data):
     textstr_alignment_h = 'right'
     textstr_alignment_v = 'bottom'
 
-    if variables_0.plot_label_position and isinstance(variables_0.plot_label_position, list):
-        textstr_position_x = variables_0.plot_label_position[0]
-        textstr_position_y = variables_0.plot_label_position[1]
-        textstr_alignment_h = variables_0.plot_label_position[2]
-        textstr_alignment_v = variables_0.plot_label_position[3]
+    if plot_label_position and isinstance(plot_label_position, list):
+        textstr_position_x = data.plot_label_position[0]
+        textstr_position_y = data.plot_label_position[1]
+        textstr_alignment_h = data.plot_label_position[2]
+        textstr_alignment_v = data.plot_label_position[3]
 
     energies = data.energies()
     energies_transposed = np.transpose(energies)
@@ -108,7 +112,7 @@ def convergence(data:Data):
     gridsizes = data.gridsizes()
     runtimes = data.runtimes()
 
-    if check_E_difference:
+    if check_E_diff:
         plotted_energies = np.abs(plotted_energies - ideal_E)
         ylabel_text = 'Energy offset / |meV|'
         textstr_position_x = 0.5
@@ -123,12 +127,23 @@ def convergence(data:Data):
     ax1.set_xlabel(xlabel_text)
     ax1.set_ylabel(ylabel_text, color=yaxes_color)
     ax1.tick_params(axis='y', labelcolor=yaxes_color)
-    if ideal_E:
-        if check_E_difference:
+
+    if ideal_E is not None:
+        if check_E_diff:
             ax1.axhline(y=0, color='grey', linestyle='--')
         else:
             ax1.axhline(y=ideal_E, color='grey', linestyle='--')
             textstr = f'Ideal  E={ideal_E:.4f}\n'
+    
+    if check_E_threshold and (ideal_E is not None):
+        if check_E_diff:
+            abs_energies = energy
+        else:
+            abs_energies = np.abs(plotted_energies - ideal_E)
+        for i, energy in enumerate(abs_energies):
+            if energy < check_E_threshold:
+                ax1.plot(gridsizes[i], plotted_energies[i], marker=converged_marker, color=E_converged_color)
+                break
 
     if any(runtimes):
         ax2 = ax1.twinx()  # instantiate a second y-axis that shares the same x-axis
