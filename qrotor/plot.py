@@ -72,8 +72,7 @@ def convergence(data:Data):
     runtime_color = 'C3'
     yaxes_color = E_color
 
-    E_converged_color = 'C1'
-    converged_marker = 'D'
+    converged_color_line = 'lightgrey'
 
     title = data.comment
     ylabel_text = 'Energy / meV'
@@ -133,7 +132,7 @@ def convergence(data:Data):
             ax1.axhline(y=0, color='grey', linestyle='--')
         else:
             ax1.axhline(y=ideal_E, color='grey', linestyle='--')
-            textstr = f'Ideal  E={ideal_E:.4f}\n'
+            textstr += f'Ideal  E={ideal_E:.4f}\n'
     
     if check_E_threshold and (ideal_E is not None):
         if check_E_diff:
@@ -142,7 +141,11 @@ def convergence(data:Data):
             abs_energies = np.abs(plotted_energies - ideal_E)
         for i, energy in enumerate(abs_energies):
             if energy < check_E_threshold:
-                ax1.plot(gridsizes[i], plotted_energies[i], marker=converged_marker, color=E_converged_color)
+                #ax1.plot(gridsizes[i], plotted_energies[i], marker=converged_marker, color=E_converged_color)
+                ax1.axvline(x=gridsizes[i], color=converged_color_line, linestyle='--')
+                textstr += f'Convergence threshold:  {check_E_threshold}\n'
+                lower_limit, _ = ax1.get_ylim()
+                ax1.text(gridsizes[i], lower_limit, str(gridsizes[i]), fontsize=10, verticalalignment='bottom', horizontalalignment='center')
                 break
 
     if any(runtimes):

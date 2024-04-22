@@ -10,7 +10,7 @@ import json
 import time
 
 
-version = 'vQR.2024.04.22.1000'
+version = 'vQR.2024.04.22.1600'
 
 
 class Variables:
@@ -77,9 +77,7 @@ class Variables:
     def from_dict(cls, data):
         obj = cls()
         obj.__dict__.update(data)
-        # obj.grid = np.array(obj.grid) if isinstance(obj.grid, list) else obj.grid
         obj.grid = np.array(obj.grid)
-        # obj.potential_values = np.array(obj.potential_values) if isinstance(obj.potential_values, list) else obj.potential_values
         obj.potential_values = np.array(obj.potential_values)
         return obj
 
@@ -230,12 +228,28 @@ class Data:
     def add(self, *args):
         for value in args:
             if isinstance(value, Data):
+                self.variables.extend(value.variables)
+                self.solutions.extend(value.solutions)
                 if len(self.solutions) == 0:
                     self.version = value.version
                 if self.comment is None:
                     self.comment = value.variables[0].comment if value.comment is None else value.comment
-                self.variables.extend(value.variables)
-                self.solutions.extend(value.solutions)
+                if self.write_summary is None:
+                    self.write_summary = value.write_summary
+                if self.separate_plots is None:
+                    self.separate_plots = value.separate_plots
+                if self.plot_label is None:
+                    self.plot_label = value.plot_label
+                if self.plot_label_position is None:
+                    self.plot_label_position = value.plot_label_position
+                if self.check_E_level is None:
+                    self.check_E_level = value.check_E_level
+                if self.check_E_diff is None:
+                    self.check_E_diff = value.check_E_diff
+                if self.check_E_threshold is None:
+                    self.check_E_threshold = value.check_E_threshold
+                if self.ideal_E is None:
+                    self.ideal_E = value.ideal_E
             elif isinstance(value, Variables):
                 self.variables.append(value)
             elif isinstance(value, Solutions):
@@ -303,8 +317,7 @@ class Data:
     @classmethod
     def from_dict(cls, data):
         obj = cls()
-        obj.version = data['version']
-        obj.comment = data['comment']
+        obj.__dict__.update(data)
         obj.variables = [Variables.from_dict(v) for v in data['variables']]
         obj.solutions = [Solutions.from_dict(s) for s in data['solutions']]
         return obj
