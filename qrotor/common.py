@@ -30,9 +30,9 @@ class Variables:
         self.potential_name = None
         '''str: 'zero', 'titov2023', 'test'...'''
         self.potential_constants = None
-        self.set_of_constants = None
-        '''List of lists with potential constants, for several calculations. Will override potential_constants.'''
         self.potential_values = None
+        #self.set_of_constants = None
+        #'''DEPRECATED.'''
 
         self.leave_potential_offset = None
         '''If true, do not correct the potential offset.'''
@@ -52,7 +52,7 @@ class Variables:
 
             'potential_name': self.potential_name,
             'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
-            'set_of_constants': self.set_of_constants.tolist() if isinstance(self.set_of_constants, np.ndarray) else self.set_of_constants,
+            #'set_of_constants': self.set_of_constants.tolist() if isinstance(self.set_of_constants, np.ndarray) else self.set_of_constants,
             'potential_values': self.potential_values.tolist() if isinstance(self.potential_values, np.ndarray) else self.potential_values,
             
             'leave_potential_offset': self.leave_potential_offset,

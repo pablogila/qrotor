@@ -1,4 +1,5 @@
 from .common import *
+from . import constants
 
 
 # Redirect to the desired potential energy function
@@ -17,6 +18,8 @@ def solve(variables:Variables):
 def titov2023(variables:Variables):
     x = variables.grid
     C = variables.potential_constants
+    if C is None:
+        C = constants.constants_titov2023[0]
     return C[0] + C[1] * np.sin(3*x) + C[2] * np.cos(3*x) + C[3] * np.sin(6*x) + C[4] * np.cos(6*x)
 
 

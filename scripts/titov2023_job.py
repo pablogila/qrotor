@@ -1,7 +1,6 @@
 import qrotor as qr
 import numpy as np
 from math import sqrt
-import os
 
 
 # Optimal gridsize value found in the convergence test
@@ -11,7 +10,7 @@ file = qr.logdirfile
 
 variables = qr.Variables()
 variables.potential_name = 'titov2023'
-variables.set_of_constants = qr.constants_titov2023
+variables.potential_constants = qr.constants_titov2023[0]
 variables.B = qr.B_Hydrogen
 variables.atom_type = 'H'
 variables.searched_E_levels = 5

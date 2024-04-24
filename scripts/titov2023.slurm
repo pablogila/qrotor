@@ -10,4 +10,4 @@
 
 module load Python
 
-python3 titov2023.py
+python3 titov2023_job.py

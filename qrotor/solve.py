@@ -24,6 +24,16 @@ def hamiltonian_matrix(variables:Variables):
     return H
 
 
+def potential(variables:Variables):
+    V = potentials.solve(variables)
+    if variables.leave_potential_offset is not True:
+        offset = min(V)
+        V = V - offset
+        variables.corrected_potential_offset = offset
+    variables.potential_values = V
+    return variables
+
+
 def schrodinger(variables:Variables):
     time_start = time.time()
 
@@ -54,6 +64,28 @@ def schrodinger(variables:Variables):
 def energies(variables:Variables, out_file=None):
     data = Data()
 
+    if variables.potential_values is None:
+        variables = potential(variables)
+
+    solutions = schrodinger(variables)
+
+    stored_variables = deepcopy(variables)
+
+    data.variables.append(stored_variables)
+    data.solutions.append(solutions)
+
+    if out_file:
+        stored_data = Data()
+        stored_data.variables.append(stored_variables)
+        stored_data.solutions.append(solutions)
+        file.write(stored_data, out_file)
+
+    return data
+
+
+def energies_OLD(variables:Variables, out_file=None):
+    data = Data()
+
     if variables.set_of_constants is None:
         variables.set_of_constants = [[0]]
         if variables.potential_constants is not None:
@@ -78,16 +110,6 @@ def energies(variables:Variables, out_file=None):
             file.write(stored_data, out_file)
 
     return data
-
-
-def potential(variables:Variables):
-    V = potentials.solve(variables)
-    if variables.leave_potential_offset is not True:
-        offset = min(V)
-        V = V - offset
-        variables.corrected_potential_offset = offset
-    variables.potential_values = V
-    return variables
 
 
 def grid_2pi(variables:Variables):
