@@ -10,7 +10,7 @@ import json
 import time
 
 
-version = 'vQR.2024.04.22.1600'
+version = 'vQR.2024.04.24.1330'
 
 
 class Variables:
