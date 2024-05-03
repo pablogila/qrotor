@@ -1,15 +1,9 @@
 from .common import *
 
 
-def fix_extension(out_file, good_extension, bad_extensions=['.json.gz', '.tar.gz', '.gz', '.tar', '.txt', '.json', '.csv', '.dat', '.out']):
-    if not out_file:
-        return None
-    if out_file.endswith(good_extension):
-        return out_file
-    for bad_extension in bad_extensions:
-        if out_file.endswith(bad_extension):
-            return out_file[:-len(bad_extension)] + good_extension
-    return out_file + good_extension
+################################################
+#############  Reading operations  #############
+################################################
 
 
 def read(input_file):
@@ -39,12 +33,51 @@ def read(input_file):
     return data
 
 
+def read_potential(variables=Variables, input_file=None, angle='deg', energy='ev'):
+    if not input_file:
+        return variables
+
+    if not os.path.exists(input_file):
+        print(f'File not found: {input_file}')
+        return variables
+
+    with open(input_file, 'r') as f:
+        lines = f.readlines()
+    positions = []
+    potentials = []
+    for line in lines:
+        if line.startswith('#'):
+            continue
+        position, potential = line.split()
+        positions.append(float(position))
+        potentials.append(float(potential))
+
+    if angle == 'deg':
+        positions = np.radians(positions)
+    elif angle == 'rad':
+        positions = np.array(positions)
+
+    if energy == 'mev':
+        potentials = np.array(potentials) * 1000
+    elif energy == 'ev':
+        potentials = np.array(potentials)
+
+    variables.grid = np.array(positions)
+    variables.gridsize = len(positions)
+    variables.potential_values = np.array(potentials)
+    return variables
+
+
+################################################
+############  Writting operations  #############
+################################################
+
+
 def write(data:Data, out_file=None):
     write_summary(data, out_file)
     write_json(data, out_file)
 
 
-# Write a human-readable output file
 def write_summary(data:Data, out_file=None):
     summary = ''
     spacer = ', '
@@ -94,6 +127,22 @@ def write_json(data:Data, out_file=None):
         print(f'Data saved at {out_file}')
 
 
+################################################
+##############  File operations  ###############
+################################################
+
+
+def fix_extension(out_file, good_extension, bad_extensions=['.json.gz', '.tar.gz', '.gz', '.tar', '.txt', '.json', '.csv', '.dat', '.out']):
+    if not out_file:
+        return None
+    if out_file.endswith(good_extension):
+        return out_file
+    for bad_extension in bad_extensions:
+        if out_file.endswith(bad_extension):
+            return out_file[:-len(bad_extension)] + good_extension
+    return out_file + good_extension
+
+
 def compress(filename, delete_original=True, original_extension='.json'):
     if not os.path.exists(filename):
         if not filename.endswith(original_extension):
@@ -129,9 +178,7 @@ def decompress(filename, delete_original=False, file_extension='.json.gz'):
         print(f'DECOMPRESSION ABORTED: {e}')
 
 
-################################################
-##############  From InputMaker  ###############
-################################################
+# From InputMaker
 
 
 def replace_line_with_keyword(new_text, keyword, filename):

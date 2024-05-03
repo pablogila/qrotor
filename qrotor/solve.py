@@ -45,8 +45,8 @@ def schrodinger(variables:Variables):
     solutions.min_potential = min(V)
 
     H = hamiltonian_matrix(variables)
-    # Solve eigenvalues with ARPACK in shift-inverse mode
     print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
+    # Solve eigenvalues with ARPACK in shift-inverse mode
     eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='LM', sigma=0, maxiter=10000)
     if any(eigenvalues) is None:
         print('WARNING:  Not all eigenvalues were found.\n')
@@ -114,5 +114,20 @@ def energies_OLD(variables:Variables, out_file=None):
 
 def grid_2pi(variables:Variables):
     variables.grid = np.linspace(0, 2*np.pi, variables.gridsize)
+    return variables
+
+
+def interpolate_potential(variables:Variables):
+    '''Interpolates the current potential_values to a new grid of size Variables.gridsize'''
+    V = variables.potential_values
+    grid = variables.grid
+    gridsize = variables.gridsize
+
+    new_grid = np.linspace(0, 2*np.pi, gridsize)
+    cubic_spline = CubicSpline(grid, V)
+    new_V = cubic_spline(new_grid)
+
+    variables.grid = new_grid
+    variables.potential_values = new_V
     return variables
 
