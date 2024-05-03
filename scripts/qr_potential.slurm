@@ -1,7 +1,7 @@
 #!/bin/bash                                                          
 #SBATCH --partition=general
 #SBATCH --qos=regular
-#SBATCH --job-name=potential_felix
+#SBATCH --job-name=qr_potential
 #SBATCH --cpus-per-task=16
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
@@ -10,4 +10,4 @@
 
 module load Python
 
-python3 potential_felix.py
+python3 qr_potential.py
