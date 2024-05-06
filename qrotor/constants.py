@@ -1,4 +1,5 @@
 from .common import *
+import numpy as np
 
 
 # Output file
@@ -15,11 +16,13 @@ if logdirname:
 m_H = 1.00784      # H mass
 m_D = 2.014102     # D mass
 # Methyl rotor radius
-r = 0.537  # in ¿meV?  # 1.035 angstroms for MAI... CHECK UNITS
-# Inertia. Should be 0.574 for H, according to titov2023
-B_Hydrogen = 1.0 / (2 * 3*(m_H * r**2))
-B_Deuterium = 1.0 / (2 * 3*(m_D * r**2))
-
+r = 0.537  # in ¿meV?  # Around 1.035 angstroms for MAI... CHECK UNITS
+# Inertia in meV.
+I_Hydrogen = 3 * (m_H * r**2)
+I_Deuterium = 3 * (m_D * r**2)
+# Rotational inertia in meV. Should be B=0.574 for H, according to titov2023
+B_Hydrogen = 1.0 / (2 * I_Hydrogen)
+B_Deuterium = 1.0 / (2 * I_Deuterium)
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_zero = [
