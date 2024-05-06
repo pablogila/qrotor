@@ -11,7 +11,7 @@ import json
 import time
 
 
-version = 'vQR.2024.05.03.1700'
+version = 'vQR.2024.05.06.1300'
 
 
 class Variables:
@@ -220,6 +220,18 @@ class Data:
         solutions = self.solutions
         paired_data = list(zip(variables, solutions))
         paired_data.sort(key=lambda pair: pair[0].gridsize)
+        self.variables, self.solutions = zip(*paired_data)
+        self.variables = list(self.variables)
+        self.solutions = list(self.solutions)
+        return self
+
+
+    def sort_by_atom_type(self, ordering:list=['H', 'D']):
+        '''Sorts the data by atom_type, according to a given ordering list, e.g. ['H', 'D'].'''
+        variables = self.variables
+        solutions = self.solutions
+        paired_data = list(zip(variables, solutions))
+        paired_data.sort(key=lambda pair: ordering.index(pair[0].atom_type))
         self.variables, self.solutions = zip(*paired_data)
         self.variables = list(self.variables)
         self.solutions = list(self.solutions)

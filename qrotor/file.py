@@ -84,7 +84,9 @@ def write_summary(data:Data, out_file=None):
     if data.version:
         summary += f'Data created on version {data.version}\n'
     if data.comment:
-        summary += data.comment + '\n\n'
+        summary += data.comment + '\n'
+    if data.version or data.comment:
+        summary += '\n------------------------------------\n\n'
 
     for i, variable in enumerate(data.variables):
         var_summary_dict = variable.summary()

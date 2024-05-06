@@ -39,6 +39,7 @@ def energy(data:Data):
                 ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
 
     unique_potentials = []
+    unique_atom_types = []
     for i, (variables, solutions) in enumerate(zip(data.variables, data.solutions)):
         V_color = V_colors[i % len(V_colors)]
         E_color = E_colors[i % len(E_colors)]
@@ -52,9 +53,12 @@ def energy(data:Data):
 
         # Plot eigenvalues
         if solutions.eigenvalues is not None:
+            text_offset = 3 * len(unique_atom_types)
+            if variables.atom_type not in unique_atom_types:
+                unique_atom_types.append(variables.atom_type)
             for j, energy in enumerate(solutions.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
-                plt.text(j%3*0.9, energy, f'E$_{j}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+                plt.text(j%3*0.9 + text_offset, energy, f'E$_{j}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             if len(data.atom_types()) > 1:
                 plt.plot([], [], color=E_color, label=f'{variables.atom_type} Energies')  # Add to legend
 
