@@ -1,0 +1,171 @@
+\documentclass[12pt,a4paper]{article}
+
+\PassOptionsToPackage{hyphens}{url} % \sloppy\url{}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=blue]{hyperref} % \href{https://www.youtube.com/}{Youtube} or \url{}
+\parindent =0cm % No indentation
+\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{multicol}
+
+% Quick pics
+\newcommand{\NEWPIC}[3]{
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=#2\textwidth]{pics/#1}
+    \caption{#3}
+    \label{#1}
+    \end{figure}
+    }
+% Without caption
+\newcommand{\NEWPICC}[2]{
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=#2\textwidth]{pics/#1}
+    \label{#1}
+    \end{figure}
+    }
+
+\title{Solving the energies for a hindered methyl rotor potential with the \textit{QRotor} Python package}
+\author{Pablo Gila-Herranz}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+
+\section*{Theoretical background}
+
+\subsection*{Hamiltonian for a hindered methyl rotor potential}
+
+A hindered methyl rotor potential can be expressed as a function of the angle, $\varphi$. Thus its energies are given by the 1-dimensional time-independent Schrödinger equation,
+$$
+H\Psi(\varphi)=E\Psi(\varphi)
+$$
+
+The hamiltonian depends of the kinetic rotational energy and the potential energy,
+\begin{equation} \label{hamiltonian}
+H = -B \frac{d^2}{d\varphi^2} + V(\varphi)
+\end{equation}
+
+The kinetic rotational energy depends on the inertia $I=mr^2$ of each hydrogen, as
+\begin{equation} \label{b}
+B = \frac{1}{2I}=\frac{1}{2\sum_{i}m_{i}r_{i}^{2}}
+\end{equation}
+
+In QRotor the potential can be introduced as a custom array. It can also be adjusted to a function such as follows, where the coefficients were previously obtained via electronic calculation methods \cite{titov2023},
+$$
+V(\varphi)=c_{0}+c_{1}\sin(3\varphi)+c_{2}\cos(3\varphi)+c_{3}\sin(6\varphi)+c_{4}\cos(6\varphi)
+$$
+
+
+\subsection*{Solving the time-independent Schrödinger equation with the Finite Difference Method}
+
+The time-independent Schrödinger equation is a second-order differential equation.
+It can be solved numerically by discretizing it with the finite difference method \cite{finite_diff_python}.
+This way, with a fine enough grid, the first derivative can be approximated as the slope,
+$$
+\frac{d\Psi}{d\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi}
+$$
+
+Following the same procedure, the second derivative is
+$$
+\frac{d^2\Psi}{d\varphi^2} = \nabla^2\Psi = \frac{\frac{\Psi(\varphi+\Delta\varphi)-\Psi(\varphi)}{\Delta\varphi} - \frac{\Psi(\varphi)-\Psi(\varphi-\Delta\varphi)}{\Delta\varphi}}{\Delta\varphi} = \frac{\Psi(\varphi+\Delta\varphi)-2\Psi(\varphi)+\Psi(\varphi-\Delta\varphi)}{\Delta\varphi^2}
+$$
+
+This second derivative can be expressed in matrix form as
+\[
+    \nabla^2 = \frac{1}{\Delta\varphi^2}
+    \left[ {\begin{array}{cccccc}
+    -2      &  1     &  0     & \cdots &  0    &  0      \\
+     1      & -2     &  1     &        &  0    &  0      \\
+     0      &  1     & \ddots &        &       &  \vdots \\
+     \vdots &        &        & \ddots &  1    &  0      \\
+     0      &  0     &        &  1     & -2    &  1      \\
+     0      &  0     & \cdots &  0     &  1    & -2      \\
+    \end{array} } \right]
+\]
+
+The multiplication of this operator and the wavefunction vector yields the second derivative at every grid point.
+To impose periodic boundary conditions, the first and last grid points are connected with an off-diagonal term,
+\[
+    \nabla^2 = \frac{1}{\Delta\varphi^2}
+    \left[ {\begin{array}{cccccc}
+    -2      &  1     &  0     & \cdots &  0    &  \bf{1} \\
+     1      & -2     &  1     &        &  0    &  0      \\
+     0      &  1     & \ddots &        &       &  \vdots \\
+     \vdots &        &        & \ddots &  1    &  0      \\
+     0      &  0     &        &  1     & -2    &  1      \\
+     \bf{1} &  0     & \cdots &  0     &  1    & -2      \\
+    \end{array} } \right]
+\]
+
+Finally, to build the potential energy operator, the energy at each grid point is set to equal the potential energy.
+This results in a diagonal matrix, with the potential energy at each point along the diagonal,
+\[
+    V(\varphi) =
+    \left[ {\begin{array}{cccc}
+    V(\varphi_1) &  0            &  \cdots &  0          \\
+     0           &  V(\varphi_2) &         &  \vdots     \\
+     \vdots      &               &  \ddots &   \vdots     \\
+     0           &   \cdots      &  \cdots & V(\varphi_N) \\
+    \end{array} } \right]
+\]
+
+This way, the energy eigenvalues of the hindered methyl rotor can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix from equation \eqref{hamiltonian}. QRotor solves this eigenvalue problem with the shift-inverted mode of the ARPACK package, provided through SciPy \cite{arpack}.
+
+
+\section*{Energy convergence}
+
+The convergence of the eigenvalues with the grid size was initially studied for a zero potential. These results were later confirmed for a known potential. The calculations were performed on DIPC's Hyperion cluster \cite{hyperion}, with 16 cores and a varying RAM size up to 1Tb for the largest grid sizes.\\
+
+A reasonable convergence of 3 decimals was observed for the energies with quantum numbers n=1 and n=2 with grids of 5,000 and 20,000 respectively. For a convergence of 4 decimals, for n=1 and n=2 the grids grow up to 50,000 and 200,000 respectively. The results from the convergence study are summarized in the following table. A comparison for a known potential \cite{titov2023} between a converged and an oversized grid is presented. Notice that the energy levels are labeled without degeneration for computational purposes.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ccclrr}
+        \textbf{Quantum n. (n)} & \textbf{Energy level} & \textbf{Decimal precision} & \textbf{Threshold} & \textbf{Gridsize} & \textbf{Runtime} \\
+        0  & 0     & -       & -        & -        & -         \\
+        1  & 1, 2  & 3   & 0.0004   & 5,000    & 0.6s      \\
+        1  & 1, 2  & 4  & 0.00004  & 50,000   & 3min      \\
+        2  & 3, 4  & 3   & 0.0004   & 20,000   & 13s       \\
+        2  & 3, 4  & 4  & 0.00004  & 200,000  & 1h 45min  \\
+        3  & 5, 6  & 3   & 0.0004   & 50,000   & 3min      \\
+        4  & 7, 8  & 3   & 0.0004   & 90,000   & 9min 30s  \\
+        5  & 9     & 3   & 0.0004   & 150,000  & 40min
+    \end{tabular}
+    \end{table}
+
+\NEWPICC{titov2023_2.png}{0.85}
+\NEWPICC{titov2023_op_2.png}{0.85}
+
+\NEWPICC{convergence_E2_00004.png}{1}
+
+
+\section*{Interpolation of custom potentials}
+
+QRotor reads input potentials as \texttt{*.dat} files, with angle and energy information.
+This potential data can be previously calculated with electronic structure methods. The potential can then be interpolated to a bigger grid size with \texttt{qr.solve.interpolate\_potential} to converge the energies. This method takes advantage of SciPy's Cubic Splines, where the interpolated curve is made of points with matching first and second derivatives \cite{cubicsplines}.\\
+
+To validate the interpolation method, a test potential with 360 points was capped to 36 points. An interpolation to its previous size proved to match the original potential. Further interpolation to a grid of size 5000 showed the expected convergence between the original and the capped potential up to the 3rd decimal place. The results are shown in the following figures.
+
+\NEWPICC{potential_felix_36.png}{1}
+\NEWPICC{potential_felix_360.png}{1}
+
+\NEWPICC{potential_felix_5000-from-36.png}{1}
+\NEWPICC{potential_felix_5000.png}{1}
+
+
+\section*{Isotopic effects}
+
+It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. A given potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
+
+\NEWPICC{potential_felix_HD.png}{1}
+
+
+\bibliographystyle{IEEEtran} % Estilo
+\bibliography{QRotor_refs} % documento .bib
+
+\end{document}
+
