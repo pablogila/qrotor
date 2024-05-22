@@ -11,7 +11,7 @@ import json
 import time
 
 
-version = 'vQR.2024.05.06.1300'
+version = 'vQR.2024.05.22.1600'
 
 
 class Variables:
@@ -21,6 +21,8 @@ class Variables:
         '''Generally 'H' or 'D'.'''
         self.searched_E_levels = None
         '''Number of energy levels to search for.'''
+        self.units = []
+        '''List containing the units in use, e.g. ['meV'].'''
 
         self.gridsize = None
         self.grid = None
@@ -46,6 +48,7 @@ class Variables:
             'comment': self.comment,
             'atom_type': self.atom_type,
             'searched_E_levels': self.searched_E_levels,
+            'units': self.units,
 
             'gridsize': self.gridsize,
             'grid': self.grid.tolist() if isinstance(self.grid, np.ndarray) else self.grid,

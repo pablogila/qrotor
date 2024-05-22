@@ -33,11 +33,17 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
+\thispagestyle{empty} % Quitar el formato en esta página
+\newpage
+\setcounter{page}{1} % Que no empiece la primera página en el índice
 
 
-\section*{Theoretical background}
+\section{Theoretical background}
 
-\subsection*{Hamiltonian for a hindered methyl rotor potential}
+
+\subsection{Hamiltonian for a hindered methyl rotor potential}
+
 
 A hindered methyl rotor potential can be expressed as a function of the angle, $\varphi$. Thus its energies are given by the 1-dimensional time-independent Schrödinger equation,
 $$
@@ -60,7 +66,8 @@ V(\varphi)=c_{0}+c_{1}\sin(3\varphi)+c_{2}\cos(3\varphi)+c_{3}\sin(6\varphi)+c_{
 $$
 
 
-\subsection*{Solving the time-independent Schrödinger equation with the Finite Difference Method}
+\subsection{Solving the time-independent Schrödinger equation with the Finite Difference Method}
+
 
 The time-independent Schrödinger equation is a second-order differential equation.
 It can be solved numerically by discretizing it with the finite difference method \cite{finite_diff_python}.
@@ -116,7 +123,11 @@ This results in a diagonal matrix, with the potential energy at each point along
 This way, the energy eigenvalues of the hindered methyl rotor can be obtained as the eigenvalues of the newly-constructed hamiltonian matrix from equation \eqref{hamiltonian}. QRotor solves this eigenvalue problem with the shift-inverted mode of the ARPACK package, provided through SciPy \cite{arpack}.
 
 
-\section*{Energy convergence}
+\section{Calibration}
+
+
+\subsection{Energy convergence}
+
 
 The convergence of the eigenvalues with the grid size was initially studied for a zero potential. These results were later confirmed for a known potential. The calculations were performed on DIPC's Hyperion cluster \cite{hyperion}, with 16 cores and a varying RAM size up to 1Tb for the largest grid sizes.\\
 
@@ -137,13 +148,14 @@ A reasonable convergence of 3 decimals was observed for the energies with quantu
     \end{tabular}
     \end{table}
 
-\NEWPICC{titov2023_2.png}{0.85}
-\NEWPICC{titov2023_op_2.png}{0.85}
+\NEWPICC{titov2023_2.png}{1}
+\NEWPICC{titov2023_op_2.png}{1}
 
 \NEWPICC{convergence_E2_00004.png}{1}
 
 
-\section*{Interpolation of custom potentials}
+\subsection{Interpolation of custom potentials}
+
 
 QRotor reads input potentials as \texttt{*.dat} files, with angle and energy information.
 This potential data can be previously calculated with electronic structure methods. The potential can then be interpolated to a bigger grid size to converge the energies. To do so, it takes advantage of SciPy's Cubic Splines, where the interpolated curve is made of points with matching first and second derivatives \cite{cubicsplines}.\\
@@ -153,27 +165,44 @@ To validate the interpolation method, a test potential with 360 points was cappe
 \newpage
 
 The original potential:
-\NEWPICC{potential_felix_360.png}{1}
+\NEWPICC{interpolate_potential_360.png}{1}
 And the capped potential:
-\NEWPICC{potential_felix_36.png}{1}
+\NEWPICC{interpolate_potential_36.png}{1}
 
 \newpage
 
 The original potential, interpolated to a grid of size 5000 to ensure a convergence up to the 3rd decimal position:
-\NEWPICC{potential_felix_5000.png}{1}
+\NEWPICC{interpolate_potential_5000.png}{1}
 As expected, the interpolated capped potential converges up to the 3rd decimal position:
-\NEWPICC{potential_felix_5000-from-36.png}{1}
+\NEWPICC{interpolate_potential_5000-from-36.png}{1}
 
 
-\section*{Isotopic effects}
-
-It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. A given potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
-
-\NEWPICC{potential_felix_HD.png}{1}
+\section{Preliminary results}
 
 
+\subsection{Isotopic effects}
+
+
+It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. A test potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
+
+\NEWPICC{interpolate_potential_HD.png}{1}
+
+
+\subsection{Custom potential: \texttt{potential\_felix.dat}}
+
+
+A custom potential provided by Félix was studied. The potential is given in eV, with a moment of inertia of 301.54 amu \AA$^2$. The rotational energy B was calculated as
+$$
+B = \frac{1}{2 I} = 1.658 \times 10^{-3} \text{eV}
+$$
+
+The potential was interpolated to a grid of size 200000 to ensure an optimal convergence. The results are shown in the following figure.
+
+
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{IEEEtran} % Estilo
 \bibliography{QRotor_refs} % documento .bib
+
 
 \end{document}
 

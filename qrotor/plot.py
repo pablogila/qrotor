@@ -24,14 +24,22 @@ def energy(data:Data):
 
     V_linestyle = '-'
 
-    xlabel = 'Angle / radians'
-    ylabel = 'Energy / meV'
+    units = data.variables[0].units
+    E_units = 'meV'
+    if 'meV' in units or 'mev' in units:
+        E_units = 'meV'
+    elif 'eV' in units or 'ev' in units:
+        E_units = 'eV'
+
+    title = data.comment
+    ylabel_text = f'Energy / {E_units}'
+    xlabel_text = 'Angle / radians'
 
     plt.figure(figsize=(10, 6))
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    plt.xlabel(xlabel_text)
+    plt.ylabel(ylabel_text)
 
-    plt.title(f'{data.comment}')
+    plt.title(title)
     if not data.comment or (len(data.variables) == 1 and data.variables[0].comment):
         plt.title(f'{data.variables[0].comment}')
 
@@ -78,8 +86,15 @@ def convergence(data:Data):
 
     converged_color_line = 'lightgrey'
 
+    units = data.variables[0].units
+    E_units = 'meV'
+    if 'meV' in units or 'mev' in units:
+        E_units = 'meV'
+    elif 'eV' in units or 'ev' in units:
+        E_units = 'eV'
+
     title = data.comment
-    ylabel_text = 'Energy / meV'
+    ylabel_text = f'Energy / {E_units}'
     xlabel_text = 'Grid Size'
     runtime_text = 'Runtime / s'
 
