@@ -120,20 +120,20 @@ This way, the energy eigenvalues of the hindered methyl rotor can be obtained as
 
 The convergence of the eigenvalues with the grid size was initially studied for a zero potential. These results were later confirmed for a known potential. The calculations were performed on DIPC's Hyperion cluster \cite{hyperion}, with 16 cores and a varying RAM size up to 1Tb for the largest grid sizes.\\
 
-A reasonable convergence of 3 decimals was observed for the energies with quantum numbers n=1 and n=2 with grids of 5,000 and 20,000 respectively. For a convergence of 4 decimals, for n=1 and n=2 the grids grow up to 50,000 and 200,000 respectively. The results from the convergence study are summarized in the following table. A comparison for a known potential \cite{titov2023} between a converged and an oversized grid is presented. Notice that the energy levels are labeled without degeneration for computational purposes.
+A reasonable convergence of 3 decimals was observed for the energies with quantum numbers n=1 and n=2 with grids of 5,000 and 20,000 respectively. For a convergence of 4 decimals, for n=1 and n=2 the grids grow up to 50,000 and 200,000 respectively. The results from the convergence study are summarized in the following table. A comparison for a known potential \cite{titov2023} between a converged and an oversized grid is presented. Notice that the eigenvalues in the outputs are labeled without degeneration for computational purposes.
 
 \begin{table}[H]
     \centering
     \begin{tabular}{ccclrr}
-        \textbf{Quantum n. (n)} & \textbf{Energy level} & \textbf{Decimal precision} & \textbf{Threshold} & \textbf{Gridsize} & \textbf{Runtime} \\
-        0  & 0     & -       & -        & -        & -         \\
-        1  & 1, 2  & 3   & 0.0004   & 5,000    & 0.6s      \\
-        1  & 1, 2  & 4  & 0.00004  & 50,000   & 3min      \\
-        2  & 3, 4  & 3   & 0.0004   & 20,000   & 13s       \\
-        2  & 3, 4  & 4  & 0.00004  & 200,000  & 1h 45min  \\
-        3  & 5, 6  & 3   & 0.0004   & 50,000   & 3min      \\
-        4  & 7, 8  & 3   & 0.0004   & 90,000   & 9min 30s  \\
-        5  & 9     & 3   & 0.0004   & 150,000  & 40min
+        \textbf{Quantum n. (n)} & \textbf{Eigenvalue} & \textbf{Decimal precision} & \textbf{Gridsize} & \textbf{Runtime} \\
+        0  & 0     & -   & -             & -         \\
+        1  & 1, 2  & 3   & 5,000         & 0.6s      \\
+        1  & 1, 2  & 4   & \bf{50,000}   & 3min      \\
+        2  & 3, 4  & 3   & 20,000        & 13s       \\
+        2  & 3, 4  & 4   & \bf{200,000}  & 1h 45min  \\
+        3  & 5, 6  & 3   & 50,000        & 3min      \\
+        4  & 7, 8  & 3   & 90,000        & 9min 30s  \\
+        5  & 9     & 3   & 150,000       & 40min
     \end{tabular}
     \end{table}
 
@@ -146,15 +146,23 @@ A reasonable convergence of 3 decimals was observed for the energies with quantu
 \section*{Interpolation of custom potentials}
 
 QRotor reads input potentials as \texttt{*.dat} files, with angle and energy information.
-This potential data can be previously calculated with electronic structure methods. The potential can then be interpolated to a bigger grid size with \texttt{qr.solve.interpolate\_potential} to converge the energies. This method takes advantage of SciPy's Cubic Splines, where the interpolated curve is made of points with matching first and second derivatives \cite{cubicsplines}.\\
+This potential data can be previously calculated with electronic structure methods. The potential can then be interpolated to a bigger grid size to converge the energies. To do so, it takes advantage of SciPy's Cubic Splines, where the interpolated curve is made of points with matching first and second derivatives \cite{cubicsplines}.\\
 
 To validate the interpolation method, a test potential with 360 points was capped to 36 points. An interpolation to its previous size proved to match the original potential. Further interpolation to a grid of size 5000 showed the expected convergence between the original and the capped potential up to the 3rd decimal place. The results are shown in the following figures.
 
-\NEWPICC{potential_felix_36.png}{1}
-\NEWPICC{potential_felix_360.png}{1}
+\newpage
 
-\NEWPICC{potential_felix_5000-from-36.png}{1}
+The original potential:
+\NEWPICC{potential_felix_360.png}{1}
+And the capped potential:
+\NEWPICC{potential_felix_36.png}{1}
+
+\newpage
+
+The original potential, interpolated to a grid of size 5000 to ensure a convergence up to the 3rd decimal position:
 \NEWPICC{potential_felix_5000.png}{1}
+As expected, the interpolated capped potential converges up to the 3rd decimal position:
+\NEWPICC{potential_felix_5000-from-36.png}{1}
 
 
 \section*{Isotopic effects}
