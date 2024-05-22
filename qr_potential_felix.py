@@ -11,7 +11,7 @@ variables.units = ['eV']
 I = 301.54  # amu Angstrom²
 variables.B = 1.0 / (2 * I)
 variables = qr.file.read_potential(variables, in_file)
-variables.gridsize = 5000 #200000
+variables.gridsize = 200000
 variables = qr.solve.interpolate_potential(variables)
 variables.comment = f'Calculated energies from {in_filename}'
 
