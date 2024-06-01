@@ -11,7 +11,7 @@ import json
 import time
 
 
-version = 'vQR.2024.05.22.1600'
+version = 'vQR.2024.06.02.1200'
 
 
 class Variables:
@@ -19,7 +19,7 @@ class Variables:
         self.comment = None
         self.atom_type = None
         '''Generally 'H' or 'D'.'''
-        self.searched_E_levels = None
+        self.searched_E_levels = 5
         '''Number of energy levels to search for.'''
         self.units = []
         '''List containing the units in use, e.g. ['meV'].'''
