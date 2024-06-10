@@ -34,17 +34,15 @@ m_H = m_H_amu * amu_to_kg
 m_D_amu = 2.014102  # D amu
 m_D = m_D_amu * amu_to_kg
 
-# Distance between Carbon and Hydrogen atoms
+# Distance between Carbon and Hydrogen atoms (from MAPI)
 distance_CH = 1.09285   # Angstroms
 distance_NH = 1.040263  # Angstroms
-
-# Angles between atoms:  C-C-H  or  N-C-H  etc.
+# Exterior angles between atoms:  C-C-H  or  N-C-H  etc (from MAPI)
 angle_CH_out = 108.7223   # degrees
 angle_NH_out = 111.29016  # degrees
 angle_CH = 180 - angle_CH_out
 angle_NH = 180 - angle_NH_out
-
-# Rotation radius
+# Rotation radius (calculated from distance and angle)
 r_amu = distance_CH * np.sin(np.deg2rad(angle_CH))
 r = r_amu * angstrom_to_m
 

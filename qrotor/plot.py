@@ -66,7 +66,7 @@ def energy(data:Data):
                 unique_atom_types.append(variables.atom_type)
             for j, energy in enumerate(solutions.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
-                plt.text(j%3*0.9 + text_offset, energy, f'E$_{j}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+                plt.text(j%3*0.9 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             if len(data.atom_types()) > 1:
                 plt.plot([], [], color=E_color, label=f'{variables.atom_type} Energies')  # Add to legend
 
