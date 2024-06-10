@@ -12,20 +12,48 @@ logdirfile = os.path.join(logdir, logname)
 if logdirname:
     os.makedirs(logdir, exist_ok=True)
 
-# Atomic masses
-m_H = 1.00784      # H amu (atomic mass units)
-m_D = 2.014102     # D amu
+# Conversion factors
+eV_to_J = 1.602176634e-19
+J_to_eV = 1 / eV_to_J
+angstrom_to_m = 1e-10
+m_to_angstrom = 1 / angstrom_to_m
+amu_to_kg = 1.66053906660e-27
+kg_to_amu = 1 / amu_to_kg
+eV_to_meV = 1000
+meV_to_eV = 0.001
 
-### TESTING ###    Bring your own units
-# Methyl rotor radius
-r = 0.537  # Supposed to be in Angstroms...  # I see about 1.035 angstroms for MAI... CHECK UNITS
-# Inertia
+# Physical constants
+h = 6.62607015e-34         # J s
+h_eVs = h * J_to_eV
+hbar = h / (2 * np.pi)  # J s
+hbar_eVs = h_eVs / (2 * np.pi)
+
+# Atomic masses
+m_H_amu = 1.00784   # H amu (atomic mass units)
+m_H = m_H_amu * amu_to_kg
+m_D_amu = 2.014102  # D amu
+m_D = m_D_amu * amu_to_kg
+
+# Distance between Carbon and Hydrogen atoms
+distance_CH = 1.09285   # Angstroms
+distance_NH = 1.040263  # Angstroms
+
+# Angles between atoms:  C-C-H  or  N-C-H  etc.
+angle_CH_out = 108.7223   # degrees
+angle_NH_out = 111.29016  # degrees
+angle_CH = 180 - angle_CH_out
+angle_NH = 180 - angle_NH_out
+
+# Rotation radius
+r_amu = distance_CH * np.sin(np.deg2rad(angle_CH))
+r = r_amu * angstrom_to_m
+
+# Inertia, SI units
 I_Hydrogen = 3 * (m_H * r**2)
 I_Deuterium = 3 * (m_D * r**2)
-# Rotational inertia. Should be B=0.574 for H, according to titov2023
-B_Hydrogen = 1.0 / (2 * I_Hydrogen)
-B_Deuterium = 1.0 / (2 * I_Deuterium)
-##############
+# Rotational energy. Should be B=0.574 meV for H, according to titov2023
+B_Hydrogen = ((hbar**2) / (2 * I_Hydrogen)) * J_to_eV
+B_Deuterium = ((hbar**2) / (2 * I_Deuterium)) * J_to_eV
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_zero = [
