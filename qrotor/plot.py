@@ -1,4 +1,4 @@
-from .common import *
+from .core import *
 
 
 def energies(data:Data):

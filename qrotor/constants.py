@@ -1,4 +1,4 @@
-from .common import *
+from .core import *
 import numpy as np
 
 
@@ -15,8 +15,8 @@ if logdirname:
 # Conversion factors
 eV_to_J = 1.602176634e-19
 J_to_eV = 1 / eV_to_J
-angstrom_to_m = 1e-10
-m_to_angstrom = 1 / angstrom_to_m
+A_to_m = 1e-10
+m_to_A = 1 / A_to_m
 amu_to_kg = 1.66053906660e-27
 kg_to_amu = 1 / amu_to_kg
 eV_to_meV = 1000
@@ -44,7 +44,7 @@ angle_CH = 180 - angle_CH_out
 angle_NH = 180 - angle_NH_out
 # Rotation radius (calculated from distance and angle)
 r_amu = distance_CH * np.sin(np.deg2rad(angle_CH))
-r = r_amu * angstrom_to_m
+r = r_amu * A_to_m
 
 # Inertia, SI units
 I_Hydrogen = 3 * (m_H * r**2)
