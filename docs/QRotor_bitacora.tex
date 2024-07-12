@@ -129,7 +129,7 @@ This way, the energy eigenvalues of the hindered methyl rotor can be obtained as
 \subsection{Energy convergence}
 
 
-The convergence of the eigenvalues with the grid size was initially studied for a zero potential. These results were later confirmed for a known potential. The calculations were performed on DIPC's Hyperion cluster \cite{hyperion}, with 16 cores and a varying RAM size up to 1Tb for the largest grid sizes.\\
+The convergence of the eigenvalues with the grid size was initially studied for a zero potential. These results were later confirmed for a known potential. The calculations were performed on DIPC's Hyperion cluster \cite{hyperion}, to take advantage of the RAM memory required to diagonalize the largest Hamiltonian matrices.\\
 
 A reasonable convergence of 3 decimals was observed for the energies with quantum numbers n=1 and n=2 with grids of 5,000 and 20,000 respectively. For a convergence of 4 decimals, for n=1 and n=2 the grids grow up to 50,000 and 200,000 respectively. The results from the convergence study are summarized in the following table. A comparison for a known potential \cite{titov2023} between a converged and an oversized grid is presented. Notice that the eigenvalues in the outputs are labeled without degeneration for computational purposes.
 
@@ -160,7 +160,7 @@ A reasonable convergence of 3 decimals was observed for the energies with quantu
 QRotor reads input potentials as \texttt{*.dat} files, with angle and energy information.
 This potential data can be previously calculated with electronic structure methods. The potential can then be interpolated to a bigger grid size to converge the energies. To do so, it takes advantage of SciPy's Cubic Splines, where the interpolated curve is made of points with matching first and second derivatives \cite{cubicsplines}.\\
 
-To validate the interpolation method, a test potential with 360 points was capped to 36 points. An interpolation to its previous size proved to match the original potential. Further interpolation to a grid of size 5000 showed the expected convergence between the original and the capped potential up to the 3rd decimal place. The results are shown in the following figures.
+To validate the interpolation method, a test potential (provided by Félix) with 360 points was capped to 36 points. An interpolation to its previous size proved to match the original potential. Further interpolation to a grid of size 5000 showed the expected convergence between the original and the capped potential up to the 3rd decimal place. The results are shown in the following figures.
 
 \newpage
 
@@ -177,31 +177,38 @@ As expected, the interpolated capped potential converges up to the 3rd decimal p
 \NEWPICC{interpolate_potential_5000-from-36.png}{1}
 
 
-\section{Preliminary results}
+\subsection{Reproducing known results from titov2023}
 
 
-\subsection{Isotopic effects}
+The energies for a known potential (ZIF-8) from titov2023 \cite{titov2023} were calculated with a converged grid of size 200000. The results were compared with the ones from the original paper:
+$$
+E_0=2.4871 \text{ meV, } E_1=2.8969 \text{ meV, } E_1'=2.8971 \text{ meV, } E_2=5.3214 \text{ meV, } E_2'=5.3222 \text{ meV}
+$$
+The energies present a good match. The results from the first potential from the paper are shown in the following figure.
+
+\NEWPICC{titov2023_1.png}{1}
 
 
-It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. A test potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
+\section{Preliminary results with a custom potential}
+
+
+Assuming that the potential energy provided by Félix was given in meV, the energies were calculated for a regular methyl ($B=0.645$) and a deuterated methyl ($B=0.323$.)\\
+
+It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. The test potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
 
 \NEWPICC{interpolate_potential_HD.png}{1}
 
-
-\subsection{Custom potential: \texttt{potential\_felix.dat}}
-
-
-A custom potential provided by Félix was studied. The potential is given in eV, with a moment of inertia of 301.54 amu \AA$^2$. The rotational energy B was calculated as
+However, for the previous calculation I assumed that the potential was given in meV, with the typical rotational energy of a methyl group. I suspected that this was the case, since the potential file from Félix mentioned that it was in eV, with a moment of inertia of 301.54 amu \AA$^2$, so that the rotational energy was
 $$
-B = \frac{1}{2 I} = 1.658 \times 10^{-3} \text{eV}
+B = \frac{\hbar^2}{2 I} = 6.93 \times 10^{-6} \text{eV}
 $$
-
-The potential was interpolated to a grid of size 200000 to ensure an optimal convergence. The results are shown in the following figure.
-
-\NEWPICC{potential_felix.png}{1}
+I suspect this was a mistake. The calculation with those values seems a bit off, as you can see in the following figure:
 
 
-\section{Comment on why to solve the eigenvalues for every new B value}
+\NEWPICC{potential_felix.png}{0.95}
+
+
+\section{Comment on why we need to solve the eigenvalues for every new B value}
 
 
 Note that from the Hamiltonian eq. \eqref{hamiltonian},
@@ -224,10 +231,10 @@ It can be deduced that B can theoretically be extracted by expressing the potent
     \end{array} } \right]
 \]
 
-But this matrix can not be solved numerically until \textit{B} is known.
-\textit{B} cannot simply be set to 1 and then multiply the Hamiltonian eigenvalues by the desired \textit{B}.\\
+But this matrix \textbf{can not be solved numerically} until \textit{B} is known.
+\textit{B} cannot simply be set to 1 and then multiply the Hamiltonian eigenvalues by the desired \textit{B}, since the diagonal terms can not be expressed as a reduced variable.\\
 
-Knowing the convergence criteria, it does not suppose any problem to just repeat the calculation for a new \textit{B} value.
+However, we know from the convergence criteria that it does not suppose any problem to just repeat the calculation for a new \textit{B} value. In a regular PC, convergence up to 3 decimal places can be achieved in less than a minute, which allows for a good iteration in our tests.\\
 
 
 \addcontentsline{toc}{section}{References}
