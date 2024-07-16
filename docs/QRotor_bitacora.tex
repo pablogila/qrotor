@@ -189,20 +189,36 @@ The energies present a good match. The results from the first potential from the
 \NEWPICC{titov2023_1.png}{1}
 
 
-\section{Preliminary results with a custom potential}
+\section{Preliminary results}
+
+\subsection{Isotope efects}
 
 
-Assuming that the potential energy provided by Félix was given in meV, the energies were calculated for a regular methyl ($B=0.645$) and a deuterated methyl ($B=0.323$.)\\
+Taking a test potential given in meV, the energies were calculated for a regular methyl ($B=0.645$) and a deuterated methyl ($B=0.323$.)\\
 
 It is expected from eq. \eqref{b} to observe a lower rotational energy as a result of an increase in the atomic masses. The isotopic effects on the energies of the hindered methyl rotor were studied by replacing the hydrogen mass with that of deuterium. The test potential was interpolated to a grid of size 200000 to ensure an optimal convergence. As expected, the results show a shift to lower energies for the deuterated counterpart.
 
 \NEWPICC{interpolate_potential_HD.png}{1}
 
-However, for the previous calculation I assumed that the potential was given in meV, with the typical rotational energy of a methyl group. I suspected that this was the case, since the potential file from Félix mentioned that it was in eV, with a moment of inertia of 301.54 amu \AA$^2$, so that the rotational energy was
+
+\subsection{Custom potential with a quasi-infinite barrier}
+
+Felix provided a potential in the eV range, with a huge inertia of of 301.54 amu \AA$^2$, so that the rotational energy was a small value,
 $$
 B = \frac{\hbar^2}{2 I} = 6.93 \times 10^{-6} \text{eV}
 $$
-I suspect this was a mistake. The calculation with those values seems a bit off, as you can see in the following figure:
+
+The result is the textbook harmonic potential for a rotor, which presents a degeneration in the ground energy level, since the rotation can be in both directions. The energy in this case would be given by
+$$
+E = \frac{1}{2} k_{\phi} x^2
+$$
+
+Felix told me something like 
+$$
+E=\sqrt{\frac{K_{\phi}}{I_{\text{something}}}}
+$$
+
+The results are shown in the following figure.
 
 
 \NEWPICC{potential_felix.png}{0.95}
@@ -211,13 +227,15 @@ I suspect this was a mistake. The calculation with those values seems a bit off,
 \section{Comment on why we need to solve the eigenvalues for every new B value}
 
 
+UPDATE: I should test with a reduced variable, $\rho=\frac{V_B}{B}$\\
+
 Note that from the Hamiltonian eq. \eqref{hamiltonian},
 
 \begin{equation*}
     H = -B \frac{d^2}{d\varphi^2} + V(\varphi)
 \end{equation*}
 
-It can be deduced that B can theoretically be extracted by expressing the potential as a reduced variable, so that
+It can be deduced that B can theoretically be extracted by expressing the potential as a reduced variable, so that (TYPO: B SHOULD DIVIDE ALL VALUES)
 
 \[
     \frac{H}{B} =
