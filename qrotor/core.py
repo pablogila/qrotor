@@ -11,7 +11,7 @@ import json
 import time
 
 
-version = 'v1.0.0'
+version = 'v1.0.1'
 
 
 class Variables:
