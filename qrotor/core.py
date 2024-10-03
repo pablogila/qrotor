@@ -9,9 +9,12 @@ import gzip
 import shutil
 import json
 import time
+import maat as mt
+# Get Maat from:
+# https://github.com/pablogila/Maat
 
 
-version = 'v1.0.1'
+version = 'v2.0.0'
 
 
 class Variables:
@@ -41,6 +44,8 @@ class Variables:
         '''If true, do not correct the potential offset.'''
         self.corrected_potential_offset = None
         '''Calculated offset potential.'''
+        self.save_eigenvectors: bool = False
+        '''Save or not the eigenvectors. Final file size will be bigger.'''
 
 
     def to_dict(self):
@@ -62,6 +67,11 @@ class Variables:
             'leave_potential_offset': self.leave_potential_offset,
             'corrected_potential_offset': self.corrected_potential_offset,
         }
+
+
+    def set_grid(self):
+        self.grid = np.linspace(0, 2*np.pi, self.gridsize)
+        return self
 
 
     def summary(self):
@@ -91,9 +101,11 @@ class Solutions:
         self.comment = None
         self.runtime = None
 
+        self.max_potential_B = None
         self.max_potential = None
         self.min_potential = None
 
+        self.eigenvalues_B = None
         self.eigenvalues = None
         self.eigenvectors = None
         self.energy_barrier = None
@@ -105,9 +117,11 @@ class Solutions:
             'comment': self.comment,
             'runtime': self.runtime,
 
-            'max_potential': self.max_potential,
+            'max_potential_B': self.max_potential_B.item() if isinstance(self.max_potential_B, np.float64) else self.max_potential_B,
+            'max_potential': self.max_potential.item() if isinstance(self.max_potential, np.float64) else self.max_potential,
             'min_potential': self.min_potential,
 
+            'eigenvalues_B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
             'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
             'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
             'energy_barrier': self.energy_barrier,
@@ -118,15 +132,17 @@ class Solutions:
     def summary(self):
         summary_dict = {
             'comment': self.comment,
+            'runtime': self.runtime,
 
             'eigenvalues': self.eigenvalues,
             'energy_barrier': self.energy_barrier,
             'first_transition': self.first_transition,
 
-            'max_potential': self.max_potential,
+            'max_potential': self.max_potential.item() if isinstance(self.max_potential, np.float64) else self.max_potential,
             'min_potential': self.min_potential,
 
-            'runtime': self.runtime,
+            'eigenvalues / B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
+            'max_potential / B': self.max_potential_B.item() if isinstance(self.max_potential_B, np.float64) else self.max_potential_B, 
         }
         return summary_dict
 
@@ -170,6 +186,12 @@ class Data:
         '''Energy Threshold for a convergence test.'''
         self.ideal_E = None
         '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
+
+
+    def discard_shit(self):
+        for solution in self.solutions:
+            solution.eigenvectors = None
+        return self
 
 
     def to_dict(self):

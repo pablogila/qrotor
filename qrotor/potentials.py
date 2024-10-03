@@ -8,6 +8,8 @@ def solve(variables:Variables):
         return titov2023(variables)
     elif variables.potential_name == 'zero':
         return zero(variables)
+    elif variables.potential_name == 'sine':
+        return sine(variables)
     elif variables.potential_name == 'test':
         return test(variables)
     else:
@@ -29,8 +31,14 @@ def zero(variables:Variables):
     return 0 * x
 
 
+def sine(variables:Variables):
+    x = variables.grid
+    C = variables.potential_constants
+    return C[0] * np.sin(3*x)
+
+
 def test(variables:Variables):
-    x = variables.x
+    x = variables.grid
     C = variables.potential_constants
     phase = 0
     return C[0] + C[1] * np.cos(3*x + phase)  # A potential as an array resulting from DFT calculations, etc.

@@ -190,9 +190,21 @@ def convergence(data:Data):
     plt.show()
 
 
-
-
-
+def reduced_energies(data):
+    '''Plots the reduced energy of the system, E/B, vs the reduced potential energy, V/B'''
+    number_of_levels = data.variables[0].searched_E_levels
+    x = []
+    for solution in data.solutions:
+        x.append(solution.max_potential_B)
+    for i in range(number_of_levels):
+        y = []
+        for solution in data.solutions:
+            y.append(solution.eigenvalues_B[i])
+        plt.plot(x, y, marker='', linestyle='-')
+    plt.xlabel('V$_{B}$ / B')
+    plt.ylabel('E / B')
+    plt.title(data.comment)
+    plt.show()
 
 
 

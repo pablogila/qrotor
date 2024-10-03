@@ -41,9 +41,6 @@ def schrodinger(variables:Variables):
 
     solutions = Solutions()
 
-    solutions.max_potential = max(V)
-    solutions.min_potential = min(V)
-
     H = hamiltonian_matrix(variables)
     print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
     # Solve eigenvalues with ARPACK in shift-inverse mode
@@ -53,19 +50,24 @@ def schrodinger(variables:Variables):
     else: print('Done.\n')
 
     solutions.eigenvalues = eigenvalues
-    solutions.eigenvectors = eigenvectors
+    solutions.max_potential = max(V)
+    solutions.min_potential = min(V)
     solutions.energy_barrier = max(V) - min(eigenvalues)
     solutions.first_transition = eigenvalues[1] - eigenvalues[0]
-
     solutions.runtime = time.time() - time_start
+    if variables.save_eigenvectors == True:
+        solutions.eigenvectors = eigenvectors
+
+    solutions.eigenvalues_B = eigenvalues / variables.B
+    solutions.max_potential_B = solutions.max_potential / variables.B
+    #solutions.max_potential_B = variables.potential_constants[0] / variables.B
     return solutions
 
 
 def energies(variables:Variables, out_file=None):
     data = Data()
 
-    if variables.potential_values is None:
-        variables = potential(variables)
+    variables = potential(variables)
 
     solutions = schrodinger(variables)
 

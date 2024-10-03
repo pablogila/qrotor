@@ -73,6 +73,18 @@ def read_potential(variables=Variables, input_file=None, angle='deg', energy='ev
 ################################################
 
 
+def save(data:Data, filename:str=None):
+    filename = 'out' if filename is None else filename
+    file = os.path.join(os.getcwd(), filename)
+    write(data, file)
+    compress(file)
+
+
+def save_essential(data:Data, filename:str=None):
+    data.discard_shit()
+    save(data, filename)
+
+
 def write(data:Data, out_file=None):
     write_summary(data, out_file)
     write_json(data, out_file)

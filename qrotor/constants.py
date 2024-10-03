@@ -9,30 +9,12 @@ logdirname = 'out'
 logdir = os.path.join(os.getcwd(), logdirname)
 logdirfile = os.path.join(logdir, logname)
 # Create logdir at import if it doesn't exist
-if logdirname:
-    os.makedirs(logdir, exist_ok=True)
-
-# Conversion factors
-eV_to_J = 1.602176634e-19
-J_to_eV = 1 / eV_to_J
-A_to_m = 1e-10
-m_to_A = 1 / A_to_m
-amu_to_kg = 1.66053906660e-27
-kg_to_amu = 1 / amu_to_kg
-eV_to_meV = 1000
-meV_to_eV = 0.001
-
-# Physical constants
-h = 6.62607015e-34         # J s
-h_eVs = h * J_to_eV
-hbar = h / (2 * np.pi)  # J s
-hbar_eVs = h_eVs / (2 * np.pi)
+#if logdirname:
+#    os.makedirs(logdir, exist_ok=True)
 
 # Atomic masses
-m_H_amu = 1.00784   # H amu (atomic mass units)
-m_H = m_H_amu * amu_to_kg
-m_D_amu = 2.014102  # D amu
-m_D = m_D_amu * amu_to_kg
+m_H = mt.mass_kg['H']
+m_D = mt.mass_kg['D']
 
 # Distance between Carbon and Hydrogen atoms (from MAPI)
 distance_CH = 1.09285   # Angstroms
@@ -43,15 +25,14 @@ angle_NH_out = 111.29016  # degrees
 angle_CH = 180 - angle_CH_out
 angle_NH = 180 - angle_NH_out
 # Rotation radius (calculated from distance and angle)
-r_amu = distance_CH * np.sin(np.deg2rad(angle_CH))
-r = r_amu * A_to_m
+r = distance_CH * np.sin(np.deg2rad(angle_CH)) * mt.A_to_m
 
 # Inertia, SI units
 I_Hydrogen = 3 * (m_H * r**2)
 I_Deuterium = 3 * (m_D * r**2)
 # Rotational energy. Should be B=0.574 meV for H, according to titov2023
-B_Hydrogen = ((hbar**2) / (2 * I_Hydrogen)) * J_to_eV
-B_Deuterium = ((hbar**2) / (2 * I_Deuterium)) * J_to_eV
+B_Hydrogen = ((mt.hbar**2) / (2 * I_Hydrogen)) * mt.J_to_eV
+B_Deuterium = ((mt.hbar**2) / (2 * I_Deuterium)) * mt.J_to_eV
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_zero = [
