@@ -14,7 +14,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v2.0.0'
+version = 'v2.1.0'
 
 
 class Variables:
@@ -37,13 +37,11 @@ class Variables:
         '''str: 'zero', 'titov2023', 'test'...'''
         self.potential_constants = None
         self.potential_values = None
-        #self.set_of_constants = None
-        #'''DEPRECATED.'''
 
-        self.leave_potential_offset = None
-        '''If true, do not correct the potential offset.'''
         self.corrected_potential_offset = None
         '''Calculated offset potential.'''
+        self.leave_potential_offset: bool = False
+        '''If true, do not correct the potential offset.'''
         self.save_eigenvectors: bool = False
         '''Save or not the eigenvectors. Final file size will be bigger.'''
 

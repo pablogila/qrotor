@@ -2,11 +2,35 @@ from .core import *
 
 
 ################################################
+##########  User-friendly operations  ##########
+################################################
+
+
+def save(data:Data, filename:str=None):
+    filename = 'out' if filename is None else filename
+    file = os.path.join(os.getcwd(), filename)
+    write(data, file)
+    compress(file)
+
+
+def save_essential(data:Data, filename:str=None):
+    data.discard_shit()
+    save(data, filename)
+
+
+def load(filename='out'):
+    file = os.path.join(os.getcwd(), filename)
+    data = read(file)
+    return data
+
+
+################################################
 #############  Reading operations  #############
 ################################################
 
 
 def read(input_file):
+    print(f'Loading data from {input_file} ...')
     is_compressed = False
     if input_file.endswith('.gz'):
         is_compressed = True
@@ -30,6 +54,8 @@ def read(input_file):
     for data_dict in data_list:
         data_obj = Data.from_dict(data_dict)
         data.add(data_obj)
+    
+    print('Data loaded succesfully')
     return data
 
 
@@ -71,18 +97,6 @@ def read_potential(variables=Variables, input_file=None, angle='deg', energy='ev
 ################################################
 ############  Writting operations  #############
 ################################################
-
-
-def save(data:Data, filename:str=None):
-    filename = 'out' if filename is None else filename
-    file = os.path.join(os.getcwd(), filename)
-    write(data, file)
-    compress(file)
-
-
-def save_essential(data:Data, filename:str=None):
-    data.discard_shit()
-    save(data, filename)
 
 
 def write(data:Data, out_file=None):
