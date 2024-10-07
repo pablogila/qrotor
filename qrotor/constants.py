@@ -57,5 +57,5 @@ test_variables.B = B_Hydrogen
 test_variables.searched_E_levels = 5
 test_variables.gridsize = 100
 test_variables.grid = np.linspace(0, 2*np.pi, test_variables.gridsize)
-test_variables.write_summary = True
+#test_variables.write_summary = True  ## DEPRECATED
 

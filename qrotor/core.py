@@ -14,7 +14,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v2.1.1'
+version = 'v2.2.0'
 
 
 class Variables:
@@ -166,8 +166,8 @@ class Data:
         self.solutions = []
 
         # Plotting
-        self.write_summary = None
-        '''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
+        #self.write_summary:bool = True ## DEPRECATED
+        #'''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
         self.separate_plots = None
         '''Do not merge plots with different atoms in the same figure.'''
         self.plot_label = None
@@ -201,7 +201,7 @@ class Data:
             'variables': [v.to_dict() for v in self.variables],
             'solutions': [s.to_dict() for s in self.solutions],
 
-            'write_summary': self.write_summary,
+            #'write_summary': self.write_summary,  ## DEPRECATED
             'separate_plots': self.separate_plots,
             'plot_label': self.plot_label,
             'plot_label_position': self.plot_label_position,
@@ -214,8 +214,43 @@ class Data:
         }
 
 
-    # Returns an array of grouped Data objects with the same potential_values and different atom_type
-    def group_by_potential(self):
+    def sort_by_potential_values(self):
+        grouped_data = self.group_by_potential_values()
+        data = Data()
+        for dataset in grouped_data:
+            data.add(dataset)
+        return data
+
+
+    def group_by_potential_values(self):
+        '''Returns an array of grouped Data objects with the same potential_values'''
+        '''Orders consecutively data with the same potential_values'''
+        print('Grouping Data by potential_values...')
+        grouped_data = []
+        for new_variables, new_solutions in zip(self.variables, self.solutions):
+            new_data = Data()
+            new_data.comment = self.comment
+            new_data.variables.append(new_variables)
+            new_data.solutions.append(new_solutions)
+            can_be_grouped = True
+            for group in grouped_data:
+                can_be_grouped = True
+                for variable in group.variables:
+                    if not np.array_equal(new_variables.potential_values, variable.potential_values):
+                        can_be_grouped = False
+                        break
+                if can_be_grouped:
+                    group.variables.append(new_variables)
+                    group.solutions.append(new_solutions)
+                    break
+            if can_be_grouped == True:
+                print('New potential_values found')
+                grouped_data.append(new_data)
+        return grouped_data
+
+
+    def group_by_potential_and_atoms(self):
+        '''Returns an array of grouped Data objects with the same potential_values and different atom_type'''
         grouped_data = []
         for new_variables, new_solutions in zip(self.variables, self.solutions):
             new_data = Data()
@@ -271,8 +306,8 @@ class Data:
                     self.version = value.version
                 if self.comment is None:
                     self.comment = value.variables[0].comment if value.comment is None else value.comment
-                if self.write_summary is None:
-                    self.write_summary = value.write_summary
+                #if self.write_summary is None:  ## DEPRECATED
+                #    self.write_summary = value.write_summary
                 if self.separate_plots is None:
                     self.separate_plots = value.separate_plots
                 if self.plot_label is None:

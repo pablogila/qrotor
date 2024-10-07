@@ -6,16 +6,16 @@ from .core import *
 ################################################
 
 
-def save(data:Data, filename:str=None):
+def save(data:Data, filename:str=None, verbose:bool=True):
     filename = 'out' if filename is None else filename
     file = os.path.join(os.getcwd(), filename)
-    write(data, file)
+    write(data, file, verbose)
     compress(file)
 
 
-def save_essential(data:Data, filename:str=None):
+def save_essential(data:Data, filename:str=None, verbose:bool=True):
     data.discard_shit()
-    save(data, filename)
+    save(data, filename, verbose)
 
 
 def load(filename='out'):
@@ -99,12 +99,12 @@ def read_potential(variables=Variables, input_file=None, angle='deg', energy='ev
 ################################################
 
 
-def write(data:Data, out_file=None):
-    write_summary(data, out_file)
+def write(data:Data, out_file=None, verbose:bool=True):
+    write_summary(data, out_file, verbose)
     write_json(data, out_file)
 
 
-def write_summary(data:Data, out_file=None):
+def write_summary(data:Data, out_file=None, verbose:bool=True):
     summary = ''
     spacer = ', '
     if data.version:
@@ -130,9 +130,10 @@ def write_summary(data:Data, out_file=None):
 
         summary += '\n------------------------------------\n\n'
 
-    print(summary)
+    if verbose:
+        print(summary)
 
-    if (data.write_summary is not False) and out_file:
+    if out_file:
         out_file = fix_extension(out_file, '.txt')
         with open(out_file, 'a') as f:
             f.write(summary)
@@ -140,6 +141,7 @@ def write_summary(data:Data, out_file=None):
 
 
 def write_json(data:Data, out_file=None):
+    print('Saving data as json...')
     if not out_file:
         return
     if not out_file.endswith('.json'):
@@ -172,6 +174,7 @@ def fix_extension(out_file, good_extension, bad_extensions=['.json.gz', '.tar.gz
 
 
 def compress(filename, delete_original=True, original_extension='.json'):
+    print('Compressing file...')
     if not os.path.exists(filename):
         if not filename.endswith(original_extension):
             filename = fix_extension(filename, original_extension)

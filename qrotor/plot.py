@@ -11,7 +11,7 @@ def energies(data:Data):
             energy(new_data)
     else:
         # Group data with the same potential_values and different atom_type
-        grouped_data = data.group_by_potential()
+        grouped_data = data.group_by_potential_and_atoms()
         for i, new_data in enumerate(grouped_data):
             energy(new_data)
 
