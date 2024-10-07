@@ -4,9 +4,20 @@ from . import file
 
 
 # Second derivative matrix, according to the finite difference method
-def laplacian_matrix(x):
+def laplacian_matrix_OLD(x):
     diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
-    laplacian_matrix = diags(diagonals, [0, -1, 1]).toarray()
+    laplacian_matrix = sparse.diags(diagonals, [0, -1, 1]).toarray()
+    # Periodic boundary conditions
+    laplacian_matrix[0, -1] = 1
+    laplacian_matrix[-1, 0] = 1
+    dx = x[1] - x[0]
+    laplacian_matrix /= dx**2
+    return laplacian_matrix
+
+
+def get_laplacian_matrix(x):
+    diagonals = [-2*np.ones(len(x)), np.ones(len(x)), np.ones(len(x))]
+    laplacian_matrix = sparse.spdiags(diagonals, [0, -1, 1], format='lil')
     # Periodic boundary conditions
     laplacian_matrix[0, -1] = 1
     laplacian_matrix[-1, 0] = 1
@@ -16,10 +27,11 @@ def laplacian_matrix(x):
 
 
 def hamiltonian_matrix(variables:Variables):
-    V = variables.potential_values
+    V = variables.potential_values.tolist()
+    potential = sparse.diags(V, format='lil')
     B = variables.B
     x = variables.grid
-    H = -B * laplacian_matrix(x) + diags(V)  # Original Hamiltonian
+    H = -B * get_laplacian_matrix(x) + potential  # Original Hamiltonian
     # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
 

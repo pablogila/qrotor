@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.sparse import diags
+from scipy import sparse
 from scipy.sparse.linalg import eigsh
 from scipy.interpolate import CubicSpline
 from copy import deepcopy
@@ -14,7 +14,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v2.2.0'
+version = 'v2.3.0'
 
 
 class Variables:
