@@ -14,7 +14,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v2.1.0'
+version = 'v2.1.1'
 
 
 class Variables:
@@ -39,7 +39,7 @@ class Variables:
         self.potential_values = None
 
         self.corrected_potential_offset = None
-        '''Calculated offset potential.'''
+        '''Calculated offset potential, V - min(V)'''
         self.leave_potential_offset: bool = False
         '''If true, do not correct the potential offset.'''
         self.save_eigenvectors: bool = False
@@ -187,6 +187,7 @@ class Data:
 
 
     def discard_shit(self):
+        '''Discard data that takes too much space'''
         for solution in self.solutions:
             solution.eigenvectors = None
         return self
