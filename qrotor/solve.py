@@ -26,7 +26,7 @@ def hamiltonian_matrix(variables:Variables):
 
 def potential(variables:Variables):
     V = potentials.solve(variables)
-    if variables.leave_potential_offset is not True:
+    if variables.correct_potential_offset is True:
         offset = min(V)
         V = V - offset
         variables.corrected_potential_offset = offset
@@ -44,7 +44,7 @@ def schrodinger(variables:Variables):
     H = hamiltonian_matrix(variables)
     print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
     # Solve eigenvalues with ARPACK in shift-inverse mode
-    eigenvalues, eigenvectors = eigsh(H, variables.searched_E_levels, which='LM', sigma=0, maxiter=10000)
+    eigenvalues, eigenvectors = eigsh(H, variables.E_levels, which='LM', sigma=0, maxiter=10000)
     if any(eigenvalues) is None:
         print('WARNING:  Not all eigenvalues were found.\n')
     else: print('Done.\n')

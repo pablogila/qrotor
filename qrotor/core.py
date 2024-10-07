@@ -14,204 +14,305 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v2.2.0'
+version = 'v3.0.0-dev1'
 
 
-class Variables:
-    def __init__(self):
-        self.comment = None
-        self.atom_type = None
-        '''Generally 'H' or 'D'.'''
-        self.searched_E_levels = 5
-        '''Number of energy levels to search for.'''
-        self.units = []
+'''
+Short description of the class methods used:
+get_*:  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
+set_*:  Sets a value, e.g. set_grid() sets the grid from the gridsize.
+'''
+
+
+class System:
+    def __init__(self,
+                 comment: str = None,
+                 E_levels: int = 5,
+                 units = None, # CHECK THAT THIS WORKS. previously = []
+                 atom_type: str = None,
+                 correct_potential_offset: bool = True,
+                 save_eigenvectors: bool = False,
+                 gridsize: int = None,
+                 grid = None,
+                 B: float = None,
+                 potential_name: str = None,
+                 potential_constants: list = None
+                 ):
+        ## Technical
+        self.comment: str = comment
+        self.E_levels: int = E_levels
+        '''Number of energy levels to be studied.'''
+        self.units = units
         '''List containing the units in use, e.g. ['meV'].'''
-
-        self.gridsize = None
-        self.grid = None
-        '''Grid, e.g. np.linspace(min, max, gridsize).'''
-        self.B = None
-        '''Inertia.'''
-
-        self.potential_name = None
-        '''str: 'zero', 'titov2023', 'test'...'''
-        self.potential_constants = None
-        self.potential_values = None
-
-        self.corrected_potential_offset = None
-        '''Calculated offset potential, V - min(V)'''
-        self.leave_potential_offset: bool = False
+        self.atom_type: str = atom_type
+        '''Generally 'H' or 'D'.'''
+        self.correct_potential_offset: bool = correct_potential_offset
         '''If true, do not correct the potential offset.'''
-        self.save_eigenvectors: bool = False
+        self.save_eigenvectors: bool = save_eigenvectors
         '''Save or not the eigenvectors. Final file size will be bigger.'''
+        ## Potential
+        self.gridsize: int = gridsize
+        self.grid = get_grid(gridsize) if grid is None else grid
+        '''Grid, e.g. np.linspace(min, max, gridsize).'''
+        self.B: float = get_B(atom_type) if B is None else B
+        '''Rotational inertia.'''
+        self.potential_name: str = potential_name
+        '''str: 'zero', 'titov2023', 'test'...'''
+        self.potential_constants: list = potential_constants
+        self.potential_values = None
+        self.potential_offset: float = None
+        '''min(V) if the potential is corrected as V - min(V)'''
+        self.min_potential: float = None
+        self.max_potential: float = None
+        self.max_potential_B: float = None
+        '''Reduced max_potential, in units of B.'''
+        # Energies
+        self.eigenvalues = None
+        self.eigenvalues_B = None
+        '''Reduced eigenvalues, in units of B.'''
+        self.eigenvectors = None
+        '''Eigenvectors, if save_eigenvectors is True. Beware of the file size.'''
+        self.energy_barrier: float = None
+        '''max(V) - min(eigenvalues)'''
+        self.first_transition: float = None
+        '''eigenvalues[1] - eigenvalues[0]'''
+        self.runtime: float = None
+        '''Time taken to solve the eigenvalues.'''
 
 
     def to_dict(self):
         return {
             'comment': self.comment,
-            'atom_type': self.atom_type,
-            'searched_E_levels': self.searched_E_levels,
+            'E_levels': self.E_levels,
             'units': self.units,
-
+            'atom_type': self.atom_type,
+            'correct_potential_offset': self.correct_potential_offset,
+            'save_eigenvectors': self.save_eigenvectors,
             'gridsize': self.gridsize,
             'grid': self.grid.tolist() if isinstance(self.grid, np.ndarray) else self.grid,
             'B': self.B,
-
             'potential_name': self.potential_name,
             'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
-            #'set_of_constants': self.set_of_constants.tolist() if isinstance(self.set_of_constants, np.ndarray) else self.set_of_constants,
             'potential_values': self.potential_values.tolist() if isinstance(self.potential_values, np.ndarray) else self.potential_values,
-            
-            'leave_potential_offset': self.leave_potential_offset,
-            'corrected_potential_offset': self.corrected_potential_offset,
+            'potential_offset': self.corrected_potential_offset,
+            'min_potential': self.min_potential,
+            'max_potential': self.max_potential,
+            'max_potential_B': self.max_potential_B,
+            # Energies
+            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
+            'eigenvalues_B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
+            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
+            'energy_barrier': self.energy_barrier,
+            'first_transition': self.first_transition,
+            'runtime': self.runtime,
         }
 
 
-    def set_grid(self):
-        self.grid = np.linspace(0, 2*np.pi, self.gridsize)
-        return self
-
-
     def summary(self):
-        summary_dict = {
+        return {
             'comment': self.comment,
+            'runtime': self.runtime,
             'atom_type': self.atom_type,
             'gridsize': self.gridsize,
             'B': self.B,
             'potential_name': self.potential_name,
             'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
-            'corrected_potential_offset': self.corrected_potential_offset,
+            'potential_offset': self.corrected_potential_offset,
+            'min_potential': self.min_potential,
+            'max_potential': self.max_potential,
+            'max_potential / B': self.max_potential_B,
+            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
+            'eigenvalues / B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
+            'energy_barrier': self.energy_barrier,
+            'first_transition': self.first_transition,
         }
-        return summary_dict
 
 
     @classmethod
     def from_dict(cls, data):
         obj = cls()
         obj.__dict__.update(data)
-        obj.grid = np.array(obj.grid)
-        obj.potential_values = np.array(obj.potential_values)
+        obj.grid = np.array(data['grid']) if 'grid' in data else None
+        obj.potential_constants = np.array(data['potential_constants']) if 'potential_constants' in data else None
+        obj.potential_values = np.array(data['potential_values']) if 'potential_values' in data else None
+        obj.eigenvalues = np.array(data['eigenvalues']) if 'eigenvalues' in data else None
+        obj.eigenvalues_B = np.array(data['eigenvalues_B']) if 'eigenvalues_B' in data else None
+        obj.eigenvectors = np.array(data['eigenvectors']) if 'eigenvectors' in data else None
         return obj
 
 
-class Solutions:
-    def __init__(self):
-        self.comment = None
-        self.runtime = None
+    def get_B(atom_type:str):
+        '''Returns the rotational inertia of the atom_type.'''
+        if atom_type in  ['H','h', 'H1', 'h1', 'hydrogen', 'Hydrogen', 'HYDROGEN']:
+            return mt.constants.B_Hydrogen
+        elif atom_type in ['D','d', 'H2', 'h2', 'deuterium', 'Deuterium', 'DEUTERIUM']:
+            return mt.constants.B_Deuterium
+        else:
+            return None
+    def set_B(self):
+        self.B = get_B(self.atom_type)
+        return self
 
-        self.max_potential_B = None
-        self.max_potential = None
-        self.min_potential = None
 
-        self.eigenvalues_B = None
-        self.eigenvalues = None
-        self.eigenvectors = None
-        self.energy_barrier = None
-        self.first_transition = None
+    def get_grid(gridsize:int):
+        if gridsize is None:
+            return None
+        return np.linspace(0, 2*np.pi, gridsize)
+    def set_grid(self):
+        self.grid = get_grid(self.gridsize)
+        return self
+
+
+class Plotting:
+    def __init__(self,
+                 title: str = None,
+                 plot_label = None,
+                 plot_label_position: tuple = None,
+                 separate_plots: bool = None,
+                 check_E_level: int = None,
+                 check_E_diff: bool = None,
+                 check_E_threshold: float = None,
+                 ideal_E: float = None
+                 ):
+        self.title: str = title
+        self.plot_label = plot_label
+        '''Can be a bool, or a str for a label title.'''
+        self.plot_label_position: tuple = plot_label_position
+        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
+        self.separate_plots: bool = separate_plots
+        '''Do not merge plots with different atoms in the same figure.'''
+        # Convergence tests
+        self.check_E_level: int = check_E_level
+        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
+        self.check_E_diff: bool = check_E_diff
+        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
+        self.check_E_threshold: float = check_E_threshold
+        '''Energy Threshold for a convergence test.'''
+        self.ideal_E: float = ideal_E
+        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
 
 
     def to_dict(self):
         return {
-            'comment': self.comment,
-            'runtime': self.runtime,
-
-            'max_potential_B': self.max_potential_B.item() if isinstance(self.max_potential_B, np.float64) else self.max_potential_B,
-            'max_potential': self.max_potential.item() if isinstance(self.max_potential, np.float64) else self.max_potential,
-            'min_potential': self.min_potential,
-
-            'eigenvalues_B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
-            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
-            'energy_barrier': self.energy_barrier,
-            'first_transition': self.first_transition,
+            'plot_label': self.plot_label,
+            'plot_label_position': self.plot_label_position,
+            'separate_plots': self.separate_plots,
+            'check_E_level': self.check_E_level,
+            'check_E_diff': self.check_E_diff,
+            'check_E_threshold': self.check_E_threshold,
+            'ideal_E': self.ideal_E
         }
-
-
-    def summary(self):
-        summary_dict = {
-            'comment': self.comment,
-            'runtime': self.runtime,
-
-            'eigenvalues': self.eigenvalues,
-            'energy_barrier': self.energy_barrier,
-            'first_transition': self.first_transition,
-
-            'max_potential': self.max_potential.item() if isinstance(self.max_potential, np.float64) else self.max_potential,
-            'min_potential': self.min_potential,
-
-            'eigenvalues / B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
-            'max_potential / B': self.max_potential_B.item() if isinstance(self.max_potential_B, np.float64) else self.max_potential_B, 
-        }
-        return summary_dict
 
 
     @classmethod
     def from_dict(cls, data):
         obj = cls()
         obj.__dict__.update(data)
-        # obj.eigenvalues = np.array(obj.eigenvalues) if isinstance(obj.eigenvalues, list) else obj.eigenvalues
-        # obj.eigenvalues = np.array(obj.eigenvalues)
-        # obj.eigenvectors = np.array(obj.eigenvectors) if isinstance(obj.eigenvectors, list) else obj.eigenvectors
-        obj.eigenvectors = np.array(obj.eigenvectors)
         return obj
 
 
 class Data:
-    def __init__(self):
-
+    def __init__(self,
+                 comment: str = None,
+                 ):
         self.version = version
-        self.comment = None
-
-        self.variables = []
-        self.solutions = []
-
-        # Plotting
-        #self.write_summary:bool = True ## DEPRECATED
-        #'''Write an additional .txt file with a summary of the calculations. Set it to False to disable it.'''
-        self.separate_plots = None
-        '''Do not merge plots with different atoms in the same figure.'''
-        self.plot_label = None
-        '''Can be a bool, or a str for a label title.'''
-        self.plot_label_position = None
-        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
-        
-        # Convergence tests
-        self.check_E_level = None
-        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
-        self.check_E_diff = None
-        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
-        self.check_E_threshold = None
-        '''Energy Threshold for a convergence test.'''
-        self.ideal_E = None
-        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
-
-
-    def discard_shit(self):
-        '''Discard data that takes too much space'''
-        for solution in self.solutions:
-            solution.eigenvectors = None
-        return self
+        self.comment: str = comment
+        self.system = []
+        '''List of System objects.'''
+        self.plotting = Plotting()
 
 
     def to_dict(self):
         return {
             'version': self.version,
             'comment': self.comment,
-
-            'variables': [v.to_dict() for v in self.variables],
-            'solutions': [s.to_dict() for s in self.solutions],
-
-            #'write_summary': self.write_summary,  ## DEPRECATED
-            'separate_plots': self.separate_plots,
-            'plot_label': self.plot_label,
-            'plot_label_position': self.plot_label_position,
-
-            # Convergence tests
-            'check_E_level': self.check_E_level,
-            'check_E_diff': self.check_E_diff,
-            'check_E_threshold': self.check_E_threshold,
-            'ideal_E': self.ideal_E,
+            'system': [s.to_dict() for s in self.system],
+            'plotting': self.plotting.to_dict()
         }
+
+
+    @classmethod
+    def from_dict(cls, data):
+        obj = cls()
+        obj.__dict__.update(data)
+        obj.system = [System.from_dict(s) for s in data['system']]
+        obj.plotting = Plotting.from_dict(data['plotting'])
+        return obj
+
+
+    def add(self, *args):
+        for value in args:
+            if isinstance(value, Data):
+                self.system.extend(value.system)
+                self.version = value.version if len(self.set) == 0 else self.version
+                self.comment = value.comment if self.comment is None else self.comment
+                self.plotting.title = value.plotting.title if self.plotting.title is None else self.plotting.title
+                self.plotting.plot_label = value.plotting.plot_label if self.plotting.plot_label is None else self.plotting.plot_label
+                self.plotting.plot_label_position = value.plotting.plot_label_position if self.plotting.plot_label_position is None else self.plotting.plot_label_position
+                self.plotting.separate_plots = value.plotting.separate_plots if self.plotting.separate_plots is None else self.plotting.separate_plots
+                self.plotting.check_E_level = value.plotting.check_E_level if self.plotting.check_E_level is None else self.plotting.check_E_level
+                self.plotting.check_E_diff = value.plotting.check_E_diff if self.plotting.check_E_diff is None else self.plotting.check_E_diff
+                self.plotting.check_E_threshold = value.plotting.check_E_threshold if self.plotting.check_E_threshold is None else self.plotting.check_E_threshold
+                self.plotting.ideal_E = value.plotting.ideal_E if self.plotting.ideal_E is None else self.plotting.ideal_E
+            elif isinstance(value, System):
+                self.set.append(value)
+            else:
+                raise TypeError(f'Data.add() can only add Data and/or System objects, not {type(value)}.')
+
+
+    def discard_shit(self):
+        '''Discard data that takes too much space'''
+        for dataset in self.system:
+            dataset.eigenvectors = None
+            dataset.potential_values = None
+            dataset.grid = None
+            if dataset.eigenvalues is not None:
+                dataset.eigenvalues_B = None
+            if dataset.max_potential is not None:
+                dataset.max_potential = None
+        return self
+
+
+    def get_energies(self):
+        energies = []
+        for i in self.system:
+            if all(i.eigenvalues):
+                energies.append(i.eigenvalues)
+            else:
+                energies.append(None)
+        return energies
+
+
+    def get_gridsizes(self):
+        gridsizes = []
+        for i in self.system:
+            if i.gridsize:
+                gridsizes.append(i.gridsize)
+            else:
+                gridsizes.append(None)
+        return gridsizes
+
+
+    def get_runtimes(self):
+        runtimes = []
+        for i in self.solutions:
+            if i.runtime:
+                runtimes.append(i.runtime)
+            else:
+                runtimes.append(None)
+        return runtimes
+
+
+    def get_atom_types(self):
+        atom_types = []
+        for i in self.variables:
+            if i.atom_type not in atom_types:
+                atom_types.append(i.atom_type)
+        return atom_types
+
+
+
+########  ME LLEGO POR AQUÍ ################################################################
 
 
     def sort_by_potential_values(self):
@@ -297,47 +398,10 @@ class Data:
         return self
 
 
-    def add(self, *args):
-        for value in args:
-            if isinstance(value, Data):
-                self.variables.extend(value.variables)
-                self.solutions.extend(value.solutions)
-                if len(self.solutions) == 0:
-                    self.version = value.version
-                if self.comment is None:
-                    self.comment = value.variables[0].comment if value.comment is None else value.comment
-                #if self.write_summary is None:  ## DEPRECATED
-                #    self.write_summary = value.write_summary
-                if self.separate_plots is None:
-                    self.separate_plots = value.separate_plots
-                if self.plot_label is None:
-                    self.plot_label = value.plot_label
-                if self.plot_label_position is None:
-                    self.plot_label_position = value.plot_label_position
-                if self.check_E_level is None:
-                    self.check_E_level = value.check_E_level
-                if self.check_E_diff is None:
-                    self.check_E_diff = value.check_E_diff
-                if self.check_E_threshold is None:
-                    self.check_E_threshold = value.check_E_threshold
-                if self.ideal_E is None:
-                    self.ideal_E = value.ideal_E
-            elif isinstance(value, Variables):
-                self.variables.append(value)
-            elif isinstance(value, Solutions):
-                self.solutions.append(value)
-            else:
-                raise TypeError(f'Data.add() can only add Data, Variables and Solutions objects, not {type(value)}.')
 
 
-    def energies(self):
-        energies = []
-        for solution in self.solutions:
-            if all(solution.eigenvalues):
-                energies.append(solution.eigenvalues)
-            else:
-                energies.append(None)
-        return energies
+
+    
 
 
     def get_ideal_E(self):
@@ -357,40 +421,3 @@ class Data:
             print("WARNING: get_ideal_E() only valid for potential_name='zero'")
             return
     
-
-    def gridsizes(self):
-        gridsizes = []
-        for variable in self.variables:
-            if variable.gridsize:
-                gridsizes.append(variable.gridsize)
-            else:
-                gridsizes.append(None)
-        return gridsizes
-    
-
-    def runtimes(self):
-        runtimes = []
-        for solution in self.solutions:
-            if solution.runtime:
-                runtimes.append(solution.runtime)
-            else:
-                runtimes.append(None)
-        return runtimes
-
-
-    def atom_types(self):
-        atom_types = []
-        for variable in self.variables:
-            if variable.atom_type not in atom_types:
-                atom_types.append(variable.atom_type)
-        return atom_types
-
-    
-    @classmethod
-    def from_dict(cls, data):
-        obj = cls()
-        obj.__dict__.update(data)
-        obj.variables = [Variables.from_dict(v) for v in data['variables']]
-        obj.solutions = [Solutions.from_dict(s) for s in data['solutions']]
-        return obj
-
