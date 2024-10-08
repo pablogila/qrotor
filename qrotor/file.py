@@ -1,4 +1,7 @@
 from .core import *
+import os
+import pickle
+import gzip
 
 
 ################################################
@@ -6,23 +9,28 @@ from .core import *
 ################################################
 
 
-def save(data:Data, filename:str=None, verbose:bool=True):
+def save(data:Data, filename:str=None, discard_shit:bool=False,  verbose:bool=True):
+    '''Save the data in the current working directory as a binary *.qrotor file.'''
     filename = 'out' if filename is None else filename
     file = os.path.join(os.getcwd(), filename)
-    write(data, file, verbose)
-    compress(file)
+    if discard_shit:
+        data = data.discard_shit()
+    with open(file, 'wb') as f:
+        pickle.dump(data, f)
+    with open(file, 'rb') as f_in, gzip.open(file + '.qrotor', 'wb') as f_out:
+        f_out.writelines(f_in)
+    if verbose:
+        print(f"Data saved and compressed to {file}.qrotor")
 
 
-def save_essential(data:Data, filename:str=None, verbose:bool=True):
-    data.discard_shit()
-    save(data, filename, verbose)
-
-
-def load(filename='out'):
+def load(filename:str='out'):
     file = os.path.join(os.getcwd(), filename)
-    data = read(file)
-    return data
-
+    with gzip.open(input_file, 'rt') as f:
+        data = pickle.load(f)
+    if isinstance(data, Data):
+        return data
+    else:
+        raise ValueError("Data integrity is compromised. Loading aborted.")
 
 ################################################
 #############  Reading operations  #############

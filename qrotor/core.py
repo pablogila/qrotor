@@ -14,7 +14,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0-dev1'
+version = 'v3.0.0-dev2'
 
 
 '''
@@ -266,10 +266,6 @@ class Data:
             dataset.eigenvectors = None
             dataset.potential_values = None
             dataset.grid = None
-            if dataset.eigenvalues is not None:
-                dataset.eigenvalues_B = None
-            if dataset.max_potential is not None:
-                dataset.max_potential = None
         return self
 
 
