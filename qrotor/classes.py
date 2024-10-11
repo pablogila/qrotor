@@ -1,26 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.sparse import diags
-from scipy.sparse.linalg import eigsh
-from scipy.interpolate import CubicSpline
 from copy import deepcopy
-import os
-import gzip
-import shutil
-import json
-import time
 import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0-dev2'
+version = 'v3.0.0-dev3'
 
 
 '''
 Short description of the class methods used:
 get_*:  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
 set_*:  Sets a value, e.g. set_grid() sets the grid from the gridsize.
+to_*:   Converts to whatever
+from_*: Converts from whatever
 '''
 
 
@@ -142,13 +136,13 @@ class System:
 
 
     def get_B(atom_type:str):
-        '''Returns the rotational inertia of the atom_type.'''
+        '''Returns the rotational inertia of the atom_type. The hydrogen one by default.'''
         if atom_type in  ['H','h', 'H1', 'h1', 'hydrogen', 'Hydrogen', 'HYDROGEN']:
             return mt.constants.B_Hydrogen
         elif atom_type in ['D','d', 'H2', 'h2', 'deuterium', 'Deuterium', 'DEUTERIUM']:
             return mt.constants.B_Deuterium
         else:
-            return None
+            return mt.constants.B_Hydrogen
     def set_B(self):
         self.B = get_B(self.atom_type)
         return self

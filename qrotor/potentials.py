@@ -1,5 +1,6 @@
-from .core import *
+from .classes import *
 from . import constants
+import numpy as np
 
 
 # Redirect to the desired potential energy function

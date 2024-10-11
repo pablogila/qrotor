@@ -1,12 +1,17 @@
-from .core import *
+from .classes import *
 from . import potentials
 from . import file
+import time
+import numpy as np
+from copy import deepcopy
+from scipy import sparse
+from scipy.interpolate import CubicSpline
 
 
 # Second derivative matrix, according to the finite difference method
-def laplacian_matrix(x):
-    diagonals = [-2*np.ones(len(x)), np.ones(len(x)-1), np.ones(len(x)-1)]
-    laplacian_matrix = diags(diagonals, [0, -1, 1]).toarray()
+def get_laplacian_matrix(x):
+    diagonals = [-2*np.ones(len(x)), np.ones(len(x)), np.ones(len(x))]
+    laplacian_matrix = sparse.spdiags(diagonals, [0, -1, 1], format='lil')
     # Periodic boundary conditions
     laplacian_matrix[0, -1] = 1
     laplacian_matrix[-1, 0] = 1
@@ -16,17 +21,18 @@ def laplacian_matrix(x):
 
 
 def hamiltonian_matrix(variables:Variables):
-    V = variables.potential_values
+    V = variables.potential_values.tolist()
+    potential = sparse.diags(V, format='lil')
     B = variables.B
     x = variables.grid
-    H = -B * laplacian_matrix(x) + diags(V)  # Original Hamiltonian
+    H = -B * get_laplacian_matrix(x) + potential  # Original Hamiltonian
     # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
 
 
 def potential(variables:Variables):
     V = potentials.solve(variables)
-    if variables.correct_potential_offset is True:
+    if variables.leave_potential_offset is not True:
         offset = min(V)
         V = V - offset
         variables.corrected_potential_offset = offset
@@ -44,7 +50,7 @@ def schrodinger(variables:Variables):
     H = hamiltonian_matrix(variables)
     print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
     # Solve eigenvalues with ARPACK in shift-inverse mode
-    eigenvalues, eigenvectors = eigsh(H, variables.E_levels, which='LM', sigma=0, maxiter=10000)
+    eigenvalues, eigenvectors = sparse.eigsh(H, variables.searched_E_levels, which='LM', sigma=0, maxiter=10000)
     if any(eigenvalues) is None:
         print('WARNING:  Not all eigenvalues were found.\n')
     else: print('Done.\n')

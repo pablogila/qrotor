@@ -1,5 +1,8 @@
-from .core import *
+from .classes import *
 import numpy as np
+import maat as mt
+# Get Maat from:
+# https://github.com/pablogila/Maat
 
 
 # Output file

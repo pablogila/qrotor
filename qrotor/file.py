@@ -1,7 +1,9 @@
-from .core import *
+from .classes import *
 import os
 import pickle
 import gzip
+import shutil
+import json
 
 
 ################################################

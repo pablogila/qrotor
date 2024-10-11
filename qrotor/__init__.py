@@ -1,4 +1,4 @@
-from .core import *
+from .classes import *
 from .constants import *
 from . import potentials
 from . import file
