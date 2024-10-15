@@ -1,9 +1,9 @@
 from .classes import *
 from . import potentials
 from . import file
+from copy import deepcopy
 import time
 import numpy as np
-from copy import deepcopy
 from scipy import sparse
 from scipy.interpolate import CubicSpline
 
@@ -20,88 +20,78 @@ def get_laplacian_matrix(x):
     return laplacian_matrix
 
 
-def hamiltonian_matrix(variables:Variables):
-    V = variables.potential_values.tolist()
+def hamiltonian_matrix(system:System):
+    V = system.potential_values.tolist()
     potential = sparse.diags(V, format='lil')
-    B = variables.B
-    x = variables.grid
+    B = system.B
+    x = system.grid
     H = -B * get_laplacian_matrix(x) + potential  # Original Hamiltonian
     # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
     return H
 
 
-def potential(variables:Variables):
-    V = potentials.solve(variables)
-    if variables.leave_potential_offset is not True:
+def potential(system:System):
+    V = potentials.solve(system)
+    if system.correct_potential_offset is True:
         offset = min(V)
         V = V - offset
-        variables.corrected_potential_offset = offset
-    variables.potential_values = V
-    return variables
+        system.corrected_potential_offset = offset
+    system.potential_values = V
+    return system
 
 
-def schrodinger(variables:Variables):
+def schrodinger(system:System):
     time_start = time.time()
-
-    V = variables.potential_values
-
-    solutions = Solutions()
-
-    H = hamiltonian_matrix(variables)
-    print(f'Solving Hamiltonian matrix of size {variables.gridsize}...')
-    # Solve eigenvalues with ARPACK in shift-inverse mode
-    eigenvalues, eigenvectors = sparse.eigsh(H, variables.searched_E_levels, which='LM', sigma=0, maxiter=10000)
+    V = system.potential_values
+    H = hamiltonian_matrix(system)
+    print(f'Solving Hamiltonian matrix of size {system.gridsize}...')
+    # Solve eigenvalues with ARPACK in shift-inverse mode, with a sparse matrix
+    eigenvalues, eigenvectors = sparse.linalg.eigsh(H, system.E_levels, which='LM', sigma=0, maxiter=10000)
     if any(eigenvalues) is None:
         print('WARNING:  Not all eigenvalues were found.\n')
     else: print('Done.\n')
-
-    solutions.eigenvalues = eigenvalues
-    solutions.max_potential = max(V)
-    solutions.min_potential = min(V)
-    solutions.energy_barrier = max(V) - min(eigenvalues)
-    solutions.first_transition = eigenvalues[1] - eigenvalues[0]
-    solutions.runtime = time.time() - time_start
-    if variables.save_eigenvectors == True:
-        solutions.eigenvectors = eigenvectors
-
-    solutions.eigenvalues_B = eigenvalues / variables.B
-    solutions.max_potential_B = solutions.max_potential / variables.B
-    #solutions.max_potential_B = variables.potential_constants[0] / variables.B
-    return solutions
+    system.eigenvalues = eigenvalues
+    system.potential_max = max(V)
+    system.potential_min = min(V)
+    system.energy_barrier = max(V) - min(eigenvalues)
+    system.first_transition = eigenvalues[1] - eigenvalues[0]
+    system.runtime = time.time() - time_start
+    if system.save_eigenvectors == True:
+        system.eigenvectors = eigenvectors
+    system.eigenvalues_B = eigenvalues / system.B
+    system.potential_max_B = system.potential_max / system.B
+    return system
 
 
-def energies(variables:Variables, out_file=None):
-    data = Data()
-
-    variables = potential(variables)
-
-    solutions = schrodinger(variables)
-
-    stored_variables = deepcopy(variables)
-
-    data.variables.append(stored_variables)
-    data.solutions.append(solutions)
-
-    if out_file:
-        stored_data = Data()
-        stored_data.variables.append(stored_variables)
-        stored_data.solutions.append(solutions)
-        file.write(stored_data, out_file)
-
+def energies(var, filename=None):
+    '''Solves the Schrödinger equation for a given System() or Data() object.\n
+    If a filename is provided, the results are saved to a file.'''
+    if isinstance(var, System):
+        data = Data()
+        data.system = [deepcopy(var)]
+    elif isinstance(var, Data):
+        data = deepcopy(var)
+    else:
+        raise ValueError('Input must be a System or Data object.')
+    for system in data.system:
+        system = potential(system)
+        system = schrodinger(system)
+    if filename:
+        file.save(data, filename)
     return data
 
 
-def interpolate_potential(variables:Variables):
-    '''Interpolates the current potential_values to a new grid of size Variables.gridsize'''
-    V = variables.potential_values
-    grid = variables.grid
-    gridsize = variables.gridsize
+def interpolate_potential(system:System):
+    '''Interpolates the current potential_values to a new grid of size System.gridsize'''
+    V = system.potential_values
+    grid = system.grid
+    gridsize = system.gridsize
 
     new_grid = np.linspace(0, 2*np.pi, gridsize)
     cubic_spline = CubicSpline(grid, V)
     new_V = cubic_spline(new_grid)
 
-    variables.grid = new_grid
-    variables.potential_values = new_V
-    return variables
+    system.grid = new_grid
+    system.potential_values = new_V
+    return system
 

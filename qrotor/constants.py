@@ -1,5 +1,6 @@
 from .classes import *
 import numpy as np
+import os
 import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
@@ -31,11 +32,11 @@ angle_NH = 180 - angle_NH_out
 r = distance_CH * np.sin(np.deg2rad(angle_CH)) * mt.A_to_m
 
 # Inertia, SI units
-I_Hydrogen = 3 * (m_H * r**2)
-I_Deuterium = 3 * (m_D * r**2)
+I_H = 3 * (m_H * r**2)
+I_D = 3 * (m_D * r**2)
 # Rotational energy. Should be B=0.574 meV for H, according to titov2023
-B_Hydrogen = ((mt.hbar**2) / (2 * I_Hydrogen)) * mt.J_to_eV
-B_Deuterium = ((mt.hbar**2) / (2 * I_Deuterium)) * mt.J_to_eV
+B_H = ((mt.hbar**2) / (2 * I_H)) * mt.J_to_eV
+B_D = ((mt.hbar**2) / (2 * I_D)) * mt.J_to_eV
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_zero = [
@@ -52,13 +53,12 @@ constants_titov2023 = [
 
 
 # Default testing variables object
-test_variables = Variables()
-test_variables.set_of_constants = constants_titov2023 #constants_titov_1
-test_variables.potential_name = 'titov2023'  # 'titov2023' or 'zero'
-test_variables.atom_type = 'H'
-test_variables.B = B_Hydrogen
-test_variables.E_levels = 5
-test_variables.gridsize = 100
-test_variables.grid = np.linspace(0, 2*np.pi, test_variables.gridsize)
-#test_variables.write_summary = True  ## DEPRECATED
+test_system = System()
+test_system.set_of_constants = constants_titov2023 #constants_titov_1
+test_system.potential_name = 'titov2023'  # 'titov2023' or 'zero'
+test_system.atom_type = 'H'
+test_system.B = B_H
+test_system.E_levels = 5
+test_system.gridsize = 100
+test_system.grid = np.linspace(0, 2*np.pi, test_system.gridsize)
 

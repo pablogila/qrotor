@@ -1,12 +1,11 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from copy import deepcopy
 import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0-dev3'
+version = 'v3.0.0-rc1'
 
 
 '''
@@ -46,9 +45,9 @@ class System:
         '''Save or not the eigenvectors. Final file size will be bigger.'''
         ## Potential
         self.gridsize: int = gridsize
-        self.grid = get_grid(gridsize) if grid is None else grid
+        self.grid = grid
         '''Grid, e.g. np.linspace(min, max, gridsize).'''
-        self.B: float = get_B(atom_type) if B is None else B
+        self.B: float = B
         '''Rotational inertia.'''
         self.potential_name: str = potential_name
         '''str: 'zero', 'titov2023', 'test'...'''
@@ -56,9 +55,9 @@ class System:
         self.potential_values = None
         self.potential_offset: float = None
         '''min(V) if the potential is corrected as V - min(V)'''
-        self.min_potential: float = None
-        self.max_potential: float = None
-        self.max_potential_B: float = None
+        self.potential_min: float = None
+        self.potential_max: float = None
+        self.potential_max_B: float = None
         '''Reduced max_potential, in units of B.'''
         # Energies
         self.eigenvalues = None
@@ -89,9 +88,9 @@ class System:
             'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
             'potential_values': self.potential_values.tolist() if isinstance(self.potential_values, np.ndarray) else self.potential_values,
             'potential_offset': self.corrected_potential_offset,
-            'min_potential': self.min_potential,
-            'max_potential': self.max_potential,
-            'max_potential_B': self.max_potential_B,
+            'potential_min': self.potential_min,
+            'potential_max': self.potential_max,
+            'potential_max_B': self.potential_max_B,
             # Energies
             'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
             'eigenvalues_B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
@@ -112,9 +111,9 @@ class System:
             'potential_name': self.potential_name,
             'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
             'potential_offset': self.corrected_potential_offset,
-            'min_potential': self.min_potential,
-            'max_potential': self.max_potential,
-            'max_potential / B': self.max_potential_B,
+            'potential_min': self.potential_min,
+            'potential_max': self.potential_max,
+            'potential_max / B': self.potential_max_B,
             'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
             'eigenvalues / B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
             'energy_barrier': self.energy_barrier,
@@ -135,25 +134,12 @@ class System:
         return obj
 
 
-    def get_B(atom_type:str):
-        '''Returns the rotational inertia of the atom_type. The hydrogen one by default.'''
-        if atom_type in  ['H','h', 'H1', 'h1', 'hydrogen', 'Hydrogen', 'HYDROGEN']:
-            return mt.constants.B_Hydrogen
-        elif atom_type in ['D','d', 'H2', 'h2', 'deuterium', 'Deuterium', 'DEUTERIUM']:
-            return mt.constants.B_Deuterium
-        else:
-            return mt.constants.B_Hydrogen
-    def set_B(self):
-        self.B = get_B(self.atom_type)
-        return self
-
-
-    def get_grid(gridsize:int):
-        if gridsize is None:
-            return None
-        return np.linspace(0, 2*np.pi, gridsize)
-    def set_grid(self):
-        self.grid = get_grid(self.gridsize)
+    def set_grid(self, gridsize:int=None):
+        if gridsize is not None:
+            self.gridsize = gridsize
+        if self.gridsize is None:
+            raise ValueError('System.gridsize not set.')
+        self.grid = np.linspace(0, 2*np.pi, self.gridsize)
         return self
 
 
@@ -238,7 +224,7 @@ class Data:
         for value in args:
             if isinstance(value, Data):
                 self.system.extend(value.system)
-                self.version = value.version if len(self.set) == 0 else self.version
+                self.version = value.version if len(self.system) == 0 else self.version
                 self.comment = value.comment if self.comment is None else self.comment
                 self.plotting.title = value.plotting.title if self.plotting.title is None else self.plotting.title
                 self.plotting.plot_label = value.plotting.plot_label if self.plotting.plot_label is None else self.plotting.plot_label
@@ -249,7 +235,7 @@ class Data:
                 self.plotting.check_E_threshold = value.plotting.check_E_threshold if self.plotting.check_E_threshold is None else self.plotting.check_E_threshold
                 self.plotting.ideal_E = value.plotting.ideal_E if self.plotting.ideal_E is None else self.plotting.ideal_E
             elif isinstance(value, System):
-                self.set.append(value)
+                self.system.append(value)
             else:
                 raise TypeError(f'Data.add() can only add Data and/or System objects, not {type(value)}.')
 
@@ -285,7 +271,7 @@ class Data:
 
     def get_runtimes(self):
         runtimes = []
-        for i in self.solutions:
+        for i in self.system:
             if i.runtime:
                 runtimes.append(i.runtime)
             else:
@@ -295,14 +281,10 @@ class Data:
 
     def get_atom_types(self):
         atom_types = []
-        for i in self.variables:
+        for i in self.system:
             if i.atom_type not in atom_types:
                 atom_types.append(i.atom_type)
         return atom_types
-
-
-
-########  ME LLEGO POR AQUÍ ################################################################
 
 
     def sort_by_potential_values(self):
@@ -315,99 +297,42 @@ class Data:
 
     def group_by_potential_values(self):
         '''Returns an array of grouped Data objects with the same potential_values'''
-        '''Orders consecutively data with the same potential_values'''
         print('Grouping Data by potential_values...')
         grouped_data = []
-        for new_variables, new_solutions in zip(self.variables, self.solutions):
-            new_data = Data()
-            new_data.comment = self.comment
-            new_data.variables.append(new_variables)
-            new_data.solutions.append(new_solutions)
-            can_be_grouped = True
-            for group in grouped_data:
-                can_be_grouped = True
-                for variable in group.variables:
-                    if not np.array_equal(new_variables.potential_values, variable.potential_values):
-                        can_be_grouped = False
-                        break
-                if can_be_grouped:
-                    group.variables.append(new_variables)
-                    group.solutions.append(new_solutions)
+        for system in self.system:
+            data = Data()
+            data.comment = self.comment
+            data.system.append(system)
+            new_group = True
+            for data_i in grouped_data:
+                if np.array_equal(system.potential_values, data_i.system[0].potential_values):
+                    data_i.system.append(system)
+                    new_group = False
                     break
-            if can_be_grouped == True:
+            if new_group:
                 print('New potential_values found')
-                grouped_data.append(new_data)
-        return grouped_data
-
-
-    def group_by_potential_and_atoms(self):
-        '''Returns an array of grouped Data objects with the same potential_values and different atom_type'''
-        grouped_data = []
-        for new_variables, new_solutions in zip(self.variables, self.solutions):
-            new_data = Data()
-            new_data.comment = self.comment
-            new_data.variables.append(new_variables)
-            new_data.solutions.append(new_solutions)
-            has_been_grouped = False
-            for group in grouped_data:
-                can_be_grouped = True
-                for variable in group.variables:
-                    if not np.array_equal(new_variables.potential_values, variable.potential_values) or (new_variables.atom_type == variable.atom_type):
-                        can_be_grouped = False
-                        break
-                if can_be_grouped:
-                    group.variables.append(new_variables)
-                    group.solutions.append(new_solutions)
-                    has_been_grouped = True
-                    break
-            if not has_been_grouped:
-                grouped_data.append(new_data)
+                grouped_data.append(data)
         return grouped_data
 
 
     def sort_by_gridsize(self):
-        variables = self.variables
-        solutions = self.solutions
-        paired_data = list(zip(variables, solutions))
-        paired_data.sort(key=lambda pair: pair[0].gridsize)
-        self.variables, self.solutions = zip(*paired_data)
-        self.variables = list(self.variables)
-        self.solutions = list(self.solutions)
+        self.system = sorted(self.system, key=lambda sys: sys.gridsize)
         return self
-
-
-    def sort_by_atom_type(self, ordering:list=['H', 'D']):
-        '''Sorts the data by atom_type, according to a given ordering list, e.g. ['H', 'D'].'''
-        variables = self.variables
-        solutions = self.solutions
-        paired_data = list(zip(variables, solutions))
-        paired_data.sort(key=lambda pair: ordering.index(pair[0].atom_type))
-        self.variables, self.solutions = zip(*paired_data)
-        self.variables = list(self.variables)
-        self.solutions = list(self.solutions)
-        return self
-
-
-
-
-
-    
 
 
     def get_ideal_E(self):
-        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from check_E_level.'''
+        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Data.Plotting.check_E_level'''
         real_E_level = None
-        if self.check_E_level is None:
-            print("WARNING: get_ideal_E() requires check_E_level to be set.")
-            return
-        if self.variables[0].potential_name == 'zero':
-            if self.check_E_level % 2 == 0:
+        if self.plotting.check_E_level is None:
+            raise ValueError("Data.Plotting.check_E_level not set.")
+        if self.system[0].potential_name == 'zero':
+            if self.plotting.check_E_level % 2 == 0:
                 real_E_level = self.check_E_level / 2
             else:
                 real_E_level = (self.check_E_level + 1) / 2
-            self.ideal_E = int(real_E_level ** 2)
-            return self.ideal_E
+            self.plotting.ideal_E = int(real_E_level ** 2)
+            return self.plotting.ideal_E
         else:
-            print("WARNING: get_ideal_E() only valid for potential_name='zero'")
+            print("WARNING:  get_ideal_E() only valid for potential_name='zero'")
             return
     
