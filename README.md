@@ -2,7 +2,7 @@
 
 QRotor is a Python library to solve the energies of a methyl rotor.  
 
-Check the latest documentation [here](https://pablogila.github.io/qrotor/docs/).  
+Check the latest documentation [here](https://pablogila.github.io/QRotor/).  
 
 ## Installing
 
