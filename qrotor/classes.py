@@ -1,20 +1,19 @@
+'''
+Common classes used in the QRotor package.
+
+Short general description of the class methods used:
+- `get_*`  ->  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
+- `set_*`  ->  Sets a value, e.g. set_grid() sets the grid from the gridsize.
+- `to_*`   ->  Converts to whatever
+- `from_*` ->  Converts from whatever
+'''
+
+
 import numpy as np
 from copy import deepcopy
 import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
-
-
-version = 'v3.0.0-rc1'
-
-
-'''
-Short description of the class methods used:
-get_*:  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
-set_*:  Sets a value, e.g. set_grid() sets the grid from the gridsize.
-to_*:   Converts to whatever
-from_*: Converts from whatever
-'''
 
 
 class System:

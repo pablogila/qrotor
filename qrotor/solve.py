@@ -1,3 +1,8 @@
+'''
+This module handles the solving of the hamiltonian eigenvalues and eigenvectors for a given system.
+'''
+
+
 from .classes import *
 from . import potentials
 from . import file
@@ -10,6 +15,7 @@ from scipy.interpolate import CubicSpline
 
 # Second derivative matrix, according to the finite difference method
 def get_laplacian_matrix(x):
+    '''Returns the Laplacian matrix for a given grid x.'''
     diagonals = [-2*np.ones(len(x)), np.ones(len(x)), np.ones(len(x))]
     laplacian_matrix = sparse.spdiags(diagonals, [0, -1, 1], format='lil')
     # Periodic boundary conditions
@@ -21,6 +27,7 @@ def get_laplacian_matrix(x):
 
 
 def hamiltonian_matrix(system:System):
+    '''Returns the Hamiltonian matrix for a given System() object.'''
     V = system.potential_values.tolist()
     potential = sparse.diags(V, format='lil')
     B = system.B
@@ -30,7 +37,8 @@ def hamiltonian_matrix(system:System):
     return H
 
 
-def potential(system:System):
+def potential(system:System) -> System:
+    '''Solves the potential_values of the system, according to the potential name, by calling `qrotor.potentials.solve()`'''
     V = potentials.solve(system)
     if system.correct_potential_offset is True:
         offset = min(V)
@@ -40,7 +48,8 @@ def potential(system:System):
     return system
 
 
-def schrodinger(system:System):
+def schrodinger(system:System) -> System:
+    '''Solves the Schrödinger equation for a given System() object.'''
     time_start = time.time()
     V = system.potential_values
     H = hamiltonian_matrix(system)
@@ -63,7 +72,7 @@ def schrodinger(system:System):
     return system
 
 
-def energies(var, filename=None):
+def energies(var, filename=None) -> Data:
     '''Solves the Schrödinger equation for a given System() or Data() object.\n
     If a filename is provided, the results are saved to a file.'''
     if isinstance(var, System):

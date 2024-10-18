@@ -1,8 +1,14 @@
+'''
+This module provides straightforward functions to plot data.
+'''
+
+
 from .classes import *
 import matplotlib.pyplot as plt
 
 
 def energies(data:Data):
+    '''Plots the energy in separated plots. NOT YET IMPLEMENTED IN v3.0.0'''
     if data.separate_plots:
         for variables, solutions in zip(data.variables, data.solutions):
             new_data = Data()
@@ -18,6 +24,7 @@ def energies(data:Data):
 
 
 def energy(data:Data):
+    '''Plots the energy of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     V_colors = ['C0'] #...
     E_colors = ['red', 'purple', 'grey']  # To extend...
     E_linestyles = ['--', ':', '-.']
@@ -79,6 +86,7 @@ def energy(data:Data):
 
 
 def convergence(data:Data):
+    '''Plots the energy convergence of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     fig, ax1 = plt.subplots(figsize=(10, 6))
 
     E_color = 'C0'

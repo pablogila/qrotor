@@ -1,9 +1,17 @@
+'''
+Common constants and default values for the QRotor package.
+'''
+
+
 from .classes import *
 import numpy as np
 import os
 import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
+
+
+version = 'v3.0.0-rc2'
 
 
 # Output file

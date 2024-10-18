@@ -1,3 +1,7 @@
+'''
+This module provides straightforward functions to save data, as well as to load data and/or potential `*.dat` files.
+'''
+
 from .classes import *
 import os
 import pickle
@@ -9,16 +13,13 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-
 ################################################
 ##########  User-friendly operations  ##########
 ################################################
-
-
 def save(data:Data, filename:str=None, discard_shit:bool=False,  verbose:bool=True):
     '''Save the data in the current working directory as a binary *.qrotor file.'''
     filename = 'out' if filename is None else filename
-    filename = fix_extension(filename, '.qrotor')
+    filename = _fix_extension(filename, '.qrotor')
     file = os.path.join(os.getcwd(), filename)
     if discard_shit:
         data = data.discard_shit()
@@ -108,13 +109,13 @@ def summary(data:Data, out_file=None, verbose:bool=True):
         print(summary)
 
     if out_file:
-        out_file = fix_extension(out_file, '.txt')
+        out_file = _fix_extension(out_file, '.txt')
         with open(out_file, 'a') as f:
             f.write(summary)
             print(f'Summary saved at {out_file}')
 
 
-def fix_extension(out_file, good_extension, bad_extensions=['.qrotor', '.json.gz', '.tar.gz', '.gz', '.tar', '.txt', '.json', '.csv', '.dat', '.out']):
+def _fix_extension(out_file, good_extension, bad_extensions=['.qrotor', '.json.gz', '.tar.gz', '.gz', '.tar', '.txt', '.json', '.csv', '.dat', '.out']):
     if not out_file:
         return None
     if out_file.endswith(good_extension):

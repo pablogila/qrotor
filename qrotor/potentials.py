@@ -1,3 +1,8 @@
+'''
+This module contains functions to calculate the actual `potential_values` of the system.
+'''
+
+
 from .classes import *
 from . import constants
 import numpy as np
@@ -5,6 +10,7 @@ import numpy as np
 
 # Redirect to the desired potential energy function
 def solve(system:System):
+    '''Solves the `potential_values` of the system, according to the potential name.'''
     if system.potential_name == 'titov2023':
         return titov2023(system)
     elif system.potential_name == 'zero':
@@ -19,6 +25,7 @@ def solve(system:System):
 
 # Potential energy function of the hindered methyl rotor, from titov2023
 def titov2023(system:System):
+    'Solves the potential energy function of the hindered methyl rotor, from titov2023.'
     x = system.grid
     C = system.potential_constants
     if C is None:
@@ -28,17 +35,20 @@ def titov2023(system:System):
 
 # Zero potential
 def zero(system:System):
+    '''Returns a zero potential.'''
     x = system.grid
     return 0 * x
 
 
 def sine(system:System):
+    '''Returns a sine potential.'''
     x = system.grid
     C = system.potential_constants
     return C[0] * np.sin(3*x)
 
 
 def test(system:System):
+    '''Returns a test potential. This is a placeholder for testing purposes.'''
     x = system.grid
     C = system.potential_constants
     phase = 0
@@ -46,6 +56,7 @@ def test(system:System):
 
 
 def custom(system:System):
+    '''Used to keep previous `potential_values` of the system. For example, when those were obtained from an external file.'''
     if system.potential_values:
         return system.potential_values
     else:
