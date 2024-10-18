@@ -1,7 +1,14 @@
-from .core import *
+'''
+This module provides straightforward functions to plot data.
+'''
+
+
+from .classes import *
+import matplotlib.pyplot as plt
 
 
 def energies(data:Data):
+    '''Plots the energy in separated plots. NOT YET IMPLEMENTED IN v3.0.0'''
     if data.separate_plots:
         for variables, solutions in zip(data.variables, data.solutions):
             new_data = Data()
@@ -17,6 +24,7 @@ def energies(data:Data):
 
 
 def energy(data:Data):
+    '''Plots the energy of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     V_colors = ['C0'] #...
     E_colors = ['red', 'purple', 'grey']  # To extend...
     E_linestyles = ['--', ':', '-.']
@@ -78,6 +86,7 @@ def energy(data:Data):
 
 
 def convergence(data:Data):
+    '''Plots the energy convergence of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     fig, ax1 = plt.subplots(figsize=(10, 6))
 
     E_color = 'C0'
@@ -192,14 +201,14 @@ def convergence(data:Data):
 
 def reduced_energies(data):
     '''Plots the reduced energy of the system, E/B, vs the reduced potential energy, V/B'''
-    number_of_levels = data.variables[0].searched_E_levels
+    number_of_levels = data.system[0].E_levels
     x = []
-    for solution in data.solutions:
-        x.append(solution.max_potential_B)
+    for system in data.system:
+        x.append(system.potential_max_B)
     for i in range(number_of_levels):
         y = []
-        for solution in data.solutions:
-            y.append(solution.eigenvalues_B[i])
+        for system in data.system:
+            y.append(system.eigenvalues_B[i])
         plt.plot(x, y, marker='', linestyle='-')
     plt.xlabel('V$_{B}$ / B')
     plt.ylabel('E / B')

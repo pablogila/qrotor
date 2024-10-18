@@ -1,11 +1,12 @@
 # QRotor
 
-Building this document...  
-Check [QRotor documentation](/docs/QRotor_docs.pdf).  
+QRotor is a Python library to solve the energies of a methyl rotor.  
 
-Scripts for convergence analysis are on the `/scripts/` folder. These scripts should be moved to root before running.
+Check the latest documentation [here](https://pablogila.github.io/qrotor/docs/).  
 
-## Install
+## Installing
+
+To install, clone the repository from [GitHub](https://github.com/pablogila/QRotor/) and run:
 
 ```shell
 pip install .

@@ -1,7 +1,11 @@
-from .core import *
+'''
+.. include:: ../README.md
+'''
+
+from .classes import *
 from .constants import *
+from .file import *
 from . import potentials
-from . import file
-from . import plot
+from . import plot # To-update
 from . import solve
 

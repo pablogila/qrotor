@@ -1,0 +1,1 @@
+pdoc ./qrotor/ -o ./docs
