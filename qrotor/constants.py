@@ -11,7 +11,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0-rc2'
+version = 'v3.0.0-rc3'
 
 
 # Output file
