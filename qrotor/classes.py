@@ -1,19 +1,26 @@
 '''
-Here are the common objects used in the QRotor package.
-- `System`. Contains all the data for a single calculation.
-- `Data`. Contains a list of `System` objects, and some plotting options as an extended version of a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
+## Description
+
+This module contains the common objects used in the QRotor package.
 
 Short general description of the class methods used:
 - `get_*`  ->  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
 - `set_*`  ->  Sets a value, e.g. set_grid() sets the grid from the gridsize.
 - `to_*`   ->  Converts to whatever
 - `from_*` ->  Converts from whatever
+
+## Index
+
+- `System`. Contains all the data for a single calculation.
+- `Analysis`. Contains different parameters to analyze the data.
+- `Data`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
 '''
 
 
 import numpy as np
 from copy import deepcopy
 import maat as mt
+from .constants import *
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
@@ -117,27 +124,22 @@ class System:
         return self
 
 
-class Plotting(mt.Plotting):
+class Analysis:
     '''
-    Plotting object containing all data options.
-    It is an extension of the [maat.classes.Plotting](https://pablogila.github.io/Maat/maat/classes.html#Plotting) object.
+    Analysis object containing the different parameters to analyze the data.
     '''
     def __init__(self,
-                 separate_plots: bool = False,
-                 check_E_level: int = 5,
-                 check_E_diff: bool = False,
-                 check_E_threshold: float = 1e-3,
+                 E_level: int = 5,
+                 E_diff: bool = False,
+                 E_threshold: float = 1e-3,
                  ideal_E: float = None,
-                 **kwargs
                  ):
-        super().__init__(**kwargs)
-        self.separate_plots: bool = separate_plots
-        '''Bool, merge plots with different atoms in the same figure or not.'''
-        self.check_E_level: int = check_E_level
+        
+        self.E_level: int = E_level
         '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
-        self.check_E_diff: bool = check_E_diff
+        self.E_diff: bool = E_diff
         '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
-        self.check_E_threshold: float = check_E_threshold
+        self.E_threshold: float = E_threshold
         '''Energy Threshold for a convergence test.'''
         self.ideal_E: float = ideal_E
         '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
@@ -146,30 +148,19 @@ class Plotting(mt.Plotting):
 class Data:
     def __init__(self,
                  comment: str = None,
+                 plotting: mt.Plotting = None,
+                 analysis: Analysis = None,
                  ):
         self.version = version
+        '''Version of the QRotor package used to generate the data.'''
         self.comment: str = comment
+        '''Custom comment for the dataset.'''
         self.system = []
-        '''List of System objects.'''
-        self.plotting = Plotting()
-
-
-    def to_dict(self):
-        return {
-            'version': self.version,
-            'comment': self.comment,
-            'system': [s.to_dict() for s in self.system],
-            'plotting': self.plotting.to_dict()
-        }
-
-
-    @classmethod
-    def from_dict(cls, data):
-        obj = cls()
-        obj.__dict__.update(data)
-        obj.system = [System.from_dict(s) for s in data['system']]
-        obj.plotting = Plotting.from_dict(data['plotting'])
-        return obj
+        '''List containing the calculated System objects.'''
+        self.plotting = plotting
+        '''Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).'''
+        self.analysis = analysis
+        '''Analysis object containing the different parameters to analyze the data.'''
 
 
     def add(self, *args):
@@ -178,14 +169,8 @@ class Data:
                 self.system.extend(value.system)
                 self.version = value.version if len(self.system) == 0 else self.version
                 self.comment = value.comment if self.comment is None else self.comment
-                self.plotting.title = value.plotting.title if self.plotting.title is None else self.plotting.title
-                self.plotting.plot_label = value.plotting.plot_label if self.plotting.plot_label is None else self.plotting.plot_label
-                self.plotting.plot_label_position = value.plotting.plot_label_position if self.plotting.plot_label_position is None else self.plotting.plot_label_position
-                self.plotting.separate_plots = value.plotting.separate_plots if self.plotting.separate_plots is None else self.plotting.separate_plots
-                self.plotting.check_E_level = value.plotting.check_E_level if self.plotting.check_E_level is None else self.plotting.check_E_level
-                self.plotting.check_E_diff = value.plotting.check_E_diff if self.plotting.check_E_diff is None else self.plotting.check_E_diff
-                self.plotting.check_E_threshold = value.plotting.check_E_threshold if self.plotting.check_E_threshold is None else self.plotting.check_E_threshold
-                self.plotting.ideal_E = value.plotting.ideal_E if self.plotting.ideal_E is None else self.plotting.ideal_E
+                self.plotting = value.plotting if self.plotting is None else self.plotting
+                self.analysis = value.analysis if self.analysis is None else self.analysis
             elif isinstance(value, System):
                 self.system.append(value)
             else:
@@ -273,7 +258,7 @@ class Data:
 
 
     def get_ideal_E(self):
-        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Data.Plotting.check_E_level'''
+        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level'''
         real_E_level = None
         if self.plotting.check_E_level is None:
             raise ValueError("Data.Plotting.check_E_level not set.")

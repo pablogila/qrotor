@@ -11,7 +11,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0-rc5'
+version = 'v3.0.0-rc6'
 
 
 # Output file
@@ -58,15 +58,4 @@ constants_titov2023 = [
     [5.9109, 0.0258,-7.0152,-0.0168, 1.0213],
     [1.4526, 0.0134,-0.3196, 0.0005,-1.1461]
     ]
-
-
-# Default testing variables object
-test_system = System()
-test_system.set_of_constants = constants_titov2023 #constants_titov_1
-test_system.potential_name = 'titov2023'  # 'titov2023' or 'zero'
-test_system.atom_type = 'H'
-test_system.B = B_H
-test_system.E_levels = 5
-test_system.gridsize = 100
-test_system.grid = np.linspace(0, 2*np.pi, test_system.gridsize)
 
