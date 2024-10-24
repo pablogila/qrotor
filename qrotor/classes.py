@@ -1,5 +1,7 @@
 '''
-Common classes used in the QRotor package.
+Here are the common objects used in the QRotor package.
+- `System`. Contains all the data for a single calculation.
+- `Data`. Contains a list of `System` objects, and some plotting options as an extended version of a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
 
 Short general description of the class methods used:
 - `get_*`  ->  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
@@ -17,6 +19,7 @@ import maat as mt
 
 
 class System:
+    '''Object containing all the data for a single calculation, with both inputs and outputs.'''
     def __init__(self,
                  comment: str = None,
                  E_levels: int = 5,
@@ -30,75 +33,61 @@ class System:
                  potential_name: str = None,
                  potential_constants: list = None
                  ):
+        '''Input parameters can be set at initialization, or modified later.'''
         ## Technical
         self.comment: str = comment
+        '''Custom comment for the dataset.'''
         self.E_levels: int = E_levels
         '''Number of energy levels to be studied.'''
         self.units = units
         '''List containing the units in use, e.g. ['meV'].'''
         self.atom_type: str = atom_type
-        '''Generally 'H' or 'D'.'''
+        '''Generally `'H'` or `'D'`.'''
         self.correct_potential_offset: bool = correct_potential_offset
-        '''If true, do not correct the potential offset.'''
+        '''Correct the potential offset as `V - min(V)` or not.'''
         self.save_eigenvectors: bool = save_eigenvectors
         '''Save or not the eigenvectors. Final file size will be bigger.'''
         ## Potential
         self.gridsize: int = gridsize
+        '''Number of points in the grid.'''
         self.grid = grid
-        '''Grid, e.g. np.linspace(min, max, gridsize).'''
+        '''The grid with the points to be used in the calculation. Can be set automatically over $2 \\Pi$ with `System.set_grid()`.'''
         self.B: float = B
-        '''Rotational inertia.'''
+        '''Rotational inertia, as in $B=\\frac{\\hbar^2}{2I}.'''
         self.potential_name: str = potential_name
-        '''str: 'zero', 'titov2023', 'test'...'''
+        '''
+        String with the name of the desired potential: `'zero'`, `'titov2023'`, `'test'`...
+        If empty or unrecognised, the custom potential values inside `potential_values` will be used. 
+        '''
         self.potential_constants: list = potential_constants
+        '''List of constants to be used in the calculation of the potential energy, in the `qrotor.potentials` module.'''
         self.potential_values = None
+        '''
+        Numpy array with the potential values for each point in the grid.
+        Can be calculated with a function available in the `qrotor.potentials` module,
+        or loaded externally with the `qrotor.file.load_potential()` function.
+        '''
         self.potential_offset: float = None
-        '''min(V) if the potential is corrected as V - min(V)'''
+        '''`min(V)` before offset correction when `correct_potential_offset=True`'''
         self.potential_min: float = None
+        '''`min(V)`'''
         self.potential_max: float = None
+        '''`max(V)`'''
         self.potential_max_B: float = None
-        '''Reduced max_potential, in units of B.'''
+        '''Reduced `potential_max`, in units of B.'''
         # Energies
         self.eigenvalues = None
+        '''Calculated eigenvalues of the system.'''
         self.eigenvalues_B = None
-        '''Reduced eigenvalues, in units of B.'''
+        '''Reduced `eigenvalues`, in units of B.'''
         self.eigenvectors = None
-        '''Eigenvectors, if save_eigenvectors is True. Beware of the file size.'''
+        '''Eigenvectors, if `save_eigenvectors` is True. Beware of the file size.'''
         self.energy_barrier: float = None
-        '''max(V) - min(eigenvalues)'''
+        '''`max(V) - min(eigenvalues)`'''
         self.first_transition: float = None
         '''eigenvalues[1] - eigenvalues[0]'''
         self.runtime: float = None
         '''Time taken to solve the eigenvalues.'''
-
-
-    def to_dict(self):
-        return {
-            'comment': self.comment,
-            'E_levels': self.E_levels,
-            'units': self.units,
-            'atom_type': self.atom_type,
-            'correct_potential_offset': self.correct_potential_offset,
-            'save_eigenvectors': self.save_eigenvectors,
-            'gridsize': self.gridsize,
-            'grid': self.grid.tolist() if isinstance(self.grid, np.ndarray) else self.grid,
-            'B': self.B,
-            'potential_name': self.potential_name,
-            'potential_constants': self.potential_constants.tolist() if isinstance(self.potential_constants, np.ndarray) else self.potential_constants,
-            'potential_values': self.potential_values.tolist() if isinstance(self.potential_values, np.ndarray) else self.potential_values,
-            'potential_offset': self.corrected_potential_offset,
-            'potential_min': self.potential_min,
-            'potential_max': self.potential_max,
-            'potential_max_B': self.potential_max_B,
-            # Energies
-            'eigenvalues': self.eigenvalues.tolist() if isinstance(self.eigenvalues, np.ndarray) else self.eigenvalues,
-            'eigenvalues_B': self.eigenvalues_B.tolist() if isinstance(self.eigenvalues_B, np.ndarray) else self.eigenvalues_B,
-            'eigenvectors': self.eigenvectors.tolist() if isinstance(self.eigenvectors, np.ndarray) else self.eigenvectors,
-            'energy_barrier': self.energy_barrier,
-            'first_transition': self.first_transition,
-            'runtime': self.runtime,
-        }
-
 
     def summary(self):
         return {
@@ -119,48 +108,31 @@ class System:
             'first_transition': self.first_transition,
         }
 
-
-    @classmethod
-    def from_dict(cls, data):
-        obj = cls()
-        obj.__dict__.update(data)
-        obj.grid = np.array(data['grid']) if 'grid' in data else None
-        obj.potential_constants = np.array(data['potential_constants']) if 'potential_constants' in data else None
-        obj.potential_values = np.array(data['potential_values']) if 'potential_values' in data else None
-        obj.eigenvalues = np.array(data['eigenvalues']) if 'eigenvalues' in data else None
-        obj.eigenvalues_B = np.array(data['eigenvalues_B']) if 'eigenvalues_B' in data else None
-        obj.eigenvectors = np.array(data['eigenvectors']) if 'eigenvectors' in data else None
-        return obj
-
-
     def set_grid(self, gridsize:int=None):
         if gridsize is not None:
             self.gridsize = gridsize
         if self.gridsize is None:
-            raise ValueError('System.gridsize not set.')
+            raise ValueError('System.gridsize is not set yet!.')
         self.grid = np.linspace(0, 2*np.pi, self.gridsize)
         return self
 
 
-class Plotting:
+class Plotting(mt.Plotting):
+    '''
+    Plotting object containing all data options.
+    It is an extension of the [maat.classes.Plotting](https://pablogila.github.io/Maat/maat/classes.html#Plotting) object.
+    '''
     def __init__(self,
-                 title: str = None,
-                 plot_label = None,
-                 plot_label_position: tuple = None,
-                 separate_plots: bool = None,
-                 check_E_level: int = None,
-                 check_E_diff: bool = None,
-                 check_E_threshold: float = None,
-                 ideal_E: float = None
+                 separate_plots: bool = False,
+                 check_E_level: int = 5,
+                 check_E_diff: bool = False,
+                 check_E_threshold: float = 1e-3,
+                 ideal_E: float = None,
+                 **kwargs
                  ):
-        self.title: str = title
-        self.plot_label = plot_label
-        '''Can be a bool, or a str for a label title.'''
-        self.plot_label_position: tuple = plot_label_position
-        '''Label position. (position_x, position_y, alignment_v, alignment_h)'''
+        super().__init__(**kwargs)
         self.separate_plots: bool = separate_plots
-        '''Do not merge plots with different atoms in the same figure.'''
-        # Convergence tests
+        '''Bool, merge plots with different atoms in the same figure or not.'''
         self.check_E_level: int = check_E_level
         '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
         self.check_E_diff: bool = check_E_diff
@@ -169,25 +141,6 @@ class Plotting:
         '''Energy Threshold for a convergence test.'''
         self.ideal_E: float = ideal_E
         '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
-
-
-    def to_dict(self):
-        return {
-            'plot_label': self.plot_label,
-            'plot_label_position': self.plot_label_position,
-            'separate_plots': self.separate_plots,
-            'check_E_level': self.check_E_level,
-            'check_E_diff': self.check_E_diff,
-            'check_E_threshold': self.check_E_threshold,
-            'ideal_E': self.ideal_E
-        }
-
-
-    @classmethod
-    def from_dict(cls, data):
-        obj = cls()
-        obj.__dict__.update(data)
-        return obj
 
 
 class Data:

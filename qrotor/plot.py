@@ -107,8 +107,8 @@ def convergence(data:Data):
     xlabel_text = 'Grid Size'
     runtime_text = 'Runtime / s'
 
-    plot_label = data.plot_label
-    plot_label_position = data.plot_label_position
+    legend_title = data.legend_title
+    legend_title_position = data.legend_title_position
     check_E_threshold = data.check_E_threshold
     check_E_diff = data.check_E_diff
     check_E_level = data.check_E_level
@@ -127,11 +127,11 @@ def convergence(data:Data):
     textstr_alignment_h = 'right'
     textstr_alignment_v = 'bottom'
 
-    if plot_label_position and isinstance(plot_label_position, list):
-        textstr_position_x = data.plot_label_position[0]
-        textstr_position_y = data.plot_label_position[1]
-        textstr_alignment_h = data.plot_label_position[2]
-        textstr_alignment_v = data.plot_label_position[3]
+    if legend_title_position and isinstance(legend_title_position, list):
+        textstr_position_x = data.legend_title_position[0]
+        textstr_position_y = data.legend_title_position[1]
+        textstr_alignment_h = data.legend_title_position[2]
+        textstr_alignment_v = data.legend_title_position[3]
 
     energies = data.energies()
     energies_transposed = np.transpose(energies)
@@ -190,9 +190,9 @@ def convergence(data:Data):
         for i, energy in enumerate(plotted_energies):
             textstr += f'N={gridsizes[i]}   E={round(energy,4):.04f}\n'
 
-    if plot_label is not False:
-        if isinstance(plot_label, str):
-            textstr = plot_label + '\n' + textstr
+    if legend_title is not False:
+        if isinstance(legend_title, str):
+            textstr = legend_title + '\n' + textstr
         fig.text(textstr_position_x, textstr_position_y, textstr, fontsize=10, verticalalignment=textstr_alignment_v, horizontalalignment=textstr_alignment_h, bbox=textbox)
 
     plt.title(title)
