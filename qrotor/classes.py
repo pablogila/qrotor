@@ -4,23 +4,23 @@
 This module contains the common objects used in the QRotor package.
 
 Short general description of the class methods used:
-- `get_*`  ->  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
-- `set_*`  ->  Sets a value, e.g. set_grid() sets the grid from the gridsize.
-- `to_*`   ->  Converts to whatever
-- `from_*` ->  Converts from whatever
+- `get_*` returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
+- `set_*` sets a value, e.g. set_grid() sets the grid from the gridsize.
+- `to_*` converts to whatever.
+- `from_*` converts from whatever.
 
 ## Index
 
 - `System`. Contains all the data for a single calculation.
 - `Analysis`. Contains different parameters to analyze the data.
-- `Data`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
+- `Experiment`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
 '''
 
 
 import numpy as np
 from copy import deepcopy
-import maat as mt
 from .constants import *
+import maat as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
@@ -142,10 +142,10 @@ class Analysis:
         self.E_threshold: float = E_threshold
         '''Energy Threshold for a convergence test.'''
         self.ideal_E: float = ideal_E
-        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()'''
+        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Experiment.get_ideal_E()'''
 
 
-class Data:
+class Experiment:
     def __init__(self,
                  comment: str = None,
                  plotting: mt.Plotting = None,
@@ -165,7 +165,7 @@ class Data:
 
     def add(self, *args):
         for value in args:
-            if isinstance(value, Data):
+            if isinstance(value, Experiment):
                 self.system.extend(value.system)
                 self.version = value.version if len(self.system) == 0 else self.version
                 self.comment = value.comment if self.comment is None else self.comment
@@ -174,7 +174,7 @@ class Data:
             elif isinstance(value, System):
                 self.system.append(value)
             else:
-                raise TypeError(f'Data.add() can only add Data and/or System objects, not {type(value)}.')
+                raise TypeError(f'Experiment.add() can only add Experiment and/or System objects, not {type(value)}.')
 
 
     def discard_shit(self):
@@ -226,18 +226,18 @@ class Data:
 
     def sort_by_potential_values(self):
         grouped_data = self.group_by_potential_values()
-        data = Data()
+        data = Experiment()
         for dataset in grouped_data:
             data.add(dataset)
         return data
 
 
     def group_by_potential_values(self):
-        '''Returns an array of grouped Data objects with the same potential_values'''
-        print('Grouping Data by potential_values...')
+        '''Returns an array of grouped Experiment objects with the same potential_values'''
+        print('Grouping Experiment by potential_values...')
         grouped_data = []
         for system in self.system:
-            data = Data()
+            data = Experiment()
             data.comment = self.comment
             data.system.append(system)
             new_group = True
@@ -258,10 +258,10 @@ class Data:
 
 
     def get_ideal_E(self):
-        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level'''
+        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level'''
         real_E_level = None
         if self.plotting.check_E_level is None:
-            raise ValueError("Data.Plotting.check_E_level not set.")
+            raise ValueError("Experiment.Plotting.check_E_level not set.")
         if self.system[0].potential_name == 'zero':
             if self.plotting.check_E_level % 2 == 0:
                 real_E_level = self.check_E_level / 2

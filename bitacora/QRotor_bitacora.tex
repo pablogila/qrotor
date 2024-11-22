@@ -224,35 +224,12 @@ The results are shown in the following figure.
 \NEWPICC{potential_felix.png}{0.95}
 
 
-\section{Comment on why we need to solve the eigenvalues for every new B value}
+\section{Energy levels as a function of potential strength}
 
 
-UPDATE: I should test with a reduced variable, $\rho=\frac{V_B}{B}$\\
+We can get the energy levels as a function of potential strength, by expressing the potential as a reduced variable $\rho=\frac{V_B}{B}$\\
 
-Note that from the Hamiltonian eq. \eqref{hamiltonian},
-
-\begin{equation*}
-    H = -B \frac{d^2}{d\varphi^2} + V(\varphi)
-\end{equation*}
-
-It can be deduced that B can theoretically be extracted by expressing the potential as a reduced variable, so that (TYPO: B SHOULD DIVIDE ALL VALUES)
-
-\[
-    \frac{H}{B} =
-    \left[ {\begin{array}{cccccc}
-     +2 +\frac{V_1}{B}  &  -1                &  0     & \cdots &  0                     &  -1                \\
-     -1                 & +2 +\frac{V_2}{B}  &  -1    &        &  0                     &  0                 \\
-     0                  &  -1                & \ddots &        &                        &  \vdots            \\
-     \vdots             &                    &        & \ddots &  -1                    &  0                 \\
-     0                  &  0                 &        &  -1    & +2 +\frac{V_{N-1}}{B}  &  -1                \\
-     -1                 &  0                 & \cdots &  0     &  -1                    & +2 +\frac{V_N}{B}  \\
-    \end{array} } \right]
-\]
-
-But this matrix \textbf{can not be solved numerically} until \textit{B} is known.
-\textit{B} cannot simply be set to 1 and then multiply the Hamiltonian eigenvalues by the desired \textit{B}, since the diagonal terms can not be expressed as a reduced variable.\\
-
-However, we know from the convergence criteria that it does not suppose any problem to just repeat the calculation for a new \textit{B} value. In a regular PC, convergence up to 3 decimal places can be achieved in less than a minute, which allows for a good iteration in our tests.\\
+In that case, we can represent E/B as a function of V/B \cite{sakai2007}.
 
 
 \addcontentsline{toc}{section}{References}

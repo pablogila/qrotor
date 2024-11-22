@@ -177,55 +177,55 @@
 
             </li>
             <li>
-                    <a class="class" href="#Data">Data</a>
+                    <a class="class" href="#Experiment">Experiment</a>
                             <ul class="memberlist">
                         <li>
-                                <a class="function" href="#Data.__init__">Data</a>
+                                <a class="function" href="#Experiment.__init__">Experiment</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Data.version">version</a>
+                                <a class="variable" href="#Experiment.version">version</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Data.comment">comment</a>
+                                <a class="variable" href="#Experiment.comment">comment</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Data.system">system</a>
+                                <a class="variable" href="#Experiment.system">system</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Data.plotting">plotting</a>
+                                <a class="variable" href="#Experiment.plotting">plotting</a>
                         </li>
                         <li>
-                                <a class="variable" href="#Data.analysis">analysis</a>
+                                <a class="variable" href="#Experiment.analysis">analysis</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.add">add</a>
+                                <a class="function" href="#Experiment.add">add</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.discard_shit">discard_shit</a>
+                                <a class="function" href="#Experiment.discard_shit">discard_shit</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.get_energies">get_energies</a>
+                                <a class="function" href="#Experiment.get_energies">get_energies</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.get_gridsizes">get_gridsizes</a>
+                                <a class="function" href="#Experiment.get_gridsizes">get_gridsizes</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.get_runtimes">get_runtimes</a>
+                                <a class="function" href="#Experiment.get_runtimes">get_runtimes</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.get_atom_types">get_atom_types</a>
+                                <a class="function" href="#Experiment.get_atom_types">get_atom_types</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.sort_by_potential_values">sort_by_potential_values</a>
+                                <a class="function" href="#Experiment.sort_by_potential_values">sort_by_potential_values</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.group_by_potential_values">group_by_potential_values</a>
+                                <a class="function" href="#Experiment.group_by_potential_values">group_by_potential_values</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.sort_by_gridsize">sort_by_gridsize</a>
+                                <a class="function" href="#Experiment.sort_by_gridsize">sort_by_gridsize</a>
                         </li>
                         <li>
-                                <a class="function" href="#Data.get_ideal_E">get_ideal_E</a>
+                                <a class="function" href="#Experiment.get_ideal_E">get_ideal_E</a>
                         </li>
                 </ul>
 
@@ -233,7 +233,7 @@
     </ul>
 
 
-            <footer>QRotor v3.0.0-rc6 documentation</footer>
+            <footer>QRotor v3.0.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -254,10 +254,10 @@
 <p>Short general description of the class methods used:</p>
 
 <ul>
-<li><code>get_*</code>  ->  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.</li>
-<li><code>set_*</code>  ->  Sets a value, e.g. set_grid() sets the grid from the gridsize.</li>
-<li><code>to_*</code>   ->  Converts to whatever</li>
-<li><code>from_*</code> ->  Converts from whatever</li>
+<li><code>get_*</code> returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.</li>
+<li><code>set_*</code> sets a value, e.g. set_grid() sets the grid from the gridsize.</li>
+<li><code>to_*</code> converts to whatever.</li>
+<li><code>from_*</code> converts from whatever.</li>
 </ul>
 
 <h2 id="index">Index</h2>
@@ -265,7 +265,7 @@
 <ul>
 <li><code><a href="#System">System</a></code>. Contains all the data for a single calculation.</li>
 <li><code><a href="#Analysis">Analysis</a></code>. Contains different parameters to analyze the data.</li>
-<li><code><a href="#Data">Data</a></code>. Contains a list of <code><a href="#System">System</a></code> objects, an <code><a href="#Analysis">Analysis</a></code> object, and some plotting options as a <a href="https://pablogila.github.io/Maat/maat/classes.html#Plotting">Maat plotting object</a>.</li>
+<li><code><a href="#Experiment">Experiment</a></code>. Contains a list of <code><a href="#System">System</a></code> objects, an <code><a href="#Analysis">Analysis</a></code> object, and some plotting options as a <a href="https://pablogila.github.io/Maat/maat/classes.html#Plotting">Maat plotting object</a>.</li>
 </ul>
 </div>
 
@@ -279,23 +279,23 @@
 </span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="sd">This module contains the common objects used in the QRotor package.</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a>
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="sd">Short general description of the class methods used:</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">- `get_*`  -&gt;  Returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="sd">- `set_*`  -&gt;  Sets a value, e.g. set_grid() sets the grid from the gridsize.</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">- `to_*`   -&gt;  Converts to whatever</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">- `from_*` -&gt;  Converts from whatever</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="sd">- `get_*` returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="sd">- `set_*` sets a value, e.g. set_grid() sets the grid from the gridsize.</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="sd">- `to_*` converts to whatever.</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">- `from_*` converts from whatever.</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="sd">## Index</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="sd">- `System`. Contains all the data for a single calculation.</span>
 </span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">- `Analysis`. Contains different parameters to analyze the data.</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">- `Data`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">- `Experiment`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">&#39;&#39;&#39;</span>
 </span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="kn">import</span> <span class="nn">maat</span> <span class="k">as</span> <span class="nn">mt</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="kn">from</span> <span class="nn">.constants</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="kn">import</span> <span class="nn">maat</span> <span class="k">as</span> <span class="nn">mt</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="c1"># Get Maat from:</span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a><span class="c1"># https://github.com/pablogila/Maat</span>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>
@@ -417,10 +417,10 @@
 </span><span id="L-142"><a href="#L-142"><span class="linenos">142</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">E_threshold</span>
 </span><span id="L-143"><a href="#L-143"><span class="linenos">143</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Energy Threshold for a convergence test.&#39;&#39;&#39;</span>
 </span><span id="L-144"><a href="#L-144"><span class="linenos">144</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ideal_E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ideal_E</span>
-</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()&#39;&#39;&#39;</span>
+</span><span id="L-145"><a href="#L-145"><span class="linenos">145</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Experiment.get_ideal_E()&#39;&#39;&#39;</span>
 </span><span id="L-146"><a href="#L-146"><span class="linenos">146</span></a>
 </span><span id="L-147"><a href="#L-147"><span class="linenos">147</span></a>
-</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="k">class</span> <span class="nc">Data</span><span class="p">:</span>
+</span><span id="L-148"><a href="#L-148"><span class="linenos">148</span></a><span class="k">class</span> <span class="nc">Experiment</span><span class="p">:</span>
 </span><span id="L-149"><a href="#L-149"><span class="linenos">149</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
 </span><span id="L-150"><a href="#L-150"><span class="linenos">150</span></a>                 <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 </span><span id="L-151"><a href="#L-151"><span class="linenos">151</span></a>                 <span class="n">plotting</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -440,7 +440,7 @@
 </span><span id="L-165"><a href="#L-165"><span class="linenos">165</span></a>
 </span><span id="L-166"><a href="#L-166"><span class="linenos">166</span></a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
 </span><span id="L-167"><a href="#L-167"><span class="linenos">167</span></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Data</span><span class="p">):</span>
+</span><span id="L-168"><a href="#L-168"><span class="linenos">168</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Experiment</span><span class="p">):</span>
 </span><span id="L-169"><a href="#L-169"><span class="linenos">169</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
 </span><span id="L-170"><a href="#L-170"><span class="linenos">170</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
 </span><span id="L-171"><a href="#L-171"><span class="linenos">171</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">comment</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
@@ -449,7 +449,7 @@
 </span><span id="L-174"><a href="#L-174"><span class="linenos">174</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">System</span><span class="p">):</span>
 </span><span id="L-175"><a href="#L-175"><span class="linenos">175</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 </span><span id="L-176"><a href="#L-176"><span class="linenos">176</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data.add() can only add Data and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</span><span id="L-177"><a href="#L-177"><span class="linenos">177</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Experiment.add() can only add Experiment and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
 </span><span id="L-178"><a href="#L-178"><span class="linenos">178</span></a>
 </span><span id="L-179"><a href="#L-179"><span class="linenos">179</span></a>
 </span><span id="L-180"><a href="#L-180"><span class="linenos">180</span></a>    <span class="k">def</span> <span class="nf">discard_shit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -501,18 +501,18 @@
 </span><span id="L-226"><a href="#L-226"><span class="linenos">226</span></a>
 </span><span id="L-227"><a href="#L-227"><span class="linenos">227</span></a>    <span class="k">def</span> <span class="nf">sort_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 </span><span id="L-228"><a href="#L-228"><span class="linenos">228</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_potential_values</span><span class="p">()</span>
-</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
+</span><span id="L-229"><a href="#L-229"><span class="linenos">229</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
 </span><span id="L-230"><a href="#L-230"><span class="linenos">230</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
 </span><span id="L-231"><a href="#L-231"><span class="linenos">231</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </span><span id="L-232"><a href="#L-232"><span class="linenos">232</span></a>        <span class="k">return</span> <span class="n">data</span>
 </span><span id="L-233"><a href="#L-233"><span class="linenos">233</span></a>
 </span><span id="L-234"><a href="#L-234"><span class="linenos">234</span></a>
 </span><span id="L-235"><a href="#L-235"><span class="linenos">235</span></a>    <span class="k">def</span> <span class="nf">group_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Data objects with the same potential_values&#39;&#39;&#39;</span>
-</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Data by potential_values...&#39;</span><span class="p">)</span>
+</span><span id="L-236"><a href="#L-236"><span class="linenos">236</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Experiment objects with the same potential_values&#39;&#39;&#39;</span>
+</span><span id="L-237"><a href="#L-237"><span class="linenos">237</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Experiment by potential_values...&#39;</span><span class="p">)</span>
 </span><span id="L-238"><a href="#L-238"><span class="linenos">238</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
 </span><span id="L-239"><a href="#L-239"><span class="linenos">239</span></a>        <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
+</span><span id="L-240"><a href="#L-240"><span class="linenos">240</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
 </span><span id="L-241"><a href="#L-241"><span class="linenos">241</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
 </span><span id="L-242"><a href="#L-242"><span class="linenos">242</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </span><span id="L-243"><a href="#L-243"><span class="linenos">243</span></a>            <span class="n">new_group</span> <span class="o">=</span> <span class="kc">True</span>
@@ -533,10 +533,10 @@
 </span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>
 </span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>
 </span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a>    <span class="k">def</span> <span class="nf">get_ideal_E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level&#39;&#39;&#39;</span>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level&#39;&#39;&#39;</span>
 </span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Experiment.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
 </span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
 </span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
 </span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">/</span> <span class="mi">2</span>
@@ -1131,7 +1131,7 @@ or loaded externally with the <code><a href="file.html#load_potential">qrotor.fi
 </span><span id="Analysis-143"><a href="#Analysis-143"><span class="linenos">143</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">E_threshold</span>
 </span><span id="Analysis-144"><a href="#Analysis-144"><span class="linenos">144</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Energy Threshold for a convergence test.&#39;&#39;&#39;</span>
 </span><span id="Analysis-145"><a href="#Analysis-145"><span class="linenos">145</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ideal_E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ideal_E</span>
-</span><span id="Analysis-146"><a href="#Analysis-146"><span class="linenos">146</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()&#39;&#39;&#39;</span>
+</span><span id="Analysis-146"><a href="#Analysis-146"><span class="linenos">146</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Experiment.get_ideal_E()&#39;&#39;&#39;</span>
 </span></pre></div>
 
 
@@ -1163,7 +1163,7 @@ or loaded externally with the <code><a href="file.html#load_potential">qrotor.fi
 </span><span id="Analysis.__init__-143"><a href="#Analysis.__init__-143"><span class="linenos">143</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">E_threshold</span>
 </span><span id="Analysis.__init__-144"><a href="#Analysis.__init__-144"><span class="linenos">144</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Energy Threshold for a convergence test.&#39;&#39;&#39;</span>
 </span><span id="Analysis.__init__-145"><a href="#Analysis.__init__-145"><span class="linenos">145</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ideal_E</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">ideal_E</span>
-</span><span id="Analysis.__init__-146"><a href="#Analysis.__init__-146"><span class="linenos">146</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Data.get_ideal_E()&#39;&#39;&#39;</span>
+</span><span id="Analysis.__init__-146"><a href="#Analysis.__init__-146"><span class="linenos">146</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Ideal energy level for a &#39;zero&#39; potential, for comparison in a convergence test. Calculated automatically with Experiment.get_ideal_E()&#39;&#39;&#39;</span>
 </span></pre></div>
 
 
@@ -1217,298 +1217,298 @@ or loaded externally with the <code><a href="file.html#load_potential">qrotor.fi
     </div>
     <a class="headerlink" href="#Analysis.ideal_E"></a>
     
-            <div class="docstring"><p>Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with <a href="#Data.get_ideal_E">Data.get_ideal_E()</a></p>
+            <div class="docstring"><p>Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with <a href="#Experiment.get_ideal_E">Experiment.get_ideal_E()</a></p>
 </div>
 
 
                             </div>
                 </section>
-                <section id="Data">
-                            <input id="Data-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="Experiment">
+                            <input id="Experiment-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr class">
             
     <span class="def">class</span>
-    <span class="name">Data</span>:
+    <span class="name">Experiment</span>:
 
-                <label class="view-source-button" for="Data-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data-149"><a href="#Data-149"><span class="linenos">149</span></a><span class="k">class</span> <span class="nc">Data</span><span class="p">:</span>
-</span><span id="Data-150"><a href="#Data-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-</span><span id="Data-151"><a href="#Data-151"><span class="linenos">151</span></a>                 <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data-152"><a href="#Data-152"><span class="linenos">152</span></a>                 <span class="n">plotting</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data-153"><a href="#Data-153"><span class="linenos">153</span></a>                 <span class="n">analysis</span><span class="p">:</span> <span class="n">Analysis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data-154"><a href="#Data-154"><span class="linenos">154</span></a>                 <span class="p">):</span>
-</span><span id="Data-155"><a href="#Data-155"><span class="linenos">155</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
-</span><span id="Data-156"><a href="#Data-156"><span class="linenos">156</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Version of the QRotor package used to generate the data.&#39;&#39;&#39;</span>
-</span><span id="Data-157"><a href="#Data-157"><span class="linenos">157</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">comment</span>
-</span><span id="Data-158"><a href="#Data-158"><span class="linenos">158</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Custom comment for the dataset.&#39;&#39;&#39;</span>
-</span><span id="Data-159"><a href="#Data-159"><span class="linenos">159</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-160"><a href="#Data-160"><span class="linenos">160</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;List containing the calculated System objects.&#39;&#39;&#39;</span>
-</span><span id="Data-161"><a href="#Data-161"><span class="linenos">161</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
-</span><span id="Data-162"><a href="#Data-162"><span class="linenos">162</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).&#39;&#39;&#39;</span>
-</span><span id="Data-163"><a href="#Data-163"><span class="linenos">163</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span>
-</span><span id="Data-164"><a href="#Data-164"><span class="linenos">164</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Analysis object containing the different parameters to analyze the data.&#39;&#39;&#39;</span>
-</span><span id="Data-165"><a href="#Data-165"><span class="linenos">165</span></a>
-</span><span id="Data-166"><a href="#Data-166"><span class="linenos">166</span></a>
-</span><span id="Data-167"><a href="#Data-167"><span class="linenos">167</span></a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-</span><span id="Data-168"><a href="#Data-168"><span class="linenos">168</span></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-</span><span id="Data-169"><a href="#Data-169"><span class="linenos">169</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Data</span><span class="p">):</span>
-</span><span id="Data-170"><a href="#Data-170"><span class="linenos">170</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data-171"><a href="#Data-171"><span class="linenos">171</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
-</span><span id="Data-172"><a href="#Data-172"><span class="linenos">172</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">comment</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
-</span><span id="Data-173"><a href="#Data-173"><span class="linenos">173</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">plotting</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span>
-</span><span id="Data-174"><a href="#Data-174"><span class="linenos">174</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">analysis</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span>
-</span><span id="Data-175"><a href="#Data-175"><span class="linenos">175</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">System</span><span class="p">):</span>
-</span><span id="Data-176"><a href="#Data-176"><span class="linenos">176</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</span><span id="Data-177"><a href="#Data-177"><span class="linenos">177</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-178"><a href="#Data-178"><span class="linenos">178</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data.add() can only add Data and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
-</span><span id="Data-179"><a href="#Data-179"><span class="linenos">179</span></a>
-</span><span id="Data-180"><a href="#Data-180"><span class="linenos">180</span></a>
-</span><span id="Data-181"><a href="#Data-181"><span class="linenos">181</span></a>    <span class="k">def</span> <span class="nf">discard_shit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-182"><a href="#Data-182"><span class="linenos">182</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Discard data that takes too much space&#39;&#39;&#39;</span>
-</span><span id="Data-183"><a href="#Data-183"><span class="linenos">183</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-184"><a href="#Data-184"><span class="linenos">184</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">eigenvectors</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data-185"><a href="#Data-185"><span class="linenos">185</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">potential_values</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data-186"><a href="#Data-186"><span class="linenos">186</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data-187"><a href="#Data-187"><span class="linenos">187</span></a>        <span class="k">return</span> <span class="bp">self</span>
-</span><span id="Data-188"><a href="#Data-188"><span class="linenos">188</span></a>
-</span><span id="Data-189"><a href="#Data-189"><span class="linenos">189</span></a>
-</span><span id="Data-190"><a href="#Data-190"><span class="linenos">190</span></a>    <span class="k">def</span> <span class="nf">get_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-191"><a href="#Data-191"><span class="linenos">191</span></a>        <span class="n">energies</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-192"><a href="#Data-192"><span class="linenos">192</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-193"><a href="#Data-193"><span class="linenos">193</span></a>            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">):</span>
-</span><span id="Data-194"><a href="#Data-194"><span class="linenos">194</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span>
-</span><span id="Data-195"><a href="#Data-195"><span class="linenos">195</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-196"><a href="#Data-196"><span class="linenos">196</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data-197"><a href="#Data-197"><span class="linenos">197</span></a>        <span class="k">return</span> <span class="n">energies</span>
-</span><span id="Data-198"><a href="#Data-198"><span class="linenos">198</span></a>
-</span><span id="Data-199"><a href="#Data-199"><span class="linenos">199</span></a>
-</span><span id="Data-200"><a href="#Data-200"><span class="linenos">200</span></a>    <span class="k">def</span> <span class="nf">get_gridsizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-201"><a href="#Data-201"><span class="linenos">201</span></a>        <span class="n">gridsizes</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-202"><a href="#Data-202"><span class="linenos">202</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-203"><a href="#Data-203"><span class="linenos">203</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">:</span>
-</span><span id="Data-204"><a href="#Data-204"><span class="linenos">204</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="Data-205"><a href="#Data-205"><span class="linenos">205</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-206"><a href="#Data-206"><span class="linenos">206</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data-207"><a href="#Data-207"><span class="linenos">207</span></a>        <span class="k">return</span> <span class="n">gridsizes</span>
-</span><span id="Data-208"><a href="#Data-208"><span class="linenos">208</span></a>
-</span><span id="Data-209"><a href="#Data-209"><span class="linenos">209</span></a>
-</span><span id="Data-210"><a href="#Data-210"><span class="linenos">210</span></a>    <span class="k">def</span> <span class="nf">get_runtimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-211"><a href="#Data-211"><span class="linenos">211</span></a>        <span class="n">runtimes</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-212"><a href="#Data-212"><span class="linenos">212</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-213"><a href="#Data-213"><span class="linenos">213</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span>
-</span><span id="Data-214"><a href="#Data-214"><span class="linenos">214</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">)</span>
-</span><span id="Data-215"><a href="#Data-215"><span class="linenos">215</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-216"><a href="#Data-216"><span class="linenos">216</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data-217"><a href="#Data-217"><span class="linenos">217</span></a>        <span class="k">return</span> <span class="n">runtimes</span>
-</span><span id="Data-218"><a href="#Data-218"><span class="linenos">218</span></a>
-</span><span id="Data-219"><a href="#Data-219"><span class="linenos">219</span></a>
-</span><span id="Data-220"><a href="#Data-220"><span class="linenos">220</span></a>    <span class="k">def</span> <span class="nf">get_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-221"><a href="#Data-221"><span class="linenos">221</span></a>        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-222"><a href="#Data-222"><span class="linenos">222</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-223"><a href="#Data-223"><span class="linenos">223</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">atom_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
-</span><span id="Data-224"><a href="#Data-224"><span class="linenos">224</span></a>                <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">atom_type</span><span class="p">)</span>
-</span><span id="Data-225"><a href="#Data-225"><span class="linenos">225</span></a>        <span class="k">return</span> <span class="n">atom_types</span>
-</span><span id="Data-226"><a href="#Data-226"><span class="linenos">226</span></a>
-</span><span id="Data-227"><a href="#Data-227"><span class="linenos">227</span></a>
-</span><span id="Data-228"><a href="#Data-228"><span class="linenos">228</span></a>    <span class="k">def</span> <span class="nf">sort_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-229"><a href="#Data-229"><span class="linenos">229</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_potential_values</span><span class="p">()</span>
-</span><span id="Data-230"><a href="#Data-230"><span class="linenos">230</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
-</span><span id="Data-231"><a href="#Data-231"><span class="linenos">231</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
-</span><span id="Data-232"><a href="#Data-232"><span class="linenos">232</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</span><span id="Data-233"><a href="#Data-233"><span class="linenos">233</span></a>        <span class="k">return</span> <span class="n">data</span>
-</span><span id="Data-234"><a href="#Data-234"><span class="linenos">234</span></a>
-</span><span id="Data-235"><a href="#Data-235"><span class="linenos">235</span></a>
-</span><span id="Data-236"><a href="#Data-236"><span class="linenos">236</span></a>    <span class="k">def</span> <span class="nf">group_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-237"><a href="#Data-237"><span class="linenos">237</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Data objects with the same potential_values&#39;&#39;&#39;</span>
-</span><span id="Data-238"><a href="#Data-238"><span class="linenos">238</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Data by potential_values...&#39;</span><span class="p">)</span>
-</span><span id="Data-239"><a href="#Data-239"><span class="linenos">239</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data-240"><a href="#Data-240"><span class="linenos">240</span></a>        <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data-241"><a href="#Data-241"><span class="linenos">241</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
-</span><span id="Data-242"><a href="#Data-242"><span class="linenos">242</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
-</span><span id="Data-243"><a href="#Data-243"><span class="linenos">243</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data-244"><a href="#Data-244"><span class="linenos">244</span></a>            <span class="n">new_group</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="Data-245"><a href="#Data-245"><span class="linenos">245</span></a>            <span class="k">for</span> <span class="n">data_i</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
-</span><span id="Data-246"><a href="#Data-246"><span class="linenos">246</span></a>                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">,</span> <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_values</span><span class="p">):</span>
-</span><span id="Data-247"><a href="#Data-247"><span class="linenos">247</span></a>                    <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data-248"><a href="#Data-248"><span class="linenos">248</span></a>                    <span class="n">new_group</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Data-249"><a href="#Data-249"><span class="linenos">249</span></a>                    <span class="k">break</span>
-</span><span id="Data-250"><a href="#Data-250"><span class="linenos">250</span></a>            <span class="k">if</span> <span class="n">new_group</span><span class="p">:</span>
-</span><span id="Data-251"><a href="#Data-251"><span class="linenos">251</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New potential_values found&#39;</span><span class="p">)</span>
-</span><span id="Data-252"><a href="#Data-252"><span class="linenos">252</span></a>                <span class="n">grouped_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="Data-253"><a href="#Data-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="n">grouped_data</span>
-</span><span id="Data-254"><a href="#Data-254"><span class="linenos">254</span></a>
-</span><span id="Data-255"><a href="#Data-255"><span class="linenos">255</span></a>
-</span><span id="Data-256"><a href="#Data-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-257"><a href="#Data-257"><span class="linenos">257</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="Data-258"><a href="#Data-258"><span class="linenos">258</span></a>        <span class="k">return</span> <span class="bp">self</span>
-</span><span id="Data-259"><a href="#Data-259"><span class="linenos">259</span></a>
-</span><span id="Data-260"><a href="#Data-260"><span class="linenos">260</span></a>
-</span><span id="Data-261"><a href="#Data-261"><span class="linenos">261</span></a>    <span class="k">def</span> <span class="nf">get_ideal_E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data-262"><a href="#Data-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level&#39;&#39;&#39;</span>
-</span><span id="Data-263"><a href="#Data-263"><span class="linenos">263</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data-264"><a href="#Data-264"><span class="linenos">264</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Data-265"><a href="#Data-265"><span class="linenos">265</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
-</span><span id="Data-266"><a href="#Data-266"><span class="linenos">266</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
-</span><span id="Data-267"><a href="#Data-267"><span class="linenos">267</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Data-268"><a href="#Data-268"><span class="linenos">268</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="Data-269"><a href="#Data-269"><span class="linenos">269</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-270"><a href="#Data-270"><span class="linenos">270</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="Data-271"><a href="#Data-271"><span class="linenos">271</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="Data-272"><a href="#Data-272"><span class="linenos">272</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span>
-</span><span id="Data-273"><a href="#Data-273"><span class="linenos">273</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Data-274"><a href="#Data-274"><span class="linenos">274</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING:  get_ideal_E() only valid for potential_name=&#39;zero&#39;&quot;</span><span class="p">)</span>
-</span><span id="Data-275"><a href="#Data-275"><span class="linenos">275</span></a>            <span class="k">return</span>
+    <a class="headerlink" href="#Experiment"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment-149"><a href="#Experiment-149"><span class="linenos">149</span></a><span class="k">class</span> <span class="nc">Experiment</span><span class="p">:</span>
+</span><span id="Experiment-150"><a href="#Experiment-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="Experiment-151"><a href="#Experiment-151"><span class="linenos">151</span></a>                 <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment-152"><a href="#Experiment-152"><span class="linenos">152</span></a>                 <span class="n">plotting</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment-153"><a href="#Experiment-153"><span class="linenos">153</span></a>                 <span class="n">analysis</span><span class="p">:</span> <span class="n">Analysis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment-154"><a href="#Experiment-154"><span class="linenos">154</span></a>                 <span class="p">):</span>
+</span><span id="Experiment-155"><a href="#Experiment-155"><span class="linenos">155</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
+</span><span id="Experiment-156"><a href="#Experiment-156"><span class="linenos">156</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Version of the QRotor package used to generate the data.&#39;&#39;&#39;</span>
+</span><span id="Experiment-157"><a href="#Experiment-157"><span class="linenos">157</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">comment</span>
+</span><span id="Experiment-158"><a href="#Experiment-158"><span class="linenos">158</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Custom comment for the dataset.&#39;&#39;&#39;</span>
+</span><span id="Experiment-159"><a href="#Experiment-159"><span class="linenos">159</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-160"><a href="#Experiment-160"><span class="linenos">160</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;List containing the calculated System objects.&#39;&#39;&#39;</span>
+</span><span id="Experiment-161"><a href="#Experiment-161"><span class="linenos">161</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
+</span><span id="Experiment-162"><a href="#Experiment-162"><span class="linenos">162</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).&#39;&#39;&#39;</span>
+</span><span id="Experiment-163"><a href="#Experiment-163"><span class="linenos">163</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span>
+</span><span id="Experiment-164"><a href="#Experiment-164"><span class="linenos">164</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Analysis object containing the different parameters to analyze the data.&#39;&#39;&#39;</span>
+</span><span id="Experiment-165"><a href="#Experiment-165"><span class="linenos">165</span></a>
+</span><span id="Experiment-166"><a href="#Experiment-166"><span class="linenos">166</span></a>
+</span><span id="Experiment-167"><a href="#Experiment-167"><span class="linenos">167</span></a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span id="Experiment-168"><a href="#Experiment-168"><span class="linenos">168</span></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+</span><span id="Experiment-169"><a href="#Experiment-169"><span class="linenos">169</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Experiment</span><span class="p">):</span>
+</span><span id="Experiment-170"><a href="#Experiment-170"><span class="linenos">170</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment-171"><a href="#Experiment-171"><span class="linenos">171</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+</span><span id="Experiment-172"><a href="#Experiment-172"><span class="linenos">172</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">comment</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
+</span><span id="Experiment-173"><a href="#Experiment-173"><span class="linenos">173</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">plotting</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span>
+</span><span id="Experiment-174"><a href="#Experiment-174"><span class="linenos">174</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">analysis</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span>
+</span><span id="Experiment-175"><a href="#Experiment-175"><span class="linenos">175</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">System</span><span class="p">):</span>
+</span><span id="Experiment-176"><a href="#Experiment-176"><span class="linenos">176</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span id="Experiment-177"><a href="#Experiment-177"><span class="linenos">177</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-178"><a href="#Experiment-178"><span class="linenos">178</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Experiment.add() can only add Experiment and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+</span><span id="Experiment-179"><a href="#Experiment-179"><span class="linenos">179</span></a>
+</span><span id="Experiment-180"><a href="#Experiment-180"><span class="linenos">180</span></a>
+</span><span id="Experiment-181"><a href="#Experiment-181"><span class="linenos">181</span></a>    <span class="k">def</span> <span class="nf">discard_shit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-182"><a href="#Experiment-182"><span class="linenos">182</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Discard data that takes too much space&#39;&#39;&#39;</span>
+</span><span id="Experiment-183"><a href="#Experiment-183"><span class="linenos">183</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-184"><a href="#Experiment-184"><span class="linenos">184</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">eigenvectors</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment-185"><a href="#Experiment-185"><span class="linenos">185</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">potential_values</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment-186"><a href="#Experiment-186"><span class="linenos">186</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment-187"><a href="#Experiment-187"><span class="linenos">187</span></a>        <span class="k">return</span> <span class="bp">self</span>
+</span><span id="Experiment-188"><a href="#Experiment-188"><span class="linenos">188</span></a>
+</span><span id="Experiment-189"><a href="#Experiment-189"><span class="linenos">189</span></a>
+</span><span id="Experiment-190"><a href="#Experiment-190"><span class="linenos">190</span></a>    <span class="k">def</span> <span class="nf">get_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-191"><a href="#Experiment-191"><span class="linenos">191</span></a>        <span class="n">energies</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-192"><a href="#Experiment-192"><span class="linenos">192</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-193"><a href="#Experiment-193"><span class="linenos">193</span></a>            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">):</span>
+</span><span id="Experiment-194"><a href="#Experiment-194"><span class="linenos">194</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span>
+</span><span id="Experiment-195"><a href="#Experiment-195"><span class="linenos">195</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-196"><a href="#Experiment-196"><span class="linenos">196</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment-197"><a href="#Experiment-197"><span class="linenos">197</span></a>        <span class="k">return</span> <span class="n">energies</span>
+</span><span id="Experiment-198"><a href="#Experiment-198"><span class="linenos">198</span></a>
+</span><span id="Experiment-199"><a href="#Experiment-199"><span class="linenos">199</span></a>
+</span><span id="Experiment-200"><a href="#Experiment-200"><span class="linenos">200</span></a>    <span class="k">def</span> <span class="nf">get_gridsizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-201"><a href="#Experiment-201"><span class="linenos">201</span></a>        <span class="n">gridsizes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-202"><a href="#Experiment-202"><span class="linenos">202</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-203"><a href="#Experiment-203"><span class="linenos">203</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">:</span>
+</span><span id="Experiment-204"><a href="#Experiment-204"><span class="linenos">204</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="Experiment-205"><a href="#Experiment-205"><span class="linenos">205</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-206"><a href="#Experiment-206"><span class="linenos">206</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment-207"><a href="#Experiment-207"><span class="linenos">207</span></a>        <span class="k">return</span> <span class="n">gridsizes</span>
+</span><span id="Experiment-208"><a href="#Experiment-208"><span class="linenos">208</span></a>
+</span><span id="Experiment-209"><a href="#Experiment-209"><span class="linenos">209</span></a>
+</span><span id="Experiment-210"><a href="#Experiment-210"><span class="linenos">210</span></a>    <span class="k">def</span> <span class="nf">get_runtimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-211"><a href="#Experiment-211"><span class="linenos">211</span></a>        <span class="n">runtimes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-212"><a href="#Experiment-212"><span class="linenos">212</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-213"><a href="#Experiment-213"><span class="linenos">213</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span>
+</span><span id="Experiment-214"><a href="#Experiment-214"><span class="linenos">214</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">)</span>
+</span><span id="Experiment-215"><a href="#Experiment-215"><span class="linenos">215</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-216"><a href="#Experiment-216"><span class="linenos">216</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment-217"><a href="#Experiment-217"><span class="linenos">217</span></a>        <span class="k">return</span> <span class="n">runtimes</span>
+</span><span id="Experiment-218"><a href="#Experiment-218"><span class="linenos">218</span></a>
+</span><span id="Experiment-219"><a href="#Experiment-219"><span class="linenos">219</span></a>
+</span><span id="Experiment-220"><a href="#Experiment-220"><span class="linenos">220</span></a>    <span class="k">def</span> <span class="nf">get_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-221"><a href="#Experiment-221"><span class="linenos">221</span></a>        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-222"><a href="#Experiment-222"><span class="linenos">222</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-223"><a href="#Experiment-223"><span class="linenos">223</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">atom_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
+</span><span id="Experiment-224"><a href="#Experiment-224"><span class="linenos">224</span></a>                <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">atom_type</span><span class="p">)</span>
+</span><span id="Experiment-225"><a href="#Experiment-225"><span class="linenos">225</span></a>        <span class="k">return</span> <span class="n">atom_types</span>
+</span><span id="Experiment-226"><a href="#Experiment-226"><span class="linenos">226</span></a>
+</span><span id="Experiment-227"><a href="#Experiment-227"><span class="linenos">227</span></a>
+</span><span id="Experiment-228"><a href="#Experiment-228"><span class="linenos">228</span></a>    <span class="k">def</span> <span class="nf">sort_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-229"><a href="#Experiment-229"><span class="linenos">229</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_potential_values</span><span class="p">()</span>
+</span><span id="Experiment-230"><a href="#Experiment-230"><span class="linenos">230</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+</span><span id="Experiment-231"><a href="#Experiment-231"><span class="linenos">231</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
+</span><span id="Experiment-232"><a href="#Experiment-232"><span class="linenos">232</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</span><span id="Experiment-233"><a href="#Experiment-233"><span class="linenos">233</span></a>        <span class="k">return</span> <span class="n">data</span>
+</span><span id="Experiment-234"><a href="#Experiment-234"><span class="linenos">234</span></a>
+</span><span id="Experiment-235"><a href="#Experiment-235"><span class="linenos">235</span></a>
+</span><span id="Experiment-236"><a href="#Experiment-236"><span class="linenos">236</span></a>    <span class="k">def</span> <span class="nf">group_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-237"><a href="#Experiment-237"><span class="linenos">237</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Experiment objects with the same potential_values&#39;&#39;&#39;</span>
+</span><span id="Experiment-238"><a href="#Experiment-238"><span class="linenos">238</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Experiment by potential_values...&#39;</span><span class="p">)</span>
+</span><span id="Experiment-239"><a href="#Experiment-239"><span class="linenos">239</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment-240"><a href="#Experiment-240"><span class="linenos">240</span></a>        <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment-241"><a href="#Experiment-241"><span class="linenos">241</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+</span><span id="Experiment-242"><a href="#Experiment-242"><span class="linenos">242</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
+</span><span id="Experiment-243"><a href="#Experiment-243"><span class="linenos">243</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment-244"><a href="#Experiment-244"><span class="linenos">244</span></a>            <span class="n">new_group</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="Experiment-245"><a href="#Experiment-245"><span class="linenos">245</span></a>            <span class="k">for</span> <span class="n">data_i</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
+</span><span id="Experiment-246"><a href="#Experiment-246"><span class="linenos">246</span></a>                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">,</span> <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_values</span><span class="p">):</span>
+</span><span id="Experiment-247"><a href="#Experiment-247"><span class="linenos">247</span></a>                    <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment-248"><a href="#Experiment-248"><span class="linenos">248</span></a>                    <span class="n">new_group</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Experiment-249"><a href="#Experiment-249"><span class="linenos">249</span></a>                    <span class="k">break</span>
+</span><span id="Experiment-250"><a href="#Experiment-250"><span class="linenos">250</span></a>            <span class="k">if</span> <span class="n">new_group</span><span class="p">:</span>
+</span><span id="Experiment-251"><a href="#Experiment-251"><span class="linenos">251</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New potential_values found&#39;</span><span class="p">)</span>
+</span><span id="Experiment-252"><a href="#Experiment-252"><span class="linenos">252</span></a>                <span class="n">grouped_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="Experiment-253"><a href="#Experiment-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="n">grouped_data</span>
+</span><span id="Experiment-254"><a href="#Experiment-254"><span class="linenos">254</span></a>
+</span><span id="Experiment-255"><a href="#Experiment-255"><span class="linenos">255</span></a>
+</span><span id="Experiment-256"><a href="#Experiment-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-257"><a href="#Experiment-257"><span class="linenos">257</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="Experiment-258"><a href="#Experiment-258"><span class="linenos">258</span></a>        <span class="k">return</span> <span class="bp">self</span>
+</span><span id="Experiment-259"><a href="#Experiment-259"><span class="linenos">259</span></a>
+</span><span id="Experiment-260"><a href="#Experiment-260"><span class="linenos">260</span></a>
+</span><span id="Experiment-261"><a href="#Experiment-261"><span class="linenos">261</span></a>    <span class="k">def</span> <span class="nf">get_ideal_E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment-262"><a href="#Experiment-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level&#39;&#39;&#39;</span>
+</span><span id="Experiment-263"><a href="#Experiment-263"><span class="linenos">263</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment-264"><a href="#Experiment-264"><span class="linenos">264</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Experiment-265"><a href="#Experiment-265"><span class="linenos">265</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Experiment.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
+</span><span id="Experiment-266"><a href="#Experiment-266"><span class="linenos">266</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
+</span><span id="Experiment-267"><a href="#Experiment-267"><span class="linenos">267</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="Experiment-268"><a href="#Experiment-268"><span class="linenos">268</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="Experiment-269"><a href="#Experiment-269"><span class="linenos">269</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-270"><a href="#Experiment-270"><span class="linenos">270</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="Experiment-271"><a href="#Experiment-271"><span class="linenos">271</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="Experiment-272"><a href="#Experiment-272"><span class="linenos">272</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span>
+</span><span id="Experiment-273"><a href="#Experiment-273"><span class="linenos">273</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment-274"><a href="#Experiment-274"><span class="linenos">274</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING:  get_ideal_E() only valid for potential_name=&#39;zero&#39;&quot;</span><span class="p">)</span>
+</span><span id="Experiment-275"><a href="#Experiment-275"><span class="linenos">275</span></a>            <span class="k">return</span>
 </span></pre></div>
 
 
     
 
-                            <div id="Data.__init__" class="classattr">
-                                        <input id="Data.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.__init__" class="classattr">
+                                        <input id="Experiment.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">Data</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">plotting</span><span class="p">:</span> <span class="n">maat</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">analysis</span><span class="p">:</span> <span class="n"><a href="#Analysis">Analysis</a></span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
+        <span class="name">Experiment</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">plotting</span><span class="p">:</span> <span class="n">maat</span><span class="o">.</span><span class="n">classes</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span>,</span><span class="param">	<span class="n">analysis</span><span class="p">:</span> <span class="n"><a href="#Analysis">Analysis</a></span> <span class="o">=</span> <span class="kc">None</span></span>)</span>
 
-                <label class="view-source-button" for="Data.__init__-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.__init__-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.__init__-150"><a href="#Data.__init__-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-</span><span id="Data.__init__-151"><a href="#Data.__init__-151"><span class="linenos">151</span></a>                 <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data.__init__-152"><a href="#Data.__init__-152"><span class="linenos">152</span></a>                 <span class="n">plotting</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data.__init__-153"><a href="#Data.__init__-153"><span class="linenos">153</span></a>                 <span class="n">analysis</span><span class="p">:</span> <span class="n">Analysis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="Data.__init__-154"><a href="#Data.__init__-154"><span class="linenos">154</span></a>                 <span class="p">):</span>
-</span><span id="Data.__init__-155"><a href="#Data.__init__-155"><span class="linenos">155</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
-</span><span id="Data.__init__-156"><a href="#Data.__init__-156"><span class="linenos">156</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Version of the QRotor package used to generate the data.&#39;&#39;&#39;</span>
-</span><span id="Data.__init__-157"><a href="#Data.__init__-157"><span class="linenos">157</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">comment</span>
-</span><span id="Data.__init__-158"><a href="#Data.__init__-158"><span class="linenos">158</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Custom comment for the dataset.&#39;&#39;&#39;</span>
-</span><span id="Data.__init__-159"><a href="#Data.__init__-159"><span class="linenos">159</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.__init__-160"><a href="#Data.__init__-160"><span class="linenos">160</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;List containing the calculated System objects.&#39;&#39;&#39;</span>
-</span><span id="Data.__init__-161"><a href="#Data.__init__-161"><span class="linenos">161</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
-</span><span id="Data.__init__-162"><a href="#Data.__init__-162"><span class="linenos">162</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).&#39;&#39;&#39;</span>
-</span><span id="Data.__init__-163"><a href="#Data.__init__-163"><span class="linenos">163</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span>
-</span><span id="Data.__init__-164"><a href="#Data.__init__-164"><span class="linenos">164</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Analysis object containing the different parameters to analyze the data.&#39;&#39;&#39;</span>
+    <a class="headerlink" href="#Experiment.__init__"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.__init__-150"><a href="#Experiment.__init__-150"><span class="linenos">150</span></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+</span><span id="Experiment.__init__-151"><a href="#Experiment.__init__-151"><span class="linenos">151</span></a>                 <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment.__init__-152"><a href="#Experiment.__init__-152"><span class="linenos">152</span></a>                 <span class="n">plotting</span><span class="p">:</span> <span class="n">mt</span><span class="o">.</span><span class="n">Plotting</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment.__init__-153"><a href="#Experiment.__init__-153"><span class="linenos">153</span></a>                 <span class="n">analysis</span><span class="p">:</span> <span class="n">Analysis</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="Experiment.__init__-154"><a href="#Experiment.__init__-154"><span class="linenos">154</span></a>                 <span class="p">):</span>
+</span><span id="Experiment.__init__-155"><a href="#Experiment.__init__-155"><span class="linenos">155</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
+</span><span id="Experiment.__init__-156"><a href="#Experiment.__init__-156"><span class="linenos">156</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Version of the QRotor package used to generate the data.&#39;&#39;&#39;</span>
+</span><span id="Experiment.__init__-157"><a href="#Experiment.__init__-157"><span class="linenos">157</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">comment</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">comment</span>
+</span><span id="Experiment.__init__-158"><a href="#Experiment.__init__-158"><span class="linenos">158</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Custom comment for the dataset.&#39;&#39;&#39;</span>
+</span><span id="Experiment.__init__-159"><a href="#Experiment.__init__-159"><span class="linenos">159</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.__init__-160"><a href="#Experiment.__init__-160"><span class="linenos">160</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;List containing the calculated System objects.&#39;&#39;&#39;</span>
+</span><span id="Experiment.__init__-161"><a href="#Experiment.__init__-161"><span class="linenos">161</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">plotting</span>
+</span><span id="Experiment.__init__-162"><a href="#Experiment.__init__-162"><span class="linenos">162</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).&#39;&#39;&#39;</span>
+</span><span id="Experiment.__init__-163"><a href="#Experiment.__init__-163"><span class="linenos">163</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">analysis</span>
+</span><span id="Experiment.__init__-164"><a href="#Experiment.__init__-164"><span class="linenos">164</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Analysis object containing the different parameters to analyze the data.&#39;&#39;&#39;</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.version" class="classattr">
+                            <div id="Experiment.version" class="classattr">
                                 <div class="attr variable">
             <span class="name">version</span>
 
         
     </div>
-    <a class="headerlink" href="#Data.version"></a>
+    <a class="headerlink" href="#Experiment.version"></a>
     
             <div class="docstring"><p>Version of the QRotor package used to generate the data.</p>
 </div>
 
 
                             </div>
-                            <div id="Data.comment" class="classattr">
+                            <div id="Experiment.comment" class="classattr">
                                 <div class="attr variable">
             <span class="name">comment</span><span class="annotation">: str</span>
 
         
     </div>
-    <a class="headerlink" href="#Data.comment"></a>
+    <a class="headerlink" href="#Experiment.comment"></a>
     
             <div class="docstring"><p>Custom comment for the dataset.</p>
 </div>
 
 
                             </div>
-                            <div id="Data.system" class="classattr">
+                            <div id="Experiment.system" class="classattr">
                                 <div class="attr variable">
             <span class="name">system</span>
 
         
     </div>
-    <a class="headerlink" href="#Data.system"></a>
+    <a class="headerlink" href="#Experiment.system"></a>
     
             <div class="docstring"><p>List containing the calculated System objects.</p>
 </div>
 
 
                             </div>
-                            <div id="Data.plotting" class="classattr">
+                            <div id="Experiment.plotting" class="classattr">
                                 <div class="attr variable">
             <span class="name">plotting</span>
 
         
     </div>
-    <a class="headerlink" href="#Data.plotting"></a>
+    <a class="headerlink" href="#Experiment.plotting"></a>
     
             <div class="docstring"><p>Maat plotting object. Check more options <a href="https://pablogila.github.io/Maat/maat/classes.html#Plotting">here</a>.</p>
 </div>
 
 
                             </div>
-                            <div id="Data.analysis" class="classattr">
+                            <div id="Experiment.analysis" class="classattr">
                                 <div class="attr variable">
             <span class="name">analysis</span>
 
         
     </div>
-    <a class="headerlink" href="#Data.analysis"></a>
+    <a class="headerlink" href="#Experiment.analysis"></a>
     
             <div class="docstring"><p>Analysis object containing the different parameters to analyze the data.</p>
 </div>
 
 
                             </div>
-                            <div id="Data.add" class="classattr">
-                                        <input id="Data.add-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.add" class="classattr">
+                                        <input id="Experiment.add-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">add</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span>, </span><span class="param"><span class="o">*</span><span class="n">args</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.add-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.add-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.add"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.add-167"><a href="#Data.add-167"><span class="linenos">167</span></a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
-</span><span id="Data.add-168"><a href="#Data.add-168"><span class="linenos">168</span></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-</span><span id="Data.add-169"><a href="#Data.add-169"><span class="linenos">169</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Data</span><span class="p">):</span>
-</span><span id="Data.add-170"><a href="#Data.add-170"><span class="linenos">170</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data.add-171"><a href="#Data.add-171"><span class="linenos">171</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
-</span><span id="Data.add-172"><a href="#Data.add-172"><span class="linenos">172</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">comment</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
-</span><span id="Data.add-173"><a href="#Data.add-173"><span class="linenos">173</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">plotting</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span>
-</span><span id="Data.add-174"><a href="#Data.add-174"><span class="linenos">174</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">analysis</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span>
-</span><span id="Data.add-175"><a href="#Data.add-175"><span class="linenos">175</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">System</span><span class="p">):</span>
-</span><span id="Data.add-176"><a href="#Data.add-176"><span class="linenos">176</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
-</span><span id="Data.add-177"><a href="#Data.add-177"><span class="linenos">177</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.add-178"><a href="#Data.add-178"><span class="linenos">178</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Data.add() can only add Data and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+    <a class="headerlink" href="#Experiment.add"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.add-167"><a href="#Experiment.add-167"><span class="linenos">167</span></a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span id="Experiment.add-168"><a href="#Experiment.add-168"><span class="linenos">168</span></a>        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+</span><span id="Experiment.add-169"><a href="#Experiment.add-169"><span class="linenos">169</span></a>            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Experiment</span><span class="p">):</span>
+</span><span id="Experiment.add-170"><a href="#Experiment.add-170"><span class="linenos">170</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment.add-171"><a href="#Experiment.add-171"><span class="linenos">171</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">version</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+</span><span id="Experiment.add-172"><a href="#Experiment.add-172"><span class="linenos">172</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">comment</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
+</span><span id="Experiment.add-173"><a href="#Experiment.add-173"><span class="linenos">173</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">plotting</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span>
+</span><span id="Experiment.add-174"><a href="#Experiment.add-174"><span class="linenos">174</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">analysis</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">analysis</span>
+</span><span id="Experiment.add-175"><a href="#Experiment.add-175"><span class="linenos">175</span></a>            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">System</span><span class="p">):</span>
+</span><span id="Experiment.add-176"><a href="#Experiment.add-176"><span class="linenos">176</span></a>                <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span id="Experiment.add-177"><a href="#Experiment.add-177"><span class="linenos">177</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.add-178"><a href="#Experiment.add-178"><span class="linenos">178</span></a>                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Experiment.add() can only add Experiment and/or System objects, not </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.discard_shit" class="classattr">
-                                        <input id="Data.discard_shit-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.discard_shit" class="classattr">
+                                        <input id="Experiment.discard_shit-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">discard_shit</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.discard_shit-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.discard_shit-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.discard_shit"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.discard_shit-181"><a href="#Data.discard_shit-181"><span class="linenos">181</span></a>    <span class="k">def</span> <span class="nf">discard_shit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.discard_shit-182"><a href="#Data.discard_shit-182"><span class="linenos">182</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Discard data that takes too much space&#39;&#39;&#39;</span>
-</span><span id="Data.discard_shit-183"><a href="#Data.discard_shit-183"><span class="linenos">183</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.discard_shit-184"><a href="#Data.discard_shit-184"><span class="linenos">184</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">eigenvectors</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data.discard_shit-185"><a href="#Data.discard_shit-185"><span class="linenos">185</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">potential_values</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data.discard_shit-186"><a href="#Data.discard_shit-186"><span class="linenos">186</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data.discard_shit-187"><a href="#Data.discard_shit-187"><span class="linenos">187</span></a>        <span class="k">return</span> <span class="bp">self</span>
+    <a class="headerlink" href="#Experiment.discard_shit"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.discard_shit-181"><a href="#Experiment.discard_shit-181"><span class="linenos">181</span></a>    <span class="k">def</span> <span class="nf">discard_shit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.discard_shit-182"><a href="#Experiment.discard_shit-182"><span class="linenos">182</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Discard data that takes too much space&#39;&#39;&#39;</span>
+</span><span id="Experiment.discard_shit-183"><a href="#Experiment.discard_shit-183"><span class="linenos">183</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.discard_shit-184"><a href="#Experiment.discard_shit-184"><span class="linenos">184</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">eigenvectors</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment.discard_shit-185"><a href="#Experiment.discard_shit-185"><span class="linenos">185</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">potential_values</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment.discard_shit-186"><a href="#Experiment.discard_shit-186"><span class="linenos">186</span></a>            <span class="n">dataset</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment.discard_shit-187"><a href="#Experiment.discard_shit-187"><span class="linenos">187</span></a>        <span class="k">return</span> <span class="bp">self</span>
 </span></pre></div>
 
 
@@ -1517,214 +1517,214 @@ or loaded externally with the <code><a href="file.html#load_potential">qrotor.fi
 
 
                             </div>
-                            <div id="Data.get_energies" class="classattr">
-                                        <input id="Data.get_energies-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.get_energies" class="classattr">
+                                        <input id="Experiment.get_energies-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">get_energies</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.get_energies-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.get_energies-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.get_energies"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.get_energies-190"><a href="#Data.get_energies-190"><span class="linenos">190</span></a>    <span class="k">def</span> <span class="nf">get_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.get_energies-191"><a href="#Data.get_energies-191"><span class="linenos">191</span></a>        <span class="n">energies</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.get_energies-192"><a href="#Data.get_energies-192"><span class="linenos">192</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.get_energies-193"><a href="#Data.get_energies-193"><span class="linenos">193</span></a>            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">):</span>
-</span><span id="Data.get_energies-194"><a href="#Data.get_energies-194"><span class="linenos">194</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span>
-</span><span id="Data.get_energies-195"><a href="#Data.get_energies-195"><span class="linenos">195</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.get_energies-196"><a href="#Data.get_energies-196"><span class="linenos">196</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data.get_energies-197"><a href="#Data.get_energies-197"><span class="linenos">197</span></a>        <span class="k">return</span> <span class="n">energies</span>
+    <a class="headerlink" href="#Experiment.get_energies"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.get_energies-190"><a href="#Experiment.get_energies-190"><span class="linenos">190</span></a>    <span class="k">def</span> <span class="nf">get_energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.get_energies-191"><a href="#Experiment.get_energies-191"><span class="linenos">191</span></a>        <span class="n">energies</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.get_energies-192"><a href="#Experiment.get_energies-192"><span class="linenos">192</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.get_energies-193"><a href="#Experiment.get_energies-193"><span class="linenos">193</span></a>            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">):</span>
+</span><span id="Experiment.get_energies-194"><a href="#Experiment.get_energies-194"><span class="linenos">194</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span>
+</span><span id="Experiment.get_energies-195"><a href="#Experiment.get_energies-195"><span class="linenos">195</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.get_energies-196"><a href="#Experiment.get_energies-196"><span class="linenos">196</span></a>                <span class="n">energies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment.get_energies-197"><a href="#Experiment.get_energies-197"><span class="linenos">197</span></a>        <span class="k">return</span> <span class="n">energies</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.get_gridsizes" class="classattr">
-                                        <input id="Data.get_gridsizes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.get_gridsizes" class="classattr">
+                                        <input id="Experiment.get_gridsizes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">get_gridsizes</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.get_gridsizes-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.get_gridsizes-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.get_gridsizes"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.get_gridsizes-200"><a href="#Data.get_gridsizes-200"><span class="linenos">200</span></a>    <span class="k">def</span> <span class="nf">get_gridsizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.get_gridsizes-201"><a href="#Data.get_gridsizes-201"><span class="linenos">201</span></a>        <span class="n">gridsizes</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.get_gridsizes-202"><a href="#Data.get_gridsizes-202"><span class="linenos">202</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.get_gridsizes-203"><a href="#Data.get_gridsizes-203"><span class="linenos">203</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">:</span>
-</span><span id="Data.get_gridsizes-204"><a href="#Data.get_gridsizes-204"><span class="linenos">204</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="Data.get_gridsizes-205"><a href="#Data.get_gridsizes-205"><span class="linenos">205</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.get_gridsizes-206"><a href="#Data.get_gridsizes-206"><span class="linenos">206</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data.get_gridsizes-207"><a href="#Data.get_gridsizes-207"><span class="linenos">207</span></a>        <span class="k">return</span> <span class="n">gridsizes</span>
+    <a class="headerlink" href="#Experiment.get_gridsizes"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.get_gridsizes-200"><a href="#Experiment.get_gridsizes-200"><span class="linenos">200</span></a>    <span class="k">def</span> <span class="nf">get_gridsizes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.get_gridsizes-201"><a href="#Experiment.get_gridsizes-201"><span class="linenos">201</span></a>        <span class="n">gridsizes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.get_gridsizes-202"><a href="#Experiment.get_gridsizes-202"><span class="linenos">202</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.get_gridsizes-203"><a href="#Experiment.get_gridsizes-203"><span class="linenos">203</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">:</span>
+</span><span id="Experiment.get_gridsizes-204"><a href="#Experiment.get_gridsizes-204"><span class="linenos">204</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="Experiment.get_gridsizes-205"><a href="#Experiment.get_gridsizes-205"><span class="linenos">205</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.get_gridsizes-206"><a href="#Experiment.get_gridsizes-206"><span class="linenos">206</span></a>                <span class="n">gridsizes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment.get_gridsizes-207"><a href="#Experiment.get_gridsizes-207"><span class="linenos">207</span></a>        <span class="k">return</span> <span class="n">gridsizes</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.get_runtimes" class="classattr">
-                                        <input id="Data.get_runtimes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.get_runtimes" class="classattr">
+                                        <input id="Experiment.get_runtimes-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">get_runtimes</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.get_runtimes-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.get_runtimes-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.get_runtimes"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.get_runtimes-210"><a href="#Data.get_runtimes-210"><span class="linenos">210</span></a>    <span class="k">def</span> <span class="nf">get_runtimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.get_runtimes-211"><a href="#Data.get_runtimes-211"><span class="linenos">211</span></a>        <span class="n">runtimes</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.get_runtimes-212"><a href="#Data.get_runtimes-212"><span class="linenos">212</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.get_runtimes-213"><a href="#Data.get_runtimes-213"><span class="linenos">213</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span>
-</span><span id="Data.get_runtimes-214"><a href="#Data.get_runtimes-214"><span class="linenos">214</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">)</span>
-</span><span id="Data.get_runtimes-215"><a href="#Data.get_runtimes-215"><span class="linenos">215</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.get_runtimes-216"><a href="#Data.get_runtimes-216"><span class="linenos">216</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-</span><span id="Data.get_runtimes-217"><a href="#Data.get_runtimes-217"><span class="linenos">217</span></a>        <span class="k">return</span> <span class="n">runtimes</span>
+    <a class="headerlink" href="#Experiment.get_runtimes"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.get_runtimes-210"><a href="#Experiment.get_runtimes-210"><span class="linenos">210</span></a>    <span class="k">def</span> <span class="nf">get_runtimes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.get_runtimes-211"><a href="#Experiment.get_runtimes-211"><span class="linenos">211</span></a>        <span class="n">runtimes</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.get_runtimes-212"><a href="#Experiment.get_runtimes-212"><span class="linenos">212</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.get_runtimes-213"><a href="#Experiment.get_runtimes-213"><span class="linenos">213</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span>
+</span><span id="Experiment.get_runtimes-214"><a href="#Experiment.get_runtimes-214"><span class="linenos">214</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">runtime</span><span class="p">)</span>
+</span><span id="Experiment.get_runtimes-215"><a href="#Experiment.get_runtimes-215"><span class="linenos">215</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.get_runtimes-216"><a href="#Experiment.get_runtimes-216"><span class="linenos">216</span></a>                <span class="n">runtimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span id="Experiment.get_runtimes-217"><a href="#Experiment.get_runtimes-217"><span class="linenos">217</span></a>        <span class="k">return</span> <span class="n">runtimes</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.get_atom_types" class="classattr">
-                                        <input id="Data.get_atom_types-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.get_atom_types" class="classattr">
+                                        <input id="Experiment.get_atom_types-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">get_atom_types</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.get_atom_types-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.get_atom_types-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.get_atom_types"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.get_atom_types-220"><a href="#Data.get_atom_types-220"><span class="linenos">220</span></a>    <span class="k">def</span> <span class="nf">get_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.get_atom_types-221"><a href="#Data.get_atom_types-221"><span class="linenos">221</span></a>        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.get_atom_types-222"><a href="#Data.get_atom_types-222"><span class="linenos">222</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.get_atom_types-223"><a href="#Data.get_atom_types-223"><span class="linenos">223</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">atom_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
-</span><span id="Data.get_atom_types-224"><a href="#Data.get_atom_types-224"><span class="linenos">224</span></a>                <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">atom_type</span><span class="p">)</span>
-</span><span id="Data.get_atom_types-225"><a href="#Data.get_atom_types-225"><span class="linenos">225</span></a>        <span class="k">return</span> <span class="n">atom_types</span>
+    <a class="headerlink" href="#Experiment.get_atom_types"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.get_atom_types-220"><a href="#Experiment.get_atom_types-220"><span class="linenos">220</span></a>    <span class="k">def</span> <span class="nf">get_atom_types</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.get_atom_types-221"><a href="#Experiment.get_atom_types-221"><span class="linenos">221</span></a>        <span class="n">atom_types</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.get_atom_types-222"><a href="#Experiment.get_atom_types-222"><span class="linenos">222</span></a>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.get_atom_types-223"><a href="#Experiment.get_atom_types-223"><span class="linenos">223</span></a>            <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">atom_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">atom_types</span><span class="p">:</span>
+</span><span id="Experiment.get_atom_types-224"><a href="#Experiment.get_atom_types-224"><span class="linenos">224</span></a>                <span class="n">atom_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">atom_type</span><span class="p">)</span>
+</span><span id="Experiment.get_atom_types-225"><a href="#Experiment.get_atom_types-225"><span class="linenos">225</span></a>        <span class="k">return</span> <span class="n">atom_types</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.sort_by_potential_values" class="classattr">
-                                        <input id="Data.sort_by_potential_values-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.sort_by_potential_values" class="classattr">
+                                        <input id="Experiment.sort_by_potential_values-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">sort_by_potential_values</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.sort_by_potential_values-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.sort_by_potential_values-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.sort_by_potential_values"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.sort_by_potential_values-228"><a href="#Data.sort_by_potential_values-228"><span class="linenos">228</span></a>    <span class="k">def</span> <span class="nf">sort_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.sort_by_potential_values-229"><a href="#Data.sort_by_potential_values-229"><span class="linenos">229</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_potential_values</span><span class="p">()</span>
-</span><span id="Data.sort_by_potential_values-230"><a href="#Data.sort_by_potential_values-230"><span class="linenos">230</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
-</span><span id="Data.sort_by_potential_values-231"><a href="#Data.sort_by_potential_values-231"><span class="linenos">231</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
-</span><span id="Data.sort_by_potential_values-232"><a href="#Data.sort_by_potential_values-232"><span class="linenos">232</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
-</span><span id="Data.sort_by_potential_values-233"><a href="#Data.sort_by_potential_values-233"><span class="linenos">233</span></a>        <span class="k">return</span> <span class="n">data</span>
+    <a class="headerlink" href="#Experiment.sort_by_potential_values"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.sort_by_potential_values-228"><a href="#Experiment.sort_by_potential_values-228"><span class="linenos">228</span></a>    <span class="k">def</span> <span class="nf">sort_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.sort_by_potential_values-229"><a href="#Experiment.sort_by_potential_values-229"><span class="linenos">229</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group_by_potential_values</span><span class="p">()</span>
+</span><span id="Experiment.sort_by_potential_values-230"><a href="#Experiment.sort_by_potential_values-230"><span class="linenos">230</span></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+</span><span id="Experiment.sort_by_potential_values-231"><a href="#Experiment.sort_by_potential_values-231"><span class="linenos">231</span></a>        <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
+</span><span id="Experiment.sort_by_potential_values-232"><a href="#Experiment.sort_by_potential_values-232"><span class="linenos">232</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</span><span id="Experiment.sort_by_potential_values-233"><a href="#Experiment.sort_by_potential_values-233"><span class="linenos">233</span></a>        <span class="k">return</span> <span class="n">data</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.group_by_potential_values" class="classattr">
-                                        <input id="Data.group_by_potential_values-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.group_by_potential_values" class="classattr">
+                                        <input id="Experiment.group_by_potential_values-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">group_by_potential_values</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.group_by_potential_values-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.group_by_potential_values-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.group_by_potential_values"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.group_by_potential_values-236"><a href="#Data.group_by_potential_values-236"><span class="linenos">236</span></a>    <span class="k">def</span> <span class="nf">group_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.group_by_potential_values-237"><a href="#Data.group_by_potential_values-237"><span class="linenos">237</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Data objects with the same potential_values&#39;&#39;&#39;</span>
-</span><span id="Data.group_by_potential_values-238"><a href="#Data.group_by_potential_values-238"><span class="linenos">238</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Data by potential_values...&#39;</span><span class="p">)</span>
-</span><span id="Data.group_by_potential_values-239"><a href="#Data.group_by_potential_values-239"><span class="linenos">239</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="Data.group_by_potential_values-240"><a href="#Data.group_by_potential_values-240"><span class="linenos">240</span></a>        <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
-</span><span id="Data.group_by_potential_values-241"><a href="#Data.group_by_potential_values-241"><span class="linenos">241</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">()</span>
-</span><span id="Data.group_by_potential_values-242"><a href="#Data.group_by_potential_values-242"><span class="linenos">242</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
-</span><span id="Data.group_by_potential_values-243"><a href="#Data.group_by_potential_values-243"><span class="linenos">243</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data.group_by_potential_values-244"><a href="#Data.group_by_potential_values-244"><span class="linenos">244</span></a>            <span class="n">new_group</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="Data.group_by_potential_values-245"><a href="#Data.group_by_potential_values-245"><span class="linenos">245</span></a>            <span class="k">for</span> <span class="n">data_i</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
-</span><span id="Data.group_by_potential_values-246"><a href="#Data.group_by_potential_values-246"><span class="linenos">246</span></a>                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">,</span> <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_values</span><span class="p">):</span>
-</span><span id="Data.group_by_potential_values-247"><a href="#Data.group_by_potential_values-247"><span class="linenos">247</span></a>                    <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="Data.group_by_potential_values-248"><a href="#Data.group_by_potential_values-248"><span class="linenos">248</span></a>                    <span class="n">new_group</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="Data.group_by_potential_values-249"><a href="#Data.group_by_potential_values-249"><span class="linenos">249</span></a>                    <span class="k">break</span>
-</span><span id="Data.group_by_potential_values-250"><a href="#Data.group_by_potential_values-250"><span class="linenos">250</span></a>            <span class="k">if</span> <span class="n">new_group</span><span class="p">:</span>
-</span><span id="Data.group_by_potential_values-251"><a href="#Data.group_by_potential_values-251"><span class="linenos">251</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New potential_values found&#39;</span><span class="p">)</span>
-</span><span id="Data.group_by_potential_values-252"><a href="#Data.group_by_potential_values-252"><span class="linenos">252</span></a>                <span class="n">grouped_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</span><span id="Data.group_by_potential_values-253"><a href="#Data.group_by_potential_values-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="n">grouped_data</span>
+    <a class="headerlink" href="#Experiment.group_by_potential_values"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.group_by_potential_values-236"><a href="#Experiment.group_by_potential_values-236"><span class="linenos">236</span></a>    <span class="k">def</span> <span class="nf">group_by_potential_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.group_by_potential_values-237"><a href="#Experiment.group_by_potential_values-237"><span class="linenos">237</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Returns an array of grouped Experiment objects with the same potential_values&#39;&#39;&#39;</span>
+</span><span id="Experiment.group_by_potential_values-238"><a href="#Experiment.group_by_potential_values-238"><span class="linenos">238</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Grouping Experiment by potential_values...&#39;</span><span class="p">)</span>
+</span><span id="Experiment.group_by_potential_values-239"><a href="#Experiment.group_by_potential_values-239"><span class="linenos">239</span></a>        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="Experiment.group_by_potential_values-240"><a href="#Experiment.group_by_potential_values-240"><span class="linenos">240</span></a>        <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">:</span>
+</span><span id="Experiment.group_by_potential_values-241"><a href="#Experiment.group_by_potential_values-241"><span class="linenos">241</span></a>            <span class="n">data</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">()</span>
+</span><span id="Experiment.group_by_potential_values-242"><a href="#Experiment.group_by_potential_values-242"><span class="linenos">242</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">comment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">comment</span>
+</span><span id="Experiment.group_by_potential_values-243"><a href="#Experiment.group_by_potential_values-243"><span class="linenos">243</span></a>            <span class="n">data</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment.group_by_potential_values-244"><a href="#Experiment.group_by_potential_values-244"><span class="linenos">244</span></a>            <span class="n">new_group</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="Experiment.group_by_potential_values-245"><a href="#Experiment.group_by_potential_values-245"><span class="linenos">245</span></a>            <span class="k">for</span> <span class="n">data_i</span> <span class="ow">in</span> <span class="n">grouped_data</span><span class="p">:</span>
+</span><span id="Experiment.group_by_potential_values-246"><a href="#Experiment.group_by_potential_values-246"><span class="linenos">246</span></a>                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">,</span> <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_values</span><span class="p">):</span>
+</span><span id="Experiment.group_by_potential_values-247"><a href="#Experiment.group_by_potential_values-247"><span class="linenos">247</span></a>                    <span class="n">data_i</span><span class="o">.</span><span class="n">system</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="Experiment.group_by_potential_values-248"><a href="#Experiment.group_by_potential_values-248"><span class="linenos">248</span></a>                    <span class="n">new_group</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="Experiment.group_by_potential_values-249"><a href="#Experiment.group_by_potential_values-249"><span class="linenos">249</span></a>                    <span class="k">break</span>
+</span><span id="Experiment.group_by_potential_values-250"><a href="#Experiment.group_by_potential_values-250"><span class="linenos">250</span></a>            <span class="k">if</span> <span class="n">new_group</span><span class="p">:</span>
+</span><span id="Experiment.group_by_potential_values-251"><a href="#Experiment.group_by_potential_values-251"><span class="linenos">251</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;New potential_values found&#39;</span><span class="p">)</span>
+</span><span id="Experiment.group_by_potential_values-252"><a href="#Experiment.group_by_potential_values-252"><span class="linenos">252</span></a>                <span class="n">grouped_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span id="Experiment.group_by_potential_values-253"><a href="#Experiment.group_by_potential_values-253"><span class="linenos">253</span></a>        <span class="k">return</span> <span class="n">grouped_data</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Returns an array of grouped Data objects with the same potential_values</p>
+            <div class="docstring"><p>Returns an array of grouped Experiment objects with the same potential_values</p>
 </div>
 
 
                             </div>
-                            <div id="Data.sort_by_gridsize" class="classattr">
-                                        <input id="Data.sort_by_gridsize-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.sort_by_gridsize" class="classattr">
+                                        <input id="Experiment.sort_by_gridsize-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">sort_by_gridsize</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.sort_by_gridsize-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.sort_by_gridsize-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.sort_by_gridsize"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.sort_by_gridsize-256"><a href="#Data.sort_by_gridsize-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.sort_by_gridsize-257"><a href="#Data.sort_by_gridsize-257"><span class="linenos">257</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="Data.sort_by_gridsize-258"><a href="#Data.sort_by_gridsize-258"><span class="linenos">258</span></a>        <span class="k">return</span> <span class="bp">self</span>
+    <a class="headerlink" href="#Experiment.sort_by_gridsize"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.sort_by_gridsize-256"><a href="#Experiment.sort_by_gridsize-256"><span class="linenos">256</span></a>    <span class="k">def</span> <span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.sort_by_gridsize-257"><a href="#Experiment.sort_by_gridsize-257"><span class="linenos">257</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="Experiment.sort_by_gridsize-258"><a href="#Experiment.sort_by_gridsize-258"><span class="linenos">258</span></a>        <span class="k">return</span> <span class="bp">self</span>
 </span></pre></div>
 
 
     
 
                             </div>
-                            <div id="Data.get_ideal_E" class="classattr">
-                                        <input id="Data.get_ideal_E-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                            <div id="Experiment.get_ideal_E" class="classattr">
+                                        <input id="Experiment.get_ideal_E-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
         <span class="name">get_ideal_E</span><span class="signature pdoc-code condensed">(<span class="param"><span class="bp">self</span></span><span class="return-annotation">):</span></span>
 
-                <label class="view-source-button" for="Data.get_ideal_E-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="Experiment.get_ideal_E-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#Data.get_ideal_E"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Data.get_ideal_E-261"><a href="#Data.get_ideal_E-261"><span class="linenos">261</span></a>    <span class="k">def</span> <span class="nf">get_ideal_E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-</span><span id="Data.get_ideal_E-262"><a href="#Data.get_ideal_E-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level&#39;&#39;&#39;</span>
-</span><span id="Data.get_ideal_E-263"><a href="#Data.get_ideal_E-263"><span class="linenos">263</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="Data.get_ideal_E-264"><a href="#Data.get_ideal_E-264"><span class="linenos">264</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Data.get_ideal_E-265"><a href="#Data.get_ideal_E-265"><span class="linenos">265</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Data.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
-</span><span id="Data.get_ideal_E-266"><a href="#Data.get_ideal_E-266"><span class="linenos">266</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
-</span><span id="Data.get_ideal_E-267"><a href="#Data.get_ideal_E-267"><span class="linenos">267</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="Data.get_ideal_E-268"><a href="#Data.get_ideal_E-268"><span class="linenos">268</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="Data.get_ideal_E-269"><a href="#Data.get_ideal_E-269"><span class="linenos">269</span></a>            <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.get_ideal_E-270"><a href="#Data.get_ideal_E-270"><span class="linenos">270</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="Data.get_ideal_E-271"><a href="#Data.get_ideal_E-271"><span class="linenos">271</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="Data.get_ideal_E-272"><a href="#Data.get_ideal_E-272"><span class="linenos">272</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span>
-</span><span id="Data.get_ideal_E-273"><a href="#Data.get_ideal_E-273"><span class="linenos">273</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="Data.get_ideal_E-274"><a href="#Data.get_ideal_E-274"><span class="linenos">274</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING:  get_ideal_E() only valid for potential_name=&#39;zero&#39;&quot;</span><span class="p">)</span>
-</span><span id="Data.get_ideal_E-275"><a href="#Data.get_ideal_E-275"><span class="linenos">275</span></a>            <span class="k">return</span>
+    <a class="headerlink" href="#Experiment.get_ideal_E"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Experiment.get_ideal_E-261"><a href="#Experiment.get_ideal_E-261"><span class="linenos">261</span></a>    <span class="k">def</span> <span class="nf">get_ideal_E</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="Experiment.get_ideal_E-262"><a href="#Experiment.get_ideal_E-262"><span class="linenos">262</span></a><span class="w">        </span><span class="sd">&#39;&#39;&#39;Only for &#39;zero&#39; potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level&#39;&#39;&#39;</span>
+</span><span id="Experiment.get_ideal_E-263"><a href="#Experiment.get_ideal_E-263"><span class="linenos">263</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="Experiment.get_ideal_E-264"><a href="#Experiment.get_ideal_E-264"><span class="linenos">264</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Experiment.get_ideal_E-265"><a href="#Experiment.get_ideal_E-265"><span class="linenos">265</span></a>            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Experiment.Plotting.check_E_level not set.&quot;</span><span class="p">)</span>
+</span><span id="Experiment.get_ideal_E-266"><a href="#Experiment.get_ideal_E-266"><span class="linenos">266</span></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">system</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
+</span><span id="Experiment.get_ideal_E-267"><a href="#Experiment.get_ideal_E-267"><span class="linenos">267</span></a>            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="Experiment.get_ideal_E-268"><a href="#Experiment.get_ideal_E-268"><span class="linenos">268</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="Experiment.get_ideal_E-269"><a href="#Experiment.get_ideal_E-269"><span class="linenos">269</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.get_ideal_E-270"><a href="#Experiment.get_ideal_E-270"><span class="linenos">270</span></a>                <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">check_E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="Experiment.get_ideal_E-271"><a href="#Experiment.get_ideal_E-271"><span class="linenos">271</span></a>            <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="Experiment.get_ideal_E-272"><a href="#Experiment.get_ideal_E-272"><span class="linenos">272</span></a>            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">plotting</span><span class="o">.</span><span class="n">ideal_E</span>
+</span><span id="Experiment.get_ideal_E-273"><a href="#Experiment.get_ideal_E-273"><span class="linenos">273</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="Experiment.get_ideal_E-274"><a href="#Experiment.get_ideal_E-274"><span class="linenos">274</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;WARNING:  get_ideal_E() only valid for potential_name=&#39;zero&#39;&quot;</span><span class="p">)</span>
+</span><span id="Experiment.get_ideal_E-275"><a href="#Experiment.get_ideal_E-275"><span class="linenos">275</span></a>            <span class="k">return</span>
 </span></pre></div>
 
 
-            <div class="docstring"><p>Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Data.Analysis.E_level</p>
+            <div class="docstring"><p>Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level</p>
 </div>
 
 

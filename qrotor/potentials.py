@@ -56,7 +56,7 @@ def test(system:System):
 
 
 def custom(system:System):
-    '''Used to keep previous `potential_values` of the system. For example, when those were obtained from an external file.'''
+    '''Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.'''
     if system.potential_values:
         return system.potential_values
     else:

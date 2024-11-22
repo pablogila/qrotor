@@ -27,7 +27,7 @@ def get_laplacian_matrix(x):
 
 
 def hamiltonian_matrix(system:System):
-    '''Returns the Hamiltonian matrix for a given System() object.'''
+    '''Returns the Hamiltonian matrix for a given `qrotor.classes.System` object.'''
     V = system.potential_values.tolist()
     potential = sparse.diags(V, format='lil')
     B = system.B
@@ -38,7 +38,7 @@ def hamiltonian_matrix(system:System):
 
 
 def potential(system:System) -> System:
-    '''Solves the potential_values of the system, according to the potential name, by calling `qrotor.potentials.solve()`'''
+    '''Solves the potential_values of the system, according to the potential name, by calling `qrotor.potentials.solve`'''
     V = potentials.solve(system)
     if system.correct_potential_offset is True:
         offset = min(V)
@@ -49,7 +49,7 @@ def potential(system:System) -> System:
 
 
 def schrodinger(system:System) -> System:
-    '''Solves the Schrödinger equation for a given System() object.'''
+    '''Solves the Schrödinger equation for a given `qrotor.classes.System` object.'''
     time_start = time.time()
     V = system.potential_values
     H = hamiltonian_matrix(system)
@@ -72,16 +72,16 @@ def schrodinger(system:System) -> System:
     return system
 
 
-def energies(var, filename=None) -> Data:
-    '''Solves the Schrödinger equation for a given System() or Data() object.\n
+def energies(var, filename=None) -> Experiment:
+    '''Solves the Schrödinger equation for a given `qrotor.classes.System` or `qrotor.classes.Experiment` object.\n
     If a filename is provided, the results are saved to a file.'''
     if isinstance(var, System):
-        data = Data()
+        data = Experiment()
         data.system = [deepcopy(var)]
-    elif isinstance(var, Data):
+    elif isinstance(var, Experiment):
         data = deepcopy(var)
     else:
-        raise ValueError('Input must be a System or Data object.')
+        raise ValueError('Input must be a System or Experiment object.')
     for system in data.system:
         system = potential(system)
         system = schrodinger(system)
@@ -90,8 +90,8 @@ def energies(var, filename=None) -> Data:
     return data
 
 
-def interpolate_potential(system:System):
-    '''Interpolates the current potential_values to a new grid of size System.gridsize'''
+def interpolate_potential(system:System) -> System:
+    '''Interpolates the current potential_values to a new grid of size `qrotor.classes.System.gridsize`'''
     V = system.potential_values
     grid = system.grid
     gridsize = system.gridsize

@@ -7,11 +7,11 @@ from .classes import *
 import matplotlib.pyplot as plt
 
 
-def energies(data:Data):
+def energies_DEV(data:Experiment):
     '''Plots the energy in separated plots. NOT YET IMPLEMENTED IN v3.0.0'''
     if data.separate_plots:
         for variables, solutions in zip(data.variables, data.solutions):
-            new_data = Data()
+            new_data = Experiment()
             new_data.comment = variables.comment
             new_data.variables.append(variables)
             new_data.solutions.append(solutions)
@@ -23,7 +23,7 @@ def energies(data:Data):
             energy(new_data)
 
 
-def energy(data:Data):
+def energy_DEV(data:Experiment):
     '''Plots the energy of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     V_colors = ['C0'] #...
     E_colors = ['red', 'purple', 'grey']  # To extend...
@@ -85,7 +85,7 @@ def energy(data:Data):
     plt.show()
 
 
-def convergence(data:Data):
+def convergence_DEV(data:Experiment):
     '''Plots the energy convergence of the system. NOT YET IMPLEMENTED IN v3.0.0'''
     fig, ax1 = plt.subplots(figsize=(10, 6))
 
@@ -234,7 +234,7 @@ def reduced_energies(data):
 
 
 
-def eigenvectors(data:Data, levels=None, squared=False, scaling_factor=1):
+def eigenvectors(data:Experiment, levels=None, squared=False, scaling_factor=1):
 
     xlabel = 'Angle / radians'
     ylabel = 'Energy / meV'
