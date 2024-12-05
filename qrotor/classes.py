@@ -260,15 +260,15 @@ class Experiment:
     def get_ideal_E(self):
         '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level'''
         real_E_level = None
-        if self.plotting.check_E_level is None:
-            raise ValueError("Experiment.Plotting.check_E_level not set.")
+        if self.analysis.E_level is None:
+            raise ValueError("Experiment.Analysis.E_level not set.")
         if self.system[0].potential_name == 'zero':
-            if self.plotting.check_E_level % 2 == 0:
-                real_E_level = self.check_E_level / 2
+            if self.analysis.E_level % 2 == 0:
+                real_E_level = self.analysis.E_level / 2
             else:
-                real_E_level = (self.check_E_level + 1) / 2
-            self.plotting.ideal_E = int(real_E_level ** 2)
-            return self.plotting.ideal_E
+                real_E_level = (self.analysis.E_level + 1) / 2
+            self.analysis.ideal_E = int(real_E_level ** 2)
+            return self.analysis.ideal_E
         else:
             print("WARNING:  get_ideal_E() only valid for potential_name='zero'")
             return
