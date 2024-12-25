@@ -10,7 +10,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.0'
+version = 'v3.0.1'
 
 
 # Output file
@@ -24,8 +24,8 @@ logdirfile = os.path.join(logdir, logname)
 #    os.makedirs(logdir, exist_ok=True)
 
 # Atomic masses
-m_H = mt.mass_kg['H']
-m_D = mt.mass_kg['D']
+m_H = mt.atom['H'].mass
+m_D = mt.atom['H'].isotope[2].mass
 
 # Distance between Carbon and Hydrogen atoms (from MAPI)
 distance_CH = 1.09285   # Angstroms
