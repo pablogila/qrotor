@@ -10,7 +10,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.1'
+version = 'v3.0.2'
 
 
 # Output file

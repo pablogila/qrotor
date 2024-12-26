@@ -36,7 +36,7 @@ th.text.replace_line(f'# QRotor {version}', '# QRotor v', readme, 1)
 print('Updating docs with Pdoc...')
 cwd = th.call.here()
 #th.file.from_template(readme, temp_readme, None, fix_dict)
-completed_process = th.call.shell(f"pdoc ./qrotor/ -o ./docs --mermaid --math --footer-text='QRotor {version} documentation'", cwd)
+completed_process = th.call.bash(f"pdoc ./qrotor/ -o ./docs --mermaid --math --footer-text='QRotor {version} documentation'", cwd)
 if completed_process.returncode != 0:
     print(completed_process.stderr)
 #th.file.remove(temp_readme)
