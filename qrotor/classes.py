@@ -1,16 +1,8 @@
 '''
 ## Description
-
 This module contains the common objects used in the QRotor package.
 
-Short general description of the class methods used:
-- `get_*` returns a value from another value, e.g. get_B(atom_type) returns the rotational inertia.
-- `set_*` sets a value, e.g. set_grid() sets the grid from the gridsize.
-- `to_*` converts to whatever.
-- `from_*` converts from whatever.
-
 ## Index
-
 - `System`. Contains all the data for a single calculation.
 - `Analysis`. Contains different parameters to analyze the data.
 - `Experiment`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).

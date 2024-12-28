@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="pdoc 15.0.1"/>
-    <title>qrotor.constants API documentation</title>
+    <title>qrotor.rotate API documentation</title>
 
     <style>/*! * Bootstrap Reboot v5.0.0 (https://getbootstrap.com/) * Copyright 2011-2021 The Bootstrap Authors * Copyright 2011-2021 Twitter, Inc. * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE) * Forked from Normalize.css, licensed MIT (https://github.com/necolas/normalize.css/blob/master/LICENSE.md) */*,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1rem;font-weight:400;line-height:1.5;color:#212529;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.5rem;font-weight:500;line-height:1.2}h1{font-size:calc(1.375rem + 1.5vw)}@media (min-width:1200px){h1{font-size:2.5rem}}h2{font-size:calc(1.325rem + .9vw)}@media (min-width:1200px){h2{font-size:2rem}}h3{font-size:calc(1.3rem + .6vw)}@media (min-width:1200px){h3{font-size:1.75rem}}h4{font-size:calc(1.275rem + .3vw)}@media (min-width:1200px){h4{font-size:1.5rem}}h5{font-size:1.25rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1rem;font-style:normal;line-height:inherit}ol,ul{padding-left:2rem}dl,ol,ul{margin-top:0;margin-bottom:1rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.5rem;margin-left:0}blockquote{margin:0 0 1rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#0d6efd;text-decoration:underline}a:hover{color:#0a58ca}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.2rem .4rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.2rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.5rem;padding-bottom:.5rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.5rem;font-size:calc(1.275rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:1.5rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}</style>
     <style>/*! syntax-highlighting.css */pre{line-height:125%;}span.linenos{color:inherit; background-color:transparent; padding-left:5px; padding-right:20px;}.pdoc-code .hll{background-color:#ffffcc}.pdoc-code{background:#f8f8f8;}.pdoc-code .c{color:#3D7B7B; font-style:italic}.pdoc-code .err{border:1px solid #FF0000}.pdoc-code .k{color:#008000; font-weight:bold}.pdoc-code .o{color:#666666}.pdoc-code .ch{color:#3D7B7B; font-style:italic}.pdoc-code .cm{color:#3D7B7B; font-style:italic}.pdoc-code .cp{color:#9C6500}.pdoc-code .cpf{color:#3D7B7B; font-style:italic}.pdoc-code .c1{color:#3D7B7B; font-style:italic}.pdoc-code .cs{color:#3D7B7B; font-style:italic}.pdoc-code .gd{color:#A00000}.pdoc-code .ge{font-style:italic}.pdoc-code .gr{color:#E40000}.pdoc-code .gh{color:#000080; font-weight:bold}.pdoc-code .gi{color:#008400}.pdoc-code .go{color:#717171}.pdoc-code .gp{color:#000080; font-weight:bold}.pdoc-code .gs{font-weight:bold}.pdoc-code .gu{color:#800080; font-weight:bold}.pdoc-code .gt{color:#0044DD}.pdoc-code .kc{color:#008000; font-weight:bold}.pdoc-code .kd{color:#008000; font-weight:bold}.pdoc-code .kn{color:#008000; font-weight:bold}.pdoc-code .kp{color:#008000}.pdoc-code .kr{color:#008000; font-weight:bold}.pdoc-code .kt{color:#B00040}.pdoc-code .m{color:#666666}.pdoc-code .s{color:#BA2121}.pdoc-code .na{color:#687822}.pdoc-code .nb{color:#008000}.pdoc-code .nc{color:#0000FF; font-weight:bold}.pdoc-code .no{color:#880000}.pdoc-code .nd{color:#AA22FF}.pdoc-code .ni{color:#717171; font-weight:bold}.pdoc-code .ne{color:#CB3F38; font-weight:bold}.pdoc-code .nf{color:#0000FF}.pdoc-code .nl{color:#767600}.pdoc-code .nn{color:#0000FF; font-weight:bold}.pdoc-code .nt{color:#008000; font-weight:bold}.pdoc-code .nv{color:#19177C}.pdoc-code .ow{color:#AA22FF; font-weight:bold}.pdoc-code .w{color:#bbbbbb}.pdoc-code .mb{color:#666666}.pdoc-code .mf{color:#666666}.pdoc-code .mh{color:#666666}.pdoc-code .mi{color:#666666}.pdoc-code .mo{color:#666666}.pdoc-code .sa{color:#BA2121}.pdoc-code .sb{color:#BA2121}.pdoc-code .sc{color:#BA2121}.pdoc-code .dl{color:#BA2121}.pdoc-code .sd{color:#BA2121; font-style:italic}.pdoc-code .s2{color:#BA2121}.pdoc-code .se{color:#AA5D1F; font-weight:bold}.pdoc-code .sh{color:#BA2121}.pdoc-code .si{color:#A45A77; font-weight:bold}.pdoc-code .sx{color:#008000}.pdoc-code .sr{color:#A45A77}.pdoc-code .s1{color:#BA2121}.pdoc-code .ss{color:#19177C}.pdoc-code .bp{color:#008000}.pdoc-code .fm{color:#0000FF}.pdoc-code .vc{color:#19177C}.pdoc-code .vg{color:#19177C}.pdoc-code .vi{color:#19177C}.pdoc-code .vm{color:#19177C}.pdoc-code .il{color:#666666}</style>
@@ -64,72 +64,21 @@
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                    pattern=".+" required>
 
+            <h2>Contents</h2>
+            <ul>
+  <li><a href="#description">Description</a></li>
+  <li><a href="#index">Index</a></li>
+</ul>
+
 
 
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="variable" href="#version">version</a>
+                    <a class="function" href="#cli">cli</a>
             </li>
             <li>
-                    <a class="variable" href="#logname">logname</a>
-            </li>
-            <li>
-                    <a class="variable" href="#logfile">logfile</a>
-            </li>
-            <li>
-                    <a class="variable" href="#logdirname">logdirname</a>
-            </li>
-            <li>
-                    <a class="variable" href="#logdir">logdir</a>
-            </li>
-            <li>
-                    <a class="variable" href="#logdirfile">logdirfile</a>
-            </li>
-            <li>
-                    <a class="variable" href="#m_H">m_H</a>
-            </li>
-            <li>
-                    <a class="variable" href="#m_D">m_D</a>
-            </li>
-            <li>
-                    <a class="variable" href="#distance_CH">distance_CH</a>
-            </li>
-            <li>
-                    <a class="variable" href="#distance_NH">distance_NH</a>
-            </li>
-            <li>
-                    <a class="variable" href="#angle_CH_out">angle_CH_out</a>
-            </li>
-            <li>
-                    <a class="variable" href="#angle_NH_out">angle_NH_out</a>
-            </li>
-            <li>
-                    <a class="variable" href="#angle_CH">angle_CH</a>
-            </li>
-            <li>
-                    <a class="variable" href="#angle_NH">angle_NH</a>
-            </li>
-            <li>
-                    <a class="variable" href="#r">r</a>
-            </li>
-            <li>
-                    <a class="variable" href="#I_H">I_H</a>
-            </li>
-            <li>
-                    <a class="variable" href="#I_D">I_D</a>
-            </li>
-            <li>
-                    <a class="variable" href="#B_H">B_H</a>
-            </li>
-            <li>
-                    <a class="variable" href="#B_D">B_D</a>
-            </li>
-            <li>
-                    <a class="variable" href="#constants_zero">constants_zero</a>
-            </li>
-            <li>
-                    <a class="variable" href="#constants_titov2023">constants_titov2023</a>
+                    <a class="function" href="#locate_coords_in_file">locate_coords_in_file</a>
             </li>
     </ul>
 
@@ -146,329 +95,178 @@
     <main class="pdoc">
             <section class="module-info">
                     <h1 class="modulename">
-<a href="./../qrotor.html">qrotor</a><wbr>.constants    </h1>
+<a href="./../qrotor.html">qrotor</a><wbr>.rotate    </h1>
 
-                        <div class="docstring"><p>Common constants and default values for the QRotor package.</p>
+                        <div class="docstring"><h2 id="description">Description</h2>
+
+<p>This module contains tools to rotate molecular structures.</p>
+
+<h2 id="index">Index</h2>
+
+<ul>
+<li><code><a href="#cli">cli()</a></code> Command Line Interface</li>
+</ul>
 </div>
 
-                        <input id="mod-constants-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                        <input id="mod-rotate-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 
-                        <label class="view-source-button" for="mod-constants-view-source"><span>View Source</span></label>
+                        <label class="view-source-button" for="mod-rotate-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">Common constants and default values for the QRotor package.</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">## Description</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">This module contains tools to rotate molecular structures.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">import</span> <span class="nn">os</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">import</span> <span class="nn">maat</span> <span class="k">as</span> <span class="nn">mt</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="c1"># Get Maat from:</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="c1"># https://github.com/pablogila/Maat</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd">## Index</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">- `cli()` Command Line Interface</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">import</span> <span class="nn">thoth</span> <span class="k">as</span> <span class="nn">th</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="n">version</span> <span class="o">=</span> <span class="s1">&#39;v3.0.4&#39;</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a><span class="c1"># Output file</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="n">logname</span> <span class="o">=</span> <span class="s1">&#39;out&#39;</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="n">logfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">logname</span><span class="p">)</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="n">logdirname</span> <span class="o">=</span> <span class="s1">&#39;out&#39;</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a><span class="n">logdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">logdirname</span><span class="p">)</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a><span class="n">logdirfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logdir</span><span class="p">,</span> <span class="n">logname</span><span class="p">)</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="c1"># Create logdir at import if it doesn&#39;t exist</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="c1">#if logdirname:</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="c1">#    os.makedirs(logdir, exist_ok=True)</span>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="c1"># Atomic masses</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="n">m_H</span> <span class="o">=</span> <span class="n">mt</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a><span class="n">m_D</span> <span class="o">=</span> <span class="n">mt</span><span class="o">.</span><span class="n">atom</span><span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isotope</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">mass</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a><span class="c1"># Distance between Carbon and Hydrogen atoms (from MAPI)</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a><span class="n">distance_CH</span> <span class="o">=</span> <span class="mf">1.09285</span>   <span class="c1"># Angstroms</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a><span class="n">distance_NH</span> <span class="o">=</span> <span class="mf">1.040263</span>  <span class="c1"># Angstroms</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a><span class="c1"># Exterior angles between atoms:  C-C-H  or  N-C-H  etc (from MAPI)</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a><span class="n">angle_CH_out</span> <span class="o">=</span> <span class="mf">108.7223</span>   <span class="c1"># degrees</span>
-</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a><span class="n">angle_NH_out</span> <span class="o">=</span> <span class="mf">111.29016</span>  <span class="c1"># degrees</span>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="n">angle_CH</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">-</span> <span class="n">angle_CH_out</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="n">angle_NH</span> <span class="o">=</span> <span class="mi">180</span> <span class="o">-</span> <span class="n">angle_NH_out</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="c1"># Rotation radius (calculated from distance and angle)</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a><span class="n">r</span> <span class="o">=</span> <span class="n">distance_CH</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">angle_CH</span><span class="p">))</span> <span class="o">*</span> <span class="n">mt</span><span class="o">.</span><span class="n">A_to_m</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="k">def</span> <span class="nf">cli</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>        <span class="n">filename</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Introduce the filename of the structure:  &#39;</span><span class="p">)</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>    <span class="n">th</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">here</span><span class="p">()</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Insert manually the approximated X Y Z coordinates, press enter to confirm.&#39;</span><span class="p">)</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># [(coords_1, coords_1_line),(coords_2, coords_2_line), etc]</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="n">input_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Introduce the coords for atom </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">:  &#39;</span><span class="p">)</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>        <span class="k">if</span> <span class="n">input_str</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>                <span class="k">continue</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coordinates were added.&#39;</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>                <span class="k">break</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="n">input_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">extract</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">input_str</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>        <span class="n">coords_full</span><span class="p">,</span> <span class="n">coords_str</span> <span class="o">=</span> <span class="n">locate_coords_in_file</span><span class="p">(</span><span class="n">input_coords</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="k">if</span> <span class="n">coords_full</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No match found, please try again!&#39;</span><span class="p">)</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>            <span class="k">continue</span>
+</span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>        <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">coords_full</span><span class="p">,</span> <span class="n">coords_str</span><span class="p">))</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The following coords were located:&#39;</span><span class="p">)</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">coords_str</span><span class="p">)</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a>        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>
 </span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="c1"># Inertia, SI units</span>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="n">I_H</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_H</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="n">I_D</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">m_D</span> <span class="o">*</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="c1"># Rotational energy. Should be B=0.574 meV for H, according to titov2023</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="n">B_H</span> <span class="o">=</span> <span class="p">((</span><span class="n">mt</span><span class="o">.</span><span class="n">hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_H</span><span class="p">))</span> <span class="o">*</span> <span class="n">mt</span><span class="o">.</span><span class="n">J_to_eV</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="n">B_D</span> <span class="o">=</span> <span class="p">((</span><span class="n">mt</span><span class="o">.</span><span class="n">hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_D</span><span class="p">))</span> <span class="o">*</span> <span class="n">mt</span><span class="o">.</span><span class="n">J_to_eV</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="c1"># Potential constants from titov2023 [C1, C2, C3, C4, C5]</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a><span class="n">constants_zero</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="p">]</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="n">constants_titov2023</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="p">[</span><span class="mf">2.7860</span><span class="p">,</span> <span class="mf">0.0130</span><span class="p">,</span><span class="o">-</span><span class="mf">1.5284</span><span class="p">,</span><span class="o">-</span><span class="mf">0.0037</span><span class="p">,</span><span class="o">-</span><span class="mf">1.2791</span><span class="p">],</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="p">[</span><span class="mf">2.6507</span><span class="p">,</span> <span class="mf">0.0158</span><span class="p">,</span><span class="o">-</span><span class="mf">1.4111</span><span class="p">,</span><span class="o">-</span><span class="mf">0.0007</span><span class="p">,</span><span class="o">-</span><span class="mf">1.2547</span><span class="p">],</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="p">[</span><span class="mf">2.1852</span><span class="p">,</span> <span class="mf">0.0164</span><span class="p">,</span><span class="o">-</span><span class="mf">1.0017</span><span class="p">,</span> <span class="mf">0.0003</span><span class="p">,</span><span class="o">-</span><span class="mf">1.2061</span><span class="p">],</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="p">[</span><span class="mf">5.9109</span><span class="p">,</span> <span class="mf">0.0258</span><span class="p">,</span><span class="o">-</span><span class="mf">7.0152</span><span class="p">,</span><span class="o">-</span><span class="mf">0.0168</span><span class="p">,</span> <span class="mf">1.0213</span><span class="p">],</span>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="p">[</span><span class="mf">1.4526</span><span class="p">,</span> <span class="mf">0.0134</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3196</span><span class="p">,</span> <span class="mf">0.0005</span><span class="p">,</span><span class="o">-</span><span class="mf">1.1461</span><span class="p">]</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="p">]</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a><span class="k">def</span> <span class="nf">locate_coords_in_file</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="sd">    Takes a given list with approximate `coords` and finds the corresponding string in the `filename`.</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="sd">    Returns a tuple with the full coords, and the original line from the file.</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a><span class="sd">    Raises an error if none or more than one match of coords is found.</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;&#39;</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>        <span class="n">pattern</span> <span class="o">+=</span> <span class="sa">rf</span><span class="s1">&#39;\s*</span><span class="si">{</span><span class="n">coord</span><span class="si">}</span><span class="s1">\d+&#39;</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">line_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">find</span><span class="o">.</span><span class="n">lines</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="n">line_coords</span> <span class="o">=</span> <span class="n">line_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">full_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">extract</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="c1"># Remove unintended additional numbers</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="n">filtered_coords</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>    <span class="k">for</span> <span class="n">full_coord</span> <span class="ow">in</span> <span class="n">full_coords</span><span class="p">:</span>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>        <span class="n">full_coord_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">full_coord</span><span class="p">)</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>            <span class="n">coord_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>            <span class="k">if</span> <span class="n">coord_str</span> <span class="ow">in</span> <span class="n">full_coord_str</span><span class="p">:</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>                <span class="n">filtered_coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_coord</span><span class="p">)</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="k">return</span> <span class="n">filtered_coords</span><span class="p">,</span> <span class="n">line_coords</span>
 </span></pre></div>
 
 
             </section>
-                <section id="version">
-                    <div class="attr variable">
-            <span class="name">version</span>        =
-<span class="default_value">&#39;v3.0.4&#39;</span>
+                <section id="cli">
+                            <input id="cli-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">cli</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">):</span></span>
 
-        
+                <label class="view-source-button" for="cli-view-source"><span>View Source</span></label>
+
     </div>
-    <a class="headerlink" href="#version"></a>
-    
+    <a class="headerlink" href="#cli"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="cli-15"><a href="#cli-15"><span class="linenos">15</span></a><span class="k">def</span> <span class="nf">cli</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="cli-16"><a href="#cli-16"><span class="linenos">16</span></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+</span><span id="cli-17"><a href="#cli-17"><span class="linenos">17</span></a>        <span class="n">filename</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Introduce the filename of the structure:  &#39;</span><span class="p">)</span>
+</span><span id="cli-18"><a href="#cli-18"><span class="linenos">18</span></a>    <span class="n">th</span><span class="o">.</span><span class="n">call</span><span class="o">.</span><span class="n">here</span><span class="p">()</span>
+</span><span id="cli-19"><a href="#cli-19"><span class="linenos">19</span></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span id="cli-20"><a href="#cli-20"><span class="linenos">20</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Insert manually the approximated X Y Z coordinates, press enter to confirm.&#39;</span><span class="p">)</span>
+</span><span id="cli-21"><a href="#cli-21"><span class="linenos">21</span></a>    <span class="n">coords</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># [(coords_1, coords_1_line),(coords_2, coords_2_line), etc]</span>
+</span><span id="cli-22"><a href="#cli-22"><span class="linenos">22</span></a>    <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="cli-23"><a href="#cli-23"><span class="linenos">23</span></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span id="cli-24"><a href="#cli-24"><span class="linenos">24</span></a>        <span class="n">input_str</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Introduce the coords for atom </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">:  &#39;</span><span class="p">)</span>
+</span><span id="cli-25"><a href="#cli-25"><span class="linenos">25</span></a>        <span class="k">if</span> <span class="n">input_str</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+</span><span id="cli-26"><a href="#cli-26"><span class="linenos">26</span></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="cli-27"><a href="#cli-27"><span class="linenos">27</span></a>                <span class="k">continue</span>
+</span><span id="cli-28"><a href="#cli-28"><span class="linenos">28</span></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="cli-29"><a href="#cli-29"><span class="linenos">29</span></a>                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Coordinates were added.&#39;</span><span class="p">)</span>
+</span><span id="cli-30"><a href="#cli-30"><span class="linenos">30</span></a>                <span class="k">break</span>
+</span><span id="cli-31"><a href="#cli-31"><span class="linenos">31</span></a>        <span class="n">input_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">extract</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">input_str</span><span class="p">)</span>
+</span><span id="cli-32"><a href="#cli-32"><span class="linenos">32</span></a>        <span class="n">coords_full</span><span class="p">,</span> <span class="n">coords_str</span> <span class="o">=</span> <span class="n">locate_coords_in_file</span><span class="p">(</span><span class="n">input_coords</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</span><span id="cli-33"><a href="#cli-33"><span class="linenos">33</span></a>        <span class="k">if</span> <span class="n">coords_full</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="cli-34"><a href="#cli-34"><span class="linenos">34</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No match found, please try again!&#39;</span><span class="p">)</span>
+</span><span id="cli-35"><a href="#cli-35"><span class="linenos">35</span></a>            <span class="k">continue</span>
+</span><span id="cli-36"><a href="#cli-36"><span class="linenos">36</span></a>        <span class="n">coords</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">coords_full</span><span class="p">,</span> <span class="n">coords_str</span><span class="p">))</span>
+</span><span id="cli-37"><a href="#cli-37"><span class="linenos">37</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The following coords were located:&#39;</span><span class="p">)</span>
+</span><span id="cli-38"><a href="#cli-38"><span class="linenos">38</span></a>        <span class="nb">print</span><span class="p">(</span><span class="n">coords_str</span><span class="p">)</span>
+</span><span id="cli-39"><a href="#cli-39"><span class="linenos">39</span></a>        <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</span></pre></div>
+
+
     
 
                 </section>
-                <section id="logname">
-                    <div class="attr variable">
-            <span class="name">logname</span>        =
-<span class="default_value">&#39;out&#39;</span>
+                <section id="locate_coords_in_file">
+                            <input id="locate_coords_in_file-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">locate_coords_in_file</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">coords</span>, </span><span class="param"><span class="n">filename</span></span><span class="return-annotation">) -> <span class="nb">tuple</span>:</span></span>
 
-        
+                <label class="view-source-button" for="locate_coords_in_file-view-source"><span>View Source</span></label>
+
     </div>
-    <a class="headerlink" href="#logname"></a>
-    
-    
+    <a class="headerlink" href="#locate_coords_in_file"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="locate_coords_in_file-42"><a href="#locate_coords_in_file-42"><span class="linenos">42</span></a><span class="k">def</span> <span class="nf">locate_coords_in_file</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-43"><a href="#locate_coords_in_file-43"><span class="linenos">43</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="locate_coords_in_file-44"><a href="#locate_coords_in_file-44"><span class="linenos">44</span></a><span class="sd">    Takes a given list with approximate `coords` and finds the corresponding string in the `filename`.</span>
+</span><span id="locate_coords_in_file-45"><a href="#locate_coords_in_file-45"><span class="linenos">45</span></a><span class="sd">    Returns a tuple with the full coords, and the original line from the file.</span>
+</span><span id="locate_coords_in_file-46"><a href="#locate_coords_in_file-46"><span class="linenos">46</span></a><span class="sd">    Raises an error if none or more than one match of coords is found.</span>
+</span><span id="locate_coords_in_file-47"><a href="#locate_coords_in_file-47"><span class="linenos">47</span></a><span class="sd">    &#39;&#39;&#39;</span>
+</span><span id="locate_coords_in_file-48"><a href="#locate_coords_in_file-48"><span class="linenos">48</span></a>    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">rf</span><span class="s1">&#39;&#39;</span>
+</span><span id="locate_coords_in_file-49"><a href="#locate_coords_in_file-49"><span class="linenos">49</span></a>    <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-50"><a href="#locate_coords_in_file-50"><span class="linenos">50</span></a>        <span class="n">pattern</span> <span class="o">+=</span> <span class="sa">rf</span><span class="s1">&#39;\s*</span><span class="si">{</span><span class="n">coord</span><span class="si">}</span><span class="s1">\d+&#39;</span>
+</span><span id="locate_coords_in_file-51"><a href="#locate_coords_in_file-51"><span class="linenos">51</span></a>    <span class="n">line_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">find</span><span class="o">.</span><span class="n">lines</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</span><span id="locate_coords_in_file-52"><a href="#locate_coords_in_file-52"><span class="linenos">52</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-53"><a href="#locate_coords_in_file-53"><span class="linenos">53</span></a>        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</span><span id="locate_coords_in_file-54"><a href="#locate_coords_in_file-54"><span class="linenos">54</span></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-55"><a href="#locate_coords_in_file-55"><span class="linenos">55</span></a>        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</span><span id="locate_coords_in_file-56"><a href="#locate_coords_in_file-56"><span class="linenos">56</span></a>    <span class="n">line_coords</span> <span class="o">=</span> <span class="n">line_coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="locate_coords_in_file-57"><a href="#locate_coords_in_file-57"><span class="linenos">57</span></a>    <span class="n">full_coords</span> <span class="o">=</span> <span class="n">th</span><span class="o">.</span><span class="n">extract</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">line_coords</span><span class="p">)</span>
+</span><span id="locate_coords_in_file-58"><a href="#locate_coords_in_file-58"><span class="linenos">58</span></a>    <span class="c1"># Remove unintended additional numbers</span>
+</span><span id="locate_coords_in_file-59"><a href="#locate_coords_in_file-59"><span class="linenos">59</span></a>    <span class="n">filtered_coords</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="locate_coords_in_file-60"><a href="#locate_coords_in_file-60"><span class="linenos">60</span></a>    <span class="k">for</span> <span class="n">full_coord</span> <span class="ow">in</span> <span class="n">full_coords</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-61"><a href="#locate_coords_in_file-61"><span class="linenos">61</span></a>        <span class="n">full_coord_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">full_coord</span><span class="p">)</span>
+</span><span id="locate_coords_in_file-62"><a href="#locate_coords_in_file-62"><span class="linenos">62</span></a>        <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-63"><a href="#locate_coords_in_file-63"><span class="linenos">63</span></a>            <span class="n">coord_str</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span>
+</span><span id="locate_coords_in_file-64"><a href="#locate_coords_in_file-64"><span class="linenos">64</span></a>            <span class="k">if</span> <span class="n">coord_str</span> <span class="ow">in</span> <span class="n">full_coord_str</span><span class="p">:</span>
+</span><span id="locate_coords_in_file-65"><a href="#locate_coords_in_file-65"><span class="linenos">65</span></a>                <span class="n">filtered_coords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">full_coord</span><span class="p">)</span>
+</span><span id="locate_coords_in_file-66"><a href="#locate_coords_in_file-66"><span class="linenos">66</span></a>    <span class="k">return</span> <span class="n">filtered_coords</span><span class="p">,</span> <span class="n">line_coords</span>
+</span></pre></div>
 
-                </section>
-                <section id="logfile">
-                    <div class="attr variable">
-            <span class="name">logfile</span>        =
-<span class="default_value">&#39;/home/pablo/OneDrive/Documents/work/PhD/_git/QRotor/out&#39;</span>
 
-        
-    </div>
-    <a class="headerlink" href="#logfile"></a>
-    
-    
+            <div class="docstring"><p>Takes a given list with approximate <code>coords</code> and finds the corresponding string in the <code>filename</code>.
+Returns a tuple with the full coords, and the original line from the file.
+Raises an error if none or more than one match of coords is found.</p>
+</div>
 
-                </section>
-                <section id="logdirname">
-                    <div class="attr variable">
-            <span class="name">logdirname</span>        =
-<span class="default_value">&#39;out&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#logdirname"></a>
-    
-    
-
-                </section>
-                <section id="logdir">
-                    <div class="attr variable">
-            <span class="name">logdir</span>        =
-<span class="default_value">&#39;/home/pablo/OneDrive/Documents/work/PhD/_git/QRotor/out&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#logdir"></a>
-    
-    
-
-                </section>
-                <section id="logdirfile">
-                    <div class="attr variable">
-            <span class="name">logdirfile</span>        =
-<span class="default_value">&#39;/home/pablo/OneDrive/Documents/work/PhD/_git/QRotor/out/out&#39;</span>
-
-        
-    </div>
-    <a class="headerlink" href="#logdirfile"></a>
-    
-    
-
-                </section>
-                <section id="m_H">
-                    <div class="attr variable">
-            <span class="name">m_H</span>        =
-<span class="default_value">1.00794</span>
-
-        
-    </div>
-    <a class="headerlink" href="#m_H"></a>
-    
-    
-
-                </section>
-                <section id="m_D">
-                    <div class="attr variable">
-            <span class="name">m_D</span>        =
-<span class="default_value">2.0141017779</span>
-
-        
-    </div>
-    <a class="headerlink" href="#m_D"></a>
-    
-    
-
-                </section>
-                <section id="distance_CH">
-                    <div class="attr variable">
-            <span class="name">distance_CH</span>        =
-<span class="default_value">1.09285</span>
-
-        
-    </div>
-    <a class="headerlink" href="#distance_CH"></a>
-    
-    
-
-                </section>
-                <section id="distance_NH">
-                    <div class="attr variable">
-            <span class="name">distance_NH</span>        =
-<span class="default_value">1.040263</span>
-
-        
-    </div>
-    <a class="headerlink" href="#distance_NH"></a>
-    
-    
-
-                </section>
-                <section id="angle_CH_out">
-                    <div class="attr variable">
-            <span class="name">angle_CH_out</span>        =
-<span class="default_value">108.7223</span>
-
-        
-    </div>
-    <a class="headerlink" href="#angle_CH_out"></a>
-    
-    
-
-                </section>
-                <section id="angle_NH_out">
-                    <div class="attr variable">
-            <span class="name">angle_NH_out</span>        =
-<span class="default_value">111.29016</span>
-
-        
-    </div>
-    <a class="headerlink" href="#angle_NH_out"></a>
-    
-    
-
-                </section>
-                <section id="angle_CH">
-                    <div class="attr variable">
-            <span class="name">angle_CH</span>        =
-<span class="default_value">71.2777</span>
-
-        
-    </div>
-    <a class="headerlink" href="#angle_CH"></a>
-    
-    
-
-                </section>
-                <section id="angle_NH">
-                    <div class="attr variable">
-            <span class="name">angle_NH</span>        =
-<span class="default_value">68.70984</span>
-
-        
-    </div>
-    <a class="headerlink" href="#angle_NH"></a>
-    
-    
-
-                </section>
-                <section id="r">
-                    <div class="attr variable">
-            <span class="name">r</span>        =
-<span class="default_value">np.float64(1.0350223020441665e-10)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#r"></a>
-    
-    
-
-                </section>
-                <section id="I_H">
-                    <div class="attr variable">
-            <span class="name">I_H</span>        =
-<span class="default_value">np.float64(3.239331176354078e-20)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#I_H"></a>
-    
-    
-
-                </section>
-                <section id="I_D">
-                    <div class="attr variable">
-            <span class="name">I_D</span>        =
-<span class="default_value">np.float64(6.47294747852218e-20)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#I_D"></a>
-    
-    
-
-                </section>
-                <section id="B_H">
-                    <div class="attr variable">
-            <span class="name">B_H</span>        =
-<span class="default_value">np.float64(1.0714121867270891e-30)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#B_H"></a>
-    
-    
-
-                </section>
-                <section id="B_D">
-                    <div class="attr variable">
-            <span class="name">B_D</span>        =
-<span class="default_value">np.float64(5.3617906073032625e-31)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#B_D"></a>
-    
-    
-
-                </section>
-                <section id="constants_zero">
-                    <div class="attr variable">
-            <span class="name">constants_zero</span>        =
-<span class="default_value">[[0, 0, 0, 0, 0]]</span>
-
-        
-    </div>
-    <a class="headerlink" href="#constants_zero"></a>
-    
-    
-
-                </section>
-                <section id="constants_titov2023">
-                    <div class="attr variable">
-            <span class="name">constants_titov2023</span>        =
-<input id="constants_titov2023-view-value" class="view-value-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-            <label class="view-value-button pdoc-button" for="constants_titov2023-view-value"></label><span class="default_value">[[2.786, 0.013, -1.5284, -0.0037, -1.2791], [2.6507, 0.0158, -1.4111, -0.0007, -1.2547], [2.1852, 0.0164, -1.0017, 0.0003, -1.2061], [5.9109, 0.0258, -7.0152, -0.0168, 1.0213], [1.4526, 0.0134, -0.3196, 0.0005, -1.1461]]</span>
-
-        
-    </div>
-    <a class="headerlink" href="#constants_titov2023"></a>
-    
-    
 
                 </section>
     </main>

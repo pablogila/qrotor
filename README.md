@@ -1,4 +1,4 @@
-# QRotor v3.0.3
+# QRotor v3.0.4
 
 Welcome to QRotor, a Python library to solve the energies of a methyl rotor.  
 
