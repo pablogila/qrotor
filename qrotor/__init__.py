@@ -1,5 +1,5 @@
 '''
-.. include:: ../README.md
+.. include:: ../_README_temp.md
 '''
 
 from .classes import *

@@ -40,7 +40,6 @@ class System:
                  potential_name: str = None,
                  potential_constants: list = None
                  ):
-        '''Input parameters can be set at initialization, or modified later.'''
         ## Technical
         self.comment: str = comment
         '''Custom comment for the dataset.'''
@@ -134,7 +133,6 @@ class Analysis:
                  E_threshold: float = 1e-3,
                  ideal_E: float = None,
                  ):
-        
         self.E_level: int = E_level
         '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
         self.E_diff: bool = E_diff
@@ -162,7 +160,6 @@ class Experiment:
         self.analysis = analysis
         '''Analysis object containing the different parameters to analyze the data.'''
 
-
     def add(self, *args):
         for value in args:
             if isinstance(value, Experiment):
@@ -176,16 +173,6 @@ class Experiment:
             else:
                 raise TypeError(f'Experiment.add() can only add Experiment and/or System objects, not {type(value)}.')
 
-
-    def discard_shit(self):
-        '''Discard data that takes too much space'''
-        for dataset in self.system:
-            dataset.eigenvectors = None
-            dataset.potential_values = None
-            dataset.grid = None
-        return self
-
-
     def get_energies(self):
         energies = []
         for i in self.system:
@@ -194,7 +181,6 @@ class Experiment:
             else:
                 energies.append(None)
         return energies
-
 
     def get_gridsizes(self):
         gridsizes = []
@@ -205,7 +191,6 @@ class Experiment:
                 gridsizes.append(None)
         return gridsizes
 
-
     def get_runtimes(self):
         runtimes = []
         for i in self.system:
@@ -215,7 +200,6 @@ class Experiment:
                 runtimes.append(None)
         return runtimes
 
-
     def get_atom_types(self):
         atom_types = []
         for i in self.system:
@@ -223,14 +207,12 @@ class Experiment:
                 atom_types.append(i.atom_type)
         return atom_types
 
-
     def sort_by_potential_values(self):
         grouped_data = self.group_by_potential_values()
         data = Experiment()
         for dataset in grouped_data:
             data.add(dataset)
         return data
-
 
     def group_by_potential_values(self):
         '''Returns an array of grouped Experiment objects with the same potential_values'''
@@ -251,11 +233,9 @@ class Experiment:
                 grouped_data.append(data)
         return grouped_data
 
-
     def sort_by_gridsize(self):
         self.system = sorted(self.system, key=lambda sys: sys.gridsize)
         return self
-
 
     def get_ideal_E(self):
         '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level'''
@@ -273,3 +253,11 @@ class Experiment:
             print("WARNING:  get_ideal_E() only valid for potential_name='zero'")
             return
     
+    def discard_shit(self):
+        '''Discard data that takes too much space'''
+        for dataset in self.system:
+            dataset.eigenvectors = None
+            dataset.potential_values = None
+            dataset.grid = None
+        return self
+
