@@ -1,5 +1,16 @@
 '''
+# Description
 This module contains functions to calculate the actual `potential_values` of the system.
+
+# Index
+- `solve()`
+- `titov2023()`
+- `zero()`
+- `sine()`
+- `test()`
+- `custom()`
+
+---
 '''
 
 

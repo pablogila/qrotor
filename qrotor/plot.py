@@ -1,10 +1,36 @@
 '''
+# Description
 This module provides straightforward functions to plot data.
+
+# Index
+- `reduced_energies()`
+- `energies_DEV()`
+- `energy_DEV()`
+- `convergence_DEV()`
+
+---
 '''
 
 
 from .classes import *
 import matplotlib.pyplot as plt
+
+
+def reduced_energies(data):
+    '''Plots the reduced energy of the system, E/B, vs the reduced potential energy, V/B'''
+    number_of_levels = data.system[0].E_levels
+    x = []
+    for system in data.system:
+        x.append(system.potential_max_B)
+    for i in range(number_of_levels):
+        y = []
+        for system in data.system:
+            y.append(system.eigenvalues_B[i])
+        plt.plot(x, y, marker='', linestyle='-')
+    plt.xlabel('V$_{B}$ / B')
+    plt.ylabel('E / B')
+    plt.title(data.comment)
+    plt.show()
 
 
 def energies_DEV(data:Experiment):
@@ -199,21 +225,7 @@ def convergence_DEV(data:Experiment):
     plt.show()
 
 
-def reduced_energies(data):
-    '''Plots the reduced energy of the system, E/B, vs the reduced potential energy, V/B'''
-    number_of_levels = data.system[0].E_levels
-    x = []
-    for system in data.system:
-        x.append(system.potential_max_B)
-    for i in range(number_of_levels):
-        y = []
-        for system in data.system:
-            y.append(system.eigenvalues_B[i])
-        plt.plot(x, y, marker='', linestyle='-')
-    plt.xlabel('V$_{B}$ / B')
-    plt.ylabel('E / B')
-    plt.title(data.comment)
-    plt.show()
+
 
 
 

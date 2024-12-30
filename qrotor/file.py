@@ -1,5 +1,15 @@
 '''
+# Description
 This module provides straightforward functions to save data, as well as to load data and/or potential `*.dat` files.
+
+# Index
+- `save()`
+- `load()`
+- `load_potential()`
+- `summary()`
+- `info()`
+
+---
 '''
 
 from .classes import *
@@ -56,7 +66,7 @@ def load(file:str='out.qrotor'):
             raise ConnectionAbortedError
 
 
-def load_potential(file, system=None, angle='deg', energy='ev'):
+def load_potential(file, system=None, angle:str='deg', energy:str='ev'):
     '''
     Read a potential energy curve from a file and return it as a Variables object.\n
     The file should contain two columns:  angle and potential,\n
@@ -100,6 +110,7 @@ def load_potential(file, system=None, angle='deg', energy='ev'):
 
 
 def summary(data:Experiment, out_file=None, verbose:bool=True):
+    '''Returns a summary of the `data` Experiment object.'''
     summary = ''
     spacer = ', '
     if data.version:
@@ -128,7 +139,7 @@ def summary(data:Experiment, out_file=None, verbose:bool=True):
 
 
 def info(experiment:Experiment, verbose:bool=True):
-    '''Returns the following info about the Experiment object: `qr`'''
+    '''Returns brief info about the Experiment object.'''
     info  = '------------------------------------\n'
     info += f'Comment: {experiment.comment}\n'
     info += f'Version: {experiment.version}\n'

@@ -1,4 +1,4 @@
-# QRotor v3.0.5
+# QRotor v3.0.6
 
 Welcome to QRotor, a Python library to solve the energies of a methyl rotor.  
 
@@ -27,6 +27,7 @@ QRotor contains the following submodules:
 - [plot](https://pablogila.github.io/QRotor/qrotor/plot.html)
 - [potentials](https://pablogila.github.io/QRotor/qrotor/potentials.html)
 - [solve](https://pablogila.github.io/QRotor/qrotor/solve.html)
+- [rotate](https://pablogila.github.io/QRotor/qrotor/rotate.html)
 
 The documentation can be compiled automatically using [pdoc](https://pdoc.dev/) and [Thoth](https://github.com/pablogila/Thoth/), by running:
 ```shell

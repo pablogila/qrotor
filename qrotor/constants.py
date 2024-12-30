@@ -1,5 +1,8 @@
 '''
+# Description
 Common constants and default values for the QRotor package.
+
+---
 '''
 
 
@@ -10,7 +13,7 @@ import maat as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.5'
+version = 'v3.0.6'
 
 
 # Output file

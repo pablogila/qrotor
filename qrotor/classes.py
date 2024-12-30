@@ -1,11 +1,13 @@
 '''
-## Description
+# Description
 This module contains the common objects used in the QRotor package.
 
-## Index
+# Index
 - `System`. Contains all the data for a single calculation.
 - `Analysis`. Contains different parameters to analyze the data.
 - `Experiment`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
+
+---
 '''
 
 

@@ -1,7 +1,11 @@
+from ase.io import read
+from ase.visualize import view
 import qrotor as qr
 import thoth as th
 
+
 th.call.here()
+
 
 filename = 'scf.in'
 coordinates = [
@@ -19,3 +23,5 @@ repeat = False
 
 qr.rotate.structure(filename, coordinates, angle, repeat)
 
+molecule = read('scf_60.in')
+view(molecule)

@@ -64,6 +64,12 @@
             <input type="search" placeholder="Search..." role="searchbox" aria-label="search"
                    pattern=".+" required>
 
+            <h2>Contents</h2>
+            <ul>
+  <li><a href="#description">Description</a></li>
+  <li><a href="#index">Index</a></li>
+</ul>
+
 
 
             <h2>API Documentation</h2>
@@ -89,7 +95,7 @@
     </ul>
 
 
-            <footer>QRotor v3.0.5 documentation</footer>
+            <footer>QRotor v3.0.6 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -103,7 +109,22 @@
                     <h1 class="modulename">
 <a href="./../qrotor.html">qrotor</a><wbr>.potentials    </h1>
 
-                        <div class="docstring"><p>This module contains functions to calculate the actual <code>potential_values</code> of the system.</p>
+                        <div class="docstring"><h1 id="description">Description</h1>
+
+<p>This module contains functions to calculate the actual <code>potential_values</code> of the system.</p>
+
+<h1 id="index">Index</h1>
+
+<ul>
+<li><code><a href="#solve">solve()</a></code></li>
+<li><code><a href="#titov2023">titov2023()</a></code></li>
+<li><code><a href="#zero">zero()</a></code></li>
+<li><code><a href="#sine">sine()</a></code></li>
+<li><code><a href="#test">test()</a></code></li>
+<li><code><a href="#custom">custom()</a></code></li>
+</ul>
+
+<hr />
 </div>
 
                         <input id="mod-potentials-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -111,68 +132,79 @@
                         <label class="view-source-button" for="mod-potentials-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos"> 1</span></a><span class="sd">&#39;&#39;&#39;</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd">This module contains functions to calculate the actual `potential_values` of the system.</span>
-</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos"> 2</span></a><span class="sd"># Description</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="sd">This module contains functions to calculate the actual `potential_values` of the system.</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a>
-</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">.classes</span> <span class="kn">import</span> <span class="o">*</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">constants</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="c1"># Redirect to the desired potential energy function</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Solves the `potential_values` of the system, according to the potential name.&#39;&#39;&#39;</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;titov2023&#39;</span><span class="p">:</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>        <span class="k">return</span> <span class="n">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a>        <span class="k">return</span> <span class="n">zero</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;sine&#39;</span><span class="p">:</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a>        <span class="k">return</span> <span class="n">sine</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>        <span class="k">return</span> <span class="n">test</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a>        <span class="k">return</span> <span class="n">custom</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a>
-</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>
-</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a><span class="c1"># Potential energy function of the hindered methyl rotor, from titov2023</span>
-</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a><span class="k">def</span> <span class="nf">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>    <span class="s1">&#39;Solves the potential energy function of the hindered methyl rotor, from titov2023.&#39;</span>
-</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="n">C</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">constants_titov2023</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="sd"># Index</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="sd">- `solve()`</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="sd">- `titov2023()`</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="sd">- `zero()`</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="sd">- `sine()`</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="sd">- `test()`</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="sd">- `custom()`</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="sd">---</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a><span class="sd">&#39;&#39;&#39;</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="kn">from</span> <span class="nn">.classes</span> <span class="kn">import</span> <span class="o">*</span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos">18</span></a><span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">constants</span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos">19</span></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos">20</span></a>
+</span><span id="L-21"><a href="#L-21"><span class="linenos">21</span></a>
+</span><span id="L-22"><a href="#L-22"><span class="linenos">22</span></a><span class="c1"># Redirect to the desired potential energy function</span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos">23</span></a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos">24</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Solves the `potential_values` of the system, according to the potential name.&#39;&#39;&#39;</span>
+</span><span id="L-25"><a href="#L-25"><span class="linenos">25</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;titov2023&#39;</span><span class="p">:</span>
+</span><span id="L-26"><a href="#L-26"><span class="linenos">26</span></a>        <span class="k">return</span> <span class="n">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="L-27"><a href="#L-27"><span class="linenos">27</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos">28</span></a>        <span class="k">return</span> <span class="n">zero</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="L-29"><a href="#L-29"><span class="linenos">29</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;sine&#39;</span><span class="p">:</span>
+</span><span id="L-30"><a href="#L-30"><span class="linenos">30</span></a>        <span class="k">return</span> <span class="n">sine</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="L-31"><a href="#L-31"><span class="linenos">31</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos">32</span></a>        <span class="k">return</span> <span class="n">test</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="L-33"><a href="#L-33"><span class="linenos">33</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-34"><a href="#L-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="n">custom</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </span><span id="L-35"><a href="#L-35"><span class="linenos">35</span></a>
-</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a><span class="c1"># Zero potential</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a zero potential.&#39;&#39;&#39;</span>
-</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">x</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>
-</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>
-</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a><span class="k">def</span> <span class="nf">sine</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a sine potential.&#39;&#39;&#39;</span>
-</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
-</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a>
-</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a>
-</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a test potential. This is a placeholder for testing purposes.&#39;&#39;&#39;</span>
-</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a>    <span class="n">phase</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">phase</span><span class="p">)</span>  <span class="c1"># A potential as an array resulting from DFT calculations, etc.</span>
-</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>
-</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.&#39;&#39;&#39;</span>
-</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">:</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span>
-</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING:  No potential_values found in system&#39;</span><span class="p">)</span>
+</span><span id="L-36"><a href="#L-36"><span class="linenos">36</span></a>
+</span><span id="L-37"><a href="#L-37"><span class="linenos">37</span></a><span class="c1"># Potential energy function of the hindered methyl rotor, from titov2023</span>
+</span><span id="L-38"><a href="#L-38"><span class="linenos">38</span></a><span class="k">def</span> <span class="nf">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-39"><a href="#L-39"><span class="linenos">39</span></a>    <span class="s1">&#39;Solves the potential energy function of the hindered methyl rotor, from titov2023.&#39;</span>
+</span><span id="L-40"><a href="#L-40"><span class="linenos">40</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos">41</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="L-42"><a href="#L-42"><span class="linenos">42</span></a>    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-43"><a href="#L-43"><span class="linenos">43</span></a>        <span class="n">C</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">constants_titov2023</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="L-44"><a href="#L-44"><span class="linenos">44</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</span><span id="L-45"><a href="#L-45"><span class="linenos">45</span></a>
+</span><span id="L-46"><a href="#L-46"><span class="linenos">46</span></a>
+</span><span id="L-47"><a href="#L-47"><span class="linenos">47</span></a><span class="c1"># Zero potential</span>
+</span><span id="L-48"><a href="#L-48"><span class="linenos">48</span></a><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos">49</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a zero potential.&#39;&#39;&#39;</span>
+</span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a>    <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">x</span>
+</span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a>
+</span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="k">def</span> <span class="nf">sine</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a sine potential.&#39;&#39;&#39;</span>
+</span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a>
+</span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a>
+</span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a test potential. This is a placeholder for testing purposes.&#39;&#39;&#39;</span>
+</span><span id="L-63"><a href="#L-63"><span class="linenos">63</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="L-64"><a href="#L-64"><span class="linenos">64</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos">65</span></a>    <span class="n">phase</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="L-66"><a href="#L-66"><span class="linenos">66</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">phase</span><span class="p">)</span>  <span class="c1"># A potential as an array resulting from DFT calculations, etc.</span>
+</span><span id="L-67"><a href="#L-67"><span class="linenos">67</span></a>
+</span><span id="L-68"><a href="#L-68"><span class="linenos">68</span></a>
+</span><span id="L-69"><a href="#L-69"><span class="linenos">69</span></a><span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos">70</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.&#39;&#39;&#39;</span>
+</span><span id="L-71"><a href="#L-71"><span class="linenos">71</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">:</span>
+</span><span id="L-72"><a href="#L-72"><span class="linenos">72</span></a>        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos">73</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING:  No potential_values found in system&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -188,18 +220,18 @@
 
     </div>
     <a class="headerlink" href="#solve"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="solve-13"><a href="#solve-13"><span class="linenos">13</span></a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="solve-14"><a href="#solve-14"><span class="linenos">14</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Solves the `potential_values` of the system, according to the potential name.&#39;&#39;&#39;</span>
-</span><span id="solve-15"><a href="#solve-15"><span class="linenos">15</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;titov2023&#39;</span><span class="p">:</span>
-</span><span id="solve-16"><a href="#solve-16"><span class="linenos">16</span></a>        <span class="k">return</span> <span class="n">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="solve-17"><a href="#solve-17"><span class="linenos">17</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
-</span><span id="solve-18"><a href="#solve-18"><span class="linenos">18</span></a>        <span class="k">return</span> <span class="n">zero</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="solve-19"><a href="#solve-19"><span class="linenos">19</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;sine&#39;</span><span class="p">:</span>
-</span><span id="solve-20"><a href="#solve-20"><span class="linenos">20</span></a>        <span class="k">return</span> <span class="n">sine</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="solve-21"><a href="#solve-21"><span class="linenos">21</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
-</span><span id="solve-22"><a href="#solve-22"><span class="linenos">22</span></a>        <span class="k">return</span> <span class="n">test</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
-</span><span id="solve-23"><a href="#solve-23"><span class="linenos">23</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="solve-24"><a href="#solve-24"><span class="linenos">24</span></a>        <span class="k">return</span> <span class="n">custom</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="solve-24"><a href="#solve-24"><span class="linenos">24</span></a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="solve-25"><a href="#solve-25"><span class="linenos">25</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Solves the `potential_values` of the system, according to the potential name.&#39;&#39;&#39;</span>
+</span><span id="solve-26"><a href="#solve-26"><span class="linenos">26</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;titov2023&#39;</span><span class="p">:</span>
+</span><span id="solve-27"><a href="#solve-27"><span class="linenos">27</span></a>        <span class="k">return</span> <span class="n">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="solve-28"><a href="#solve-28"><span class="linenos">28</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;zero&#39;</span><span class="p">:</span>
+</span><span id="solve-29"><a href="#solve-29"><span class="linenos">29</span></a>        <span class="k">return</span> <span class="n">zero</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="solve-30"><a href="#solve-30"><span class="linenos">30</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;sine&#39;</span><span class="p">:</span>
+</span><span id="solve-31"><a href="#solve-31"><span class="linenos">31</span></a>        <span class="k">return</span> <span class="n">sine</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="solve-32"><a href="#solve-32"><span class="linenos">32</span></a>    <span class="k">elif</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">==</span> <span class="s1">&#39;test&#39;</span><span class="p">:</span>
+</span><span id="solve-33"><a href="#solve-33"><span class="linenos">33</span></a>        <span class="k">return</span> <span class="n">test</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
+</span><span id="solve-34"><a href="#solve-34"><span class="linenos">34</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="solve-35"><a href="#solve-35"><span class="linenos">35</span></a>        <span class="k">return</span> <span class="n">custom</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -219,13 +251,13 @@
 
     </div>
     <a class="headerlink" href="#titov2023"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="titov2023-28"><a href="#titov2023-28"><span class="linenos">28</span></a><span class="k">def</span> <span class="nf">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="titov2023-29"><a href="#titov2023-29"><span class="linenos">29</span></a>    <span class="s1">&#39;Solves the potential energy function of the hindered methyl rotor, from titov2023.&#39;</span>
-</span><span id="titov2023-30"><a href="#titov2023-30"><span class="linenos">30</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="titov2023-31"><a href="#titov2023-31"><span class="linenos">31</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="titov2023-32"><a href="#titov2023-32"><span class="linenos">32</span></a>    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="titov2023-33"><a href="#titov2023-33"><span class="linenos">33</span></a>        <span class="n">C</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">constants_titov2023</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="titov2023-34"><a href="#titov2023-34"><span class="linenos">34</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="titov2023-39"><a href="#titov2023-39"><span class="linenos">39</span></a><span class="k">def</span> <span class="nf">titov2023</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="titov2023-40"><a href="#titov2023-40"><span class="linenos">40</span></a>    <span class="s1">&#39;Solves the potential energy function of the hindered methyl rotor, from titov2023.&#39;</span>
+</span><span id="titov2023-41"><a href="#titov2023-41"><span class="linenos">41</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="titov2023-42"><a href="#titov2023-42"><span class="linenos">42</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="titov2023-43"><a href="#titov2023-43"><span class="linenos">43</span></a>    <span class="k">if</span> <span class="n">C</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="titov2023-44"><a href="#titov2023-44"><span class="linenos">44</span></a>        <span class="n">C</span> <span class="o">=</span> <span class="n">constants</span><span class="o">.</span><span class="n">constants_titov2023</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="titov2023-45"><a href="#titov2023-45"><span class="linenos">45</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -245,10 +277,10 @@
 
     </div>
     <a class="headerlink" href="#zero"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="zero-38"><a href="#zero-38"><span class="linenos">38</span></a><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="zero-39"><a href="#zero-39"><span class="linenos">39</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a zero potential.&#39;&#39;&#39;</span>
-</span><span id="zero-40"><a href="#zero-40"><span class="linenos">40</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="zero-41"><a href="#zero-41"><span class="linenos">41</span></a>    <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">x</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="zero-49"><a href="#zero-49"><span class="linenos">49</span></a><span class="k">def</span> <span class="nf">zero</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="zero-50"><a href="#zero-50"><span class="linenos">50</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a zero potential.&#39;&#39;&#39;</span>
+</span><span id="zero-51"><a href="#zero-51"><span class="linenos">51</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="zero-52"><a href="#zero-52"><span class="linenos">52</span></a>    <span class="k">return</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">x</span>
 </span></pre></div>
 
 
@@ -268,11 +300,11 @@
 
     </div>
     <a class="headerlink" href="#sine"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="sine-44"><a href="#sine-44"><span class="linenos">44</span></a><span class="k">def</span> <span class="nf">sine</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="sine-45"><a href="#sine-45"><span class="linenos">45</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a sine potential.&#39;&#39;&#39;</span>
-</span><span id="sine-46"><a href="#sine-46"><span class="linenos">46</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="sine-47"><a href="#sine-47"><span class="linenos">47</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="sine-48"><a href="#sine-48"><span class="linenos">48</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="sine-55"><a href="#sine-55"><span class="linenos">55</span></a><span class="k">def</span> <span class="nf">sine</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="sine-56"><a href="#sine-56"><span class="linenos">56</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a sine potential.&#39;&#39;&#39;</span>
+</span><span id="sine-57"><a href="#sine-57"><span class="linenos">57</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="sine-58"><a href="#sine-58"><span class="linenos">58</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="sine-59"><a href="#sine-59"><span class="linenos">59</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -292,12 +324,12 @@
 
     </div>
     <a class="headerlink" href="#test"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="test-51"><a href="#test-51"><span class="linenos">51</span></a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="test-52"><a href="#test-52"><span class="linenos">52</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a test potential. This is a placeholder for testing purposes.&#39;&#39;&#39;</span>
-</span><span id="test-53"><a href="#test-53"><span class="linenos">53</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
-</span><span id="test-54"><a href="#test-54"><span class="linenos">54</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
-</span><span id="test-55"><a href="#test-55"><span class="linenos">55</span></a>    <span class="n">phase</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span id="test-56"><a href="#test-56"><span class="linenos">56</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">phase</span><span class="p">)</span>  <span class="c1"># A potential as an array resulting from DFT calculations, etc.</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="test-62"><a href="#test-62"><span class="linenos">62</span></a><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="test-63"><a href="#test-63"><span class="linenos">63</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Returns a test potential. This is a placeholder for testing purposes.&#39;&#39;&#39;</span>
+</span><span id="test-64"><a href="#test-64"><span class="linenos">64</span></a>    <span class="n">x</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">grid</span>
+</span><span id="test-65"><a href="#test-65"><span class="linenos">65</span></a>    <span class="n">C</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span>
+</span><span id="test-66"><a href="#test-66"><span class="linenos">66</span></a>    <span class="n">phase</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="test-67"><a href="#test-67"><span class="linenos">67</span></a>    <span class="k">return</span> <span class="n">C</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">C</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">phase</span><span class="p">)</span>  <span class="c1"># A potential as an array resulting from DFT calculations, etc.</span>
 </span></pre></div>
 
 
@@ -317,12 +349,12 @@
 
     </div>
     <a class="headerlink" href="#custom"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="custom-59"><a href="#custom-59"><span class="linenos">59</span></a><span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
-</span><span id="custom-60"><a href="#custom-60"><span class="linenos">60</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.&#39;&#39;&#39;</span>
-</span><span id="custom-61"><a href="#custom-61"><span class="linenos">61</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">:</span>
-</span><span id="custom-62"><a href="#custom-62"><span class="linenos">62</span></a>        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span>
-</span><span id="custom-63"><a href="#custom-63"><span class="linenos">63</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="custom-64"><a href="#custom-64"><span class="linenos">64</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING:  No potential_values found in system&#39;</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="custom-70"><a href="#custom-70"><span class="linenos">70</span></a><span class="k">def</span> <span class="nf">custom</span><span class="p">(</span><span class="n">system</span><span class="p">:</span><span class="n">System</span><span class="p">):</span>
+</span><span id="custom-71"><a href="#custom-71"><span class="linenos">71</span></a><span class="w">    </span><span class="sd">&#39;&#39;&#39;Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.&#39;&#39;&#39;</span>
+</span><span id="custom-72"><a href="#custom-72"><span class="linenos">72</span></a>    <span class="k">if</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span><span class="p">:</span>
+</span><span id="custom-73"><a href="#custom-73"><span class="linenos">73</span></a>        <span class="k">return</span> <span class="n">system</span><span class="o">.</span><span class="n">potential_values</span>
+</span><span id="custom-74"><a href="#custom-74"><span class="linenos">74</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="custom-75"><a href="#custom-75"><span class="linenos">75</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING:  No potential_values found in system&#39;</span><span class="p">)</span>
 </span></pre></div>
 
 

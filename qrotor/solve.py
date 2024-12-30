@@ -1,5 +1,16 @@
 '''
+# Description
 This module handles the solving of the hamiltonian eigenvalues and eigenvectors for a given system.
+
+# Index
+- `get_laplacian_matrix()`
+- `hamiltonian_matrix()`
+- `potential()`
+- `schrodinger()`
+- `energies()`
+- `interpolate_potential()`
+
+---
 '''
 
 

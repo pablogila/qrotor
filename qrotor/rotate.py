@@ -1,9 +1,9 @@
 '''
-## Description
+# Description
 This module contains tools to rotate molecular structures.
 Working with Quantum ESPRESSO input files.
 
-## Index
+# Index
 - `structure()`
 - `rotate_coords_and_save()`
 - `locate_all_coords_in_file()`

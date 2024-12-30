@@ -21,6 +21,7 @@ fix_dict = {
     '[plot](https://pablogila.github.io/QRotor/qrotor/plot.html)'             : '`qrotor.plot`',
     '[potentials](https://pablogila.github.io/QRotor/qrotor/potentials.html)' : '`qrotor.potentials`',
     '[solve](https://pablogila.github.io/QRotor/qrotor/solve.html)'           : '`qrotor.solve`',
+    '[rotate](https://pablogila.github.io/QRotor/qrotor/rotate.html)'         : '`qrotor.rotate`'
 }
 
 version = th.find.lines(r"version\s*=", version_path, -1, 0, False, True)[0]
