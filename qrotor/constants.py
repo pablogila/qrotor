@@ -8,12 +8,12 @@ Common constants and default values for the QRotor package.
 
 import numpy as np
 import os
-import maat as mt
+import maatpy as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.6'
+version = 'v3.0.7'
 
 
 # Output file

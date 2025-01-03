@@ -1,7 +1,8 @@
 from ase.io import read
 from ase.visualize import view
 import qrotor as qr
-import thoth as th
+import thotpy as th
+import maatpy as mt
 
 
 th.call.here()
@@ -21,7 +22,14 @@ coordinates = [
 angle = 60
 repeat = False
 
-qr.rotate.structure(filename, coordinates, angle, repeat)
+scf = qr.rotate.structure(filename, coordinates, angle, repeat, True)
 
-molecule = read('scf_60.in')
-view(molecule)
+parameters = th.qe.read_in(filename)
+#celldm1 = parameters['A'] * mt.A_to_bohr
+#th.qe.set_value(celldm1, 'celldm(1)', scf)
+
+molecule = read(filename)
+#view(molecule)
+
+rotated_molecule = read('scf_60.in')
+#view(rotated_molecule)

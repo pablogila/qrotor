@@ -14,9 +14,10 @@ This module contains the common objects used in the QRotor package.
 import numpy as np
 from copy import deepcopy
 from .constants import *
-import maat as mt
-# Get Maat from:
-# https://github.com/pablogila/Maat
+import maatpy as mt
+# Get MaatPy from:
+# https://github.com/pablogila/MaatPy
+# pip install maatpy
 
 
 class System:

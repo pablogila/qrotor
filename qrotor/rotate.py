@@ -15,7 +15,7 @@ Working with Quantum ESPRESSO input files.
 '''
 
 
-import thoth as th
+import thotpy as th
 import numpy as np
 import re
 from .constants import *
@@ -26,37 +26,42 @@ from scipy.spatial.transform import Rotation
 def structure(filename:str,
               input_coords:list,
               angle:float,
-              repeat:bool=False
-              ) -> None:
+              repeat:bool=False,
+              show_axis:bool=False
+              ):
     '''
     Takes a `filename` with a molecular structure.
     Tree or more atomic coordinates are specified in the `input_coords` list.
     These input coordinates can be approximate.
     It rotates these points from their geometrical center by a specific `angle`.
     Additionally, if `repeat=True`, it repeats the same rotation over the whole circunference.
-    Finally, it writes the rotated structure(s) as new structural files.
+    Finally, it writes the rotated structure(s) as new structural file.\n
+    Returns the name of the output file, or a list with the output files if `repeat=True`.
     '''
     coords, lines = locate_all_coords_in_file(input_coords, filename)
     # Rotate the coordinates
     if not repeat:
-        rotate_coords_and_save(filename, coords, lines, angle)
-        return None
+        output = rotate_coords_and_save(filename, coords, lines, angle, show_axis)
+        return output
+    outputs = []
     for i in range(0, 360, angle):
         print(i)
-        rotate_coords_and_save(filename, coords, lines, i)
-    return None
+        output = rotate_coords_and_save(filename, coords, lines, i, show_axis)
+        outputs.append(output)
+    return outputs
 
 
 def rotate_coords_and_save(filename:str,
                            coords:list,
                            lines:list,
-                           angle:float
+                           angle:float,
+                           show_axis:bool=False
                            ) -> None:
     '''
     Takes some `coords`, rotates them by a given `angle`,
     and updates the corresponding `lines` in a new structural file updated from `filename`.
     '''
-    rotated_coords = rotate_coords(coords, angle)
+    rotated_coords = rotate_coords(coords, angle, show_axis)
     updated_lines = []
     for i, line in enumerate(lines):
         updated_line = update_line_with_coords(line, rotated_coords[i])
@@ -67,8 +72,14 @@ def rotate_coords_and_save(filename:str,
     base_name = os.path.basename(filename)  # scf.in
     name, ext = os.path.splitext(base_name)  # ('scf', '.in')
     new_name = f"{name}_{angle}{ext}"  # scf_angle.in
-    comment = f'This structure was rotated by {angle}º with QRotor {version}'
+    comment = f'! This structure was rotated by {angle}º with QRotor {version}'
     th.file.from_template(filename, new_name, comment, fixing_dict)
+    if show_axis:
+        atom1 = 'Si ' + str(rotated_coords[-1][0]) + '   ' + str(rotated_coords[-1][1]) + '   ' + str(rotated_coords[-1][2])
+        atom2 = 'Si ' + str(rotated_coords[-2][0]) + '   ' + str(rotated_coords[-2][1]) + '   ' + str(rotated_coords[-2][2])
+        th.qe.add_atom(filename=new_name, position=atom1)
+        #th.qe.add_atom(filename=new_name, position=atom2)  #### IF I ADD 1 ATOM IT REMOVES ONE LINE, IF I ADD " IT REMOVES 2 WTF IS GOING ON HERE
+    return new_name
 
 
 def locate_all_coords_in_file(coords:list,
@@ -132,7 +143,8 @@ def locate_coords_in_file(coords:list,
 
 
 def rotate_coords(coords:list,
-                  angle:float
+                  angle:float,
+                  show_axis:bool=False
                   ) -> list:
     '''
     Takes a list of spatial coordinates as
@@ -141,7 +153,9 @@ def rotate_coords(coords:list,
     taking the perpendicular axis that passes through the
     geometrical center of the first three points as the axis of rotation.
     Any additional coordinates are rotated with the same rotation matrix.
-    Returns a list with the updated positions.
+    Returns a list with the updated positions.\n
+    If `show_axis=True` it returns two additional coordinates at the end of the list,
+    with the centroid and the rotation vector.
     '''
     coords = np.array(coords)
     if len(coords) < 3:
@@ -160,7 +174,11 @@ def rotate_coords(coords:list,
     # Rotate all coordinates around the geometrical center
     rotated_coords_centered = rotation.apply(coords_centered)
     rotated_coords = rotated_coords_centered + center
-    return rotated_coords.tolist()
+    rotated_coords = rotated_coords.tolist()
+    if show_axis:
+        rotated_coords.append(center)
+        rotated_coords.append(center+axis)
+    return rotated_coords
     
 
 def update_line_with_coords(line:str,

@@ -18,7 +18,7 @@ import pickle
 import gzip
 import shutil
 import json
-import maat as mt
+import maatpy as mt
 # Get Maat from:
 # https://github.com/pablogila/Maat
 
