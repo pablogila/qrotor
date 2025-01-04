@@ -5,11 +5,9 @@ Working with Quantum ESPRESSO input files.
 
 # Index
 - `structure()`
-- `rotate_coords_and_save()`
-- `locate_all_coords_in_file()`
-- `locate_coords_in_file()`
-- `rotate_coords()`
-- `update_line_with_coords()`
+- `rotate_atom()`
+- `rotate_atoms()`
+- `save_rotation()`
 
 ---
 '''
@@ -23,132 +21,88 @@ import os
 from scipy.spatial.transform import Rotation
 
 
-def structure(filename:str,
-              input_coords:list,
-              angle:float,
-              repeat:bool=False,
-              show_axis:bool=False
-              ):
+def structure(
+        filepath:str,
+        positions:list,
+        angle:float,
+        repeat:bool=False,
+        show_axis:bool=False
+    ) -> list:
     '''
-    Takes a `filename` with a molecular structure.
-    Tree or more atomic coordinates are specified in the `input_coords` list.
-    These input coordinates can be approximate.
-    It rotates these points from their geometrical center by a specific `angle`.
-    Additionally, if `repeat=True`, it repeats the same rotation over the whole circunference.
-    Finally, it writes the rotated structure(s) as new structural file.\n
-    Returns the name of the output file, or a list with the output files if `repeat=True`.
+    Takes a `filepath` with a molecular structure, and tree or more atomic `positions` (list).
+    These input positions can be approximate, and are used to identify the target atoms.
+    It rotates these points by the geometrical center of the first three atoms by a specific `angle`.
+    Additionally, if `repeat=True` it repeats the same rotation over the whole circunference.
+    Finally, it writes the rotated structure(s) to a new structural file.
+    Returns a list with the output filenames.
     '''
-    coords, lines = locate_all_coords_in_file(input_coords, filename)
-    # Rotate the coordinates
+    if len(positions) < 3:
+        raise ValueError("At least three positions are required to define the rotation axis.")
+    lines = []
+    full_positions = []
+    for position in positions:
+        line = locate_atom(filepath, position)
+        lines.append(line)
+        pos = th.extract.coords(line)
+        if len(pos) > 3:  # Keep only the first three coordinates
+            pos = pos[:3]
+        full_positions.append(pos)
+    # Set the angles to rotate
     if not repeat:
-        output = rotate_coords_and_save(filename, coords, lines, angle, show_axis)
-        return output
+        angles = [angle]
+    else:
+        angles = range(0, 360, angle)
+    # Rotate and save the structure
     outputs = []
-    for i in range(0, 360, angle):
-        print(i)
-        output = rotate_coords_and_save(filename, coords, lines, i, show_axis)
+    basename = os.path.basename(filepath)
+    name, ext = os.path.splitext(basename)
+    for angle in angles:
+        output = os.path.join(name + f'_{angle}' + ext)
+        rotated_positions = rotate_atoms(full_positions, angle, show_axis)
+        save_rotation(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
 
 
-def rotate_coords_and_save(filename:str,
-                           coords:list,
-                           lines:list,
-                           angle:float,
-                           show_axis:bool=False
-                           ) -> None:
+def locate_atom(
+        filepath:str,
+        position:list
+    ) -> str:
     '''
-    Takes some `coords`, rotates them by a given `angle`,
-    and updates the corresponding `lines` in a new structural file updated from `filename`.
-    '''
-    rotated_coords = rotate_coords(coords, angle, show_axis)
-    updated_lines = []
-    for i, line in enumerate(lines):
-        updated_line = update_line_with_coords(line, rotated_coords[i])
-        updated_lines.append(updated_line)
-    fixing_dict = {}
-    for i in range(len(lines)):
-        fixing_dict[lines[i]] = updated_lines[i]
-    base_name = os.path.basename(filename)  # scf.in
-    name, ext = os.path.splitext(base_name)  # ('scf', '.in')
-    new_name = f"{name}_{angle}{ext}"  # scf_angle.in
-    comment = f'! This structure was rotated by {angle}º with QRotor {version}'
-    th.file.from_template(filename, new_name, comment, fixing_dict)
-    if show_axis:
-        atom1 = 'Si ' + str(rotated_coords[-1][0]) + '   ' + str(rotated_coords[-1][1]) + '   ' + str(rotated_coords[-1][2])
-        atom2 = 'Si ' + str(rotated_coords[-2][0]) + '   ' + str(rotated_coords[-2][1]) + '   ' + str(rotated_coords[-2][2])
-        th.qe.add_atom(filename=new_name, position=atom1)
-        #th.qe.add_atom(filename=new_name, position=atom2)  #### IF I ADD 1 ATOM IT REMOVES ONE LINE, IF I ADD " IT REMOVES 2 WTF IS GOING ON HERE
-    return new_name
-
-
-def locate_all_coords_in_file(coords:list,
-                              filename:str
-                              ) -> tuple:
-    '''
-    Runs `locate_coords_in_file()` for a list of several atoms.
-    '''
-    th.call.here()
-    filename = th.file.get(filename)
-    all_coords = []  # [[x1,y1,z1], [x2,y2,z2], etc]
-    all_lines = []  # [line_1, line_2, etc]
-    for coord in coords:
-        xyz_approx = th.extract.coords(coord)
-        xyz, xyz_str = locate_coords_in_file(xyz_approx, filename)
-        if xyz is None:
-            raise ValueError(f"The following coordinates were not found:\n{coord}")
-        all_coords.append(xyz)
-        all_lines.append(xyz_str)
-    return all_coords, all_lines
-
-
-def locate_coords_in_file(coords:list,
-                          filename:str
-                          ) -> tuple:
-    '''
-    Takes a given list with approximate `coords` and finds the corresponding string in the `filename`.
-    Returns a tuple with the full coords, and the original line from the file.
+    Takes a list with an approximated `position` and finds the corresponding string in the `filepath`.
+    Returns the corresponding line with the full position.
     Raises an error if none or more than one match of coords is found.
     '''
     pattern = rf''
+    coords = th.extract.coords(position)
     for coord in coords:
         pattern += rf'\s*{coord}\d+'
-    line_coords = th.find.lines(pattern, filename, 0, 0, False, True)
-    if len(line_coords) != 1:  # If it failed, maybe the coordinate was rounded. Trying removing one decimal...
+    line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
+    if len(line_coords) != 1:  # If it failed, maybe the position rounded. Trying removing one decimal...
         pattern = rf''
         for i in range(len(coords)):
             coords[i] = str(coords[i])[:-1]  # remove last digit
             pattern += rf'\s*{coords[i]}\d+'
-        line_coords = th.find.lines(pattern, filename, 0, 0, False, True)
+        line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
         if len(line_coords) != 1:  # Try a final time!
             pattern = rf''
             for i in range(len(coords)):
                 coords[i] = str(coords[i])[:-1]  # remove last two digits
                 pattern += rf'\s*{coords[i]}\d+'
-            line_coords = th.find.lines(pattern, filename, 0, 0, False, True)
+            line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
             if len(line_coords) != 1:
                 return None, None
-    # Get the coords from the matched line
-    line_coords = line_coords[0]
-    full_coords = th.extract.coords(line_coords)
-    # Remove unintended additional numbers
-    filtered_coords = []
-    for full_coord in full_coords:
-        full_coord_str = str(full_coord)
-        for coord in coords:
-            coord_str = str(coord)
-            if coord_str in full_coord_str:
-                filtered_coords.append(full_coord)
-    return filtered_coords, line_coords
+    return line_coords[0]
 
 
-def rotate_coords(coords:list,
-                  angle:float,
-                  show_axis:bool=False
-                  ) -> list:
+def rotate_atoms(
+    positions:list,
+    angle:float,
+    show_axis:bool=False
+    ) -> list:
     '''
-    Takes a list of spatial coordinates as
-    `coords = [[x1,y1,z1], [x2,y2,z2], [x3,y3,z3]], [etc]`.
+    Takes a list of atomic `positions` as
+    `[[x1,y1,z1], [x2,y2,z2], [x3,y3,z3]], [etc]`.
     Then rotates said coordinates by a given `angle` (degrees),
     taking the perpendicular axis that passes through the
     geometrical center of the first three points as the axis of rotation.
@@ -157,42 +111,64 @@ def rotate_coords(coords:list,
     If `show_axis=True` it returns two additional coordinates at the end of the list,
     with the centroid and the rotation vector.
     '''
-    coords = np.array(coords)
-    if len(coords) < 3:
+    if len(positions) < 3:
         raise ValueError("At least three coordinates are required to define the rotation axis.")
+    positions = np.array(positions)
     # Define the geometrical center of the first three points
-    center = np.mean(coords[:3], axis=0)
+    center = np.mean(positions[:3], axis=0)
     # Ensure the axis passes through the geometrical center
-    coords_centered = coords - center
+    centered_positions = positions - center
     # Define the perpendicular axis (normal to the plane formed by the first three points)
-    v1 = coords_centered[1] - coords_centered[0]
-    v2 = coords_centered[2] - coords_centered[0]
-    axis = np.cross(v1, v2)
-    axis = axis / np.linalg.norm(axis)
+    v1 = centered_positions[0] - centered_positions[1]
+    v2 = centered_positions[0] - centered_positions[2]
+    axis = np.cross(v2, v1)
+    axis_length = np.linalg.norm(axis)
+    axis = axis / axis_length
     # Create the rotation object using scipy
     rotation = Rotation.from_rotvec(np.radians(angle) * axis)
     # Rotate all coordinates around the geometrical center
-    rotated_coords_centered = rotation.apply(coords_centered)
-    rotated_coords = rotated_coords_centered + center
-    rotated_coords = rotated_coords.tolist()
+    rotated_centered_positions = rotation.apply(centered_positions)
+    rotated_positions = (rotated_centered_positions + center).tolist()
+    # Verify that the distance to the axis remains the same for the first three points
+    print("\nOriginal, Rotated centered positions:")
+    for i in range(3):
+        print(centered_positions[i], rotated_centered_positions[i])
+    print("\nOriginal, Rotated distances to the rotation axis:")
+    for i in range(3):
+        original_distance = np.linalg.norm(centered_positions[i])
+        rotated_distance = np.linalg.norm(rotated_centered_positions[i])
+        print(f"{original_distance}, {rotated_distance}")
+    print('')
     if show_axis:
-        rotated_coords.append(center)
-        rotated_coords.append(center+axis)
-    return rotated_coords
-    
+        rotated_positions.append(center.tolist())
+        rotated_positions.append((center + axis).tolist())
+    return rotated_positions
 
-def update_line_with_coords(line:str,
-                            coords
-                            ) -> str:
+
+def save_rotation(
+        filename,
+        output:str,
+        lines:list,
+        positions:list
+    ) -> str:
     '''
-    Takes a point as a list of `coords`, and a `line` string.
-    Updates the floats in the string with the new coords.
+    Takes an input `filename` and updates the `lines` with the new `positions`,
+    then saves it as a new `output`.
     '''
-    float_pattern = r'[-+]?\d*\.\d+'
-    parts = re.split(float_pattern, line)
-    floats = re.findall(float_pattern, line)
-    if len(floats) < 3:
-        raise ValueError("The line does not contain at least three floats!")
-    new_line = parts[0] + f"{coords[0]:.15f} " + parts[1] + f"{coords[1]:.15f} " + parts[2] + f"{coords[2]:.15f} " + ''.join(parts[3:])
-    return new_line
+    th.file.copy(filename, output)
+    for i, line in enumerate(lines):
+        strings = line.split()
+        atom = strings[0]
+        new_line = f"  {atom}   {positions[i][0]:.15f}   {positions[i][1]:.15f}   {positions[i][2]:.15f}"
+        th.text.replace_line(output, line, new_line)
+    if len(lines) == len(positions):
+        return output
+    elif len(lines) + 2 != len(positions):
+        raise ValueError(f"What?!  len(lines)={len(lines)} and len(positions)={len(positions)}")
+    # This is only for the show_axis=True case
+    additional_positions = positions[-2:]
+    for pos in additional_positions:
+        pos.insert(0, 'He')
+        th.qe.add_atom(output, pos)
+    return output
 
