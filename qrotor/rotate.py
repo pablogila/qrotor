@@ -41,7 +41,7 @@ def structure(
     lines = []
     full_positions = []
     for position in positions:
-        line = locate_atom(filepath, position)
+        line = aton.get_atom(filepath, position)
         lines.append(line)
         pos = th.extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
@@ -62,37 +62,6 @@ def structure(
         save_rotation(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
-
-
-def locate_atom(
-        filepath:str,
-        position:list
-    ) -> str:
-    '''
-    Takes a list with an approximated `position` and finds the corresponding string in the `filepath`.
-    Returns the corresponding line with the full position.
-    Raises an error if none or more than one match of coords is found.
-    '''
-    pattern = rf''
-    coords = th.extract.coords(position)
-    for coord in coords:
-        pattern += rf'\s*{coord}\d+'
-    line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
-    if len(line_coords) != 1:  # If it failed, maybe the position rounded. Trying removing one decimal...
-        pattern = rf''
-        for i in range(len(coords)):
-            coords[i] = str(coords[i])[:-1]  # remove last digit
-            pattern += rf'\s*{coords[i]}\d+'
-        line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
-        if len(line_coords) != 1:  # Try a final time!
-            pattern = rf''
-            for i in range(len(coords)):
-                coords[i] = str(coords[i])[:-1]  # remove last two digits
-                pattern += rf'\s*{coords[i]}\d+'
-            line_coords = th.find.lines(filepath=filepath, key=pattern, regex=True)
-            if len(line_coords) != 1:
-                return None, None
-    return line_coords[0]
 
 
 def rotate_atoms(
