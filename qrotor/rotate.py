@@ -1,4 +1,4 @@
-'''
+"""
 # Description
 This module contains tools to rotate molecular structures.
 Working with Quantum ESPRESSO input files.
@@ -10,7 +10,7 @@ Working with Quantum ESPRESSO input files.
 - `save_rotation()`
 
 ---
-'''
+"""
 
 
 import thotpy as th
@@ -28,14 +28,14 @@ def structure(
         repeat:bool=False,
         show_axis:bool=False
     ) -> list:
-    '''
+    """
     Takes a `filepath` with a molecular structure, and tree or more atomic `positions` (list).
     These input positions can be approximate, and are used to identify the target atoms.
     It rotates these points by the geometrical center of the first three atoms by a specific `angle`.
     Additionally, if `repeat=True` it repeats the same rotation over the whole circunference.
     Finally, it writes the rotated structure(s) to a new structural file.
     Returns a list with the output filenames.
-    '''
+    """
     if len(positions) < 3:
         raise ValueError("At least three positions are required to define the rotation axis.")
     lines = []
@@ -43,7 +43,7 @@ def structure(
     for position in positions:
         line = aton.get_atom(filepath, position)
         lines.append(line)
-        pos = th.extract.coords(line)
+        pos = aton.text.extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         full_positions.append(pos)
