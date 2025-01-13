@@ -1,39 +1,44 @@
 """
 # Description
+
 This module contains tools to rotate molecular structures.
 Working with Quantum ESPRESSO input files.
 
+
 # Index
-- `structure()`
-- `rotate_atom()`
-- `rotate_atoms()`
-- `save_rotation()`
+
+To rotate specific atoms from a structure  
+`rotate()`  
+
+For more precise control
+`rotate_coords()`  
+`save_rotation()`  
 
 ---
 """
 
 
-import thotpy as th
 import numpy as np
-import re
 from .constants import *
 import os
 from scipy.spatial.transform import Rotation
+import aton
 
 
-def structure(
+def rotate(
         filepath:str,
         positions:list,
         angle:float,
         repeat:bool=False,
         show_axis:bool=False
     ) -> list:
-    """
-    Takes a `filepath` with a molecular structure, and tree or more atomic `positions` (list).
+    """Rotates atoms from an structural file.
+
+    Takes a `filepath` with a molecular structure, and three or more atomic `positions` (list).
     These input positions can be approximate, and are used to identify the target atoms.
     It rotates these points by the geometrical center of the first three atoms by a specific `angle`.
     Additionally, if `repeat=True` it repeats the same rotation over the whole circunference.
-    Finally, it writes the rotated structure(s) to a new structural file.
+    Finally, it writes the rotated structure(s) to a new structural file(s).
     Returns a list with the output filenames.
     """
     if len(positions) < 3:
@@ -41,7 +46,7 @@ def structure(
     lines = []
     full_positions = []
     for position in positions:
-        line = aton.get_atom(filepath, position)
+        line = aton.interface.qe.get_atom(filepath, position)
         lines.append(line)
         pos = aton.text.extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
@@ -58,28 +63,30 @@ def structure(
     name, ext = os.path.splitext(basename)
     for angle in angles:
         output = os.path.join(name + f'_{angle}' + ext)
-        rotated_positions = rotate_atoms(full_positions, angle, show_axis)
+        rotated_positions = rotate_coords(full_positions, angle, show_axis)
         save_rotation(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
 
 
-def rotate_atoms(
+def rotate_coords(
     positions:list,
     angle:float,
     show_axis:bool=False
     ) -> list:
-    '''
+    """Rotates geometrical coordinates.
+
     Takes a list of atomic `positions` as
     `[[x1,y1,z1], [x2,y2,z2], [x3,y3,z3]], [etc]`.
     Then rotates said coordinates by a given `angle` (degrees),
     taking the perpendicular axis that passes through the
     geometrical center of the first three points as the axis of rotation.
     Any additional coordinates are rotated with the same rotation matrix.
-    Returns a list with the updated positions.\n
+    Returns a list with the updated positions.
+
     If `show_axis=True` it returns two additional coordinates at the end of the list,
     with the centroid and the rotation vector.
-    '''
+    """
     if len(positions) < 3:
         raise ValueError("At least three coordinates are required to define the rotation axis.")
     positions = np.array(positions)
@@ -124,12 +131,12 @@ def save_rotation(
     Takes an input `filename` and updates the `lines` with the new `positions`,
     then saves it as a new `output`.
     '''
-    th.file.copy(filename, output)
+    aton.st.file.copy(filename, output)
     for i, line in enumerate(lines):
         strings = line.split()
         atom = strings[0]
         new_line = f"  {atom}   {positions[i][0]:.15f}   {positions[i][1]:.15f}   {positions[i][2]:.15f}"
-        th.text.replace_line(output, line, new_line)
+        aton.text.edit.replace_line(output, line, new_line)
     if len(lines) == len(positions):
         return output
     elif len(lines) + 2 != len(positions):
@@ -138,6 +145,6 @@ def save_rotation(
     additional_positions = positions[-2:]
     for pos in additional_positions:
         pos.insert(0, 'He')
-        th.qe.add_atom(output, pos)
+        aton.interface.qe.add_atom(output, pos)
     return output
 

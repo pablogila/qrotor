@@ -1,9 +1,9 @@
 from ase.io import read
 from ase.visualize import view
 import qrotor as qr
-import thotpy as th
+import aton
 
-th.call.here()
+aton.st.call.here()
 
 filename = 'scf.in'
 coordinates = [
@@ -20,7 +20,7 @@ coordinates = [
 angle = 320
 repeat = False
 
-scf = qr.rotate.structure(filename, coordinates, angle, repeat, True)
+scf = qr.edit.rotate(filename, coordinates, angle, repeat, True)
 
 for file in scf:
     rotated_molecule = read(file)

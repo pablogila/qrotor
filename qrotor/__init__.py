@@ -8,5 +8,5 @@ from .file import *
 from . import potentials
 from . import plot # To-update
 from . import solve
-from . import rotate
+from . import edit
 
