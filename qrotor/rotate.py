@@ -25,14 +25,14 @@ from scipy.spatial.transform import Rotation
 import aton
 
 
-def rotate(
+def qe(
         filepath:str,
         positions:list,
         angle:float,
         repeat:bool=False,
         show_axis:bool=False
     ) -> list:
-    """Rotates atoms from an structural file.
+    """Rotates atoms from a Quantum ESPRESSO input file.
 
     Takes a `filepath` with a molecular structure, and three or more atomic `positions` (list).
     These input positions can be approximate, and are used to identify the target atoms.
@@ -51,7 +51,9 @@ def rotate(
         pos = aton.text.extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
-        full_positions.append(pos)
+        # Convert to cartesian
+        pos_cartesian = aton.interface.qe.to_cartesian(pos)
+        full_positions.append(pos_cartesian)
     # Set the angles to rotate
     if not repeat:
         angles = [angle]
@@ -63,7 +65,8 @@ def rotate(
     name, ext = os.path.splitext(basename)
     for angle in angles:
         output = os.path.join(name + f'_{angle}' + ext)
-        rotated_positions = rotate_coords(full_positions, angle, show_axis)
+        rotated_positions_cartesian = rotate_coords(full_positions, angle, show_axis)
+        rotated_positions = aton.interface.qe.from_cartesian(rotated_positions_cartesian)
         save_rotation(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
