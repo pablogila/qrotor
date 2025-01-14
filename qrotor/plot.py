@@ -43,7 +43,7 @@ def energies_DEV(data:Experiment):
             new_data.solutions.append(solutions)
             energy(new_data)
     else:
-        # Group data with the same potential_values and different atom_type
+        # Group data with the same potential_values and different element
         grouped_data = data.group_by_potential_and_atoms()
         for i, new_data in enumerate(grouped_data):
             energy(new_data)
@@ -81,7 +81,7 @@ def energy_DEV(data:Experiment):
                 ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
 
     unique_potentials = []
-    unique_atom_types = []
+    unique_elements = []
     for i, (variables, solutions) in enumerate(zip(data.variables, data.solutions)):
         V_color = V_colors[i % len(V_colors)]
         E_color = E_colors[i % len(E_colors)]
@@ -95,16 +95,16 @@ def energy_DEV(data:Experiment):
 
         # Plot eigenvalues
         if solutions.eigenvalues is not None:
-            text_offset = 3 * len(unique_atom_types)
-            if variables.atom_type not in unique_atom_types:
-                unique_atom_types.append(variables.atom_type)
+            text_offset = 3 * len(unique_elements)
+            if variables.element not in unique_elements:
+                unique_elements.append(variables.element)
             for j, energy in enumerate(solutions.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
                 plt.text(j%3*0.9 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-            if len(data.atom_types()) > 1:
-                plt.plot([], [], color=E_color, label=f'{variables.atom_type} Energies')  # Add to legend
+            if len(data.elements()) > 1:
+                plt.plot([], [], color=E_color, label=f'{variables.element} Energies')  # Add to legend
 
-    if len(data.atom_types()) > 1:
+    if len(data.elements()) > 1:
         plt.subplots_adjust(right=0.85)
         plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
 

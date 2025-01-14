@@ -3,6 +3,14 @@
 This module provides straightforward functions to save data, as well as to load data and/or potential `*.dat` files.
 
 # Index
+
+| | | 
+| --- | --- |
+| `load_potential()` | Load a custom potential from a file |
+| `save_potential()` | Save a calculated potential from Quantum ESPRESSO |
+
+
+# Index
 - `save()`
 - `load()`
 - `load_potential()`
@@ -16,54 +24,9 @@ from .classes import *
 import os
 import pickle
 import gzip
-import shutil
-import json
-import maatpy as mt
-# Get Maat from:
-# https://github.com/pablogila/Maat
+import aton
 
 
-################################################
-##########  User-friendly operations  ##########
-################################################
-def save(data:Experiment, filename:str=None, discard_shit:bool=False,  verbose:bool=True):
-    '''Save the data in the current working directory as a binary *.qrotor file.'''
-    filename = 'out' if filename is None else filename
-    filename = _fix_extension(filename, '.qrotor')
-    file = os.path.join(os.getcwd(), filename)
-    if discard_shit:
-        data = data.discard_shit()
-    with gzip.open(file, 'wb') as f:
-        pickle.dump(data, f)
-    if verbose:
-        print(f"Experiment saved and compressed to {file}")
-
-
-def load(file:str='out.qrotor'):
-    '''Load the data from a binary `*.qrotor` file in the current working directory.'''
-    if not os.path.exists(file):
-        file = os.path.join(os.getcwd(), file)
-    if not os.path.exists(file):
-        raise FileNotFoundError(f"The file {file} does not exist.")
-
-    with gzip.open(file, 'rb') as f:
-        data = pickle.load(f)
-    if isinstance(data, Experiment):
-        info(data, verbose=True)
-        return data
-    else:
-        try:
-            version = data.version
-            version_message = f' (Experiment version {version})'
-        except:
-            version_message = ''
-        print('WARNING: Data integrity could not be ckecked!' + version_message)
-        user_input = input("Continue anyway? ('y' or 'n', suggested: 'n')")
-        if user_input in mt.confirmation_keys['yes']:
-            print('Data was loaded anyways... Good luck!')
-            return data
-        else:
-            raise ConnectionAbortedError
 
 
 def load_potential(file, system=None, angle:str='deg', energy:str='ev'):
@@ -78,7 +41,7 @@ def load_potential(file, system=None, angle:str='deg', energy:str='ev'):
         raise FileNotFoundError(f"The file {file} does not exist.")
 
     system = System() if system is None else system
-    with open(input_file, 'r') as f:
+    with open(file, 'r') as f:
         lines = f.readlines()
     positions = []
     potentials = []

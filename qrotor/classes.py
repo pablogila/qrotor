@@ -1,73 +1,75 @@
-'''
+"""
 # Description
-This module contains the common objects used in the QRotor package.
+
+This module contains common classes for QRotor calculations.
+
 
 # Index
-- `System`. Contains all the data for a single calculation.
-- `Analysis`. Contains different parameters to analyze the data.
-- `Experiment`. Contains a list of `System` objects, an `Analysis` object, and some plotting options as a [Maat plotting object](https://pablogila.github.io/Maat/maat/classes.html#Plotting).
+
+| | |
+| --- | --- |
+| `System`     | Contains all the data for a single calculation |
+| `Experiment` | Container for several `System` objects, with specific methods |
 
 ---
-'''
+"""
 
 
 import numpy as np
 from copy import deepcopy
 from .constants import *
-import maatpy as mt
-# Get MaatPy from:
-# https://github.com/pablogila/MaatPy
-# pip install maatpy
+import aton
 
 
 class System:
-    '''Object containing all the data for a single calculation, with both inputs and outputs.'''
-    def __init__(self,
-                 comment: str = None,
-                 E_levels: int = 5,
-                 units = None, # CHECK THAT THIS WORKS. previously = []
-                 atom_type: str = None,
-                 correct_potential_offset: bool = True,
-                 save_eigenvectors: bool = False,
-                 gridsize: int = None,
-                 grid = None,
-                 B: float = None,
-                 potential_name: str = None,
-                 potential_constants: list = None
-                 ):
+    """Contains all the data for a single calculation, with both inputs and outputs."""
+    def __init__(
+            self,
+            comment: str = None,
+            E_levels: int = 5,
+            units = None,               ################ TODO CHECK THAT THIS WORKS. previously = []
+            element: str = None,
+            correct_potential_offset: bool = True,
+            save_eigenvectors: bool = False,
+            gridsize: int = None,
+            grid = None,
+            B: float = None,
+            potential_name: str = None,
+            potential_constants: list = None
+            ):
         ## Technical
         self.comment: str = comment
-        '''Custom comment for the dataset.'''
+        """Custom comment for the dataset."""
         self.E_levels: int = E_levels
-        '''Number of energy levels to be studied.'''
+        """Number of energy levels to be studied."""
         self.units = units
-        '''List containing the units in use, e.g. ['meV'].'''
-        self.atom_type: str = atom_type
-        '''Generally `'H'` or `'D'`.'''
+        """List containing the units in use, e.g. ['meV']."""     #############  TODO remove the need for a list
+        self.element: str = element
+        """Generally `'H'` or `'D'`."""
         self.correct_potential_offset: bool = correct_potential_offset
-        '''Correct the potential offset as `V - min(V)` or not.'''
+        """Correct the potential offset as `V - min(V)` or not."""
         self.save_eigenvectors: bool = save_eigenvectors
-        '''Save or not the eigenvectors. Final file size will be bigger.'''
+        """Save or not the eigenvectors. Final file size will be bigger."""
         ## Potential
         self.gridsize: int = gridsize
-        '''Number of points in the grid.'''
+        """Number of points in the grid."""
         self.grid = grid
-        '''The grid with the points to be used in the calculation. Can be set automatically over $2 \\Pi$ with `System.set_grid()`.'''
+        """The grid with the points to be used in the calculation. Can be set automatically over $2 \\Pi$ with `System.set_grid()`."""
         self.B: float = B
-        '''Rotational inertia, as in $B=\\frac{\\hbar^2}{2I}.'''
+        """Rotational inertia, as in $B=\\frac{\\hbar^2}{2I}."""
         self.potential_name: str = potential_name
-        '''
-        String with the name of the desired potential: `'zero'`, `'titov2023'`, `'test'`...
+        """Name of the desired potential: `'zero'`, `'titov2023'`, `'test'`...
+
         If empty or unrecognised, the custom potential values inside `potential_values` will be used. 
-        '''
+        """
         self.potential_constants: list = potential_constants
-        '''List of constants to be used in the calculation of the potential energy, in the `qrotor.potentials` module.'''
+        """List of constants to be used in the calculation of the potential energy, in the `qrotor.potential` module."""
         self.potential_values = None
-        '''
-        Numpy array with the potential values for each point in the grid.
-        Can be calculated with a function available in the `qrotor.potentials` module,
-        or loaded externally with the `qrotor.file.load_potential()` function.
-        '''
+        """Numpy array with the potential values for each point in the grid.
+
+        Can be calculated with a function available in the `qrotor.potential` module,
+        or loaded externally with the `qrotor.load_potential()` function.
+        """
         self.potential_offset: float = None
         '''`min(V)` before offset correction when `correct_potential_offset=True`'''
         self.potential_min: float = None
@@ -94,7 +96,7 @@ class System:
         return {
             'comment': self.comment,
             'runtime': self.runtime,
-            'atom_type': self.atom_type,
+            'element': self.element,
             'gridsize': self.gridsize,
             'B': self.B,
             'potential_name': self.potential_name,
@@ -118,42 +120,19 @@ class System:
         return self
 
 
-class Analysis:
-    '''
-    Analysis object containing the different parameters to analyze the data.
-    '''
-    def __init__(self,
-                 E_level: int = 5,
-                 E_diff: bool = False,
-                 E_threshold: float = 1e-3,
-                 ideal_E: float = None,
-                 ):
-        self.E_level: int = E_level
-        '''Energy level to check in a convergence test. By default, it will be the higher calculated one.'''
-        self.E_diff: bool = E_diff
-        '''If True, in plot.convergence it will check the difference between ideal_E and the calculated one.'''
-        self.E_threshold: float = E_threshold
-        '''Energy Threshold for a convergence test.'''
-        self.ideal_E: float = ideal_E
-        '''Ideal energy level for a 'zero' potential, for comparison in a convergence test. Calculated automatically with Experiment.get_ideal_E()'''
-
-
 class Experiment:
     def __init__(self,
                  comment: str = None,
                  plotting: mt.Plotting = None,
-                 analysis: Analysis = None,
                  ):
         self.version = version
-        '''Version of the QRotor package used to generate the data.'''
+        """Version of the package used to generate the data."""
         self.comment: str = comment
-        '''Custom comment for the dataset.'''
+        """Custom comment for the dataset."""
         self.system = []
-        '''List containing the calculated System objects.'''
-        self.plotting = plotting
-        '''Maat plotting object. Check more options [here](https://pablogila.github.io/Maat/maat/classes.html#Plotting).'''
-        self.analysis = analysis
-        '''Analysis object containing the different parameters to analyze the data.'''
+        """List containing the calculated `System` objects."""
+        self.plotting: aton.spx.classes.Plotting = plotting
+        """`Aton.spx.classes.Plotting` object."""
 
     def add(self, *args):
         for value in args:
@@ -162,7 +141,6 @@ class Experiment:
                 self.version = value.version if len(self.system) == 0 else self.version
                 self.comment = value.comment if self.comment is None else self.comment
                 self.plotting = value.plotting if self.plotting is None else self.plotting
-                self.analysis = value.analysis if self.analysis is None else self.analysis
             elif isinstance(value, System):
                 self.system.append(value)
             else:
@@ -195,12 +173,12 @@ class Experiment:
                 runtimes.append(None)
         return runtimes
 
-    def get_atom_types(self):
-        atom_types = []
+    def get_elements(self):
+        elements = []
         for i in self.system:
-            if i.atom_type not in atom_types:
-                atom_types.append(i.atom_type)
-        return atom_types
+            if i.element not in elements:
+                elements.append(i.element)
+        return elements
 
     def sort_by_potential_values(self):
         grouped_data = self.group_by_potential_values()
@@ -232,18 +210,16 @@ class Experiment:
         self.system = sorted(self.system, key=lambda sys: sys.gridsize)
         return self
 
-    def get_ideal_E(self):
-        '''Only for 'zero' potential. Calculates the ideal energy level for a convergence test, from Experiment.Analysis.E_level'''
+    def get_ideal_E(self, E_level):
+        """Calculates the ideal energy for a specified `E_level` for a convergence test. Only for 'zero' potential."""
         real_E_level = None
-        if self.analysis.E_level is None:
-            raise ValueError("Experiment.Analysis.E_level not set.")
         if self.system[0].potential_name == 'zero':
-            if self.analysis.E_level % 2 == 0:
-                real_E_level = self.analysis.E_level / 2
+            if E_level % 2 == 0:
+                real_E_level = E_level / 2
             else:
-                real_E_level = (self.analysis.E_level + 1) / 2
-            self.analysis.ideal_E = int(real_E_level ** 2)
-            return self.analysis.ideal_E
+                real_E_level = (E_level + 1) / 2
+            ideal_E = int(real_E_level ** 2)
+            return ideal_E
         else:
             print("WARNING:  get_ideal_E() only valid for potential_name='zero'")
             return

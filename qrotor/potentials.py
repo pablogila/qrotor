@@ -9,6 +9,7 @@ This module contains functions to calculate the actual `potential_values` of the
 - `sine()`
 - `test()`
 - `custom()`
+- `load()`
 
 ---
 '''
@@ -73,3 +74,45 @@ def custom(system:System):
     else:
         print('WARNING:  No potential_values found in system')
 
+
+def load(file, system=None, angle:str='deg', energy:str='ev'):                 #########   TODO: integrarlo bien
+    '''
+    Read a potential energy curve from a file and return it as a Variables object.\n
+    The file should contain two columns:  angle and potential,\n
+    with degrees and eV as default units.\n
+    '''
+    if not os.path.exists(file):
+        file = os.path.join(os.getcwd(), file)
+    if not os.path.exists(file):
+        raise FileNotFoundError(f"The file {file} does not exist.")
+
+    system = System() if system is None else system
+    with open(file, 'r') as f:
+        lines = f.readlines()
+    positions = []
+    potentials = []
+    for line in lines:
+        if line.startswith('#'):
+            continue
+        position, potential = line.split()
+        positions.append(float(position))
+        potentials.append(float(potential))
+
+    if angle in mt.unit_keys['deg']:
+        positions = np.radians(positions)
+    elif angle in mt.unit_keys['rad']:
+        positions = np.array(positions)
+    else:
+        raise ValueError(f"Angle unit '{angle}' not recognized.")
+
+    if energy in mt.unit_keys['mev']:
+        potentials = np.array(potentials) * 1000
+    elif energy in mt.unit_keys['ev']:
+        potentials = np.array(potentials)
+    else:
+        raise ValueError(f"Energy unit '{energy}' not recognized.")
+
+    system.grid = np.array(positions)
+    system.gridsize = len(positions)
+    system.potential_values = np.array(potentials)
+    return system
