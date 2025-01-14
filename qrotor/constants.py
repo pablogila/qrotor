@@ -13,7 +13,7 @@ import maatpy as mt
 # https://github.com/pablogila/Maat
 
 
-version = 'v3.0.9'
+version = 'v3.0.10'
 
 
 # Output file

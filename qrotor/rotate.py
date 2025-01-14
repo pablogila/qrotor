@@ -52,8 +52,11 @@ def qe(
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         # Convert to cartesian
-        pos_cartesian = aton.interface.qe.to_cartesian(pos)
+        pos_cartesian = aton.interface.qe.to_cartesian(filepath, pos)
         full_positions.append(pos_cartesian)
+        print(pos)
+        print(pos_cartesian)
+        print('')
     # Set the angles to rotate
     if not repeat:
         angles = [angle]
@@ -66,7 +69,10 @@ def qe(
     for angle in angles:
         output = os.path.join(name + f'_{angle}' + ext)
         rotated_positions_cartesian = rotate_coords(full_positions, angle, show_axis)
-        rotated_positions = aton.interface.qe.from_cartesian(rotated_positions_cartesian)
+        rotated_positions = []
+        for coord in rotated_positions_cartesian:
+            pos = aton.interface.qe.from_cartesian(filepath, coord)
+            rotated_positions.append(pos)
         save_rotation(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
@@ -108,16 +114,6 @@ def rotate_coords(
     # Rotate all coordinates around the geometrical center
     rotated_centered_positions = rotation.apply(centered_positions)
     rotated_positions = (rotated_centered_positions + center).tolist()
-    # Verify that the distance to the axis remains the same for the first three points
-    print("\nOriginal, Rotated centered positions:")
-    for i in range(3):
-        print(centered_positions[i], rotated_centered_positions[i])
-    print("\nOriginal, Rotated distances to the rotation axis:")
-    for i in range(3):
-        original_distance = np.linalg.norm(centered_positions[i])
-        rotated_distance = np.linalg.norm(rotated_centered_positions[i])
-        print(f"{original_distance}, {rotated_distance}")
-    print('')
     if show_axis:
         rotated_positions.append(center.tolist())
         rotated_positions.append((center + axis).tolist())

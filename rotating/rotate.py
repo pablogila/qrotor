@@ -17,10 +17,10 @@ coordinates = [
 #    'H   0.42432   0.55012   0.82435'
 ]
 
-angle = 320
+angle = 60
 repeat = False
 
-scf = qr.edit.rotate(filename, coordinates, angle, repeat, True)
+scf = qr.rotate.qe(filename, coordinates, angle, repeat, True)
 
 for file in scf:
     rotated_molecule = read(file)
