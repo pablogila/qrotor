@@ -1,28 +1,29 @@
 """
 # Description
 
-This module contains tools to rotate molecular structures.
+This submodule contains tools to rotate molecular structures.
 Working with Quantum ESPRESSO input files.
 
 
 # Index
 
-To rotate specific atoms from a structure  
-`rotate()`  
-
-For more precise control
-`rotate_coords()`  
-`save_rotation()`  
+| | |
+| --- | --- |
+| `rotate()`        | Rotate specific atoms from a Quantum ESPRESSO input file |
+| `rotate_coords()` | Rotate
 
 ---
 """
 
 
 import numpy as np
-from .constants import *
 import os
+import shutil
 from scipy.spatial.transform import Rotation
-import aton
+from .constants import *
+import aton.interface.qe as qe
+import aton.text.extract as extract
+import aton.text.edit as edit
 
 
 def qe(
@@ -37,22 +38,24 @@ def qe(
     Takes a `filepath` with a molecular structure, and three or more atomic `positions` (list).
     These input positions can be approximate, and are used to identify the target atoms.
     It rotates these points by the geometrical center of the first three atoms by a specific `angle`.
-    Additionally, if `repeat=True` it repeats the same rotation over the whole circunference.
+    Additionally, if `repeat = True` it repeats the same rotation over the whole circunference.
     Finally, it writes the rotated structure(s) to a new structural file(s).
-    Returns a list with the output filenames.
+    Returns a list with the output filename(s).
+
+    To debug, `show_axis = True` adds two additional helium atoms as the rotation vector.
     """
     if len(positions) < 3:
         raise ValueError("At least three positions are required to define the rotation axis.")
     lines = []
     full_positions = []
     for position in positions:
-        line = aton.interface.qe.get_atom(filepath, position)
+        line = qe.get_atom(filepath, position)
         lines.append(line)
-        pos = aton.text.extract.coords(line)
+        pos = extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         # Convert to cartesian
-        pos_cartesian = aton.interface.qe.to_cartesian(filepath, pos)
+        pos_cartesian = qe.to_cartesian(filepath, pos)
         full_positions.append(pos_cartesian)
         print(pos)
         print(pos_cartesian)
@@ -71,17 +74,17 @@ def qe(
         rotated_positions_cartesian = rotate_coords(full_positions, angle, show_axis)
         rotated_positions = []
         for coord in rotated_positions_cartesian:
-            pos = aton.interface.qe.from_cartesian(filepath, coord)
+            pos = qe.from_cartesian(filepath, coord)
             rotated_positions.append(pos)
-        save_rotation(filepath, output, lines, rotated_positions)
+        _save_qe(filepath, output, lines, rotated_positions)
         outputs.append(output)
     return outputs
 
 
 def rotate_coords(
-    positions:list,
-    angle:float,
-    show_axis:bool=False
+        positions:list,
+        angle:float,
+        show_axis:bool=False
     ) -> list:
     """Rotates geometrical coordinates.
 
@@ -93,7 +96,7 @@ def rotate_coords(
     Any additional coordinates are rotated with the same rotation matrix.
     Returns a list with the updated positions.
 
-    If `show_axis=True` it returns two additional coordinates at the end of the list,
+    If `show_axis = True` it returns two additional coordinates at the end of the list,
     with the centroid and the rotation vector.
     """
     if len(positions) < 3:
@@ -120,22 +123,19 @@ def rotate_coords(
     return rotated_positions
 
 
-def save_rotation(
+def _save_qe(
         filename,
         output:str,
         lines:list,
         positions:list
     ) -> str:
-    '''
-    Takes an input `filename` and updates the `lines` with the new `positions`,
-    then saves it as a new `output`.
-    '''
-    aton.st.file.copy(filename, output)
+    """Copies `filename` to `output`, updating the old `lines` with the new `positions`."""
+    shutil.copy(filename, output)
     for i, line in enumerate(lines):
         strings = line.split()
         atom = strings[0]
         new_line = f"  {atom}   {positions[i][0]:.15f}   {positions[i][1]:.15f}   {positions[i][2]:.15f}"
-        aton.text.edit.replace_line(output, line, new_line)
+        edit.replace_line(output, line, new_line)
     if len(lines) == len(positions):
         return output
     elif len(lines) + 2 != len(positions):
@@ -144,6 +144,6 @@ def save_rotation(
     additional_positions = positions[-2:]
     for pos in additional_positions:
         pos.insert(0, 'He')
-        aton.interface.qe.add_atom(output, pos)
+        qe.add_atom(output, pos)
     return output
 

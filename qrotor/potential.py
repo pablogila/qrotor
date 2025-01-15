@@ -18,6 +18,7 @@ This module contains functions to calculate the actual `potential_values` of the
 from .classes import *
 from . import constants
 import numpy as np
+import aton.st.alias as alias
 
 
 # Redirect to the desired potential energy function
@@ -68,19 +69,22 @@ def test(system:System):
 
 
 def custom(system:System):
-    '''Used to keep the previous `qrotor.classes.System.potential_values` of the system. For example, when those were obtained from an external file, with `qrotor.file.load_potential`.'''
+    """Used to keep the previous `aton.qrotor.classes.System.potential_values` of the system.
+    
+    For example, when those were obtained from an external file, with `aton.qrotor.potential.load()`.
+    """
     if system.potential_values:
         return system.potential_values
     else:
         print('WARNING:  No potential_values found in system')
 
 
-def load(file, system=None, angle:str='deg', energy:str='ev'):                 #########   TODO: integrarlo bien
-    '''
-    Read a potential energy curve from a file and return it as a Variables object.\n
-    The file should contain two columns:  angle and potential,\n
-    with degrees and eV as default units.\n
-    '''
+def load(file, system=None, angle:str='deg', energy:str='ev') -> System:                 #########   TODO: integrarlo bien
+    """Read a potential rotational energy dataset.
+
+    The file should contain two columns: `angle` and `energy`,
+    with degrees and eV as default units.
+    """
     if not os.path.exists(file):
         file = os.path.join(os.getcwd(), file)
     if not os.path.exists(file):
@@ -98,16 +102,16 @@ def load(file, system=None, angle:str='deg', energy:str='ev'):                 #
         positions.append(float(position))
         potentials.append(float(potential))
 
-    if angle in mt.unit_keys['deg']:
+    if angle.lower() in alias.units['deg']:
         positions = np.radians(positions)
-    elif angle in mt.unit_keys['rad']:
+    elif angle.lower() in alias.units['rad']:
         positions = np.array(positions)
     else:
         raise ValueError(f"Angle unit '{angle}' not recognized.")
 
-    if energy in mt.unit_keys['mev']:
+    if energy.lower() in alias.units['meV']:
         potentials = np.array(potentials) * 1000
-    elif energy in mt.unit_keys['ev']:
+    elif energy.lower() in alias.units['ev']:
         potentials = np.array(potentials)
     else:
         raise ValueError(f"Energy unit '{energy}' not recognized.")
