@@ -1,32 +1,36 @@
-'''
+"""
 # Description
-This module handles the solving of the hamiltonian eigenvalues and eigenvectors for a given system.
+
+This module is used to solve the hamiltonian eigenvalues and eigenvectors for a given quantum system.
+Sparse matrices are used to achieve optimal performance.
+
 
 # Index
-- `get_laplacian_matrix()`
-- `hamiltonian_matrix()`
-- `potential()`
-- `schrodinger()`
-- `energies()`
-- `interpolate_potential()`
+
+| | |
+| --- | --- |
+| `laplacian_matrix()`      | Calculate the second derivative matrix for a given grid |
+| `hamiltonian_matrix()`    | Calculate the hamiltonian matrix of the system |
+| `potential()`             | Solve the potential values of the system |
+| `schrodinger()`           | Solve the Schrödiger equation for the system |
+| `energies()`              | Solve the system(s) for the QSys or QExp object |
 
 ---
-'''
+"""
 
 
 from .classes import *
-from . import potentials
-from . import file
+from .potential import solve as solve_potential
 from copy import deepcopy
 import time
 import numpy as np
 from scipy import sparse
-from scipy.interpolate import CubicSpline
+import aton
 
 
-# Second derivative matrix, according to the finite difference method
-def get_laplacian_matrix(x):
-    '''Returns the Laplacian matrix for a given grid x.'''
+def laplacian_matrix(grid):
+    """Calculates the Laplacian (second derivative) matrix for a given `grid`."""
+    x = grid
     diagonals = [-2*np.ones(len(x)), np.ones(len(x)), np.ones(len(x))]
     laplacian_matrix = sparse.spdiags(diagonals, [0, -1, 1], format='lil')
     # Periodic boundary conditions
@@ -37,20 +41,24 @@ def get_laplacian_matrix(x):
     return laplacian_matrix
 
 
-def hamiltonian_matrix(system:System):
-    '''Returns the Hamiltonian matrix for a given `qrotor.classes.System` object.'''
+def hamiltonian_matrix(system:QSys):
+    """Calculates the Hamiltonian matrix for a given `qrotor.classes.QSys` object."""
     V = system.potential_values.tolist()
     potential = sparse.diags(V, format='lil')
     B = system.B
     x = system.grid
-    H = -B * get_laplacian_matrix(x) + potential  # Original Hamiltonian
-    # H = -laplacian_matrix(x) + (1/B)*diags(potential)  # In units of B ¿? CHECK
+    H = -B * laplacian_matrix(x) + potential
     return H
 
 
-def potential(system:System) -> System:
-    '''Solves the potential_values of the system, according to the potential name, by calling `qrotor.potentials.solve`'''
-    V = potentials.solve(system)
+def potential(system:QSys) -> QSys:
+    """Solves the potential_values of the system.
+
+    It uses the potential name, by calling `qrotor.potential.solve`.
+    Then it applies extra operations, such as removing the potential offset
+    if `QSys.correct_potential_offset = True`.
+    """
+    V = solve_potential(system)
     if system.correct_potential_offset is True:
         offset = min(V)
         V = V - offset
@@ -59,8 +67,11 @@ def potential(system:System) -> System:
     return system
 
 
-def schrodinger(system:System) -> System:
-    '''Solves the Schrödinger equation for a given `qrotor.classes.System` object.'''
+def schrodinger(system:QSys) -> QSys:
+    """Solves the Schrödinger equation for a given `qrotor.classes.QSys` object.
+    
+    Uses ARPACK in shift-inverse mode to solve the hamiltonian sparse matrix.
+    """
     time_start = time.time()
     V = system.potential_values
     H = hamiltonian_matrix(system)
@@ -70,12 +81,12 @@ def schrodinger(system:System) -> System:
     if any(eigenvalues) is None:
         print('WARNING:  Not all eigenvalues were found.\n')
     else: print('Done.\n')
+    system.runtime = time.time() - time_start
     system.eigenvalues = eigenvalues
     system.potential_max = max(V)
     system.potential_min = min(V)
     system.energy_barrier = max(V) - min(eigenvalues)
     system.first_transition = eigenvalues[1] - eigenvalues[0]
-    system.runtime = time.time() - time_start
     if system.save_eigenvectors == True:
         system.eigenvectors = eigenvectors
     system.eigenvalues_B = eigenvalues / system.B
@@ -83,35 +94,19 @@ def schrodinger(system:System) -> System:
     return system
 
 
-def energies(var, filename=None) -> Experiment:
-    '''Solves the Schrödinger equation for a given `qrotor.classes.System` or `qrotor.classes.Experiment` object.\n
-    If a filename is provided, the results are saved to a file.'''
-    if isinstance(var, System):
-        data = Experiment()
-        data.system = [deepcopy(var)]
-    elif isinstance(var, Experiment):
+def energies(var, filename:str=None) -> QExp:
+    """Solves the Schrödinger equation for a given `qrotor.classes.QSys` or `qrotor.classes.QExp` object."""
+    if isinstance(var, QSys):
+        data = QExp()
+        data.systems = [deepcopy(var)]
+    elif isinstance(var, QExp):
         data = deepcopy(var)
     else:
-        raise ValueError('Input must be a System or Experiment object.')
-    for system in data.system:
+        raise ValueError('Input must be a QSys or QExp object.')
+    for system in data.systems:
         system = potential(system)
         system = schrodinger(system)
     if filename:
-        file.save(data, filename)
+        aton.st.file.save(data, filename)
     return data
-
-
-def interpolate_potential(system:System) -> System:
-    '''Interpolates the current potential_values to a new grid of size `qrotor.classes.System.gridsize`'''
-    V = system.potential_values
-    grid = system.grid
-    gridsize = system.gridsize
-
-    new_grid = np.linspace(0, 2*np.pi, gridsize)
-    cubic_spline = CubicSpline(grid, V)
-    new_V = cubic_spline(new_grid)
-
-    system.grid = new_grid
-    system.potential_values = new_V
-    return system
 

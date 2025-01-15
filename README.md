@@ -1,6 +1,11 @@
 # QRotor v3.0.6
 
-Welcome to QRotor, a Python library to solve the energies of a methyl rotor.  
+Welcome to QRotor, a Python library to solve the energies of methyl and amine rotors.  
+
+
+# MOVING TO ATON
+
+QRotor is being ported as a subpackage of [ATON](https://github.com/pablogila/ATON).
 
 
 ## Installation

@@ -2,7 +2,7 @@
 # Description
 
 This submodule contains tools to rotate molecular structures.
-Working with Quantum ESPRESSO input files.
+Works with Quantum ESPRESSO input files.
 
 
 # Index
@@ -10,7 +10,7 @@ Working with Quantum ESPRESSO input files.
 | | |
 | --- | --- |
 | `rotate()`        | Rotate specific atoms from a Quantum ESPRESSO input file |
-| `rotate_coords()` | Rotate
+| `rotate_coords()` | Rotate a specific list of coordinates |
 
 ---
 """
@@ -21,7 +21,7 @@ import os
 import shutil
 from scipy.spatial.transform import Rotation
 from .constants import *
-import aton.interface.qe as qe
+import aton.interface as interface
 import aton.text.extract as extract
 import aton.text.edit as edit
 
@@ -49,13 +49,13 @@ def qe(
     lines = []
     full_positions = []
     for position in positions:
-        line = qe.get_atom(filepath, position)
+        line = interface.qe.get_atom(filepath, position)
         lines.append(line)
         pos = extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         # Convert to cartesian
-        pos_cartesian = qe.to_cartesian(filepath, pos)
+        pos_cartesian = interface.qe.to_cartesian(filepath, pos)
         full_positions.append(pos_cartesian)
         print(pos)
         print(pos_cartesian)
@@ -74,7 +74,7 @@ def qe(
         rotated_positions_cartesian = rotate_coords(full_positions, angle, show_axis)
         rotated_positions = []
         for coord in rotated_positions_cartesian:
-            pos = qe.from_cartesian(filepath, coord)
+            pos = interface.qe.from_cartesian(filepath, coord)
             rotated_positions.append(pos)
         _save_qe(filepath, output, lines, rotated_positions)
         outputs.append(output)
@@ -144,6 +144,6 @@ def _save_qe(
     additional_positions = positions[-2:]
     for pos in additional_positions:
         pos.insert(0, 'He')
-        qe.add_atom(output, pos)
+        interface.qe.add_atom(output, pos)
     return output
 
