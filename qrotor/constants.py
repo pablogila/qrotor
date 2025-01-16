@@ -11,11 +11,10 @@ see [*Cryst. Growth Des.* 2024, 24, 391−404](https://doi.org/10.1021/acs.cgd.3
 
 
 import numpy as np
-import os
 import aton
 
 
-version = 'v3.0.11'   ####################    TODO: remove when integrated to ATON
+version = 'v3.1.0'   ####################    TODO: remove when integrated to ATON
 
 
 # Distance between Carbon and Hydrogen atoms (measured from MAPbI3)
