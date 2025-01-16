@@ -31,7 +31,7 @@ def qe(
         positions:list,
         angle:float,
         repeat:bool=False,
-        show_axis:bool=False
+        show_axis:bool=False,
     ) -> list:
     """Rotates atoms from a Quantum ESPRESSO input file.
 
@@ -51,15 +51,17 @@ def qe(
     for position in positions:
         line = interface.qe.get_atom(filepath, position)
         lines.append(line)
+        try:
+            element = extract.element(line)
+        except:
+            element = 'atom'
         pos = extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         # Convert to cartesian
         pos_cartesian = interface.qe.to_cartesian(filepath, pos)
         full_positions.append(pos_cartesian)
-        print(pos)
-        print(pos_cartesian)
-        print('')
+        print(f'Found {element} at position {pos}')
     # Set the angles to rotate
     if not repeat:
         angles = [angle]
@@ -69,6 +71,7 @@ def qe(
     outputs = []
     basename = os.path.basename(filepath)
     name, ext = os.path.splitext(basename)
+    print('Rotating the structure...')
     for angle in angles:
         output = os.path.join(name + f'_{angle}' + ext)
         rotated_positions_cartesian = rotate_coords(full_positions, angle, show_axis)
@@ -78,6 +81,7 @@ def qe(
             rotated_positions.append(pos)
         _save_qe(filepath, output, lines, rotated_positions)
         outputs.append(output)
+        print(output)
     return outputs
 
 
