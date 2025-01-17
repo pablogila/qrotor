@@ -1,4 +1,4 @@
-# QRotor v3.0.6
+# QRotor
 
 Welcome to QRotor, a Python library to solve the energies of methyl and amine rotors.  
 
@@ -9,8 +9,6 @@ QRotor is being ported as a subpackage of [ATON](https://github.com/pablogila/AT
 
 
 ## Installation
-
-QRotor requires the Maat package, and has the same dependencies. You can get Maat [here](https://github.com/pablogila/Maat/).  
 
 To install QRotor, clone the repository from [GitHub](https://github.com/pablogila/QRotor/) or download it as a ZIP and run:  
 ```shell
@@ -28,20 +26,13 @@ An offline version of the documentation is also available at `/docs/qrotor.html`
 QRotor contains the following submodules:  
 - [classes](https://pablogila.github.io/QRotor/qrotor/classes.html)
 - [constants](https://pablogila.github.io/QRotor/qrotor/constants.html)
-- [file](https://pablogila.github.io/QRotor/qrotor/file.html)
 - [plot](https://pablogila.github.io/QRotor/qrotor/plot.html)
 - [potentials](https://pablogila.github.io/QRotor/qrotor/potentials.html)
 - [solve](https://pablogila.github.io/QRotor/qrotor/solve.html)
 - [rotate](https://pablogila.github.io/QRotor/qrotor/rotate.html)
 
-The documentation can be compiled automatically using [pdoc](https://pdoc.dev/) and [Thoth](https://github.com/pablogila/Thoth/), by running:
-```shell
-python3 makedocs.py
-```
 
 ## License
-
-> TL;DR: Do what you want with this, as long as you share the source code of your modifications, also under GNU AGPLv3.  
 
 Copyright (C) 2024  Pablo Gila-Herranz
 
