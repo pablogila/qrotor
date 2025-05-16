@@ -6,307 +6,332 @@ This module provides straightforward functions to plot QRotor data.
 
 # Index
 
-`reduced_energies()`  
-`energies_DEV()`     NOT IMPLEMENTED  
-`energy_DEV()`       NOT IMPLEMENTED  
-`convergence_DEV()`  NOT IMPLEMENTED  
+| | |
+| --- | --- |
+| `potential()`        | Potential values as a function of the angle |
+| `energies()`         | Calculated eigenvalues |
+| `reduced_energies()` | Reduced energies E/B as a function of the reduced potential V/B |
+| `wavefunction()`     | Selected wavefunctions or squared wavefunctions of a system |
+| `splittings()`       | Tunnel splitting energies of a list of systems |
+| `convergence()`      | Energy convergence |
 
 ---
 """
 
 
-from .classes import *
+from .system import System
+from . import systems
 import matplotlib.pyplot as plt
+import numpy as np
+from copy import deepcopy
+import aton.alias as alias
+import aton.phys as phys
 
 
-def reduced_energies(data:QExp):
-    """Plots the reduced energy of the system, E/B, vs the reduced potential energy, V/B"""
-    number_of_levels = data.systems[0].E_levels
-    x = []
-    for system in data.systems:
-        x.append(system.potential_max_B)
-    for i in range(number_of_levels):
-        y = []
-        for system in data.systems:
-            y.append(system.eigenvalues_B[i])
-        plt.plot(x, y, marker='', linestyle='-')
-    plt.xlabel('V$_{B}$ / B')
-    plt.ylabel('E / B')
-    plt.title(data.comment)
+def potential(
+        data,
+        title:str=None,
+        marker='',
+        linestyle='-',
+        cm:bool=False,
+        ) -> None:
+    """Plot the potential values of `data` (System object, or list of systems).
+
+    Title can be customized with `title`.
+    If empty, system[0].comment will be used as title if no more comments are present.
+
+    `marker` and `linestyle` can be a Matplotlib string or list of strings.
+    Optionally, the Viridis colormap can be used with `cm = True`.
+    """
+    system = systems.as_list(data)
+    title_str = title if title else (system[0].comment if (system[0].comment and (len(system) == 1 or not system[-1].comment)) else 'Rotational potential energy')
+    # Marker as a list
+    if isinstance(marker, list):
+        if len(marker) < len(system):
+            marker.extend([''] * (len(system) - len(marker)))
+    else:
+        marker = [marker] * len(system)
+    # Linestyle as a list
+    if isinstance(linestyle, list):
+        if len(linestyle) < len(system):
+            linestyle.extend(['-'] * (len(system) - len(linestyle)))
+    else:
+        linestyle = [linestyle] * len(system)
+
+    plt.figure()
+    plt.title(title_str)
+    plt.xlabel('Angle / rad')
+    plt.ylabel('Potential energy / meV')
+    plt.xticks([-2*np.pi, -3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi], [r'$-2\pi$', r'$-\frac{3\pi}{2}$', r'$-\pi$', r'$-\frac{\pi}{2}$', '0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+
+    if cm:  # Plot using a colormap
+        colors = plt.cm.viridis(np.linspace(0, 1, len(system)+1))  # +1 to avoid the lighter tones
+        for i, s in enumerate(system):
+            plt.plot(s.grid, s.potential_values, marker=marker[i], linestyle=linestyle[i], label=s.comment, color=colors[i])
+    else:  # Regular plot
+        for i, s in enumerate(system):
+            plt.plot(s.grid, s.potential_values, marker=marker[i], linestyle=linestyle[i], label=s.comment)
+
+    if all(s.comment for s in system) and len(system) != 1:
+        plt.legend(fontsize='small')
+
     plt.show()
 
 
-def energies_DEV(data:QExp):
-    '''Plots the energy in separated plots. NOT YET IMPLEMENTED IN v3.0.0'''
-    if data.separate_plots:
-        for variables, solutions in zip(data.variables, data.solutions):
-            new_data = Experiment()
-            new_data.comment = variables.comment
-            new_data.variables.append(variables)
-            new_data.solutions.append(solutions)
-            energy(new_data)
-    else:
-        # Group data with the same potential_values and different element
-        grouped_data = data.group_by_potential_and_atoms()
-        for i, new_data in enumerate(grouped_data):
-            energy(new_data)
+def energies(
+        data,
+        title:str=None,
+        ) -> None:
+    """Plot the eigenvalues of `data` (System or a list of System objects)."""
+    if isinstance(data, System):
+        var = [data]
+    else:  # Should be a list
+        systems.as_list(data)
+        var = data
 
-
-def energy_DEV(data:QExp):
-    '''Plots the energy of the system. NOT YET IMPLEMENTED IN v3.0.0'''
-    V_colors = ['C0'] #...
-    E_colors = ['red', 'purple', 'grey']  # To extend...
+    V_colors = ['C0', 'C1', 'C2', 'C3', 'C4']
+    E_colors = ['lightblue', 'sandybrown', 'lightgrey', 'lightcoral', 'plum']
     E_linestyles = ['--', ':', '-.']
-    edgecolors = ['tomato', 'purple', 'grey']
+    edgecolors = E_colors
 
     V_linestyle = '-'
-
-    units = data.units
-    E_units = 'meV'
-    if 'meV' in units or 'mev' in units:
-        E_units = 'meV'
-    elif 'eV' in units or 'ev' in units:
-        E_units = 'eV'
-
-    title = data.comment
-    ylabel_text = f'Energy / {E_units}'
+    title = title if title else (var[0].comment if var[0].comment else 'Energy eigenvalues')
+    ylabel_text = f'Energy / meV'
     xlabel_text = 'Angle / radians'
 
     plt.figure(figsize=(10, 6))
     plt.xlabel(xlabel_text)
     plt.ylabel(ylabel_text)
-
     plt.title(title)
-    if not data.comment or (len(data.variables) == 1 and data.variables[0].comment):
-        plt.title(f'{data.variables[0].comment}')
-
-    plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
-                ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+    plt.xticks([-2*np.pi, -3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi], [r'$-2\pi$', r'$-\frac{3\pi}{2}$', r'$-\pi$', r'$-\frac{\pi}{2}$', '0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
 
     unique_potentials = []
-    unique_elements = []
-    for i, (variables, solutions) in enumerate(zip(data.variables, data.solutions)):
+    unique_groups = []
+    for i, system in enumerate(var):
         V_color = V_colors[i % len(V_colors)]
         E_color = E_colors[i % len(E_colors)]
         E_linestyle = E_linestyles[i % len(E_linestyles)]
         edgecolor = edgecolors[i % len(edgecolors)]
 
         # Plot potential energy if it is unique
-        if not any(np.array_equal(variables.potential_values, element) for element in unique_potentials):
-            unique_potentials.append(variables.potential_values)
-            plt.plot(variables.grid, variables.potential_values, color=V_color, linestyle=V_linestyle)
+        if not any(np.array_equal(system.potential_values, value) for value in unique_potentials):
+            unique_potentials.append(system.potential_values)
+            plt.plot(system.grid, system.potential_values, color=V_color, linestyle=V_linestyle)
 
         # Plot eigenvalues
-        if solutions.eigenvalues is not None:
-            text_offset = 3 * len(unique_elements)
-            if variables.element not in unique_elements:
-                unique_elements.append(variables.element)
-            for j, energy in enumerate(solutions.eigenvalues):
+        if any(system.eigenvalues):
+            text_offset = 3 * len(unique_groups)
+            if system.group not in unique_groups:
+                unique_groups.append(system.group)
+            for j, energy in enumerate(system.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
-                plt.text(j%3*0.9 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-            if len(data.elements()) > 1:
-                plt.plot([], [], color=E_color, label=f'{variables.element} Energies')  # Add to legend
+                # Textbox positions are a bit weird when plotting more than 2 systems, but whatever...
+                plt.text(j%3*1.0 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
+            if len(systems.get_groups(var)) > 1:
+                plt.plot([], [], color=E_color, label=f'{system.group} Energies')  # Add to legend
 
-    if len(data.elements()) > 1:
+    if len(systems.get_groups(var)) > 1:
         plt.subplots_adjust(right=0.85)
         plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
 
     plt.show()
 
 
-def convergence_DEV(data:QExp):
-    '''Plots the energy convergence of the system. NOT YET IMPLEMENTED IN v3.0.0'''
-    fig, ax1 = plt.subplots(figsize=(10, 6))
+def reduced_energies(
+        data:list,
+        title:str=None,
+        values:list=[],
+        legend:list=[],
+        ) -> None:
+    """Plots the reduced energy of the system E/B vs the reduced potential energy V/B.
 
-    E_color = 'C0'
-    runtime_color = 'C3'
-    yaxes_color = E_color
+    Takes a `data` list of System objects as input.
+    An optional `title` can be specified.
 
-    converged_color_line = 'lightgrey'
-
-    units = data.variables[0].units
-    E_units = 'meV'
-    if 'meV' in units or 'mev' in units:
-        E_units = 'meV'
-    elif 'eV' in units or 'ev' in units:
-        E_units = 'eV'
-
-    title = data.comment
-    ylabel_text = f'Energy / {E_units}'
-    xlabel_text = 'Grid Size'
-    runtime_text = 'Runtime / s'
-
-    legend_title = data.legend_title
-    legend_title_position = data.legend_title_position
-    check_E_threshold = data.check_E_threshold
-    check_E_diff = data.check_E_diff
-    check_E_level = data.check_E_level
-    ideal_E = data.ideal_E
-    if check_E_level is None:
-        data.check_E_level = len(data.solutions[0].eigenvalues) - 1
-        check_E_level = data.check_E_level
-        ideal_E = data.get_ideal_E()
-
-
-    textbox = dict(boxstyle='round', facecolor='white', edgecolor='lightgrey', alpha=0.5)
-    textstr = ''
-
-    textstr_position_x = 0.88
-    textstr_position_y = 0.15
-    textstr_alignment_h = 'right'
-    textstr_alignment_v = 'bottom'
-
-    if legend_title_position and isinstance(legend_title_position, list):
-        textstr_position_x = data.legend_title_position[0]
-        textstr_position_y = data.legend_title_position[1]
-        textstr_alignment_h = data.legend_title_position[2]
-        textstr_alignment_v = data.legend_title_position[3]
-
-    energies = data.energies()
-    energies_transposed = np.transpose(energies)
-    plotted_energies = energies_transposed[check_E_level]
-    gridsizes = data.gridsizes()
-    runtimes = data.runtimes()
-
-    if check_E_diff:
-        plotted_energies = np.abs(plotted_energies - ideal_E)
-        ylabel_text = 'Energy offset / |meV|'
-        textstr_position_x = 0.5
-        textstr_position_y = 0.85
-        textstr_alignment_v = 'top'
-        textstr_alignment_h = 'center'
-    
-    if not any(runtimes):
-        yaxes_color = 'black'
-
-    ax1.plot(gridsizes, plotted_energies, marker='o', linestyle='-', color=E_color)
-    ax1.set_xlabel(xlabel_text)
-    ax1.set_ylabel(ylabel_text, color=yaxes_color)
-    ax1.tick_params(axis='y', labelcolor=yaxes_color)
-
-    if ideal_E is not None:
-        if check_E_diff:
-            ax1.axhline(y=0, color='grey', linestyle='--')
-        else:
-            ax1.axhline(y=ideal_E, color='grey', linestyle='--')
-            textstr += f'Ideal  E={ideal_E:.4f}\n'
-    
-    if check_E_threshold and (ideal_E is not None):
-        if check_E_diff:
-            abs_energies = energy
-        else:
-            abs_energies = np.abs(plotted_energies - ideal_E)
-        for i, energy in enumerate(abs_energies):
-            if energy < check_E_threshold:
-                #ax1.plot(gridsizes[i], plotted_energies[i], marker=converged_marker, color=E_converged_color)
-                ax1.axvline(x=gridsizes[i], color=converged_color_line, linestyle='--')
-                textstr += f'Convergence threshold:  {check_E_threshold}\n'
-                lower_limit, _ = ax1.get_ylim()
-                ax1.text(gridsizes[i], lower_limit, str(gridsizes[i]), fontsize=10, verticalalignment='bottom', horizontalalignment='center')
-                break
-
-    if any(runtimes):
-        ax2 = ax1.twinx()  # instantiate a second y-axis that shares the same x-axis
-        ax2.set_ylabel(runtime_text, color=runtime_color)  # we already handled the x-label with ax1
-        ax2.plot(gridsizes, runtimes, marker='o', linestyle='-', color=runtime_color)
-        ax2.tick_params(axis='y', labelcolor=runtime_color)
-        for i, energy in enumerate(plotted_energies):
-            textstr += f'N={gridsizes[i]}   E={round(energy,4):.04f}   t={round(runtimes[i],2):.02f}'
-            if i < len(plotted_energies) - 1:
-                textstr += '\n'
-
+    Optional maximum reduced potential `values` are plotted
+    as vertical lines (floats or ints) or regions
+    (lists inside the values list, from min to max).
+    A `legend` of the same len as `values` can be included.
+    These values are assumed to be divided by B by the user.
+    """
+    if values and (isinstance(values, float) or isinstance(values, int) or isinstance(values, np.float64)):
+        values = [values]
+    if values and len(values) <= len(legend):
+        plot_legend = True
     else:
-        for i, energy in enumerate(plotted_energies):
-            textstr += f'N={gridsizes[i]}   E={round(energy,4):.04f}\n'
-
-    if legend_title is not False:
-        if isinstance(legend_title, str):
-            textstr = legend_title + '\n' + textstr
-        fig.text(textstr_position_x, textstr_position_y, textstr, fontsize=10, verticalalignment=textstr_alignment_v, horizontalalignment=textstr_alignment_h, bbox=textbox)
-
+        plot_legend = False
+        legend = [''] * len(values)
+    systems.as_list(data)
+    title = title if title else (data[0].comment if data[0].comment else 'Reduced energies')
+    number_of_levels = data[0].searched_E
+    x = []
+    for system in data:
+        potential_max_B = system.potential_max / system.B
+        x.append(potential_max_B)
+    colors = plt.cm.viridis(np.linspace(0, 1, number_of_levels+1))  # +1 to avoid the lighter tones
+    for i in range(number_of_levels):
+        y = []
+        for system in data:
+            eigenvalues_B_i = system.eigenvalues[i] / system.B
+            y.append(eigenvalues_B_i)
+        plt.plot(x, y, marker='', linestyle='-', color=colors[i])
+    # Add vertical lines in the specified values
+    line_colors = plt.cm.tab10(np.linspace(0, 1, len(values)))
+    for i, value in enumerate(values):
+        if isinstance(value, list):
+            min_value = min(value)
+            max_value = max(value)
+            plt.axvspan(min_value, max_value, color=line_colors[i], alpha=0.2, linestyle='', label=legend[i])
+        else:
+            plt.axvline(x=value, color=line_colors[i], linestyle='--', label=legend[i], alpha=0.5)
+    plt.xlabel('V$_{B}$ / B')
+    plt.ylabel('E / B')
     plt.title(title)
+    if plot_legend:
+        plt.legend()
     plt.show()
 
 
+def wavefunction(
+        system:System,
+        title:str=None,
+        square:bool=True,
+        levels=[0, 1, 2],
+        overlap=False,
+        yticks:bool=False,
+        ) -> None:
+    """Plot the wavefunction of a `system` for the specified `levels`.
 
+    Wavefunctions are squared by default, showing the probabilities;
+    To show the actual wavefunctions, set `square = False`.
 
+    `levels` can be a list of indexes, or the number of levels to plot.
 
+    Specific wavefunctions can be overlapped with `overlap` as a list with the target indexes.
+    The `overlap` value can also be the max number of wavefunctions to add.
+    All found wavefunctions can be added together with `overlap = True`;
+    but note that this overlap is limited by the number of System.searched_E,
+    that must be specified before solving the system.
+    Setting `overlap` will ignore the `levels` argument.
 
-
-
-
-
-
-
-'''
-###################################################
-############  TO FIX:
-
-
-
-
-
-
-
-
-def eigenvectors(data:Experiment, levels=None, squared=False, scaling_factor=1):
-
-    xlabel = 'Angle / radians'
-    ylabel = 'Energy / meV'
-    title = data.title
-    V_color = 'lightblue'
-    V_label = 'Potential'
-
-    #energy_color = 'red'
-    energy_edgecolor = 'lightgrey'
-    energy_linestyle = ':'
-    energy_label = 'E'
-
-    eigenvector_linestyle = '--'
-
-    # To square the eigenvectors
-    if squared:
-        eigenvector_label = 'Eigenvect$^2$ '
-        square = 2
+    Set `yticks = True` to plot the wavefunction yticks.
+    """
+    data = deepcopy(system)
+    eigenvectors = data.eigenvectors
+    title = title if title else (data.comment if data.comment else 'System wavefunction')
+    fig, ax1 = plt.subplots()
+    plt.title(title)
+    ax1.set_xlabel('Angle / radians')
+    ax1.set_ylabel('Potential / meV')
+    ax1.set_xticks([-2*np.pi, -3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi], [r'$-2\pi$', r'$-\frac{3\pi}{2}$', r'$-\pi$', r'$-\frac{\pi}{2}$', '0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
+    ax1.plot(data.grid, data.potential_values, color='blue', linestyle='-')
+    ax2 = ax1.twinx()
+    if not yticks:
+        ax2.set_yticks([])
+    ax2.set_ylabel('Squared wavefunction' if square else 'Wavefunction')
+    # Set levels list
+    if isinstance(levels, int) or isinstance(levels, float):
+        levels = [x for x in range(int(levels))]
+    if not isinstance(levels, list):
+        raise ValueError('levels must be an int or a list of ints')
+    # Set overlap if requested
+    if overlap == True and isinstance(overlap, bool):
+        eigenvectors = [np.sum(eigenvectors, axis=0)]
+        levels = [0]
+        show_legend = False
+    elif overlap is not False and (isinstance(overlap, int) or isinstance(overlap, float)):
+        max_int = int(overlap)
+        eigenvectors = [np.sum(eigenvectors[:max_int], axis=0)]
+        levels = [0]
+        show_legend = False
+    elif isinstance(overlap, list):
+        eigenvectors = [np.sum([eigenvectors[i] for i in overlap], axis=0)]
+        levels = [0]
+        show_legend = False
     else:
-        eigenvector_label = 'Eigenvect '
-        square = 1
-    
-    for i, potential in enumerate(data.set_of_potentials):
-
-        # Transpose the 2D array so that each inner array represents a different eigenvector
-        eigenvectors_transposed = np.transpose(data.set_of_eigenvectors[i])
-
-        # Plot potential energy
-        plt.figure(figsize=(10, 6))
-        plt.plot(data.x, potential, color=V_color, label=V_label)
-        plt.xlabel(xlabel)
-        plt.ylabel(ylabel)
-        plt.title(f'{title} (#' + str(i+1) + ')' )
-        if len(data.set_of_potentials) == 1:
-            plt.title(f'{title}')
-        plt.xticks([0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi],
-                   ['0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
-        for j, energy in enumerate(data.set_of_energies[i]):
-            if levels is not None and j not in levels:
-                continue
-
-            color = 'C' + str(j)
-
-            E_label = energy_label + str(j)
-            plt.axhline(y=energy, linestyle=energy_linestyle, color=color, label=E_label)
-            plt.text(j%3*0.9, energy, f'E$_{j}$ = {energy:.4f}', va='top', bbox=dict(edgecolor=energy_edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-
-            eigenvect_label = eigenvector_label + str(j)
-            eigenvector = scaling_factor*eigenvectors_transposed[j]**square
-            plt.plot(data.x, eigenvector, linestyle=eigenvector_linestyle, label=eigenvect_label, color=color)
-
-        plt.subplots_adjust(right=0.85)
-        plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
-        plt.text(1.03, 0.9, f'Eigenvects\nscaled x{scaling_factor}', transform=plt.gca().transAxes)
-        plt.show()
+        show_legend = True
+    # Square values if so
+    if square:
+        eigenvectors = [vec**2 for vec in eigenvectors]
+    # Plot the wavefunction
+    for i in levels:
+        ax2.plot(data.grid, eigenvectors[i], linestyle='--', label=f'{i}')
+    if show_legend:
+        fig.legend(loc='upper right', bbox_to_anchor=(0.9, 0.88), fontsize='small', title='Index')
+    plt.show()
 
 
+def splittings(
+        data:list,
+        title:str=None,
+        units:str='ueV'
+        ) -> None:
+    """Plot the tunnel splitting energies of a `data` list of systems.
+
+    The different `System.comment` are shown in the horizontal axis.
+    An optional `title` can be specified.
+    Default units shown are $\\mu$eV (`'ueV'`).
+    Available units are: `'ueV'`, `'meV'`, `'Ry'`.
+    """
+    title = title if title != None else 'Tunnel splitting energies'
+    calcs = deepcopy(data)
+    calcs = systems.as_list(calcs)
+
+    fig, ax = plt.subplots()
+    ax.set_ylabel("Energy / meV")
+
+    y = [c.splittings[0] for c in calcs]
+    x = [c.comment for c in calcs]
+    # What units do we want?
+    if units.lower() in alias.units['ueV']:
+        y = [j * phys.meV_to_ueV for j in y]
+        ax.set_ylabel("Energy / $\\mu$eV")
+    elif units.lower() in alias.units['Ry']:
+        y = [j * phys.meV_to_Ry for j in y]
+        ax.set_ylabel("Energy / Ry")
+    #else:  # It's okay let's use meV
+
+    ax.bar(range(len(y)), y)
+    for i, comment in enumerate(x):
+        ax.text(x=i, y=0, s=comment+' ', rotation=45, verticalalignment='top', horizontalalignment='right')
+    ax.set_xlabel("")
+    ax.set_title(title)
+    ax.set_xticks([])
+    fig.tight_layout()
+    plt.show()
 
 
-'''
+def convergence(data:list) -> None:
+    """Plot the energy convergence of a `data` list of Systems as a function of the gridsize."""
+    systems.as_list(data)
+    gridsizes = [system.gridsize for system in data]
+    runtimes = [system.runtime for system in data]
+    deviations = []  # List of lists, containing all eigenvalue deviations for every system
+    searched_E = data[0].searched_E
+    for system in data:
+        deviation_list = []
+        for i, eigenvalue in enumerate(system.eigenvalues):
+            ideal_E = systems.get_ideal_E(i)
+            deviation = abs(ideal_E - eigenvalue)
+            deviation_list.append(deviation)
+        deviation_list = deviation_list[1:]  # Remove ground state
+        deviations.append(deviation_list)
+    # Plotting
+    fig, ax1 = plt.subplots()
+    ax1.set_xlabel('Grid size')
+    ax1.set_ylabel('Error / meV')
+    ax1.set_xscale('log')
+    ax1.set_yscale('log')
+    ax2 = ax1.twinx()
+    ax2.set_ylabel('Runtime / s')
+    ax2.set_yscale('log')
+    ax2.plot(gridsizes, runtimes, color='tab:grey', label='Runtime', linestyle='--')
+    colors = plt.cm.viridis(np.linspace(0, 1, searched_E))  # Should be searched_E-1 but we want to avoid lighter colors
+    for i in range(searched_E-1):
+        if i % 2 == 0:  # Ignore even numbers, since those levels are degenerated.
+            continue
+        ax1.plot(gridsizes, [dev[i] for dev in deviations], label=f'$E_{{{int((i+1)/2)}}}$', color=colors[i])
+    fig.legend(loc='upper right', bbox_to_anchor=(0.9, 0.88), fontsize='small')
+    plt.title(data[0].comment if data[0].comment else 'Energy convergence vs grid size')
+    plt.show()
+

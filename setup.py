@@ -1,39 +1,34 @@
-from setuptools import setup
-import re
+from setuptools import setup, find_packages
 
-DESCRIPTION = 'QRotor'
-LONG_DESCRIPTION = 'QRotor'
-AUTHOR = 'Pablo Gila-Herranz'
-AUTHOR_EMAIL = 'pgila001@ikasle.ehu.eus'
+DESCRIPTION = "QRotor"
+LONG_DESCRIPTION = "QRotor"
 
-def get_version():
-    with open('qrotor/constants.py', 'r') as file:
-        content = file.read()
-        version_match = re.search(r"version\s*=\s*'([^']+)'", content)
-        if version_match:
-            return version_match.group(1)
-        raise RuntimeError("Unable to find version.")
+exec(open('qrotor/_version.py').read())
+
+with open('README.md', 'r') as f:
+    LONG_DESCRIPTION = f.read()
 
 setup(
-        name="qrotor", 
-        version=get_version(),
-        author=AUTHOR,
-        author_email=AUTHOR_EMAIL,
-        description=DESCRIPTION,
-        long_description=LONG_DESCRIPTION,
-        packages=['qrotor'],
-        install_requires=['aton',
-                          'numpy',
-                          'matplotlib',
-                          'pandas',
-                          'scipy'],
-        keywords=['python', 'maat', 'INS', 'Raman', 'ATR', 'FTIR', 'spectroscopy', 'spectra', 'analysis'],
-        classifiers= [
-            "Development Status :: 5 - Production/Stable",
-            "Intended Audience :: Science/Research",
-            "Programming Language :: Python :: 3",
-            "Operating System :: POSIX :: Linux",
-            "Operating System :: Microsoft :: Windows",
-            "Operating System :: Other OS",
-        ]
+    name = 'qrotor', 
+    version = __version__,
+    author = 'Pablo Gila-Herranz',
+    author_email = 'pgila001@ikasle.ehu.eus',
+    description = DESCRIPTION,
+    long_description = LONG_DESCRIPTION,
+    long_description_content_type = 'text/markdown',
+    packages = find_packages(),
+    install_requires = ['scipy', 'pandas', 'numpy', 'matplotlib', 'aton'],
+    extras_requires = {'dev': ['pytest', 'twine', 'build']},
+    python_requires = '>=3',
+    license = 'AGPL-3.0',
+    keywords = ['QRotor', 'Molecular rotations', 'Quantum rotations', 'Quantum', 'Molecular', 'Rotations', 'Neutrons', 'Research', 'Ab-initio', 'DFT', 'Density Functional Theory', 'Quantum ESPRESSO', 'Phonons', 'Electronic structure'],
+    classifiers = [
+        "Development Status :: 5 - Production/Stable",
+        "Natural Language :: English",
+        "Intended Audience :: Science/Research",
+        "Programming Language :: Python :: 3",
+        "Operating System :: POSIX :: Linux",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: Other OS",
+    ]
 )

@@ -1,0 +1,25 @@
+:root {
+    --pdoc-background: #000000;
+}
+
+.pdoc {
+    --text: #f7f7f7;
+    --muted: #9d9d9d;
+    --link: #c6a4fd;
+    --link-hover: #a070ed;
+    --code: #171120;
+    --active: #392a52;
+
+    --accent: #241e2d;
+    --accent2: #000000;  /* Same as background to remove lines from tables */
+
+    --nav-hover: rgba(0, 0, 0, 0.1);
+    --name: #c6a4fd;
+    --def: #FAC637;
+    --annotation: #FAC637;
+}
+
+/* Hide table headers */
+th {
+    display: none;
+}
