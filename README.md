@@ -1,4 +1,4 @@
-# QRotor
+<p align="center"><img width="40.0%" src="pics/qrotor.png"></p>
  
 QRotor is a Python package used to study molecular rotations,
 such as those of methyl and amine groups.

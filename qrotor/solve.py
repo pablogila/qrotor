@@ -50,7 +50,7 @@ def energies(system:System, filename:str=None) -> System:
     system = potential(system)
     system = schrodinger(system)
     if filename:
-        aton.st.file.save(system, filename)
+        aton.file.save(system, filename)
     return system
 
 
