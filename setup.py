@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 
 DESCRIPTION = "QRotor"
-LONG_DESCRIPTION = "QRotor"
 
 exec(open('qrotor/_version.py').read())
 
