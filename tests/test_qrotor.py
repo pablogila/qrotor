@@ -1,4 +1,4 @@
-import aton.qrotor as qr
+import qrotor as qr
 import aton.api as api
 import aton.txt.extract as extract
 import aton.file as file
