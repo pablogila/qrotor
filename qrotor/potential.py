@@ -50,7 +50,6 @@ from scipy.interpolate import CubicSpline
 import aton.alias as alias
 import aton.file as file
 import aton.api.qe as qe
-import aton.phys as phys
 from ._version import __version__
 
 
@@ -100,10 +99,10 @@ def save(
     if energy.lower() in alias.units['meV']:
         potential_data += 'Potential/meV\n'
     elif energy.lower() in alias.units['eV']:
-        potential_values = potential_values * phys.meV_to_eV
+        potential_values = potential_values * 1e-3
         potential_data += 'Potential/eV\n'
     elif energy.lower() in alias.units['Ry']:
-        potential_values = potential_values * phys.meV_to_Ry
+        potential_values = potential_values * constants.meV_to_Ry
         potential_data += 'Potential/Ry\n'
     else:
         print(f"WARNING:  Unrecognised '{energy}' energy units, using meV instead")
@@ -161,11 +160,11 @@ def load(
         raise ValueError(f"Angle unit '{angle}' not recognized.")
     # Save energies to numpy arrays
     if energy.lower() in alias.units['eV']:
-        potentials = np.array(potentials) * phys.eV_to_meV
+        potentials = np.array(potentials) * 1000
     elif energy.lower() in alias.units['meV']:
         potentials = np.array(potentials)
     elif energy.lower() in alias.units['Ry']:
-        potentials = np.array(potentials) * phys.Ry_to_meV
+        potentials = np.array(potentials) * constants.Ry_to_meV
     else:
         raise ValueError(f"Energy unit '{energy}' not recognized.")
     # Set the system
@@ -244,15 +243,15 @@ def from_qe(
             counter_errors += 1
             continue
         if energy.lower() in alias.units['eV']:
-            energy_value = content['Energy'] * phys.Ry_to_eV
+            energy_value = content['Energy'] * constants.Ry_to_eV
         elif energy.lower() in alias.units['meV']:
-            energy_value = content['Energy'] * phys.Ry_to_meV
+            energy_value = content['Energy'] * constants.Ry_to_meV
         elif energy.lower() in alias.units['Ry']:
             energy_value = content['Energy']
         else:
             print(f"WARNING: Energy unit '{energy}' not recognized, using meV instead.")
             energy = 'meV'
-            energy_value = content['Energy'] * phys.Ry_to_meV
+            energy_value = content['Energy'] * constants.Ry_to_meV
         splits = filename.split('_')
         angle_value = splits[-1].replace('.out', '')
         angle_value = float(angle_value)

@@ -21,11 +21,11 @@ This module provides straightforward functions to plot QRotor data.
 
 from .system import System
 from . import systems
+from . import constants
 import matplotlib.pyplot as plt
 import numpy as np
 from copy import deepcopy
 import aton.alias as alias
-import aton.phys as phys
 
 
 def potential(
@@ -284,10 +284,10 @@ def splittings(
     x = [c.comment for c in calcs]
     # What units do we want?
     if units.lower() in alias.units['ueV']:
-        y = [j * phys.meV_to_ueV for j in y]
+        y = [j * 1000 for j in y]  # Convert meV to micro eV
         ax.set_ylabel("Energy / $\\mu$eV")
     elif units.lower() in alias.units['Ry']:
-        y = [j * phys.meV_to_Ry for j in y]
+        y = [j * constants.meV_to_Ry for j in y]
         ax.set_ylabel("Energy / Ry")
     #else:  # It's okay let's use meV
 

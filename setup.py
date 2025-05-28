@@ -16,7 +16,7 @@ setup(
     long_description = LONG_DESCRIPTION,
     long_description_content_type = 'text/markdown',
     packages = find_packages(),
-    install_requires = ['scipy', 'pandas', 'numpy', 'matplotlib', 'aton'],
+    install_requires = ['scipy', 'pandas', 'numpy', 'matplotlib', 'aton', 'periodictable'],
     extras_requires = {'dev': ['pytest', 'twine', 'build']},
     python_requires = '>=3',
     license = 'AGPL-3.0',
