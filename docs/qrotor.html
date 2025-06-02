@@ -61,13 +61,26 @@
 
             <h2>Contents</h2>
             <ul>
-  <li><a href="#index">Index</a></li>
+  <li><a href="#installation">Installation</a>
+  <ul>
+    <li><a href="#with-pip">With pip</a></li>
+    <li><a href="#from-source">From source</a></li>
+  </ul></li>
+  <li><a href="#documentation">Documentation</a></li>
   <li><a href="#usage">Usage</a>
   <ul>
     <li><a href="#solving-quantum-rotational-systems">Solving quantum rotational systems</a></li>
     <li><a href="#custom-potentials-from-dft">Custom potentials from DFT</a></li>
     <li><a href="#tunnel-splittings-and-excitations">Tunnel splittings and excitations</a></li>
   </ul></li>
+  <li><a href="#contributing">Contributing</a>
+  <ul>
+    <li><a href="#code-style">Code style</a></li>
+    <li><a href="#automated-testing">Automated testing</a></li>
+    <li><a href="#compiling-the-documentation">Compiling the documentation</a></li>
+  </ul></li>
+  <li><a href="#citation">Citation</a></li>
+  <li><a href="#license">License</a></li>
 </ul>
 
 
@@ -83,7 +96,7 @@
             </ul>
 
 
-            <footer>QRotor v4.0.0 documentation</footer>
+            <footer>QRotor v4.0.1 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -108,7 +121,43 @@ These quantum systems are represented by the <code>qrotor.System()</code> object
 <p>QRotor can obtain custom potentials from DFT,
 which are used to solve the quantum system.</p>
 
-<h1 id="index">Index</h1>
+<hr />
+
+<h1 id="installation">Installation</h1>
+
+<p>As always, it is recommended to install your packages in a virtual environment:  </p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</code></pre>
+</div>
+
+<h2 id="with-pip">With pip</h2>
+
+<p>Install or upgrade ATON with  </p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>qrotor<span class="w"> </span>-U
+</code></pre>
+</div>
+
+<h2 id="from-source">From source</h2>
+
+<p>Optionally, you can install ATON from the <a href="https://github.com/pablogila/qrotor/">GitHub repo</a>.
+Clone the repository or download the <a href="https://github.com/pablogila/qrotor/tags">latest stable release</a>
+as a ZIP, unzip it, and run inside it:  </p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>.
+</code></pre>
+</div>
+
+<hr />
+
+<h1 id="documentation">Documentation</h1>
+
+<p>QRotor contains the following modules:</p>
 
 <table>
 <thead>
@@ -148,6 +197,8 @@ which are used to solve the quantum system.</p>
 </tr>
 </tbody>
 </table>
+
+<hr />
 
 <h1 id="usage">Usage</h1>
 
@@ -258,6 +309,77 @@ considering the mean of the eigenvalues for each sublevel.
 See <a href="https://doi.org/10.1119/1.1538575">R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)</a>
 and <a href="https://doi.org/10.1016/S0079-6565(99)00016-3">A. J. Horsewill, Progress in Nuclear Magnetic Resonance Spectroscopy 35, 359–389 (1999)</a>
 for further reference.</p>
+
+<hr />
+
+<h1 id="contributing">Contributing</h1>
+
+<p>If you are interested in opening an issue or a pull request, please feel free to do so on <a href="https://github.com/pablogila/qrotor/">GitHub</a>.<br />
+For major changes, please get in touch first to discuss the details.  </p>
+
+<h2 id="code-style">Code style</h2>
+
+<p>Please try to follow some general guidelines:  </p>
+
+<ul>
+<li>Use a code style consistent with the rest of the project.  </li>
+<li>Include docstrings to document new additions.  </li>
+<li>Include automated tests for new features or modifications, see <a href="#automated-testing">automated testing</a>.  </li>
+<li>Arrange function arguments by order of relevance.  </li>
+</ul>
+
+<h2 id="automated-testing">Automated testing</h2>
+
+<p>If you are modifying the source code, you should run the automated tests of the <a href="https://github.com/pablogila/qrotor/tree/main/tests"><code>tests/</code></a> folder to check that everything works as intended.
+To do so, first install PyTest in your environment,</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>pytest
+</code></pre>
+</div>
+
+<p>And then run PyTest inside the main directory,</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>pytest<span class="w"> </span>-vv
+</code></pre>
+</div>
+
+<h2 id="compiling-the-documentation">Compiling the documentation</h2>
+
+<p>The documentation can be compiled automatically to <code>docs/qrotor.html</code> with <a href="https://pdoc.dev/">Pdoc</a> and <a href="https://pablogila.github.io/aton">ATON</a>, by running:</p>
+
+<div class="pdoc-code codehilite">
+<pre><span></span><code>python3<span class="w"> </span>makedocs.py
+</code></pre>
+</div>
+
+<p>This runs Pdoc, updating links and pictures, and using the custom theme CSS template from the <code>css/</code> folder.</p>
+
+<hr />
+
+<h1 id="citation">Citation</h1>
+
+<p>QRotor is currently under development.
+Please cite it if you use it in your research,</p>
+
+<blockquote>
+  <p>Pablo Gila-Herranz, <em>QRotor</em>, <a href="https://pablogila.github.io/qrotor">https://pablogila.github.io/qrotor</a>  </p>
+</blockquote>
+
+<hr />
+
+<h1 id="license">License</h1>
+
+<p>Copyright (C) 2025 Pablo Gila-Herranz<br />
+This program is free software: you can redistribute it and/or modify
+it under the terms of the <strong>GNU Affero General Public License</strong> as published
+by the Free Software Foundation, either version <strong>3</strong> of the License, or
+(at your option) any later version.<br />
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.<br />
+See the attached GNU Affero General Public License for more details.  </p>
 </div>
 
                         <input id="mod-qrotor-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">

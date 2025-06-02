@@ -50,13 +50,13 @@ I_ND3 = 3 * (periodictable.D.mass * _amu * r_NH**2)
 
 # Rotational energy
 _hbar = const.physical_constants['reduced Planck constant'][0]
-B_CH3 = ((_hbar**2) / (2 * I_CH3)) * const.eV * 1000
+B_CH3 = ((_hbar**2) / (2 * I_CH3)) * (1000 / const.eV)
 """Rotational energy of CH3, in meV·s/kg·m^2."""
-B_CD3 = ((_hbar**2) / (2 * I_CD3)) * const.eV * 1000
+B_CD3 = ((_hbar**2) / (2 * I_CD3)) * (1000 / const.eV)
 """Rotational energy of CD3, in meV·s/kg·m^2."""
-B_NH3 = ((_hbar**2) / (2 * I_NH3)) * const.eV * 1000
+B_NH3 = ((_hbar**2) / (2 * I_NH3)) * (1000 / const.eV)
 """Rotational energy of NH3, in meV·s/kg·m^2."""
-B_ND3 = ((_hbar**2) / (2 * I_ND3)) * const.eV * 1000
+B_ND3 = ((_hbar**2) / (2 * I_ND3)) * (1000 / const.eV)
 """Rotational energy of ND3, in meV·s/kg·m^2."""
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
@@ -74,12 +74,12 @@ In meV units.
 """
 
 # Quick conversion factors
-eV_to_Ry = const.physical_constants['Rydberg constant times hc in eV'][0]
+Ry_to_eV = const.physical_constants['Rydberg constant times hc in eV'][0]
 """Quick conversion factor from eV to Rydberg energy."""
-meV_to_Ry = eV_to_Ry / 1000
+Ry_to_meV = Ry_to_eV * 1000
 """Quick conversion factor from meV to Rydberg energy."""
-Ry_to_eV = 1 / eV_to_Ry
+eV_to_Ry = 1 / Ry_to_eV
 """Quick conversion factor from Rydberg to eV."""
-Ry_to_meV = 1 / meV_to_Ry
+meV_to_Ry = 1 / Ry_to_meV
 """Quick conversion factor from Rydberg to meV."""
 

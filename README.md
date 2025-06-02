@@ -9,10 +9,43 @@ These quantum systems are represented by the `qrotor.System()` object.
 QRotor can obtain custom potentials from DFT,
 which are used to solve the quantum system.
 
-Check the [full documentation online](https://pablogila.github.io/qrotor/).
+
+---
 
 
-# Index
+# Installation
+
+As always, it is recommended to install your packages in a virtual environment:  
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+
+## With pip
+
+Install or upgrade ATON with  
+```bash
+pip install qrotor -U
+```
+
+
+## From source
+
+Optionally, you can install ATON from the [GitHub repo](https://github.com/pablogila/qrotor/).
+Clone the repository or download the [latest stable release](https://github.com/pablogila/qrotor/tags)
+as a ZIP, unzip it, and run inside it:  
+```bash
+pip install .
+```
+
+
+---
+
+
+# Documentation
+
+QRotor contains the following modules:
 
 | | |
 | --- | --- |
@@ -23,6 +56,11 @@ Check the [full documentation online](https://pablogila.github.io/qrotor/).
 | [qrotor.potential](https://pablogila.github.io/qrotor/qrotor/potential.html) | Potential definitions and loading functions |
 | [qrotor.solve](https://pablogila.github.io/qrotor/qrotor/solve.html)         | Solve rotation eigenvalues and eigenvectors |
 | [qrotor.plot](https://pablogila.github.io/qrotor/qrotor/plot.html)           | Plotting functions |
+
+Check the [full documentation online](https://pablogila.github.io/qrotor/).
+
+
+---
 
 
 # Usage
@@ -129,4 +167,72 @@ considering the mean of the eigenvalues for each sublevel.
 See [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575)
 and [A. J. Horsewill, Progress in Nuclear Magnetic Resonance Spectroscopy 35, 359–389 (1999)](https://doi.org/10.1016/S0079-6565(99)00016-3)
 for further reference.
+
+
+---
+
+
+# Contributing
+
+If you are interested in opening an issue or a pull request, please feel free to do so on [GitHub](https://github.com/pablogila/qrotor/).  
+For major changes, please get in touch first to discuss the details.  
+
+
+## Code style
+
+Please try to follow some general guidelines:  
+- Use a code style consistent with the rest of the project.  
+- Include docstrings to document new additions.  
+- Include automated tests for new features or modifications, see [automated testing](#automated-testing).  
+- Arrange function arguments by order of relevance.  
+
+
+## Automated testing
+
+If you are modifying the source code, you should run the automated tests of the [`tests/`](https://github.com/pablogila/qrotor/tree/main/tests) folder to check that everything works as intended.
+To do so, first install PyTest in your environment,
+```bash
+pip install pytest
+```
+
+And then run PyTest inside the main directory,
+```bash
+pytest -vv
+```
+
+
+## Compiling the documentation
+
+The documentation can be compiled automatically to `docs/qrotor.html` with [Pdoc](https://pdoc.dev/) and [ATON](https://pablogila.github.io/aton), by running:
+```shell
+python3 makedocs.py
+```
+
+This runs Pdoc, updating links and pictures, and using the custom theme CSS template from the `css/` folder.
+
+
+---
+
+
+# Citation
+
+QRotor is currently under development.
+Please cite it if you use it in your research,
+> Pablo Gila-Herranz, *QRotor*, https://pablogila.github.io/qrotor  
+
+
+---
+
+
+# License
+
+Copyright (C) 2025 Pablo Gila-Herranz  
+This program is free software: you can redistribute it and/or modify
+it under the terms of the **GNU Affero General Public License** as published
+by the Free Software Foundation, either version **3** of the License, or
+(at your option) any later version.  
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the attached GNU Affero General Public License for more details.  
 

@@ -125,21 +125,21 @@
                     <a class="variable" href="#constants_titov2023">constants_titov2023</a>
             </li>
             <li>
-                    <a class="variable" href="#eV_to_Ry">eV_to_Ry</a>
-            </li>
-            <li>
-                    <a class="variable" href="#meV_to_Ry">meV_to_Ry</a>
-            </li>
-            <li>
                     <a class="variable" href="#Ry_to_eV">Ry_to_eV</a>
             </li>
             <li>
                     <a class="variable" href="#Ry_to_meV">Ry_to_meV</a>
             </li>
+            <li>
+                    <a class="variable" href="#eV_to_Ry">eV_to_Ry</a>
+            </li>
+            <li>
+                    <a class="variable" href="#meV_to_Ry">meV_to_Ry</a>
+            </li>
     </ul>
 
 
-            <footer>QRotor v4.0.0 documentation</footer>
+            <footer>QRotor v4.0.1 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -219,13 +219,13 @@
 </span><span id="L-50"><a href="#L-50"><span class="linenos">50</span></a>
 </span><span id="L-51"><a href="#L-51"><span class="linenos">51</span></a><span class="c1"># Rotational energy</span>
 </span><span id="L-52"><a href="#L-52"><span class="linenos">52</span></a><span class="n">_hbar</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">physical_constants</span><span class="p">[</span><span class="s1">&#39;reduced Planck constant&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="n">B_CH3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_CH3</span><span class="p">))</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span id="L-53"><a href="#L-53"><span class="linenos">53</span></a><span class="n">B_CH3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_CH3</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span><span class="p">)</span>
 </span><span id="L-54"><a href="#L-54"><span class="linenos">54</span></a><span class="sd">&quot;&quot;&quot;Rotational energy of CH3, in meV·s/kg·m^2.&quot;&quot;&quot;</span>
-</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="n">B_CD3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_CD3</span><span class="p">))</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span id="L-55"><a href="#L-55"><span class="linenos">55</span></a><span class="n">B_CD3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_CD3</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span><span class="p">)</span>
 </span><span id="L-56"><a href="#L-56"><span class="linenos">56</span></a><span class="sd">&quot;&quot;&quot;Rotational energy of CD3, in meV·s/kg·m^2.&quot;&quot;&quot;</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="n">B_NH3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_NH3</span><span class="p">))</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos">57</span></a><span class="n">B_NH3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_NH3</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span><span class="p">)</span>
 </span><span id="L-58"><a href="#L-58"><span class="linenos">58</span></a><span class="sd">&quot;&quot;&quot;Rotational energy of NH3, in meV·s/kg·m^2.&quot;&quot;&quot;</span>
-</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="n">B_ND3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_ND3</span><span class="p">))</span> <span class="o">*</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span> <span class="o">*</span> <span class="mi">1000</span>
+</span><span id="L-59"><a href="#L-59"><span class="linenos">59</span></a><span class="n">B_ND3</span> <span class="o">=</span> <span class="p">((</span><span class="n">_hbar</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">I_ND3</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1000</span> <span class="o">/</span> <span class="n">const</span><span class="o">.</span><span class="n">eV</span><span class="p">)</span>
 </span><span id="L-60"><a href="#L-60"><span class="linenos">60</span></a><span class="sd">&quot;&quot;&quot;Rotational energy of ND3, in meV·s/kg·m^2.&quot;&quot;&quot;</span>
 </span><span id="L-61"><a href="#L-61"><span class="linenos">61</span></a>
 </span><span id="L-62"><a href="#L-62"><span class="linenos">62</span></a><span class="c1"># Potential constants from titov2023 [C1, C2, C3, C4, C5]</span>
@@ -243,13 +243,13 @@
 </span><span id="L-74"><a href="#L-74"><span class="linenos">74</span></a><span class="sd">&quot;&quot;&quot;</span>
 </span><span id="L-75"><a href="#L-75"><span class="linenos">75</span></a>
 </span><span id="L-76"><a href="#L-76"><span class="linenos">76</span></a><span class="c1"># Quick conversion factors</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="n">eV_to_Ry</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">physical_constants</span><span class="p">[</span><span class="s1">&#39;Rydberg constant times hc in eV&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos">77</span></a><span class="n">Ry_to_eV</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">physical_constants</span><span class="p">[</span><span class="s1">&#39;Rydberg constant times hc in eV&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
 </span><span id="L-78"><a href="#L-78"><span class="linenos">78</span></a><span class="sd">&quot;&quot;&quot;Quick conversion factor from eV to Rydberg energy.&quot;&quot;&quot;</span>
-</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a><span class="n">meV_to_Ry</span> <span class="o">=</span> <span class="n">eV_to_Ry</span> <span class="o">/</span> <span class="mi">1000</span>
+</span><span id="L-79"><a href="#L-79"><span class="linenos">79</span></a><span class="n">Ry_to_meV</span> <span class="o">=</span> <span class="n">Ry_to_eV</span> <span class="o">*</span> <span class="mi">1000</span>
 </span><span id="L-80"><a href="#L-80"><span class="linenos">80</span></a><span class="sd">&quot;&quot;&quot;Quick conversion factor from meV to Rydberg energy.&quot;&quot;&quot;</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="n">Ry_to_eV</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">eV_to_Ry</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos">81</span></a><span class="n">eV_to_Ry</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">Ry_to_eV</span>
 </span><span id="L-82"><a href="#L-82"><span class="linenos">82</span></a><span class="sd">&quot;&quot;&quot;Quick conversion factor from Rydberg to eV.&quot;&quot;&quot;</span>
-</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="n">Ry_to_meV</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">meV_to_Ry</span>
+</span><span id="L-83"><a href="#L-83"><span class="linenos">83</span></a><span class="n">meV_to_Ry</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">Ry_to_meV</span>
 </span><span id="L-84"><a href="#L-84"><span class="linenos">84</span></a><span class="sd">&quot;&quot;&quot;Quick conversion factor from Rydberg to meV.&quot;&quot;&quot;</span>
 </span></pre></div>
 
@@ -426,7 +426,7 @@
                 <section id="B_CH3">
                     <div class="attr variable">
             <span class="name">B_CH3</span>        =
-<span class="default_value">np.float64(1.656160489847138e-38)</span>
+<span class="default_value">np.float64(0.6451810934439263)</span>
 
         
     </div>
@@ -440,7 +440,7 @@
                 <section id="B_CD3">
                     <div class="attr variable">
             <span class="name">B_CD3</span>        =
-<span class="default_value">np.float64(8.288606822820315e-39)</span>
+<span class="default_value">np.float64(0.322894577298338)</span>
 
         
     </div>
@@ -454,7 +454,7 @@
                 <section id="B_NH3">
                     <div class="attr variable">
             <span class="name">B_NH3</span>        =
-<span class="default_value">np.float64(1.8884842800054863e-38)</span>
+<span class="default_value">np.float64(0.7356861609698612)</span>
 
         
     </div>
@@ -468,7 +468,7 @@
                 <section id="B_ND3">
                     <div class="attr variable">
             <span class="name">B_ND3</span>        =
-<span class="default_value">np.float64(9.451320559813093e-39)</span>
+<span class="default_value">np.float64(0.36818976002936143)</span>
 
         
     </div>
@@ -497,44 +497,16 @@ In meV units.</p>
 
 
                 </section>
-                <section id="eV_to_Ry">
-                    <div class="attr variable">
-            <span class="name">eV_to_Ry</span>        =
-<span class="default_value">13.60569312299</span>
-
-        
-    </div>
-    <a class="headerlink" href="#eV_to_Ry"></a>
-    
-            <div class="docstring"><p>Quick conversion factor from eV to Rydberg energy.</p>
-</div>
-
-
-                </section>
-                <section id="meV_to_Ry">
-                    <div class="attr variable">
-            <span class="name">meV_to_Ry</span>        =
-<span class="default_value">0.01360569312299</span>
-
-        
-    </div>
-    <a class="headerlink" href="#meV_to_Ry"></a>
-    
-            <div class="docstring"><p>Quick conversion factor from meV to Rydberg energy.</p>
-</div>
-
-
-                </section>
                 <section id="Ry_to_eV">
                     <div class="attr variable">
             <span class="name">Ry_to_eV</span>        =
-<span class="default_value">0.07349864435133158</span>
+<span class="default_value">13.60569312299</span>
 
         
     </div>
     <a class="headerlink" href="#Ry_to_eV"></a>
     
-            <div class="docstring"><p>Quick conversion factor from Rydberg to eV.</p>
+            <div class="docstring"><p>Quick conversion factor from eV to Rydberg energy.</p>
 </div>
 
 
@@ -542,11 +514,39 @@ In meV units.</p>
                 <section id="Ry_to_meV">
                     <div class="attr variable">
             <span class="name">Ry_to_meV</span>        =
-<span class="default_value">73.49864435133159</span>
+<span class="default_value">13605.69312299</span>
 
         
     </div>
     <a class="headerlink" href="#Ry_to_meV"></a>
+    
+            <div class="docstring"><p>Quick conversion factor from meV to Rydberg energy.</p>
+</div>
+
+
+                </section>
+                <section id="eV_to_Ry">
+                    <div class="attr variable">
+            <span class="name">eV_to_Ry</span>        =
+<span class="default_value">0.07349864435133158</span>
+
+        
+    </div>
+    <a class="headerlink" href="#eV_to_Ry"></a>
+    
+            <div class="docstring"><p>Quick conversion factor from Rydberg to eV.</p>
+</div>
+
+
+                </section>
+                <section id="meV_to_Ry">
+                    <div class="attr variable">
+            <span class="name">meV_to_Ry</span>        =
+<span class="default_value">7.349864435133159e-05</span>
+
+        
+    </div>
+    <a class="headerlink" href="#meV_to_Ry"></a>
     
             <div class="docstring"><p>Quick conversion factor from Rydberg to meV.</p>
 </div>
