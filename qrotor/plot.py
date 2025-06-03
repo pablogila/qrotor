@@ -271,7 +271,7 @@ def splittings(
     The different `System.comment` are shown in the horizontal axis.
     An optional `title` can be specified.
     Default units shown are $\\mu$eV (`'ueV'`).
-    Available units are: `'ueV'`, `'meV'`, `'Ry'`.
+    Available units are: `'ueV'`, `'meV'`, `'Ry'`, or `'B'` (free rotor units).
     """
     title = title if title != None else 'Tunnel splitting energies'
     calcs = deepcopy(data)
@@ -289,6 +289,9 @@ def splittings(
     elif units.lower() in alias.units['Ry']:
         y = [j * constants.meV_to_Ry for j in y]
         ax.set_ylabel("Energy / Ry")
+    elif units.upper() == 'B':
+        y = [j / c.B for j, c in zip(y, calcs)]
+        ax.set_ylabel("Energy / B")
     #else:  # It's okay let's use meV
 
     ax.bar(range(len(y)), y)

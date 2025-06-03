@@ -66,6 +66,7 @@ def save(
     in degrees and meVs by default.
     The units can be changed with `angle` and `energy`,
     but only change these defaults if you know what you are doing.
+    An optional `comment` can be included in the header of the file.
     """
     print('Saving potential data file...')
     # Check if a previous potential.dat file exists, and ask to overwrite it
@@ -77,7 +78,7 @@ def save(
             print("Aborted.")
             return None
     # Set header
-    potential_data = f'# {comment}\n' if comment else f'# {system.comment}\n' if system.comment else ''
+    potential_data = f'## {comment}\n' if comment else f'## {system.comment}\n' if system.comment else ''
     potential_data += '# Rotational potential dataset\n'
     potential_data += f'# Saved with QRotor {__version__}\n'
     potential_data += '# https://pablogila.github.io/qrotor\n'
@@ -143,6 +144,11 @@ def load(
     system = System() if system is None else system
     with open(file_path, 'r') as f:
         lines = f.readlines()
+    # Read the comment
+    loaded_comment = ''
+    if lines[0].startswith('## '):
+        loaded_comment = lines[0][3:].strip()
+    # Read data
     positions = []
     potentials = []
     for line in lines:
@@ -171,8 +177,13 @@ def load(
     system.grid = np.array(positions)
     system.gridsize = len(positions)
     system.potential_values = np.array(potentials)
-    # System comment as the parent folder name
-    system.comment = os.path.basename(os.path.dirname(file_path)) if comment==None else comment
+    # System comment as the loaded comment or the parent folder name
+    if comment:
+        system.comment = comment
+    elif loaded_comment:
+        system.comment = loaded_comment
+    else:
+        system.comment = os.path.basename(os.path.dirname(file_path))
     print(f"Loaded {filepath}")
     return system
 
@@ -184,9 +195,10 @@ def from_qe(
         exclude:list=['slurm-'],
         energy:str='meV',
         comment:str=None,
-        ) -> None:
+        ) -> System:
     """Compiles a rotational potential CSV file from Quantum ESPRESSO outputs,
     created with `qrotor.rotate.structure_qe()`.
+    Returns a `System` object with the new potential values.
 
     The angle in degrees is extracted from the output filenames,
     which must follow `whatever_ANGLE.out`.
@@ -213,7 +225,7 @@ def from_qe(
     files = file.get_list(folder=folder, include=include, exclude=exclude, abspath=True)
     folder_name = os.path.basename(folder)
     # Set header
-    potential_data = f'# {comment}\n' if comment else f'# {folder_name}\n'
+    potential_data = f'## {comment}\n' if comment else f'## {folder_name}\n'
     potential_data += '# Rotational potential dataset\n'
     potential_data += f'# Calculated with QE using QRotor {__version__}\n'
     potential_data += '# https://pablogila.github.io/qrotor\n'
@@ -273,7 +285,12 @@ def from_qe(
     # Warn the user if not in default units
     if energy.lower() not in alias.units['meV']:
         print(f"WARNING: You saved the potential in '{energy}' units! Remember that QRotor works in meVs!")
-    return None
+    new_system = None
+    try:
+        new_system = load(filepath=filepath, comment=comment, energy=energy)
+    except:
+        pass
+    return new_system
 
 
 def merge(

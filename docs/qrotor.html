@@ -96,7 +96,7 @@
             </ul>
 
 
-            <footer>QRotor v4.0.1 documentation</footer>
+            <footer>QRotor v4.0.2 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -168,20 +168,20 @@ as a ZIP, unzip it, and run inside it:  </p>
 </thead>
 <tbody>
 <tr>
+  <td><code><a href="qrotor/constants.html">qrotor.constants</a></code></td>
+  <td>Common bond lengths and inertias</td>
+</tr>
+<tr>
   <td><code><a href="qrotor/system.html">qrotor.system</a></code></td>
   <td>Definition of the quantum <code>System</code> object</td>
 </tr>
 <tr>
   <td><code><a href="qrotor/systems.html">qrotor.systems</a></code></td>
-  <td>Functions to manage several System objects, such as a list of systems</td>
+  <td>Utilities to manage several System objects, such as a list of systems</td>
 </tr>
 <tr>
   <td><code><a href="qrotor/rotate.html">qrotor.rotate</a></code></td>
   <td>Rotate specific atoms from structural files</td>
-</tr>
-<tr>
-  <td><code><a href="qrotor/constants.html">qrotor.constants</a></code></td>
-  <td>Common bond lengths and inertias</td>
 </tr>
 <tr>
   <td><code><a href="qrotor/potential.html">qrotor.potential</a></code></td>
@@ -193,7 +193,7 @@ as a ZIP, unzip it, and run inside it:  </p>
 </tr>
 <tr>
   <td><code><a href="qrotor/plot.html">qrotor.plot</a></code></td>
-  <td>Plotting functions</td>
+  <td>Plotting utilities</td>
 </tr>
 </tbody>
 </table>
@@ -204,7 +204,8 @@ as a ZIP, unzip it, and run inside it:  </p>
 
 <h2 id="solving-quantum-rotational-systems">Solving quantum rotational systems</h2>
 
-<p>A basic calculation of the eigenvalues for a zero potential goes as follows.
+<p>Let's start with a basic calculation of the eigenvalues for a zero potential, corresponding to a free rotor. 
+A predefined synthetic potential can be used, see all available options in the <code><a href="qrotor/potential.html">qrotor.potential</a></code> documentation.
 Note that the default energy unit is meV unless stated otherwise.</p>
 
 <div class="pdoc-code codehilite">
@@ -214,7 +215,7 @@ Note that the default energy unit is meV unless stated otherwise.</p>
 <span class="n">system</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Rotational inertia</span>
 <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">=</span> <span class="s1">&#39;zero&#39;</span>
 <span class="n">system</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-<span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span>
 <span class="c1"># [0.0, 1.0, 1.0, 4.0, 4.0, 9.0, 9.0, ...]  # approx values</span>
 </code></pre>
 </div>
@@ -228,10 +229,10 @@ in a cosine potential of amplitude 30 meV:</p>
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">qrotor</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qr</span>
 <span class="n">system</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">System</span><span class="p">()</span>
-<span class="n">system</span><span class="o">.</span><span class="n">gridsize</span> <span class="o">=</span> <span class="mi">200000</span>  <span class="c1"># Size of the potential grid</span>
+<span class="n">system</span><span class="o">.</span><span class="n">gridsize</span> <span class="o">=</span> <span class="mi">200000</span>
 <span class="n">system</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">B_CH3</span>  <span class="c1"># Rotational inertia of a methyl group</span>
 <span class="n">system</span><span class="o">.</span><span class="n">potential_name</span> <span class="o">=</span> <span class="s1">&#39;cosine&#39;</span>
-<span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Offset, max, freq, phase (for cos pot.)</span>
+<span class="n">system</span><span class="o">.</span><span class="n">potential_constants</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>  <span class="c1"># Offset, max, freq, phase (for cosine potential)</span>
 <span class="n">system</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
 <span class="c1"># Plot potential and eigenvalues</span>
 <span class="n">qr</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">energies</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
@@ -243,7 +244,7 @@ in a cosine potential of amplitude 30 meV:</p>
 <h2 id="custom-potentials-from-dft">Custom potentials from DFT</h2>
 
 <p>QRotor can be used to obtain custom rotational potentials from DFT calculations.
-Using Quantum ESPRESSO, running an SCF calculation for a methyl rotation every 10 degrees:</p>
+To run a Quantum ESPRESSO SCF calculation for a methyl rotation every 10 degrees:</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">qrotor</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">qr</span>
@@ -264,10 +265,8 @@ Using Quantum ESPRESSO, running an SCF calculation for a methyl rotation every 1
 <p>To load the calculated potential to a QRotor System,</p>
 
 <div class="pdoc-code codehilite">
-<pre><span></span><code><span class="c1"># Compile a &#39;potential.csv&#39; file with the calculated potential as a function of the angle</span>
-<span class="n">qr</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">from_qe</span><span class="p">()</span>
-<span class="c1"># Load to the system</span>
-<span class="n">system</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<pre><span></span><code><span class="c1"># Compile a &#39;potential.csv&#39; file with the calculated potential as a function of the angle, and load it into a new system</span>
+<span class="n">system</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">potential</span><span class="o">.</span><span class="n">from_qe</span><span class="p">()</span>
 <span class="c1"># Solve the system, interpolating to a bigger gridsize</span>
 <span class="n">system</span><span class="o">.</span><span class="n">B</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">B_CH3</span>
 <span class="n">system</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="mi">200000</span><span class="p">)</span>
@@ -282,9 +281,9 @@ below the potential maximum are also calculated upon solving the system:</p>
 
 <div class="pdoc-code codehilite">
 <pre><span></span><code><span class="n">system</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-<span class="n">system</span><span class="o">.</span><span class="n">splittings</span>
-<span class="n">system</span><span class="o">.</span><span class="n">excitations</span>
-<span class="n">system</span><span class="o">.</span><span class="n">deg</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">splittings</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">deg</span><span class="p">)</span>
 </code></pre>
 </div>
 
