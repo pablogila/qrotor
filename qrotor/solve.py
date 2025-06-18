@@ -100,7 +100,7 @@ def schrodinger(system:System) -> System:
     system.version = __version__
     system.runtime = time.time() - time_start
     system.eigenvalues = eigenvalues
-    system.energy_barrier = max(V) - min(eigenvalues)
+    system.E_activation = max(V) - min(eigenvalues)
     # Solve excitations and tunnel splittings, assuming triplet degeneracy
     system = excitations(system)
     # Do we really need to save eigenvectors?

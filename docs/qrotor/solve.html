@@ -98,7 +98,7 @@
     </ul>
 
 
-            <footer>QRotor v4.0.2 documentation</footer>
+            <footer>QRotor v4.1.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -276,7 +276,7 @@ see <code><a href="system.html#System.solve">qrotor.system.System.solve()</a></c
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span>
 </span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">runtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_start</span>
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">energy_barrier</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">E_activation</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
 </span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>    <span class="c1"># Solve excitations and tunnel splittings, assuming triplet degeneracy</span>
 </span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a>    <span class="n">system</span> <span class="o">=</span> <span class="n">excitations</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>    <span class="c1"># Do we really need to save eigenvectors?</span>
@@ -565,7 +565,7 @@ if <code>system.correct_potential_offset = True</code>.</p>
 </span><span id="schrodinger-101"><a href="#schrodinger-101"><span class="linenos">101</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">__version__</span>
 </span><span id="schrodinger-102"><a href="#schrodinger-102"><span class="linenos">102</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">runtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">time_start</span>
 </span><span id="schrodinger-103"><a href="#schrodinger-103"><span class="linenos">103</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span>
-</span><span id="schrodinger-104"><a href="#schrodinger-104"><span class="linenos">104</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">energy_barrier</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
+</span><span id="schrodinger-104"><a href="#schrodinger-104"><span class="linenos">104</span></a>    <span class="n">system</span><span class="o">.</span><span class="n">E_activation</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">V</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">eigenvalues</span><span class="p">)</span>
 </span><span id="schrodinger-105"><a href="#schrodinger-105"><span class="linenos">105</span></a>    <span class="c1"># Solve excitations and tunnel splittings, assuming triplet degeneracy</span>
 </span><span id="schrodinger-106"><a href="#schrodinger-106"><span class="linenos">106</span></a>    <span class="n">system</span> <span class="o">=</span> <span class="n">excitations</span><span class="p">(</span><span class="n">system</span><span class="p">)</span>
 </span><span id="schrodinger-107"><a href="#schrodinger-107"><span class="linenos">107</span></a>    <span class="c1"># Do we really need to save eigenvectors?</span>

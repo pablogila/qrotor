@@ -103,6 +103,8 @@ class System:
         """List of `eigenvalues` grouped by energy levels, found below `potential_max`."""
         self.deg: float = None
         """Estimated degeneracy of the `E_levels` found below `potential_max`."""
+        self.E_activation: float = None
+        """Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`"""
         self.excitations: list = []
         """Torsional excitations, as the difference between each energy level with respect to the ground state.
 
@@ -115,8 +117,6 @@ class System:
         the mean of the eigenvalues from A and the mean of the eigenvalues from E,
         see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).
         """
-        self.energy_barrier: float = None
-        """Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`"""
         self.runtime: float = None
         """Time taken to solve the eigenvalues."""
 
@@ -269,7 +269,7 @@ class System:
             'deg': self.deg,
             'excitations': self.excitations,
             'splittings': self.splittings,
-            'energy_barrier': self.energy_barrier,
+            'E_activation': self.E_activation,
             'runtime': self.runtime,
         }
 

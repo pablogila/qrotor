@@ -137,13 +137,13 @@
                                 <a class="variable" href="#System.deg">deg</a>
                         </li>
                         <li>
+                                <a class="variable" href="#System.E_activation">E_activation</a>
+                        </li>
+                        <li>
                                 <a class="variable" href="#System.excitations">excitations</a>
                         </li>
                         <li>
                                 <a class="variable" href="#System.splittings">splittings</a>
-                        </li>
-                        <li>
-                                <a class="variable" href="#System.energy_barrier">energy_barrier</a>
                         </li>
                         <li>
                                 <a class="variable" href="#System.runtime">runtime</a>
@@ -175,7 +175,7 @@
     </ul>
 
 
-            <footer>QRotor v4.0.2 documentation</footer>
+            <footer>QRotor v4.1.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -306,20 +306,20 @@ This class can be loaded directly as <code><a href="#System">qrotor.System()</a>
 </span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;List of `eigenvalues` grouped by energy levels, found below `potential_max`.&quot;&quot;&quot;</span>
 </span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimated degeneracy of the `E_levels` found below `potential_max`.&quot;&quot;&quot;</span>
-</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
-</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>
-</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
-</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a><span class="sd">        </span>
-</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
-</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a>
+</span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
+</span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a><span class="sd">        </span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
+</span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
+</span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
+</span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Time taken to solve the eigenvalues.&quot;&quot;&quot;</span>
 </span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a>
@@ -472,7 +472,7 @@ This class can be loaded directly as <code><a href="#System">qrotor.System()</a>
 </span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a>            <span class="s1">&#39;deg&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span>
 </span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a>            <span class="s1">&#39;excitations&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">,</span>
 </span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>            <span class="s1">&#39;splittings&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">,</span>
-</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>            <span class="s1">&#39;energy_barrier&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">,</span>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a>            <span class="s1">&#39;E_activation&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">,</span>
 </span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>            <span class="s1">&#39;runtime&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span>
 </span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>        <span class="p">}</span>
 </span></pre></div>
@@ -579,20 +579,20 @@ This class can be loaded directly as <code><a href="#System">qrotor.System()</a>
 </span><span id="System-104"><a href="#System-104"><span class="linenos">104</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;List of `eigenvalues` grouped by energy levels, found below `potential_max`.&quot;&quot;&quot;</span>
 </span><span id="System-105"><a href="#System-105"><span class="linenos">105</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="System-106"><a href="#System-106"><span class="linenos">106</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimated degeneracy of the `E_levels` found below `potential_max`.&quot;&quot;&quot;</span>
-</span><span id="System-107"><a href="#System-107"><span class="linenos">107</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="System-108"><a href="#System-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
-</span><span id="System-109"><a href="#System-109"><span class="linenos">109</span></a>
-</span><span id="System-110"><a href="#System-110"><span class="linenos">110</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
-</span><span id="System-111"><a href="#System-111"><span class="linenos">111</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="System-112"><a href="#System-112"><span class="linenos">112</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="System-113"><a href="#System-113"><span class="linenos">113</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
-</span><span id="System-114"><a href="#System-114"><span class="linenos">114</span></a><span class="sd">        </span>
-</span><span id="System-115"><a href="#System-115"><span class="linenos">115</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
-</span><span id="System-116"><a href="#System-116"><span class="linenos">116</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
-</span><span id="System-117"><a href="#System-117"><span class="linenos">117</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
-</span><span id="System-118"><a href="#System-118"><span class="linenos">118</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="System-119"><a href="#System-119"><span class="linenos">119</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="System-120"><a href="#System-120"><span class="linenos">120</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="System-107"><a href="#System-107"><span class="linenos">107</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="System-108"><a href="#System-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="System-109"><a href="#System-109"><span class="linenos">109</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="System-110"><a href="#System-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
+</span><span id="System-111"><a href="#System-111"><span class="linenos">111</span></a>
+</span><span id="System-112"><a href="#System-112"><span class="linenos">112</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
+</span><span id="System-113"><a href="#System-113"><span class="linenos">113</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="System-114"><a href="#System-114"><span class="linenos">114</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="System-115"><a href="#System-115"><span class="linenos">115</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
+</span><span id="System-116"><a href="#System-116"><span class="linenos">116</span></a><span class="sd">        </span>
+</span><span id="System-117"><a href="#System-117"><span class="linenos">117</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
+</span><span id="System-118"><a href="#System-118"><span class="linenos">118</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
+</span><span id="System-119"><a href="#System-119"><span class="linenos">119</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
+</span><span id="System-120"><a href="#System-120"><span class="linenos">120</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="System-121"><a href="#System-121"><span class="linenos">121</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="System-122"><a href="#System-122"><span class="linenos">122</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Time taken to solve the eigenvalues.&quot;&quot;&quot;</span>
 </span><span id="System-123"><a href="#System-123"><span class="linenos">123</span></a>
@@ -745,7 +745,7 @@ This class can be loaded directly as <code><a href="#System">qrotor.System()</a>
 </span><span id="System-270"><a href="#System-270"><span class="linenos">270</span></a>            <span class="s1">&#39;deg&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span>
 </span><span id="System-271"><a href="#System-271"><span class="linenos">271</span></a>            <span class="s1">&#39;excitations&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">,</span>
 </span><span id="System-272"><a href="#System-272"><span class="linenos">272</span></a>            <span class="s1">&#39;splittings&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">,</span>
-</span><span id="System-273"><a href="#System-273"><span class="linenos">273</span></a>            <span class="s1">&#39;energy_barrier&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">,</span>
+</span><span id="System-273"><a href="#System-273"><span class="linenos">273</span></a>            <span class="s1">&#39;E_activation&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">,</span>
 </span><span id="System-274"><a href="#System-274"><span class="linenos">274</span></a>            <span class="s1">&#39;runtime&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span>
 </span><span id="System-275"><a href="#System-275"><span class="linenos">275</span></a>        <span class="p">}</span>
 </span></pre></div>
@@ -851,20 +851,20 @@ This class can be loaded directly as <code><a href="#System">qrotor.System()</a>
 </span><span id="System.__init__-104"><a href="#System.__init__-104"><span class="linenos">104</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;List of `eigenvalues` grouped by energy levels, found below `potential_max`.&quot;&quot;&quot;</span>
 </span><span id="System.__init__-105"><a href="#System.__init__-105"><span class="linenos">105</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="System.__init__-106"><a href="#System.__init__-106"><span class="linenos">106</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Estimated degeneracy of the `E_levels` found below `potential_max`.&quot;&quot;&quot;</span>
-</span><span id="System.__init__-107"><a href="#System.__init__-107"><span class="linenos">107</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="System.__init__-108"><a href="#System.__init__-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
-</span><span id="System.__init__-109"><a href="#System.__init__-109"><span class="linenos">109</span></a>
-</span><span id="System.__init__-110"><a href="#System.__init__-110"><span class="linenos">110</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
-</span><span id="System.__init__-111"><a href="#System.__init__-111"><span class="linenos">111</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="System.__init__-112"><a href="#System.__init__-112"><span class="linenos">112</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="System.__init__-113"><a href="#System.__init__-113"><span class="linenos">113</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
-</span><span id="System.__init__-114"><a href="#System.__init__-114"><span class="linenos">114</span></a><span class="sd">        </span>
-</span><span id="System.__init__-115"><a href="#System.__init__-115"><span class="linenos">115</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
-</span><span id="System.__init__-116"><a href="#System.__init__-116"><span class="linenos">116</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
-</span><span id="System.__init__-117"><a href="#System.__init__-117"><span class="linenos">117</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
-</span><span id="System.__init__-118"><a href="#System.__init__-118"><span class="linenos">118</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="System.__init__-119"><a href="#System.__init__-119"><span class="linenos">119</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="System.__init__-120"><a href="#System.__init__-120"><span class="linenos">120</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="System.__init__-107"><a href="#System.__init__-107"><span class="linenos">107</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="System.__init__-108"><a href="#System.__init__-108"><span class="linenos">108</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`&quot;&quot;&quot;</span>
+</span><span id="System.__init__-109"><a href="#System.__init__-109"><span class="linenos">109</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="System.__init__-110"><a href="#System.__init__-110"><span class="linenos">110</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Torsional excitations, as the difference between each energy level with respect to the ground state.</span>
+</span><span id="System.__init__-111"><a href="#System.__init__-111"><span class="linenos">111</span></a>
+</span><span id="System.__init__-112"><a href="#System.__init__-112"><span class="linenos">112</span></a><span class="sd">        Considers the means between degenerated eigenvalues for all energy levels below `potential_max`.</span>
+</span><span id="System.__init__-113"><a href="#System.__init__-113"><span class="linenos">113</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="System.__init__-114"><a href="#System.__init__-114"><span class="linenos">114</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="System.__init__-115"><a href="#System.__init__-115"><span class="linenos">115</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Tunnel splitting energies, for every degenerated energy level.</span>
+</span><span id="System.__init__-116"><a href="#System.__init__-116"><span class="linenos">116</span></a><span class="sd">        </span>
+</span><span id="System.__init__-117"><a href="#System.__init__-117"><span class="linenos">117</span></a><span class="sd">        Calculated for all `E_levels` as the difference between</span>
+</span><span id="System.__init__-118"><a href="#System.__init__-118"><span class="linenos">118</span></a><span class="sd">        the mean of the eigenvalues from A and the mean of the eigenvalues from E,</span>
+</span><span id="System.__init__-119"><a href="#System.__init__-119"><span class="linenos">119</span></a><span class="sd">        see [R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)](https://doi.org/10.1119/1.1538575).</span>
+</span><span id="System.__init__-120"><a href="#System.__init__-120"><span class="linenos">120</span></a><span class="sd">        &quot;&quot;&quot;</span>
 </span><span id="System.__init__-121"><a href="#System.__init__-121"><span class="linenos">121</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="kc">None</span>
 </span><span id="System.__init__-122"><a href="#System.__init__-122"><span class="linenos">122</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Time taken to solve the eigenvalues.&quot;&quot;&quot;</span>
 </span></pre></div>
@@ -1138,6 +1138,19 @@ Potential energy units must be in meV.</p>
 
 
                             </div>
+                            <div id="System.E_activation" class="classattr">
+                                <div class="attr variable">
+            <span class="name">E_activation</span><span class="annotation">: float</span>
+
+        
+    </div>
+    <a class="headerlink" href="#System.E_activation"></a>
+    
+            <div class="docstring"><p>Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, <code>max(V) - min(eigenvalues)</code></p>
+</div>
+
+
+                            </div>
                             <div id="System.excitations" class="classattr">
                                 <div class="attr variable">
             <span class="name">excitations</span><span class="annotation">: list</span>
@@ -1166,19 +1179,6 @@ Potential energy units must be in meV.</p>
 <p>Calculated for all <code><a href="#System.E_levels">E_levels</a></code> as the difference between
 the mean of the eigenvalues from A and the mean of the eigenvalues from E,
 see <a href="https://doi.org/10.1119/1.1538575">R. M. Dimeo, American Journal of Physics 71, 885–893 (2003)</a>.</p>
-</div>
-
-
-                            </div>
-                            <div id="System.energy_barrier" class="classattr">
-                                <div class="attr variable">
-            <span class="name">energy_barrier</span><span class="annotation">: float</span>
-
-        
-    </div>
-    <a class="headerlink" href="#System.energy_barrier"></a>
-    
-            <div class="docstring"><p>Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, <code>max(V) - min(eigenvalues)</code></p>
 </div>
 
 
@@ -1492,7 +1492,7 @@ like eigenvectors, potential values and grids.</p>
 </span><span id="System.summary-270"><a href="#System.summary-270"><span class="linenos">270</span></a>            <span class="s1">&#39;deg&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span>
 </span><span id="System.summary-271"><a href="#System.summary-271"><span class="linenos">271</span></a>            <span class="s1">&#39;excitations&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">excitations</span><span class="p">,</span>
 </span><span id="System.summary-272"><a href="#System.summary-272"><span class="linenos">272</span></a>            <span class="s1">&#39;splittings&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">splittings</span><span class="p">,</span>
-</span><span id="System.summary-273"><a href="#System.summary-273"><span class="linenos">273</span></a>            <span class="s1">&#39;energy_barrier&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_barrier</span><span class="p">,</span>
+</span><span id="System.summary-273"><a href="#System.summary-273"><span class="linenos">273</span></a>            <span class="s1">&#39;E_activation&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_activation</span><span class="p">,</span>
 </span><span id="System.summary-274"><a href="#System.summary-274"><span class="linenos">274</span></a>            <span class="s1">&#39;runtime&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">runtime</span><span class="p">,</span>
 </span><span id="System.summary-275"><a href="#System.summary-275"><span class="linenos">275</span></a>        <span class="p">}</span>
 </span></pre></div>
