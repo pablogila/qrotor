@@ -1,7 +1,7 @@
 """
 # Description
 
-Common constants and default inertia values used in the QRotor subpackage.
+Common constants and default inertia values used in QRotor.
 
 Bond lengths and angles were obtained from MAPbI3, see
 [K. Drużbicki *et al*., Crystal Growth & Design 24, 391–404 (2024)](https://doi.org/10.1021/acs.cgd.3c01112).
@@ -75,11 +75,15 @@ In meV units.
 
 # Quick conversion factors
 Ry_to_eV = const.physical_constants['Rydberg constant times hc in eV'][0]
-"""Quick conversion factor from eV to Rydberg energy."""
+"""Quick conversion factor from Rydberg to eV energy."""
 Ry_to_meV = Ry_to_eV * 1000
-"""Quick conversion factor from meV to Rydberg energy."""
+"""Quick conversion factor from Rydberg to meV energy."""
 eV_to_Ry = 1 / Ry_to_eV
-"""Quick conversion factor from Rydberg to eV."""
+"""Quick conversion factor from eV to Rydberg."""
 meV_to_Ry = 1 / Ry_to_meV
-"""Quick conversion factor from Rydberg to meV."""
+"""Quick conversion factor from meV to Rydberg."""
+cm1_to_meV = (const.h * const.c * 100 / const.e) * 1000
+"""Quick conversion factor from cm$^{-1}$ to meV."""
+meV_to_cm1 = 1/cm1_to_meV
+"""Quick conversion factor from meV to cm$^{-1}$."""
 

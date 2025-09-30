@@ -16,6 +16,9 @@ temp_*
 _*
 cleanpy.sh
 
+# Include
+!_version.py
+
 
 ######################################
 ########## PYTHON GITIGNORE ##########
