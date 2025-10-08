@@ -61,7 +61,7 @@ class System:
         if not B:
             B = self.B
         self.B: float = B
-        """Rotational inertia, as in $B=\\frac{\\hbar^2}{2I}$.
+        """Kinetic rotational energy, as in $B=\\frac{\\hbar^2}{2I}$.
 
         Defaults to the value for a methyl group.
         """

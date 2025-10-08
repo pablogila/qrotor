@@ -51,13 +51,13 @@ I_ND3 = 3 * (periodictable.D.mass * _amu * r_NH**2)
 # Rotational energy
 _hbar = const.physical_constants['reduced Planck constant'][0]
 B_CH3 = ((_hbar**2) / (2 * I_CH3)) * (1000 / const.eV)
-"""Rotational energy of CH3, in meV·s/kg·m^2."""
+"""Kinetic rotational energy of CH3, in meV·s/kg·m^2."""
 B_CD3 = ((_hbar**2) / (2 * I_CD3)) * (1000 / const.eV)
-"""Rotational energy of CD3, in meV·s/kg·m^2."""
+"""Kinetic rotational energy of CD3, in meV·s/kg·m^2."""
 B_NH3 = ((_hbar**2) / (2 * I_NH3)) * (1000 / const.eV)
-"""Rotational energy of NH3, in meV·s/kg·m^2."""
+"""Kinetic rotational energy of NH3, in meV·s/kg·m^2."""
 B_ND3 = ((_hbar**2) / (2 * I_ND3)) * (1000 / const.eV)
-"""Rotational energy of ND3, in meV·s/kg·m^2."""
+"""Kinetic rotational energy of ND3, in meV·s/kg·m^2."""
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_titov2023 = [
