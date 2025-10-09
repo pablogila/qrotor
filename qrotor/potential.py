@@ -372,7 +372,10 @@ def interpolate(system:System) -> System:
     grid = system.grid
     gridsize = system.gridsize
     new_grid = np.linspace(0, 2*np.pi, gridsize)
-    cubic_spline = CubicSpline(grid, V)
+    # Impose periodic boundary conditions
+    grid_periodic = np.append(grid, grid[0] + 2*np.pi)
+    V_periodic = np.append(V, V[0])
+    cubic_spline = CubicSpline(grid_periodic, V_periodic, bc_type='periodic')
     new_V = cubic_spline(new_grid)
     system.grid = new_grid
     system.potential_values = new_V

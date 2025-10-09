@@ -34,6 +34,8 @@ def potential(
         marker='',
         linestyle='-',
         cm:bool=False,
+        normalize:bool=False,
+        ylim:tuple=None,
         ) -> None:
     """Plot the potential values of `data` (System object, or list of systems).
 
@@ -42,8 +44,13 @@ def potential(
 
     `marker` and `linestyle` can be a Matplotlib string or list of strings.
     Optionally, the Viridis colormap can be used with `cm = True`.
+
+    Set `normalize = True` to normalize by their respective `qrotor.system.System.potential_max`.
+    This can be useful if you have performed subtractions or similar operations.
+    In this case, you might also want to play with `ylim` to adjust the y-axis limits.
     """
-    system = systems.as_list(data)
+    data_copy = deepcopy(data)
+    system = systems.as_list(data_copy)
     title_str = title if title else (system[0].comment if (system[0].comment and (len(system) == 1 or not system[-1].comment)) else 'Rotational potential energy')
     # Marker as a list
     if isinstance(marker, list):
@@ -62,6 +69,15 @@ def potential(
     plt.title(title_str)
     plt.xlabel('Angle / rad')
     plt.ylabel('Potential energy / meV')
+
+    if normalize:
+        plt.ylabel('Energy / V$_{3}$')
+        for s in system:
+            s.potential_values = s.potential_values / s.potential_max
+
+    if ylim:
+        plt.ylim(ylim)
+
     plt.xticks([-2*np.pi, -3*np.pi/2, -np.pi, -np.pi/2, 0, np.pi/2, np.pi, 3*np.pi/2, 2*np.pi], [r'$-2\pi$', r'$-\frac{3\pi}{2}$', r'$-\pi$', r'$-\frac{\pi}{2}$', '0', r'$\frac{\pi}{2}$', r'$\pi$', r'$\frac{3\pi}{2}$', r'$2\pi$'])
 
     if cm:  # Plot using a colormap
