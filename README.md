@@ -1,19 +1,34 @@
 <p align="center"><img width="60.0%" src="pics/qrotor.png"></p>
  
-QRotor is a Python package used to study molecular rotations,
+
+QRotor is a Python package used to study molecular rotations
+based on the one-dimensional hindered-rotor model,
 such as those of methyl and amine groups.
 It can calculate their quantum energy levels and wavefunctions,
 along with excitations and tunnel splittings.
-These quantum systems are represented by the `qrotor.System()` object.
 
-QRotor can obtain custom potentials from DFT,
-which are used to solve the quantum system.
+QRotor systematically produces Quantum ESPRESSO SCF calculations to obtain
+the rotational Potential Energy Surface (PES) of custom molecular structures.
+This potential is used to solve the quantum hamiltonian of the hindered rotor model:
+
+$$
+H = -B \frac{d^2}{d\varphi^2} + V(\varphi)
+$$
+
+where $B$ is the *kinetic rotational energy* constant,
+
+$$
+B = \frac{\hbar^2}{2I}=\frac{\hbar^2}{2\sum_{i}m_{i}r_{i}^{2}}
+$$
+
+Head to the [Usage](#usage) section for a quick hands-on introduction.
 
 
 ---
 
 
 # Installation
+
 
 As always, it is recommended to install your packages in a virtual environment:  
 ```bash
@@ -24,6 +39,7 @@ source .venv/bin/activate
 
 ## With pip
 
+
 Install or upgrade ATON with  
 ```bash
 pip install qrotor -U
@@ -31,6 +47,7 @@ pip install qrotor -U
 
 
 ## From source
+
 
 Optionally, you can install ATON from the [GitHub repo](https://github.com/pablogila/qrotor/).
 Clone the repository or download the [latest stable release](https://github.com/pablogila/qrotor/tags)
@@ -44,6 +61,7 @@ pip install .
 
 
 # Documentation
+
 
 QRotor contains the following modules:
 
@@ -65,17 +83,18 @@ Check the [full documentation online](https://pablogila.github.io/qrotor/).
 
 # Usage
 
-## Solving quantum rotational systems
+
+## Solving quantum eigenvalues for one-dimensional rotor systems
+
 
 Let's start with a basic calculation of the eigenvalues for a zero potential, corresponding to a free rotor. 
-A predefined synthetic potential can be used, see all available options in the [qrotor.potential](https://pablogila.github.io/qrotor/qrotor/potential.html) documentation.
 Note that the default energy unit is meV unless stated otherwise.
 
 ```python
 import qrotor as qr
 system = qr.System()
 system.gridsize = 200000  # Size of the potential grid
-system.B = 1  # Rotational inertia
+system.B = 1              # Rotational inertia
 system.potential_name = 'zero'
 system.solve()
 print(system.eigenvalues)
@@ -85,8 +104,10 @@ print(system.eigenvalues)
 The accuracy of the calculation increases with bigger gridsizes,
 but note that the runtime increases exponentially.
 
-The same calculation can be performed for a methyl group,
-in a cosine potential of amplitude 30 meV:
+Predefined synthetic potentials can be used,
+see all available options in the [qrotor.potential](https://pablogila.github.io/qrotor/qrotor/potential.html) documentation.
+For example, we can solve the system for a hindered methyl group,
+in a [cosine potential](https://pablogila.github.io/qrotor/qrotor/potential.html#cosine) of amplitude 30 meV:
 
 ```python
 import qrotor as qr
@@ -103,10 +124,14 @@ qr.plot.wavefunction(system, levels=[0,1,2], square=True)
 ```
 
 
-## Custom potentials from DFT
+## Rotational PES from custom structures
 
-QRotor can be used to obtain custom rotational potentials from DFT calculations.
-To run a Quantum ESPRESSO SCF calculation for a methyl rotation every 10 degrees:
+
+QRotor can be used to calculate the rotational Potential Energy Surface (PES) from DFT calculations.
+Currently only Quantum ESPRESSO is supported,
+although other DFT codes can be easily implemented through [ATON](https://pablogila.github.io/aton).
+
+First, run a Quantum ESPRESSO SCF calculation for a methyl rotation every 10 degrees:
 
 ```python
 import qrotor as qr
@@ -123,10 +148,13 @@ scf_files = qr.rotate.structure_qe('molecule.in', positions=atoms, angle=10, rep
 api.slurm.sbatch(files=scf_files)
 ```
 
-To load the calculated potential to a QRotor System,
+You can compile a `potential.csv` file with the calculated potential as a function of the angle,
+and load it into a new [system](https://pablogila.github.io/qrotor/qrotor/system.html):
+
 ```python
-# Compile a 'potential.csv' file with the calculated potential as a function of the angle, and load it into a new system
 system = qr.potential.from_qe()
+# Check the potential
+qr.plot.potential(system)
 # Solve the system, interpolating to a bigger gridsize
 system.B = qr.B_CH3
 system.solve(200000)
@@ -134,13 +162,15 @@ qr.plot.energies(system)
 ```
 
 
-## Tunnel splittings and excitations
+## Other quantum observables
 
-Tunnel splittings, excitations and energy level degeneracy
-below the potential maximum are also calculated upon solving the system:
+
+The Zero-Point Energies (ZPEs), quantum tunnel splittings, excitations and energy level degeneracy
+below the potential maximum are also calculated upon solving the [system](https://pablogila.github.io/qrotor/qrotor/system.html):
 
 ```python
 system.solve()
+print(system.eigenvalues[0])
 print(system.splittings)
 print(system.excitations)
 print(system.deg)
@@ -149,7 +179,7 @@ print(system.deg)
 An integer `System.deg` degeneracy (e.g. 3 for methyls)
 indicates that the energy levels have been properly estimated.
 However, if the degeneracy is a float instead,
-please check the splittings and excitations manually from the system eigenvalues.
+you might want to check the splittings and excitations manually from the system eigenvalues.
 
 To export the energies and the tunnel splittings of several calculations to a CSV file:
 
@@ -173,11 +203,13 @@ for further reference.
 
 # Contributing
 
+
 If you are interested in opening an issue or a pull request, please feel free to do so on [GitHub](https://github.com/pablogila/qrotor/).  
 For major changes, please get in touch first to discuss the details.  
 
 
 ## Code style
+
 
 Please try to follow some general guidelines:  
 - Use a code style consistent with the rest of the project.  
@@ -187,6 +219,7 @@ Please try to follow some general guidelines:
 
 
 ## Automated testing
+
 
 If you are modifying the source code, you should run the automated tests of the [`tests/`](https://github.com/pablogila/qrotor/tree/main/tests) folder to check that everything works as intended.
 To do so, first install PyTest in your environment,
@@ -217,13 +250,14 @@ This runs Pdoc, updating links and pictures, and using the custom theme CSS temp
 
 QRotor is currently under development.
 Please cite it if you use it in your research,
-> Pablo Gila-Herranz, *QRotor*, https://pablogila.github.io/qrotor  
+> Gila-Herranz, P. (2024). QRotor: Solving one-dimensional hindered-rotor quantum systems. https://pablogila.github.io/qrotor
 
 
 ---
 
 
 # License
+
 
 Copyright (C) 2025 Pablo Gila-Herranz  
 This program is free software: you can redistribute it and/or modify

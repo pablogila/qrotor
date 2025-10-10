@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: QRotor
+title: QRotor: Solving one-dimensional hindered-rotor quantum systems
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -32,5 +32,5 @@ keywords:
   - Hindered molecular rotor
 license: AGPL-3.0-or-later
 commit: e1b355b
-version: 4.2.0
+version: 4.2.1
 date-released: '2024-10-10'

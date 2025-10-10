@@ -13,7 +13,7 @@ This module provides straightforward functions to plot QRotor data.
 | `reduced_energies()` | Reduced energies E/B as a function of the reduced potential V/B |
 | `wavefunction()`     | Selected wavefunctions or squared wavefunctions of a system |
 | `splittings()`       | Tunnel splitting energies of a list of systems |
-| `convergence()`      | Energy convergence |
+| `convergence()`      | Energy convergence of a list of systems calculated with different parameters |
 
 ---
 """
