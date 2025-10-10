@@ -1,0 +1,36 @@
+cff-version: 1.2.0
+title: QRotor
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Pablo
+    family-names: Gila-Herranz
+    email: pgila001@ikasle.ehu.eus
+    affiliation: 'Centro de Física de Materiales (CFM-MPC), CSIC-UPV/EHU'
+    orcid: 'https://orcid.org/0000-0002-9480-9876'
+repository-code: 'https://github.com/pablogila/qrotor'
+url: 'https://pablogila.github.io/qrotor'
+abstract: >-
+  QRotor is a Python package used to study molecular
+  rotations, such as those of methyl and amine groups. It
+  can calculate their quantum energy levels and
+  wavefunctions, along with excitations and tunnel
+  splittings.
+keywords:
+  - Quantum rotations
+  - Rotational PES
+  - PES
+  - Potential Energy Surface
+  - Quantum ESPRESSO
+  - Density Functional Theory
+  - DFT
+  - Rotations
+  - Tunnel splitting
+  - One-dimensional hindered-rotor
+  - Hindered molecular rotor
+license: AGPL-3.0-or-later
+commit: e1b355b
+version: 4.2.0
+date-released: '2024-10-10'
