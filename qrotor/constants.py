@@ -53,7 +53,7 @@ r_CH = distance_CH * np.sin(np.deg2rad(angle_CH)) * 1e-10
 r_NH = distance_NH * np.sin(np.deg2rad(angle_NH)) * 1e-10
 """Rotation radius of the amine group, in meters."""
 
-# Inertia, SI units
+# Inertias, SI units
 I_CH3 = 3 * (periodictable.H.mass * amu_to_kg * r_CH**2)
 """Inertia of CH3, in kg·m^2."""
 I_CD3 = 3 * (periodictable.D.mass * amu_to_kg * r_CH**2)
@@ -63,6 +63,7 @@ I_NH3 = 3 * (periodictable.H.mass * amu_to_kg * r_NH**2)
 I_ND3 = 3 * (periodictable.D.mass * amu_to_kg * r_NH**2)
 """Inertia of ND3, in kg·m^2."""
 
+# Inertias of the co-rotation, SI units
 I_CH3NH3 = I_CH3 + I_NH3
 """Inertia of CH3NH3+, in kg·m^2."""
 I_CD3NH3 = I_CD3 + I_NH3
@@ -72,7 +73,17 @@ I_CH3ND3 = I_CH3 + I_ND3
 I_CD3ND3 = I_CD3 + I_ND3
 """Inertia of CD3ND3+, in kg·m^2."""
 
-# Inertia, atomic units
+# Inertias of the dis-rotation, SI units
+I_CH3NH3_dis = 1 / ((1/I_CH3) + (1/I_NH3))
+"""Inertia of the disrotatory torsion of CH3NH3+, in kg·m^2."""
+I_CD3NH3_dis = 1 / ((1/I_CD3) + (1/I_NH3))
+"""Inertia of the disrotatory torsion of CD3NH3+, in kg·m^2."""
+I_CH3ND3_dis = 1 / ((1/I_CH3) + (1/I_ND3))
+"""Inertia of the disrotatory torsion of CH3ND3+, in kg·m^2."""
+I_CD3ND3_dis = 1 / ((1/I_CD3) + (1/I_ND3))
+"""Inertia of the disrotatory torsion of CD3ND3+, in kg·m^2."""
+
+# Inertias, atomic units
 I_CH3_amu = I_CH3 / (amu_to_kg * 1e-20)
 """Inertia of CH3, in amu·AA^2."""
 I_CD3_amu = I_CD3 / (amu_to_kg * 1e-20)
@@ -82,6 +93,7 @@ I_NH3_amu = I_NH3 / (amu_to_kg * 1e-20)
 I_ND3_amu = I_ND3 / (amu_to_kg * 1e-20)
 """Inertia of ND3, in amu·AA^2."""
 
+# Inertias of the co-rotation, amu units
 I_CH3NH3_amu = I_CH3_amu + I_NH3_amu
 """Inertia of CH3NH3+, in amu·AA^2."""
 I_CD3NH3_amu = I_CD3_amu + I_NH3_amu
@@ -90,6 +102,16 @@ I_CH3ND3_amu = I_CH3_amu + I_ND3_amu
 """Inertia of CH3ND3+, in amu·AA^2."""
 I_CD3ND3_amu = I_CD3_amu + I_ND3_amu
 """Inertia of CD3ND3+, in amu·AA^2."""
+
+# Inertias of the dis-rotation, amu units
+I_CH3NH3_dis_amu = I_CH3NH3_dis / (amu_to_kg * 1e-20)
+"""Inertia of the disrotatory torsion of CH3NH3+, in amu·AA^2."""
+I_CD3NH3_dis_amu = I_CD3NH3_dis / (amu_to_kg * 1e-20)
+"""Inertia of the disrotatory torsion of CD3NH3+, in amu·AA^2."""
+I_CH3ND3_dis_amu = I_CH3ND3_dis / (amu_to_kg * 1e-20)
+"""Inertia of the disrotatory torsion of CH3ND3+, in amu·AA^2."""
+I_CD3ND3_dis_amu = I_CD3ND3_dis / (amu_to_kg * 1e-20)
+"""Inertia of the disrotatory torsion of CD3ND3+, in amu·AA^2."""
 
 # Rotational energy
 _hbar = const.physical_constants['reduced Planck constant'][0]
@@ -110,6 +132,15 @@ B_CH3ND3 = ((_hbar**2) / (2 * I_CH3ND3)) * (1000 / const.eV)
 """Kinetic rotational energy of CH3ND3+, in meV·s/kg·m^2."""
 B_CD3ND3 = ((_hbar**2) / (2 * I_CD3ND3)) * (1000 / const.eV)
 """Kinetic rotational energy of CD3ND3+, in meV·s/kg·m^2."""
+
+B_CH3NH3_dis = ((_hbar**2) / (2 * I_CH3NH3_dis)) * (1000 / const.eV)
+"""Kinetic rotational energy of the disrotatory torsion of CH3NH3+, in meV·s/kg·m^2."""
+B_CD3NH3_dis = ((_hbar**2) / (2 * I_CD3NH3_dis)) * (1000 / const.eV)
+"""Kinetic rotational energy of the disrotatory torsion of CD3NH3+, in meV·s/kg·m^2."""
+B_CH3ND3_dis = ((_hbar**2) / (2 * I_CH3ND3_dis)) * (1000 / const.eV)
+"""Kinetic rotational energy of the disrotatory torsion of CH3ND3+, in meV·s/kg·m^2."""
+B_CD3ND3_dis = ((_hbar**2) / (2 * I_CD3ND3_dis)) * (1000 / const.eV)
+"""Kinetic rotational energy of the disrotatory torsion of CD3ND3+, in meV·s/kg·m^2."""
 
 # Potential constants from titov2023 [C1, C2, C3, C4, C5]
 constants_titov2023 = [
