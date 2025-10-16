@@ -324,11 +324,13 @@ def filter_tags(
         systems:list,
         include:str='',
         exclude:str='',
+        strict:bool=False,
         ) -> list:
     """Returns a filtered list of systems with or without specific tags.
-    
-    Tags are separated by blank spaces.
-    Include tags from `include`, exclude tags from `exclude`.
+
+    You can `include` or `exclude` any number of tags, separated by blank spaces.
+    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.
+    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.
     """
     systems = as_list(systems)
     included_tags = include.split()
@@ -336,12 +338,16 @@ def filter_tags(
     filtered_systems = []
     for i in systems:
         tags_found = list_tags(i)
-        if excluded_tags and any(tag in excluded_tags for tag in tags_found):
-            continue
+        if excluded_tags:
+            if strict and all(tag in tags_found for tag in excluded_tags):
+                continue
+            elif not strict and any(tag in tags_found for tag in excluded_tags):
+                continue
         if included_tags:
-            if any(tag in included_tags for tag in tags_found):
-                filtered_systems.append(i)
-        else:
-            filtered_systems.append(i)
+            if strict and not all(tag in tags_found for tag in included_tags):
+                continue
+            elif not strict and not any(tag in tags_found for tag in included_tags):
+                continue
+        filtered_systems.append(i)
     return filtered_systems
 
