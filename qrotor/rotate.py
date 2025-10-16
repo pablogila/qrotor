@@ -9,7 +9,7 @@ Works with Quantum ESPRESSO input files.
 
 | | |
 | --- | --- |
-| `structure_qe()`  | Rotate specific atoms from a Quantum ESPRESSO input file |
+| `input_qe()`      | Rotate specific atoms from a Quantum ESPRESSO input file |
 | `rotate_coords()` | Rotate a specific list of coordinates |
 
 ---
@@ -26,7 +26,7 @@ import aton.txt.extract as extract
 import aton.txt.edit as edit
 
 
-def structure_qe(
+def input_qe(
         filepath:str,
         positions:list,
         angle:float,
@@ -66,13 +66,13 @@ def structure_qe(
     lines = []
     full_positions = []
     for position in positions:
-        line = api.qe.get_atom(filepath, position, precision)
+        line = api.pwx.get_atom(filepath, position, precision)
         lines.append(line)
         pos = extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
             pos = pos[:3]
         # Convert to cartesian
-        pos_cartesian = api.qe.to_cartesian(filepath, pos)
+        pos_cartesian = api.pwx.to_cartesian(filepath, pos)
         full_positions.append(pos_cartesian)
         print(f'Found atom: "{line}"')
     # Set the angles to rotate
@@ -92,7 +92,7 @@ def structure_qe(
         rotated_positions_cartesian = rotate_coords(full_positions, angle, use_centroid, show_axis)
         rotated_positions = []
         for coord in rotated_positions_cartesian:
-            pos = api.qe.from_cartesian(filepath, coord)
+            pos = api.pwx.from_cartesian(filepath, coord)
             rotated_positions.append(pos)
         _save_qe(filepath, output, lines, rotated_positions)
         outputs.append(output)
@@ -184,7 +184,7 @@ def _save_qe(
         additional_positions = positions[-2:]
         for pos in additional_positions:
             pos.insert(0, 'He')
-            api.qe.add_atom(output, pos)
+            api.pwx.add_atom(output, pos)
     elif len(lines) != len(positions):
         raise ValueError(f"What?!  len(lines)={len(lines)} and len(positions)={len(positions)}")
     # Add angle to calculation prefix
@@ -192,11 +192,11 @@ def _save_qe(
     splits = output_name.split('_')
     angle_str = splits[-1].replace('.in', '')
     prefix = ''
-    content = api.qe.read_in(output)
+    content = api.pwx.read_in(output)
     if 'prefix' in content.keys():
         prefix = content['prefix']
         prefix = prefix.strip("'")
     prefix = "'" + prefix + angle_str + "'"
-    api.qe.set_value(output, 'prefix', prefix)
+    api.pwx.set_value(output, 'prefix', prefix)
     return output
 

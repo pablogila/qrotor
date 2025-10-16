@@ -49,7 +49,7 @@ from copy import deepcopy
 from scipy.interpolate import CubicSpline
 import aton.alias as alias
 import aton.file as file
-import aton.api.qe as qe
+import aton.api.pwx as pwx
 from ._version import __version__
 
 
@@ -196,8 +196,8 @@ def from_qe(
         energy:str='meV',
         comment:str=None,
         ) -> System:
-    """Compiles a rotational potential CSV file from Quantum ESPRESSO outputs,
-    created with `qrotor.rotate.structure_qe()`.
+    """Compiles a rotational potential CSV file from Quantum ESPRESSO pw.x outputs,
+    created with `qrotor.rotate.input_qe()`.
     Returns a `System` object with the new potential values.
 
     The angle in degrees is extracted from the output filenames,
@@ -227,7 +227,7 @@ def from_qe(
     # Set header
     potential_data = f'## {comment}\n' if comment else f'## {folder_name}\n'
     potential_data += '# Rotational potential dataset\n'
-    potential_data += f'# Calculated with QE using QRotor {__version__}\n'
+    potential_data += f'# Calculated with QE pw.x using QRotor {__version__}\n'
     potential_data += '# https://pablogila.github.io/qrotor\n'
     potential_data += '#\n'
     if energy.lower() in alias.units['eV']:
@@ -249,7 +249,7 @@ def from_qe(
         file_path = file.get(filepath=file_path, include='.out', return_anyway=True)
         if not file_path:  # Not an output file, skip it
             continue
-        content = qe.read_out(file_path)
+        content = pwx.read_out(file_path)
         if not content['Success']:  # Ignore unsuccessful calculations
             print(f'x   {filename}')
             counter_errors += 1
