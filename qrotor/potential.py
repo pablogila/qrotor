@@ -125,6 +125,7 @@ def save(
 def load(
         filepath:str='potential.csv',
         comment:str=None,
+        tags:str='',
         system:System=None,
         angle:str='deg',
         energy:str='meV',
@@ -184,6 +185,8 @@ def load(
         system.comment = loaded_comment
     else:
         system.comment = os.path.basename(os.path.dirname(file_path))
+    if tags:
+        system.tags = tags
     print(f"Loaded {filepath}")
     return system
 

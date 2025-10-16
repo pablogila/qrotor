@@ -98,7 +98,10 @@ def energies(
         data,
         title:str=None,
         ) -> None:
-    """Plot the eigenvalues of `data` (System or a list of System objects)."""
+    """Plot the eigenvalues of `data` (System or a list of System objects).
+
+    You can use up to 1 tag per system to differentiate between molecular groups.
+    """
     if isinstance(data, System):
         var = [data]
     else:  # Should be a list
@@ -137,14 +140,14 @@ def energies(
         # Plot eigenvalues
         if any(system.eigenvalues):
             text_offset = 3 * len(unique_groups)
-            if system.group not in unique_groups:
-                unique_groups.append(system.group)
+            if system.tags not in unique_groups:
+                unique_groups.append(system.tags)
             for j, energy in enumerate(system.eigenvalues):
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
                 # Textbox positions are a bit weird when plotting more than 2 systems, but whatever...
                 plt.text(j%3*1.0 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
             if len(systems.get_groups(var)) > 1:
-                plt.plot([], [], color=E_color, label=f'{system.group} Energies')  # Add to legend
+                plt.plot([], [], color=E_color, label=f'{system.tags} Energies')  # Add to legend
 
     if len(systems.get_groups(var)) > 1:
         plt.subplots_adjust(right=0.85)

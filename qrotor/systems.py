@@ -12,14 +12,16 @@ These are commonly used as a list of `System` objects.
 | `as_list()`          | Ensures that a list only contains System objects |
 | `save_energies()`    | Save the energy eigenvalues for all systems to a CSV |
 | `save_splittings()`  | Save the tunnel splitting energies for all systems to a CSV |
+| `save_summary()`     | Save a summary of some relevant parameters for all systems to a CSV |
 | `get_energies()`     | Get the eigenvalues from all systems |
 | `get_gridsizes()`    | Get all gridsizes |
 | `get_runtimes()`     | Get all runtimes |
-| `get_groups()`       | Get the chemical groups in use |
 | `get_ideal_E()`      | Calculate the ideal energy for a specified level |
 | `sort_by_gridsize()` | Sort systems by gridsize |
 | `reduce_size()`      | Discard data that takes too much space |
 | `summary()`          | Print a summary of a System or list of Systems |
+| `list_tags()`        | Get a list with all system tags |
+| `filter_tags()`      | Filter the systems with or without specific tags |
 
 ---
 """
@@ -51,9 +53,9 @@ def as_list(systems) -> None:
 def save_energies(
         systems:list,
         comment:str='',
-        filepath:str='eigenvalues.csv',
+        filepath:str='qrotor_eigenvalues.csv',
         ) -> pd.DataFrame:
-    """Save the energy eigenvalues for all `systems` to a eigenvalues.csv file.
+    """Save the energy eigenvalues for all `systems` to a qrotor_eigenvalues.csv file.
 
     Returns a Pandas Dataset with `System.comment` columns and `System.eigenvalues` values.
 
@@ -62,7 +64,7 @@ def save_energies(
     A `comment` can be included at the top of the file.
     Note that `System.comment` must not include commas (`,`).
     """
-    as_list(systems)
+    systems = as_list(systems)
     version = systems[0].version
     E = {}
     # Find max length of eigenvalues
@@ -81,7 +83,7 @@ def save_energies(
     # Else save to file
     df.to_csv(filepath, sep=',', index=False)
     # Include a comment at the top of the file
-    file_comment = f'# {comment}\n' if comment else f''
+    file_comment = f'## {comment}\n' if comment else f''
     file_comment += f'# Energy eigenvalues\n'
     file_comment += f'# Calculated with QRotor {version}\n'
     file_comment += f'# https://pablogila.github.io/qrotor\n#'
@@ -93,9 +95,9 @@ def save_energies(
 def save_splittings(
     systems:list,
     comment:str='',
-    filepath:str='splittings.csv',
+    filepath:str='qrotor_splittings.csv',
     ) -> pd.DataFrame:
-    """Save the tunnel splitting energies for all `systems` to a splittings.csv file.
+    """Save the tunnel splitting energies for all `systems` to a qrotor_splittings.csv file.
 
     Returns a Pandas Dataset with `System.comment` columns and `System.splittings` values.
 
@@ -105,7 +107,7 @@ def save_splittings(
     Note that `System.comment` must not include commas (`,`).
     Different splitting lengths across systems are allowed - missing values will be NaN.
     """
-    as_list(systems)
+    systems = as_list(systems)
     version = systems[0].version
     tunnelling_E = {}
     # Find max length of splittings
@@ -119,7 +121,7 @@ def save_splittings(
     # Else save to file
     df.to_csv(filepath, sep=',', index=False)
     # Include a comment at the top of the file 
-    file_comment = f'# {comment}\n' if comment else f''
+    file_comment = f'## {comment}\n' if comment else f''
     file_comment += f'# Tunnel splitting energies\n'
     file_comment += f'# Calculated with QRotor {version}\n'
     file_comment += f'# https://pablogila.github.io/qrotor\n#'
@@ -128,12 +130,80 @@ def save_splittings(
     return df
 
 
+def save_summary(
+    systems:list,
+    comment:str='',
+    filepath:str='qrotor_summary.csv',
+    ) -> pd.DataFrame:
+    """Save a summary for all `systems` to a qrotor_summary.csv file.
+
+    Produces one row per System with the columns:
+    `comment`, `ZPE`, `E_activation`, `potential_max`, `1st_splitting`,
+    `1st_excitation`, `B`, `degeneracy`, `gridsize`.
+
+    Set `filepath` to null to just return the DataFrame.
+    """
+    systems = as_list(systems)
+    version = systems[0].version
+    rows = []
+    for s in systems:
+        eigenvalues = getattr(s, 'eigenvalues', None)
+        if eigenvalues is not None and len(eigenvalues) > 0:
+            first_val = eigenvalues[0]
+            zpe = float('nan') if first_val is None else first_val
+        else:
+            zpe = float('nan')
+        splittings = getattr(s, 'splittings', None)
+        if splittings is not None and len(splittings) > 0:
+            first_splitting = float('nan') if splittings[0] is None else splittings[0]
+        else:
+            first_splitting = float('nan')
+        excitations = getattr(s, 'excitations', None)
+        if excitations is not None and len(excitations) > 0:
+            first_excitation = float('nan') if excitations[0] is None else excitations[0]
+        else:
+            first_excitation = float('nan')
+        system_comment = getattr(s, 'comment', None)
+        E_activation = getattr(s, 'E_activation', None)
+        B = getattr(s, 'B', None)
+        tags = getattr(s, 'tags', None)
+        deg = getattr(s, 'deg', None)
+        gridsize = getattr(s, 'gridsize', None)
+        potential_max = getattr(s, 'potential_max', None)
+        # Each row contains the following:
+        rows.append({
+            'comment': system_comment,
+            'ZPE': zpe,
+            'E_activation': E_activation,
+            'potential_max': potential_max,
+            '1st_splitting': first_splitting,
+            '1st_excitation': first_excitation,
+            'B': B,
+            'degeneracy': deg,
+            'gridsize': gridsize,
+            'tags': tags,
+        })
+    # Save to file or just return df
+    df = pd.DataFrame(rows)
+    if not filepath:
+        return df
+    df.to_csv(filepath, sep=',', index=False)
+    # Include a comment at the top of the file
+    file_comment = f'## {comment}\n' if comment else ''
+    file_comment += '# Summary of systems\n'
+    file_comment += f'# Calculated with QRotor {version}\n'
+    file_comment += '# https://pablogila.github.io/qrotor\n#'
+    txt.edit.insert_at(filepath, file_comment, 0)
+    print(f'Summary saved to {filepath}')
+    return df
+
+
 def get_energies(systems:list) -> list:
     """Get a list with all lists of eigenvalues from all systems.
 
     If no eigenvalues are present for a particular system, appends None.
     """
-    as_list(systems)
+    systems = as_list(systems)
     energies = []
     for i in systems:
         if all(i.eigenvalues):
@@ -148,7 +218,7 @@ def get_gridsizes(systems:list) -> list:
 
     If no gridsize value is present for a particular system, appends None.
     """
-    as_list(systems)
+    systems = as_list(systems)
     gridsizes = []
     for i in systems:
         if i.gridsize:
@@ -165,7 +235,7 @@ def get_runtimes(systems:list) -> list:
     
     If no runtime value is present for a particular system, appends None.
     """
-    as_list(systems)
+    systems = as_list(systems)
     runtimes = []
     for i in systems:
         if i.runtime:
@@ -173,16 +243,6 @@ def get_runtimes(systems:list) -> list:
         else:
             runtimes.append(None)
     return runtimes
-
-
-def get_groups(systems:list) -> list:
-    """Returns a list with all `System.group` values."""
-    as_list(systems)
-    groups = []
-    for i in systems:
-        if i.group not in groups:
-            groups.append(i.group)
-    return groups
 
 
 def get_ideal_E(E_level:int) -> int:
@@ -201,7 +261,7 @@ def get_ideal_E(E_level:int) -> int:
 
 def sort_by_gridsize(systems:list) -> list:
     """Sorts a list of System objects by `System.gridsize`."""
-    as_list(systems)
+    systems = as_list(systems)
     systems = sorted(systems, key=lambda sys: sys.gridsize)
     return systems
 
@@ -212,13 +272,16 @@ def reduce_size(systems:list) -> list:
     Removes eigenvectors, potential values and grids,
     for all System values inside the `systems` list.
     """
-    as_list(systems)
+    systems = as_list(systems)
     for dataset in systems:
         dataset = dataset.reduce_size()
     return systems
 
 
-def summary(systems, verbose:bool=False) -> None:
+def summary(
+        systems,
+        verbose:bool=False
+        ) -> None:
     """Print a summary of a System or list of Systems.
     
     Print extra info with `verbose=True`
@@ -242,4 +305,43 @@ def summary(systems, verbose:bool=False) -> None:
             print('version     ' + str(system.version))
         print('--------------------')
     return None
+
+
+def list_tags(systems:list) -> list:
+    """Returns a list with all system tags."""
+    systems = as_list(systems)
+    tags = []
+    for i in systems:
+        # i.tags is guaranteed to exist and be a string (may be empty)
+        system_tags = i.tags.split()
+        for tag in system_tags:
+            if tag not in tags:
+                tags.append(tag)
+    return tags
+
+
+def filter_tags(
+        systems:list,
+        include:str='',
+        exclude:str='',
+        ) -> list:
+    """Returns a filtered list of systems with or without specific tags.
+    
+    Tags are separated by blank spaces.
+    Include tags from `include`, exclude tags from `exclude`.
+    """
+    systems = as_list(systems)
+    included_tags = include.split()
+    excluded_tags = exclude.split()
+    filtered_systems = []
+    for i in systems:
+        tags_found = list_tags(i)
+        if excluded_tags and any(tag in excluded_tags for tag in tags_found):
+            continue
+        if included_tags:
+            if any(tag in included_tags for tag in tags_found):
+                filtered_systems.append(i)
+        else:
+            filtered_systems.append(i)
+    return filtered_systems
 

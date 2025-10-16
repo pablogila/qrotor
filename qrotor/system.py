@@ -24,16 +24,14 @@ class System:
     def __init__(
             self,
             comment: str = None,
+            B: float = B_CH3,
+            gridsize: int = 200000,
             searched_E: int = 21,
             correct_potential_offset: bool = True,
             save_eigenvectors: bool = True,
-            group: str = '',
-            B: float = B_CH3,
-            gridsize: int = 200000,
-            grid = [],
             potential_name: str = '',
             potential_constants: list = None,
-            potential_values = [],
+            tags: str = '',
             ):
         """A new quantum system can be instantiated as `system = qrotor.System()`.
         This new system will contain the default values listed above.
@@ -49,17 +47,12 @@ class System:
         """Correct the potential offset as `V - min(V)` or not."""
         self.save_eigenvectors: bool = save_eigenvectors
         """Save or not the eigenvectors. Final file size will be bigger."""
-        self.group: str = group
-        """Chemical group, methyl or amine: `'CH3'`, `'CD3'`, `'NH3'`, `'ND3'`.
+        self.tags: str = tags
+        """Custom tags separated by spaces, such as the molecular group, etc.
 
-        Can be used to set the value of `B` automatically at startup.
-        It can also be configured afterwards with `System.set_group()`.
-        This group can be used as metadata to analyse different datasets.
+        Can be used to filter between datasets.
         """
-        self.set_group(group)  # Normalise the group name, and set the value of B
         ## Potential
-        if not B:
-            B = self.B
         self.B: float = B
         """Kinetic rotational energy, as in $B=\\frac{\\hbar^2}{2I}$.
 
@@ -67,7 +60,7 @@ class System:
         """
         self.gridsize: int = gridsize
         """Number of points in the grid."""
-        self.grid = grid
+        self.grid = []
         """The grid with the points to be used in the calculation.
 
         Can be set automatically over $2 \\pi$ with `System.set_grid()`.
@@ -80,7 +73,7 @@ class System:
         """
         self.potential_constants: list = potential_constants
         """List of constants to be used in the calculation of the potential energy, in the `qrotor.potential` module."""
-        self.potential_values = potential_values
+        self.potential_values = []
         """Numpy [ndarray](https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html) with the potential values for each point in the grid.
 
         Can be calculated with a function available in the `qrotor.potential` module,
@@ -205,40 +198,6 @@ class System:
         else:
             raise ValueError('gridsize must be provided if there is no System.gridsize')
         return self
-    
-    def set_group(self, group:str=None, B:float=None):
-        """Normalise `System.group` name, and set `System.B` based on it."""
-        for name in alias.chemical['CH3']:
-            if group.lower() == name:
-                self.group = 'CH3'
-                if not B:
-                    B = B_CH3
-                self.B = B
-                return self
-        for name in alias.chemical['CD3']:
-            if group.lower() == name:
-                self.group = 'CD3'
-                if not B:
-                    B = B_CD3
-                self.B = B
-                return self
-        for name in alias.chemical['NH3']:
-            if group.lower() == name:
-                self.group = 'NH3'
-                if not B:
-                    B = B_NH3
-                self.B = B
-                return self
-        for name in alias.chemical['ND3']:
-            if group.lower() == name:
-                self.group = 'ND3'
-                if not B:
-                    B = B_ND3
-                self.B = B
-                return self
-        self.group = group  # No match was found
-        self.B = None
-        return self
 
     def reduce_size(self):
         """Discard data that takes too much space,
@@ -256,7 +215,7 @@ class System:
             'searched_E': self.searched_E,
             'correct_potential_offset': self.correct_potential_offset,
             'save_eigenvectors': self.save_eigenvectors,
-            'group': self.group,
+            'tags': self.tags,
             'B': self.B,
             'gridsize': self.gridsize,
             'potential_name': self.potential_name,
