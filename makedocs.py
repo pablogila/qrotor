@@ -15,7 +15,7 @@ fix_dict ={
     '[qrotor.system](https://pablogila.github.io/qrotor/qrotor/system.html)'              : '`qrotor.system`',
     '[qrotor.systems](https://pablogila.github.io/qrotor/qrotor/systems.html)'            : '`qrotor.systems`',
     '[qrotor.constants](https://pablogila.github.io/qrotor/qrotor/constants.html)'        : '`qrotor.constants`',
-    '[qrotor.rotate](https://pablogila.github.io/qrotor/qrotor/rotate.html)'              : '`qrotor.rotate`',
+    '[qrotor.rotation](https://pablogila.github.io/qrotor/qrotor/rotation.html)'          : '`qrotor.rotation`',
     '[qrotor.potential](https://pablogila.github.io/qrotor/qrotor/potential.html)'        : '`qrotor.potential`',
     '[qrotor.solve](https://pablogila.github.io/qrotor/qrotor/solve.html)'                : '`qrotor.solve`',
     '[qrotor.plot](https://pablogila.github.io/qrotor/qrotor/plot.html)'                  : '`qrotor.plot`',

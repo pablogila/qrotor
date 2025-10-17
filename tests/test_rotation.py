@@ -10,14 +10,14 @@ structure_120 = folder + 'CH3NH3_120.in'
 structure_60 = folder + 'CH3NH3_60.in'
 
 
-def test_rotate():
+def test_rotation():
     CH3 = [
         '0.100   0.183   0.316',
         '0.151   0.532   0.842',
         '0.118   0.816   0.277',
     ]
     # 120 degrees (it should remain the same)
-    qr.rotate.input_qe(filepath=structure, positions=CH3, angle=120, precision=2)
+    qr.rotation.rotate_qe(filepath=structure, positions=CH3, angle=120, precision=2)
     for coord in CH3:
         rotated_coord = api.pwx.get_atom(filepath=structure_120, position=coord, precision=2)
         rotated_coord = extract.coords(rotated_coord)
@@ -37,7 +37,7 @@ def test_rotate():
         '0.095062781582172   0.488975944606740   0.115053787468686',
         '0.128156574395412   0.205890189020629   0.680672454316303',
     ]
-    qr.rotate.input_qe(filepath=structure, positions=CH3, angle=60, precision=2)
+    qr.rotation.rotate_qe(filepath=structure, positions=CH3, angle=60, precision=2)
     for coord in ideal:
         rotated_coord = api.pwx.get_atom(filepath=structure_60, position=coord, precision=3)
         rotated_coord = extract.coords(rotated_coord)

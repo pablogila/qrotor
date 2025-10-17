@@ -70,7 +70,7 @@ QRotor contains the following modules:
 | [qrotor.constants](https://pablogila.github.io/qrotor/qrotor/constants.html) | Common bond lengths and inertias |
 | [qrotor.system](https://pablogila.github.io/qrotor/qrotor/system.html)       | Definition of the quantum `System` object |
 | [qrotor.systems](https://pablogila.github.io/qrotor/qrotor/systems.html)     | Utilities to manage several System objects, such as a list of systems |
-| [qrotor.rotate](https://pablogila.github.io/qrotor/qrotor/rotate.html)       | Rotate specific atoms from structural files |
+| [qrotor.rotation](https://pablogila.github.io/qrotor/qrotor/rotation.html)   | Rotate specific atoms from structural files |
 | [qrotor.potential](https://pablogila.github.io/qrotor/qrotor/potential.html) | Potential definitions and loading functions |
 | [qrotor.solve](https://pablogila.github.io/qrotor/qrotor/solve.html)         | Solve rotation eigenvalues and eigenvectors |
 | [qrotor.plot](https://pablogila.github.io/qrotor/qrotor/plot.html)           | Plotting utilities |
@@ -143,7 +143,7 @@ atoms = [
     '3.103   3.206   3.309'
 ]
 # Create the input SCF files, saving the filenames to a list
-scf_files = qr.rotate.structure_qe('molecule.in', positions=atoms, angle=10, repeat=True)
+scf_files = qr.rotation.rotate_qe('molecule.in', positions=atoms, angle=10, repeat=True)
 # Run the Quantum ESPRESSO calculations
 api.slurm.sbatch(files=scf_files)
 ```

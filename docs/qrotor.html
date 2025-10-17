@@ -89,14 +89,14 @@
                     <li><a href="qrotor/constants.html">constants</a></li>
                     <li><a href="qrotor/plot.html">plot</a></li>
                     <li><a href="qrotor/potential.html">potential</a></li>
-                    <li><a href="qrotor/rotate.html">rotate</a></li>
+                    <li><a href="qrotor/rotation.html">rotation</a></li>
                     <li><a href="qrotor/solve.html">solve</a></li>
                     <li><a href="qrotor/system.html">system</a></li>
                     <li><a href="qrotor/systems.html">systems</a></li>
             </ul>
 
 
-            <footer>QRotor v4.4.1 documentation</footer>
+            <footer>QRotor v4.5.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -193,7 +193,7 @@ as a ZIP, unzip it, and run inside it:  </p>
   <td>Utilities to manage several System objects, such as a list of systems</td>
 </tr>
 <tr>
-  <td><code><a href="qrotor/rotate.html">qrotor.rotate</a></code></td>
+  <td><code><a href="qrotor/rotation.html">qrotor.rotation</a></code></td>
   <td>Rotate specific atoms from structural files</td>
 </tr>
 <tr>
@@ -273,7 +273,7 @@ although other DFT codes can be easily implemented through <a href="https://pabl
     <span class="s1">&#39;3.103   3.206   3.309&#39;</span>
 <span class="p">]</span>
 <span class="c1"># Create the input SCF files, saving the filenames to a list</span>
-<span class="n">scf_files</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">rotate</span><span class="o">.</span><span class="n">structure_qe</span><span class="p">(</span><span class="s1">&#39;molecule.in&#39;</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">atoms</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">scf_files</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">rotation</span><span class="o">.</span><span class="n">rotate_qe</span><span class="p">(</span><span class="s1">&#39;molecule.in&#39;</span><span class="p">,</span> <span class="n">positions</span><span class="o">=</span><span class="n">atoms</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># Run the Quantum ESPRESSO calculations</span>
 <span class="n">api</span><span class="o">.</span><span class="n">slurm</span><span class="o">.</span><span class="n">sbatch</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="n">scf_files</span><span class="p">)</span>
 </code></pre>
@@ -414,7 +414,7 @@ See the attached GNU Affero General Public License for more details.  </p>
 </span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.system</span><span class="w"> </span><span class="kn">import</span> <span class="n">System</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.constants</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">systems</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">rotate</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">rotation</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">potential</span>
 </span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot</span>

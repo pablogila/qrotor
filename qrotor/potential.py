@@ -200,7 +200,7 @@ def from_qe(
         comment:str=None,
         ) -> System:
     """Compiles a rotational potential CSV file from Quantum ESPRESSO pw.x outputs,
-    created with `qrotor.rotate.input_qe()`.
+    created with `qrotor.rotation.rotate_qe()`.
     Returns a `System` object with the new potential values.
 
     The angle in degrees is extracted from the output filenames,

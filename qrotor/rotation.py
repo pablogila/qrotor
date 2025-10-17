@@ -9,7 +9,7 @@ Works with Quantum ESPRESSO input files.
 
 | | |
 | --- | --- |
-| `input_qe()`      | Rotate specific atoms from a Quantum ESPRESSO input file |
+| `rotate_qe()`     | Rotate specific atoms from a Quantum ESPRESSO input file |
 | `rotate_coords()` | Rotate a specific list of coordinates |
 
 ---
@@ -26,7 +26,7 @@ import aton.txt.extract as extract
 import aton.txt.edit as edit
 
 
-def input_qe(
+def rotate_qe(
         filepath:str,
         positions:list,
         angle:float,
@@ -35,7 +35,7 @@ def input_qe(
         use_centroid:bool=True,
         show_axis:bool=False,
     ) -> list:
-    """Rotates atoms from a Quantum ESPRESSO input file.
+    """Rotates atoms from a Quantum ESPRESSO pw.x input file.
 
     Takes a `filepath` with a molecular structure, and three or more atomic `positions` (list).
     These input positions can be approximate, and are used to identify the target atoms.

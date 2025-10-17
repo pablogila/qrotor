@@ -110,7 +110,7 @@
     </ul>
 
 
-            <footer>QRotor v4.4.1 documentation</footer>
+            <footer>QRotor v4.5.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -426,7 +426,7 @@ Available potentials are:</p>
 </span><span id="L-200"><a href="#L-200"><span class="linenos">200</span></a>        <span class="n">comment</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span><span id="L-201"><a href="#L-201"><span class="linenos">201</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">:</span>
 </span><span id="L-202"><a href="#L-202"><span class="linenos">202</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compiles a rotational potential CSV file from Quantum ESPRESSO pw.x outputs,</span>
-</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="sd">    created with `qrotor.rotate.input_qe()`.</span>
+</span><span id="L-203"><a href="#L-203"><span class="linenos">203</span></a><span class="sd">    created with `qrotor.rotation.rotate_qe()`.</span>
 </span><span id="L-204"><a href="#L-204"><span class="linenos">204</span></a><span class="sd">    Returns a `System` object with the new potential values.</span>
 </span><span id="L-205"><a href="#L-205"><span class="linenos">205</span></a>
 </span><span id="L-206"><a href="#L-206"><span class="linenos">206</span></a><span class="sd">    The angle in degrees is extracted from the output filenames,</span>
@@ -929,7 +929,7 @@ Set to the parent folder name by default.</p>
 </span><span id="from_qe-201"><a href="#from_qe-201"><span class="linenos">201</span></a>        <span class="n">comment</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 </span><span id="from_qe-202"><a href="#from_qe-202"><span class="linenos">202</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="p">:</span>
 </span><span id="from_qe-203"><a href="#from_qe-203"><span class="linenos">203</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compiles a rotational potential CSV file from Quantum ESPRESSO pw.x outputs,</span>
-</span><span id="from_qe-204"><a href="#from_qe-204"><span class="linenos">204</span></a><span class="sd">    created with `qrotor.rotate.input_qe()`.</span>
+</span><span id="from_qe-204"><a href="#from_qe-204"><span class="linenos">204</span></a><span class="sd">    created with `qrotor.rotation.rotate_qe()`.</span>
 </span><span id="from_qe-205"><a href="#from_qe-205"><span class="linenos">205</span></a><span class="sd">    Returns a `System` object with the new potential values.</span>
 </span><span id="from_qe-206"><a href="#from_qe-206"><span class="linenos">206</span></a>
 </span><span id="from_qe-207"><a href="#from_qe-207"><span class="linenos">207</span></a><span class="sd">    The angle in degrees is extracted from the output filenames,</span>
@@ -1027,7 +1027,7 @@ Set to the parent folder name by default.</p>
 
 
             <div class="docstring"><p>Compiles a rotational potential CSV file from Quantum ESPRESSO pw.x outputs,
-created with <code><a href="rotate.html#input_qe">qrotor.rotate.input_qe()</a></code>.
+created with <code><a href="rotation.html#rotate_qe">qrotor.rotation.rotate_qe()</a></code>.
 Returns a <code>System</code> object with the new potential values.</p>
 
 <p>The angle in degrees is extracted from the output filenames,
