@@ -212,10 +212,10 @@ class System:
         return {
             'version': self.version,
             'comment': self.comment,
+            'tags': self.tags,
             'searched_E': self.searched_E,
             'correct_potential_offset': self.correct_potential_offset,
             'save_eigenvectors': self.save_eigenvectors,
-            'tags': self.tags,
             'B': self.B,
             'gridsize': self.gridsize,
             'potential_name': self.potential_name,

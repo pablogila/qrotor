@@ -288,6 +288,7 @@ def summary(
     """
     print('--------------------')
     systems = as_list(systems)
+    
     for system in systems:
         dictionary = system.summary()
         if verbose:
@@ -299,10 +300,16 @@ def summary(
             if len(system.eigenvalues) > 6:
                 eigenvalues = eigenvalues[:6]
                 extra = '...'
-            print('comment     ' + str(system.comment))
-            print('B           ' + str(system.B))
-            print('eigenvalues ' + str([float(round(e, 4)) for e in eigenvalues]) + extra)
-            print('version     ' + str(system.version))
+            print('comment         ' + str(system.comment))
+            print('ZPE             ' + str(system.eigenvalues[0]))
+            print('E activation    ' + str(system.E_activation))
+            print('V max           ' + str(system.potential_max))
+            print('1st splitting   ' + str(system.splittings[0]))
+            print('1st excitation  ' + str(system.excitations[0]))
+            print('B               ' + str(system.B))
+            print('eigenvalues     ' + str([float(round(e, 4)) for e in eigenvalues]) + extra)
+            print('tags            ' + str(system.tags))
+            print('version         ' + str(system.version))
         print('--------------------')
     return None
 
