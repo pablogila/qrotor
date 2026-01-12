@@ -40,7 +40,7 @@ source .venv/bin/activate
 ## With pip
 
 
-Install or upgrade ATON with  
+Install or upgrade QRotor with  
 ```bash
 pip install qrotor -U
 ```
@@ -49,7 +49,7 @@ pip install qrotor -U
 ## From source
 
 
-Optionally, you can install ATON from the [GitHub repo](https://github.com/pablogila/qrotor/).
+Optionally, you can install QRotor from the [GitHub repo](https://github.com/pablogila/qrotor/).
 Clone the repository or download the [latest stable release](https://github.com/pablogila/qrotor/tags)
 as a ZIP, unzip it, and run inside it:  
 ```bash
