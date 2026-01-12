@@ -146,10 +146,10 @@ def energies(
                 plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
                 # Textbox positions are a bit weird when plotting more than 2 systems, but whatever...
                 plt.text(j%3*1.0 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-            if len(systems.get_groups(var)) > 1:
+            if len(systems.list_tags(var)) > 1:
                 plt.plot([], [], color=E_color, label=f'{system.tags} Energies')  # Add to legend
 
-    if len(systems.get_groups(var)) > 1:
+    if len(systems.list_tags(var)) > 1:
         plt.subplots_adjust(right=0.85)
         plt.legend(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
 
