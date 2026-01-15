@@ -113,20 +113,22 @@ class System:
         self.runtime: float = None
         """Time taken to solve the eigenvalues."""
 
-    def solve(self, new_gridsize:int=None):
+    def solve(self, gridsize:int=None, B:int=None):
         """Default user method to solve the quantum system.
 
-        The potential can be interpolated to a `new_gridsize`.
+        The potential can be interpolated to a new `gridsize`.
 
         Same as running `qrotor.solve.energies(System)`
         with an optional new gridsize.
         """
         from .solve import energies
-        if new_gridsize:
-            self.gridsize = new_gridsize
+        if gridsize:
+            self.gridsize = gridsize
+        if B:
+            self.B = B
         return energies(self)
 
-    def solve_potential(self, new_gridsize:int=None):
+    def solve_potential(self, gridsize:int=None):
         """Default user method to quickly solve the potential of the quantum system.
 
         This method does not solve the energies of the system,
@@ -134,14 +136,14 @@ class System:
         `System.potential_min` and `System.potential_offset` accordingly.
         To solve the potential AND the energies, check `System.solve()`.
 
-        The potential can be interpolated to a `new_gridsize`.
+        The potential can be interpolated to a new `gridsize`.
 
         Same as running `qrotor.solve.potential(System)`
         with an optional new gridsize.
         """
         from .solve import potential
-        if new_gridsize:
-            self.gridsize = new_gridsize
+        if gridsize:
+            self.gridsize = gridsize
         return potential(self)
 
     def change_phase(self, phase:float, calculate:bool=True):
