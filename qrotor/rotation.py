@@ -66,7 +66,7 @@ def rotate_qe(
     lines = []
     full_positions = []
     for position in positions:
-        line = api.pwx.get_atom(filepath, position, precision)
+        line = api.pwx.get_atom(filepath=filepath, position=position, precision=precision, literal=True)
         lines.append(line)
         pos = extract.coords(line)
         if len(pos) > 3:  # Keep only the first three coordinates
