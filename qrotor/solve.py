@@ -1,7 +1,7 @@
 """
 # Description
 
-This module is used to solve any given quantum system.
+This module is used to solve any given quantum `qrotor.system.System()`.
 
 Although the functions of this module can be used independently,
 it is highly recommended to use the methods `System.solve()` or

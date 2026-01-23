@@ -172,10 +172,10 @@ def energies(
                     plt.axhline(y=energy, color=E_color, linestyle=E_linestyle)
                     # Textbox positions are a bit weird when plotting more than 2 systems, but whatever...
                     plt.text(j%3*1.0 + text_offset, energy, f'$E_{{{j}}}$ = {round(energy,4):.04f}', va='top', bbox=dict(edgecolor=edgecolor, boxstyle='round,pad=0.2', facecolor='white', alpha=0.8))
-                if len(systems.list_tags(var)) > 1:
+                if len(systems.get_tags(var)) > 1:
                     plt.plot([], [], color=E_color, label=f'{system.tags} Energies')  # Add to legend
 
-        if len(systems.list_tags(var)) > 1:
+        if len(systems.get_tags(var)) > 1:
             plt.subplots_adjust(right=0.85)
             leg = plt.legend() #(bbox_to_anchor=(1.1, 0.5), loc='center', fontsize='small')
             leg.set_draggable(True)
@@ -388,7 +388,7 @@ def convergence(data:list, rc:dict={}) -> None:
     for system in data:
         deviation_list = []
         for i, eigenvalue in enumerate(system.eigenvalues):
-            ideal_E = systems.get_ideal_E(i)
+            ideal_E = systems.calculate_ideal_E(i)
             deviation = abs(ideal_E - eigenvalue)
             deviation_list.append(deviation)
         deviation_list = deviation_list[1:]  # Remove ground state

@@ -9,19 +9,19 @@ These are commonly used as a list of `System` objects.
 
 | | |
 | --- | --- |
-| `as_list()`          | Ensures that a list only contains System objects |
-| `save_energies()`    | Save the energy eigenvalues for all systems to a CSV |
-| `save_splittings()`  | Save the tunnel splitting energies for all systems to a CSV |
-| `save_summary()`     | Save a summary of some relevant parameters for all systems to a CSV |
-| `get_energies()`     | Get the eigenvalues from all systems |
-| `get_gridsizes()`    | Get all gridsizes |
-| `get_runtimes()`     | Get all runtimes |
-| `get_ideal_E()`      | Calculate the ideal energy for a specified level |
-| `sort_by_gridsize()` | Sort systems by gridsize |
-| `reduce_size()`      | Discard data that takes too much space |
-| `summary()`          | Print a summary of a System or list of Systems |
-| `list_tags()`        | Get a list with all system tags |
-| `filter_tags()`      | Filter the systems with or without specific tags |
+| `as_list()`           | Ensures that a list only contains System objects |  
+| `save_energies()`     | Save the energy eigenvalues for all systems to a CSV |  
+| `save_splittings()`   | Save the tunnel splitting energies for all systems to a CSV |  
+| `save_summary()`      | Save a summary of some relevant parameters for all systems to a CSV |  
+| `get_energies()`      | Get the eigenvalues from all systems |  
+| `get_gridsizes()`     | Get all gridsizes |  
+| `get_runtimes()`      | Get all runtimes |  
+| `get_tags()`          | Get a list with all system tags |  
+| `filter_tags()`       | Filter the systems with or without specific tags |  
+| `calculate_ideal_E()` | Calculate the ideal energy for a specified level |  
+| `sort_by_gridsize()`  | Sort systems by gridsize |  
+| `reduce_size()`       | Discard data that takes too much space |  
+| `summary()`           | Print a summary of a System or list of Systems |  
 
 ---
 """
@@ -245,7 +245,52 @@ def get_runtimes(systems:list) -> list:
     return runtimes
 
 
-def get_ideal_E(E_level:int) -> int:
+def get_tags(systems:list) -> list:
+    """Returns a list with all system tags."""
+    systems = as_list(systems)
+    tags = []
+    for i in systems:
+        # i.tags is guaranteed to exist and be a string (may be empty)
+        system_tags = i.tags.split()
+        for tag in system_tags:
+            if tag not in tags:
+                tags.append(tag)
+    return tags
+
+
+def filter_tags(
+        systems:list,
+        include:str='',
+        exclude:str='',
+        strict:bool=False,
+        ) -> list:
+    """Returns a filtered list of systems with or without specific tags.
+
+    You can `include` or `exclude` any number of tags, separated by blank spaces.
+    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.
+    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.
+    """
+    systems = as_list(systems)
+    included_tags = include.split()
+    excluded_tags = exclude.split()
+    filtered_systems = []
+    for i in systems:
+        tags_found = get_tags(i)
+        if excluded_tags:
+            if strict and all(tag in tags_found for tag in excluded_tags):
+                continue
+            elif not strict and any(tag in tags_found for tag in excluded_tags):
+                continue
+        if included_tags:
+            if strict and not all(tag in tags_found for tag in included_tags):
+                continue
+            elif not strict and not any(tag in tags_found for tag in included_tags):
+                continue
+        filtered_systems.append(i)
+    return filtered_systems
+
+
+def calculate_ideal_E(E_level:int) -> int:
     """Calculates the ideal energy for a specified `E_level`.
 
     To be used in convergence tests with `potential_name = 'zero'`.
@@ -312,49 +357,4 @@ def summary(
             print('version         ' + str(system.version))
         print('--------------------')
     return None
-
-
-def list_tags(systems:list) -> list:
-    """Returns a list with all system tags."""
-    systems = as_list(systems)
-    tags = []
-    for i in systems:
-        # i.tags is guaranteed to exist and be a string (may be empty)
-        system_tags = i.tags.split()
-        for tag in system_tags:
-            if tag not in tags:
-                tags.append(tag)
-    return tags
-
-
-def filter_tags(
-        systems:list,
-        include:str='',
-        exclude:str='',
-        strict:bool=False,
-        ) -> list:
-    """Returns a filtered list of systems with or without specific tags.
-
-    You can `include` or `exclude` any number of tags, separated by blank spaces.
-    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.
-    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.
-    """
-    systems = as_list(systems)
-    included_tags = include.split()
-    excluded_tags = exclude.split()
-    filtered_systems = []
-    for i in systems:
-        tags_found = list_tags(i)
-        if excluded_tags:
-            if strict and all(tag in tags_found for tag in excluded_tags):
-                continue
-            elif not strict and any(tag in tags_found for tag in excluded_tags):
-                continue
-        if included_tags:
-            if strict and not all(tag in tags_found for tag in included_tags):
-                continue
-            elif not strict and not any(tag in tags_found for tag in included_tags):
-                continue
-        filtered_systems.append(i)
-    return filtered_systems
 

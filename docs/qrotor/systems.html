@@ -96,7 +96,13 @@
                     <a class="function" href="#get_runtimes">get_runtimes</a>
             </li>
             <li>
-                    <a class="function" href="#get_ideal_E">get_ideal_E</a>
+                    <a class="function" href="#get_tags">get_tags</a>
+            </li>
+            <li>
+                    <a class="function" href="#filter_tags">filter_tags</a>
+            </li>
+            <li>
+                    <a class="function" href="#calculate_ideal_E">calculate_ideal_E</a>
             </li>
             <li>
                     <a class="function" href="#sort_by_gridsize">sort_by_gridsize</a>
@@ -107,16 +113,10 @@
             <li>
                     <a class="function" href="#summary">summary</a>
             </li>
-            <li>
-                    <a class="function" href="#list_tags">list_tags</a>
-            </li>
-            <li>
-                    <a class="function" href="#filter_tags">filter_tags</a>
-            </li>
     </ul>
 
 
-            <footer>QRotor v4.6.2 documentation</footer>
+            <footer>QRotor v4.7.0 documentation</footer>
 
         <a class="attribution" title="pdoc: Python API documentation generator" href="https://pdoc.dev" target="_blank">
             built with <span class="visually-hidden">pdoc</span><img
@@ -174,7 +174,15 @@ These are commonly used as a list of <code>System</code> objects.</p>
   <td>Get all runtimes</td>
 </tr>
 <tr>
-  <td><code><a href="#get_ideal_E">get_ideal_E()</a></code></td>
+  <td><code><a href="#get_tags">get_tags()</a></code></td>
+  <td>Get a list with all system tags</td>
+</tr>
+<tr>
+  <td><code><a href="#filter_tags">filter_tags()</a></code></td>
+  <td>Filter the systems with or without specific tags</td>
+</tr>
+<tr>
+  <td><code><a href="#calculate_ideal_E">calculate_ideal_E()</a></code></td>
   <td>Calculate the ideal energy for a specified level</td>
 </tr>
 <tr>
@@ -188,14 +196,6 @@ These are commonly used as a list of <code>System</code> objects.</p>
 <tr>
   <td><code><a href="#summary">summary()</a></code></td>
   <td>Print a summary of a System or list of Systems</td>
-</tr>
-<tr>
-  <td><code><a href="#list_tags">list_tags()</a></code></td>
-  <td>Get a list with all system tags</td>
-</tr>
-<tr>
-  <td><code><a href="#filter_tags">filter_tags()</a></code></td>
-  <td>Filter the systems with or without specific tags</td>
 </tr>
 </tbody>
 </table>
@@ -218,19 +218,19 @@ These are commonly used as a list of <code>System</code> objects.</p>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="sd">| | |</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="sd">| --- | --- |</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="sd">| `as_list()`          | Ensures that a list only contains System objects |</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">| `save_energies()`    | Save the energy eigenvalues for all systems to a CSV |</span>
-</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="sd">| `save_splittings()`  | Save the tunnel splitting energies for all systems to a CSV |</span>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">| `save_summary()`     | Save a summary of some relevant parameters for all systems to a CSV |</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">| `get_energies()`     | Get the eigenvalues from all systems |</span>
-</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">| `get_gridsizes()`    | Get all gridsizes |</span>
-</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">| `get_runtimes()`     | Get all runtimes |</span>
-</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">| `get_ideal_E()`      | Calculate the ideal energy for a specified level |</span>
-</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">| `sort_by_gridsize()` | Sort systems by gridsize |</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">| `reduce_size()`      | Discard data that takes too much space |</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">| `summary()`          | Print a summary of a System or list of Systems |</span>
-</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="sd">| `list_tags()`        | Get a list with all system tags |</span>
-</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="sd">| `filter_tags()`      | Filter the systems with or without specific tags |</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="sd">| `as_list()`           | Ensures that a list only contains System objects |  </span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">| `save_energies()`     | Save the energy eigenvalues for all systems to a CSV |  </span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a><span class="sd">| `save_splittings()`   | Save the tunnel splitting energies for all systems to a CSV |  </span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a><span class="sd">| `save_summary()`      | Save a summary of some relevant parameters for all systems to a CSV |  </span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="sd">| `get_energies()`      | Get the eigenvalues from all systems |  </span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a><span class="sd">| `get_gridsizes()`     | Get all gridsizes |  </span>
+</span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">| `get_runtimes()`      | Get all runtimes |  </span>
+</span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">| `get_tags()`          | Get a list with all system tags |  </span>
+</span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">| `filter_tags()`       | Filter the systems with or without specific tags |  </span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">| `calculate_ideal_E()` | Calculate the ideal energy for a specified level |  </span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">| `sort_by_gridsize()`  | Sort systems by gridsize |  </span>
+</span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a><span class="sd">| `reduce_size()`       | Discard data that takes too much space |  </span>
+</span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a><span class="sd">| `summary()`           | Print a summary of a System or list of Systems |  </span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a><span class="sd">---</span>
 </span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a><span class="sd">&quot;&quot;&quot;</span>
@@ -454,118 +454,118 @@ These are commonly used as a list of <code>System</code> objects.</p>
 </span><span id="L-245"><a href="#L-245"><span class="linenos">245</span></a>    <span class="k">return</span> <span class="n">runtimes</span>
 </span><span id="L-246"><a href="#L-246"><span class="linenos">246</span></a>
 </span><span id="L-247"><a href="#L-247"><span class="linenos">247</span></a>
-</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a><span class="k">def</span><span class="w"> </span><span class="nf">get_ideal_E</span><span class="p">(</span><span class="n">E_level</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the ideal energy for a specified `E_level`.</span>
-</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>
-</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a><span class="sd">    To be used in convergence tests with `potential_name = &#39;zero&#39;`.</span>
-</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>    <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>    <span class="k">if</span> <span class="n">E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="n">E_level</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>    <span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>    <span class="k">return</span> <span class="n">ideal_E</span>
+</span><span id="L-248"><a href="#L-248"><span class="linenos">248</span></a><span class="k">def</span><span class="w"> </span><span class="nf">get_tags</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="L-249"><a href="#L-249"><span class="linenos">249</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a list with all system tags.&quot;&quot;&quot;</span>
+</span><span id="L-250"><a href="#L-250"><span class="linenos">250</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="L-251"><a href="#L-251"><span class="linenos">251</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-252"><a href="#L-252"><span class="linenos">252</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="L-253"><a href="#L-253"><span class="linenos">253</span></a>        <span class="c1"># i.tags is guaranteed to exist and be a string (may be empty)</span>
+</span><span id="L-254"><a href="#L-254"><span class="linenos">254</span></a>        <span class="n">system_tags</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="L-255"><a href="#L-255"><span class="linenos">255</span></a>        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">system_tags</span><span class="p">:</span>
+</span><span id="L-256"><a href="#L-256"><span class="linenos">256</span></a>            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+</span><span id="L-257"><a href="#L-257"><span class="linenos">257</span></a>                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span id="L-258"><a href="#L-258"><span class="linenos">258</span></a>    <span class="k">return</span> <span class="n">tags</span>
+</span><span id="L-259"><a href="#L-259"><span class="linenos">259</span></a>
 </span><span id="L-260"><a href="#L-260"><span class="linenos">260</span></a>
-</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a>
-</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Sorts a list of System objects by `System.gridsize`.&quot;&quot;&quot;</span>
-</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">systems</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>    <span class="k">return</span> <span class="n">systems</span>
-</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a>
+</span><span id="L-261"><a href="#L-261"><span class="linenos">261</span></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_tags</span><span class="p">(</span>
+</span><span id="L-262"><a href="#L-262"><span class="linenos">262</span></a>        <span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span>
+</span><span id="L-263"><a href="#L-263"><span class="linenos">263</span></a>        <span class="n">include</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="L-264"><a href="#L-264"><span class="linenos">264</span></a>        <span class="n">exclude</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="L-265"><a href="#L-265"><span class="linenos">265</span></a>        <span class="n">strict</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="L-266"><a href="#L-266"><span class="linenos">266</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="L-267"><a href="#L-267"><span class="linenos">267</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a filtered list of systems with or without specific tags.</span>
 </span><span id="L-268"><a href="#L-268"><span class="linenos">268</span></a>
-</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="k">def</span><span class="w"> </span><span class="nf">reduce_size</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard data that takes too much space.</span>
-</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a>
-</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a><span class="sd">    Removes eigenvectors, potential values and grids,</span>
-</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a><span class="sd">    for all System values inside the `systems` list.</span>
-</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">reduce_size</span><span class="p">()</span>
-</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>    <span class="k">return</span> <span class="n">systems</span>
-</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>
-</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>
-</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a><span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span>
-</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>        <span class="n">systems</span><span class="p">,</span>
-</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>        <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
-</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a summary of a System or list of Systems.</span>
-</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a><span class="sd">    </span>
-</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a><span class="sd">    Print extra info with `verbose=True`</span>
-</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
-</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a>    
-</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>    <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a>        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a>        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s1">&lt;24</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
-</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>            <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
-</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a>                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
-</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>                <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
-</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;comment         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">comment</span><span class="p">))</span>
-</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZPE             &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E activation    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">E_activation</span><span class="p">))</span>
-</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;V max           &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_max</span><span class="p">))</span>
-</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st splitting   &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">splittings</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st excitation  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B               &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">B</span><span class="p">))</span>
-</span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eigenvalues     &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eigenvalues</span><span class="p">])</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
-</span><span id="L-311"><a href="#L-311"><span class="linenos">311</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tags            &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">tags</span><span class="p">))</span>
-</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;version         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
-</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
-</span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a>    <span class="k">return</span> <span class="kc">None</span>
-</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a>
+</span><span id="L-269"><a href="#L-269"><span class="linenos">269</span></a><span class="sd">    You can `include` or `exclude` any number of tags, separated by blank spaces.</span>
+</span><span id="L-270"><a href="#L-270"><span class="linenos">270</span></a><span class="sd">    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.</span>
+</span><span id="L-271"><a href="#L-271"><span class="linenos">271</span></a><span class="sd">    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.</span>
+</span><span id="L-272"><a href="#L-272"><span class="linenos">272</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-273"><a href="#L-273"><span class="linenos">273</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="L-274"><a href="#L-274"><span class="linenos">274</span></a>    <span class="n">included_tags</span> <span class="o">=</span> <span class="n">include</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="L-275"><a href="#L-275"><span class="linenos">275</span></a>    <span class="n">excluded_tags</span> <span class="o">=</span> <span class="n">exclude</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="L-276"><a href="#L-276"><span class="linenos">276</span></a>    <span class="n">filtered_systems</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="L-277"><a href="#L-277"><span class="linenos">277</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="L-278"><a href="#L-278"><span class="linenos">278</span></a>        <span class="n">tags_found</span> <span class="o">=</span> <span class="n">get_tags</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span id="L-279"><a href="#L-279"><span class="linenos">279</span></a>        <span class="k">if</span> <span class="n">excluded_tags</span><span class="p">:</span>
+</span><span id="L-280"><a href="#L-280"><span class="linenos">280</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
+</span><span id="L-281"><a href="#L-281"><span class="linenos">281</span></a>                <span class="k">continue</span>
+</span><span id="L-282"><a href="#L-282"><span class="linenos">282</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
+</span><span id="L-283"><a href="#L-283"><span class="linenos">283</span></a>                <span class="k">continue</span>
+</span><span id="L-284"><a href="#L-284"><span class="linenos">284</span></a>        <span class="k">if</span> <span class="n">included_tags</span><span class="p">:</span>
+</span><span id="L-285"><a href="#L-285"><span class="linenos">285</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
+</span><span id="L-286"><a href="#L-286"><span class="linenos">286</span></a>                <span class="k">continue</span>
+</span><span id="L-287"><a href="#L-287"><span class="linenos">287</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
+</span><span id="L-288"><a href="#L-288"><span class="linenos">288</span></a>                <span class="k">continue</span>
+</span><span id="L-289"><a href="#L-289"><span class="linenos">289</span></a>        <span class="n">filtered_systems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span id="L-290"><a href="#L-290"><span class="linenos">290</span></a>    <span class="k">return</span> <span class="n">filtered_systems</span>
+</span><span id="L-291"><a href="#L-291"><span class="linenos">291</span></a>
+</span><span id="L-292"><a href="#L-292"><span class="linenos">292</span></a>
+</span><span id="L-293"><a href="#L-293"><span class="linenos">293</span></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_ideal_E</span><span class="p">(</span><span class="n">E_level</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="L-294"><a href="#L-294"><span class="linenos">294</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the ideal energy for a specified `E_level`.</span>
+</span><span id="L-295"><a href="#L-295"><span class="linenos">295</span></a>
+</span><span id="L-296"><a href="#L-296"><span class="linenos">296</span></a><span class="sd">    To be used in convergence tests with `potential_name = &#39;zero&#39;`.</span>
+</span><span id="L-297"><a href="#L-297"><span class="linenos">297</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-298"><a href="#L-298"><span class="linenos">298</span></a>    <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="L-299"><a href="#L-299"><span class="linenos">299</span></a>    <span class="k">if</span> <span class="n">E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="L-300"><a href="#L-300"><span class="linenos">300</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="n">E_level</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="L-301"><a href="#L-301"><span class="linenos">301</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="L-302"><a href="#L-302"><span class="linenos">302</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="L-303"><a href="#L-303"><span class="linenos">303</span></a>    <span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="L-304"><a href="#L-304"><span class="linenos">304</span></a>    <span class="k">return</span> <span class="n">ideal_E</span>
+</span><span id="L-305"><a href="#L-305"><span class="linenos">305</span></a>
+</span><span id="L-306"><a href="#L-306"><span class="linenos">306</span></a>
+</span><span id="L-307"><a href="#L-307"><span class="linenos">307</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="L-308"><a href="#L-308"><span class="linenos">308</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Sorts a list of System objects by `System.gridsize`.&quot;&quot;&quot;</span>
+</span><span id="L-309"><a href="#L-309"><span class="linenos">309</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="L-310"><a href="#L-310"><span class="linenos">310</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">systems</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="L-311"><a href="#L-311"><span class="linenos">311</span></a>    <span class="k">return</span> <span class="n">systems</span>
+</span><span id="L-312"><a href="#L-312"><span class="linenos">312</span></a>
+</span><span id="L-313"><a href="#L-313"><span class="linenos">313</span></a>
+</span><span id="L-314"><a href="#L-314"><span class="linenos">314</span></a><span class="k">def</span><span class="w"> </span><span class="nf">reduce_size</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="L-315"><a href="#L-315"><span class="linenos">315</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard data that takes too much space.</span>
 </span><span id="L-316"><a href="#L-316"><span class="linenos">316</span></a>
-</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a><span class="k">def</span><span class="w"> </span><span class="nf">list_tags</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a list with all system tags.&quot;&quot;&quot;</span>
-</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a>        <span class="c1"># i.tags is guaranteed to exist and be a string (may be empty)</span>
-</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>        <span class="n">system_tags</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">system_tags</span><span class="p">:</span>
-</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a>                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a>    <span class="k">return</span> <span class="n">tags</span>
-</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>
-</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a>
-</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_tags</span><span class="p">(</span>
-</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a>        <span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span>
-</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a>        <span class="n">include</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a>        <span class="n">exclude</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>        <span class="n">strict</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a filtered list of systems with or without specific tags.</span>
-</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>
-</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a><span class="sd">    You can `include` or `exclude` any number of tags, separated by blank spaces.</span>
-</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a><span class="sd">    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.</span>
-</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a><span class="sd">    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.</span>
-</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>    <span class="n">included_tags</span> <span class="o">=</span> <span class="n">include</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>    <span class="n">excluded_tags</span> <span class="o">=</span> <span class="n">exclude</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>    <span class="n">filtered_systems</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>        <span class="n">tags_found</span> <span class="o">=</span> <span class="n">list_tags</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>        <span class="k">if</span> <span class="n">excluded_tags</span><span class="p">:</span>
-</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
-</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>                <span class="k">continue</span>
-</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
-</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>                <span class="k">continue</span>
-</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>        <span class="k">if</span> <span class="n">included_tags</span><span class="p">:</span>
-</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
-</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>                <span class="k">continue</span>
-</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
-</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>                <span class="k">continue</span>
-</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>        <span class="n">filtered_systems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="k">return</span> <span class="n">filtered_systems</span>
+</span><span id="L-317"><a href="#L-317"><span class="linenos">317</span></a><span class="sd">    Removes eigenvectors, potential values and grids,</span>
+</span><span id="L-318"><a href="#L-318"><span class="linenos">318</span></a><span class="sd">    for all System values inside the `systems` list.</span>
+</span><span id="L-319"><a href="#L-319"><span class="linenos">319</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-320"><a href="#L-320"><span class="linenos">320</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="L-321"><a href="#L-321"><span class="linenos">321</span></a>    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="L-322"><a href="#L-322"><span class="linenos">322</span></a>        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">reduce_size</span><span class="p">()</span>
+</span><span id="L-323"><a href="#L-323"><span class="linenos">323</span></a>    <span class="k">return</span> <span class="n">systems</span>
+</span><span id="L-324"><a href="#L-324"><span class="linenos">324</span></a>
+</span><span id="L-325"><a href="#L-325"><span class="linenos">325</span></a>
+</span><span id="L-326"><a href="#L-326"><span class="linenos">326</span></a><span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span>
+</span><span id="L-327"><a href="#L-327"><span class="linenos">327</span></a>        <span class="n">systems</span><span class="p">,</span>
+</span><span id="L-328"><a href="#L-328"><span class="linenos">328</span></a>        <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
+</span><span id="L-329"><a href="#L-329"><span class="linenos">329</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-330"><a href="#L-330"><span class="linenos">330</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a summary of a System or list of Systems.</span>
+</span><span id="L-331"><a href="#L-331"><span class="linenos">331</span></a><span class="sd">    </span>
+</span><span id="L-332"><a href="#L-332"><span class="linenos">332</span></a><span class="sd">    Print extra info with `verbose=True`</span>
+</span><span id="L-333"><a href="#L-333"><span class="linenos">333</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-334"><a href="#L-334"><span class="linenos">334</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
+</span><span id="L-335"><a href="#L-335"><span class="linenos">335</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="L-336"><a href="#L-336"><span class="linenos">336</span></a>    
+</span><span id="L-337"><a href="#L-337"><span class="linenos">337</span></a>    <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="L-338"><a href="#L-338"><span class="linenos">338</span></a>        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</span><span id="L-339"><a href="#L-339"><span class="linenos">339</span></a>        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span id="L-340"><a href="#L-340"><span class="linenos">340</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="L-341"><a href="#L-341"><span class="linenos">341</span></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s1">&lt;24</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span><span id="L-342"><a href="#L-342"><span class="linenos">342</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="L-343"><a href="#L-343"><span class="linenos">343</span></a>            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
+</span><span id="L-344"><a href="#L-344"><span class="linenos">344</span></a>            <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span id="L-345"><a href="#L-345"><span class="linenos">345</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+</span><span id="L-346"><a href="#L-346"><span class="linenos">346</span></a>                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+</span><span id="L-347"><a href="#L-347"><span class="linenos">347</span></a>                <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
+</span><span id="L-348"><a href="#L-348"><span class="linenos">348</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;comment         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">comment</span><span class="p">))</span>
+</span><span id="L-349"><a href="#L-349"><span class="linenos">349</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZPE             &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="L-350"><a href="#L-350"><span class="linenos">350</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E activation    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">E_activation</span><span class="p">))</span>
+</span><span id="L-351"><a href="#L-351"><span class="linenos">351</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;V max           &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_max</span><span class="p">))</span>
+</span><span id="L-352"><a href="#L-352"><span class="linenos">352</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st splitting   &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">splittings</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="L-353"><a href="#L-353"><span class="linenos">353</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st excitation  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="L-354"><a href="#L-354"><span class="linenos">354</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B               &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">B</span><span class="p">))</span>
+</span><span id="L-355"><a href="#L-355"><span class="linenos">355</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eigenvalues     &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eigenvalues</span><span class="p">])</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
+</span><span id="L-356"><a href="#L-356"><span class="linenos">356</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tags            &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">tags</span><span class="p">))</span>
+</span><span id="L-357"><a href="#L-357"><span class="linenos">357</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;version         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+</span><span id="L-358"><a href="#L-358"><span class="linenos">358</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
+</span><span id="L-359"><a href="#L-359"><span class="linenos">359</span></a>    <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
@@ -934,29 +934,112 @@ Different splitting lengths across systems are allowed - missing values will be 
 
 
                 </section>
-                <section id="get_ideal_E">
-                            <input id="get_ideal_E-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+                <section id="get_tags">
+                            <input id="get_tags-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">get_ideal_E</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">E_level</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="nb">int</span>:</span></span>
+        <span class="name">get_tags</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">systems</span><span class="p">:</span> <span class="nb">list</span></span><span class="return-annotation">) -> <span class="nb">list</span>:</span></span>
 
-                <label class="view-source-button" for="get_ideal_E-view-source"><span>View Source</span></label>
+                <label class="view-source-button" for="get_tags-view-source"><span>View Source</span></label>
 
     </div>
-    <a class="headerlink" href="#get_ideal_E"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_ideal_E-249"><a href="#get_ideal_E-249"><span class="linenos">249</span></a><span class="k">def</span><span class="w"> </span><span class="nf">get_ideal_E</span><span class="p">(</span><span class="n">E_level</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="get_ideal_E-250"><a href="#get_ideal_E-250"><span class="linenos">250</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the ideal energy for a specified `E_level`.</span>
-</span><span id="get_ideal_E-251"><a href="#get_ideal_E-251"><span class="linenos">251</span></a>
-</span><span id="get_ideal_E-252"><a href="#get_ideal_E-252"><span class="linenos">252</span></a><span class="sd">    To be used in convergence tests with `potential_name = &#39;zero&#39;`.</span>
-</span><span id="get_ideal_E-253"><a href="#get_ideal_E-253"><span class="linenos">253</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="get_ideal_E-254"><a href="#get_ideal_E-254"><span class="linenos">254</span></a>    <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
-</span><span id="get_ideal_E-255"><a href="#get_ideal_E-255"><span class="linenos">255</span></a>    <span class="k">if</span> <span class="n">E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-</span><span id="get_ideal_E-256"><a href="#get_ideal_E-256"><span class="linenos">256</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="n">E_level</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="get_ideal_E-257"><a href="#get_ideal_E-257"><span class="linenos">257</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="get_ideal_E-258"><a href="#get_ideal_E-258"><span class="linenos">258</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
-</span><span id="get_ideal_E-259"><a href="#get_ideal_E-259"><span class="linenos">259</span></a>    <span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-</span><span id="get_ideal_E-260"><a href="#get_ideal_E-260"><span class="linenos">260</span></a>    <span class="k">return</span> <span class="n">ideal_E</span>
+    <a class="headerlink" href="#get_tags"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_tags-249"><a href="#get_tags-249"><span class="linenos">249</span></a><span class="k">def</span><span class="w"> </span><span class="nf">get_tags</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="get_tags-250"><a href="#get_tags-250"><span class="linenos">250</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a list with all system tags.&quot;&quot;&quot;</span>
+</span><span id="get_tags-251"><a href="#get_tags-251"><span class="linenos">251</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="get_tags-252"><a href="#get_tags-252"><span class="linenos">252</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="get_tags-253"><a href="#get_tags-253"><span class="linenos">253</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="get_tags-254"><a href="#get_tags-254"><span class="linenos">254</span></a>        <span class="c1"># i.tags is guaranteed to exist and be a string (may be empty)</span>
+</span><span id="get_tags-255"><a href="#get_tags-255"><span class="linenos">255</span></a>        <span class="n">system_tags</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="get_tags-256"><a href="#get_tags-256"><span class="linenos">256</span></a>        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">system_tags</span><span class="p">:</span>
+</span><span id="get_tags-257"><a href="#get_tags-257"><span class="linenos">257</span></a>            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
+</span><span id="get_tags-258"><a href="#get_tags-258"><span class="linenos">258</span></a>                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+</span><span id="get_tags-259"><a href="#get_tags-259"><span class="linenos">259</span></a>    <span class="k">return</span> <span class="n">tags</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Returns a list with all system tags.</p>
+</div>
+
+
+                </section>
+                <section id="filter_tags">
+                            <input id="filter_tags-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">filter_tags</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">systems</span><span class="p">:</span> <span class="nb">list</span>,</span><span class="param">	<span class="n">include</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">exclude</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="nb">list</span>:</span></span>
+
+                <label class="view-source-button" for="filter_tags-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#filter_tags"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="filter_tags-262"><a href="#filter_tags-262"><span class="linenos">262</span></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_tags</span><span class="p">(</span>
+</span><span id="filter_tags-263"><a href="#filter_tags-263"><span class="linenos">263</span></a>        <span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span>
+</span><span id="filter_tags-264"><a href="#filter_tags-264"><span class="linenos">264</span></a>        <span class="n">include</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="filter_tags-265"><a href="#filter_tags-265"><span class="linenos">265</span></a>        <span class="n">exclude</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+</span><span id="filter_tags-266"><a href="#filter_tags-266"><span class="linenos">266</span></a>        <span class="n">strict</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="filter_tags-267"><a href="#filter_tags-267"><span class="linenos">267</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="filter_tags-268"><a href="#filter_tags-268"><span class="linenos">268</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a filtered list of systems with or without specific tags.</span>
+</span><span id="filter_tags-269"><a href="#filter_tags-269"><span class="linenos">269</span></a>
+</span><span id="filter_tags-270"><a href="#filter_tags-270"><span class="linenos">270</span></a><span class="sd">    You can `include` or `exclude` any number of tags, separated by blank spaces.</span>
+</span><span id="filter_tags-271"><a href="#filter_tags-271"><span class="linenos">271</span></a><span class="sd">    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.</span>
+</span><span id="filter_tags-272"><a href="#filter_tags-272"><span class="linenos">272</span></a><span class="sd">    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.</span>
+</span><span id="filter_tags-273"><a href="#filter_tags-273"><span class="linenos">273</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="filter_tags-274"><a href="#filter_tags-274"><span class="linenos">274</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="filter_tags-275"><a href="#filter_tags-275"><span class="linenos">275</span></a>    <span class="n">included_tags</span> <span class="o">=</span> <span class="n">include</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="filter_tags-276"><a href="#filter_tags-276"><span class="linenos">276</span></a>    <span class="n">excluded_tags</span> <span class="o">=</span> <span class="n">exclude</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span id="filter_tags-277"><a href="#filter_tags-277"><span class="linenos">277</span></a>    <span class="n">filtered_systems</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="filter_tags-278"><a href="#filter_tags-278"><span class="linenos">278</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="filter_tags-279"><a href="#filter_tags-279"><span class="linenos">279</span></a>        <span class="n">tags_found</span> <span class="o">=</span> <span class="n">get_tags</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span id="filter_tags-280"><a href="#filter_tags-280"><span class="linenos">280</span></a>        <span class="k">if</span> <span class="n">excluded_tags</span><span class="p">:</span>
+</span><span id="filter_tags-281"><a href="#filter_tags-281"><span class="linenos">281</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
+</span><span id="filter_tags-282"><a href="#filter_tags-282"><span class="linenos">282</span></a>                <span class="k">continue</span>
+</span><span id="filter_tags-283"><a href="#filter_tags-283"><span class="linenos">283</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
+</span><span id="filter_tags-284"><a href="#filter_tags-284"><span class="linenos">284</span></a>                <span class="k">continue</span>
+</span><span id="filter_tags-285"><a href="#filter_tags-285"><span class="linenos">285</span></a>        <span class="k">if</span> <span class="n">included_tags</span><span class="p">:</span>
+</span><span id="filter_tags-286"><a href="#filter_tags-286"><span class="linenos">286</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
+</span><span id="filter_tags-287"><a href="#filter_tags-287"><span class="linenos">287</span></a>                <span class="k">continue</span>
+</span><span id="filter_tags-288"><a href="#filter_tags-288"><span class="linenos">288</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
+</span><span id="filter_tags-289"><a href="#filter_tags-289"><span class="linenos">289</span></a>                <span class="k">continue</span>
+</span><span id="filter_tags-290"><a href="#filter_tags-290"><span class="linenos">290</span></a>        <span class="n">filtered_systems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</span><span id="filter_tags-291"><a href="#filter_tags-291"><span class="linenos">291</span></a>    <span class="k">return</span> <span class="n">filtered_systems</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>Returns a filtered list of systems with or without specific tags.</p>
+
+<p>You can <code>include</code> or <code>exclude</code> any number of tags, separated by blank spaces.
+By default, the filters are triggered if any tag is found, i.e. <em>tag1 OR tag2</em>.
+Set <code>strict=True</code> to require all tags to match, i.e. <em>tag1 AND tag2</em>.</p>
+</div>
+
+
+                </section>
+                <section id="calculate_ideal_E">
+                            <input id="calculate_ideal_E-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">calculate_ideal_E</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">E_level</span><span class="p">:</span> <span class="nb">int</span></span><span class="return-annotation">) -> <span class="nb">int</span>:</span></span>
+
+                <label class="view-source-button" for="calculate_ideal_E-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#calculate_ideal_E"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="calculate_ideal_E-294"><a href="#calculate_ideal_E-294"><span class="linenos">294</span></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_ideal_E</span><span class="p">(</span><span class="n">E_level</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+</span><span id="calculate_ideal_E-295"><a href="#calculate_ideal_E-295"><span class="linenos">295</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the ideal energy for a specified `E_level`.</span>
+</span><span id="calculate_ideal_E-296"><a href="#calculate_ideal_E-296"><span class="linenos">296</span></a>
+</span><span id="calculate_ideal_E-297"><a href="#calculate_ideal_E-297"><span class="linenos">297</span></a><span class="sd">    To be used in convergence tests with `potential_name = &#39;zero&#39;`.</span>
+</span><span id="calculate_ideal_E-298"><a href="#calculate_ideal_E-298"><span class="linenos">298</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="calculate_ideal_E-299"><a href="#calculate_ideal_E-299"><span class="linenos">299</span></a>    <span class="n">real_E_level</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="calculate_ideal_E-300"><a href="#calculate_ideal_E-300"><span class="linenos">300</span></a>    <span class="k">if</span> <span class="n">E_level</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="calculate_ideal_E-301"><a href="#calculate_ideal_E-301"><span class="linenos">301</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="n">E_level</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="calculate_ideal_E-302"><a href="#calculate_ideal_E-302"><span class="linenos">302</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="calculate_ideal_E-303"><a href="#calculate_ideal_E-303"><span class="linenos">303</span></a>        <span class="n">real_E_level</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+</span><span id="calculate_ideal_E-304"><a href="#calculate_ideal_E-304"><span class="linenos">304</span></a>    <span class="n">ideal_E</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">real_E_level</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</span><span id="calculate_ideal_E-305"><a href="#calculate_ideal_E-305"><span class="linenos">305</span></a>    <span class="k">return</span> <span class="n">ideal_E</span>
 </span></pre></div>
 
 
@@ -978,11 +1061,11 @@ Different splitting lengths across systems are allowed - missing values will be 
 
     </div>
     <a class="headerlink" href="#sort_by_gridsize"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="sort_by_gridsize-263"><a href="#sort_by_gridsize-263"><span class="linenos">263</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="sort_by_gridsize-264"><a href="#sort_by_gridsize-264"><span class="linenos">264</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Sorts a list of System objects by `System.gridsize`.&quot;&quot;&quot;</span>
-</span><span id="sort_by_gridsize-265"><a href="#sort_by_gridsize-265"><span class="linenos">265</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="sort_by_gridsize-266"><a href="#sort_by_gridsize-266"><span class="linenos">266</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">systems</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
-</span><span id="sort_by_gridsize-267"><a href="#sort_by_gridsize-267"><span class="linenos">267</span></a>    <span class="k">return</span> <span class="n">systems</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="sort_by_gridsize-308"><a href="#sort_by_gridsize-308"><span class="linenos">308</span></a><span class="k">def</span><span class="w"> </span><span class="nf">sort_by_gridsize</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="sort_by_gridsize-309"><a href="#sort_by_gridsize-309"><span class="linenos">309</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Sorts a list of System objects by `System.gridsize`.&quot;&quot;&quot;</span>
+</span><span id="sort_by_gridsize-310"><a href="#sort_by_gridsize-310"><span class="linenos">310</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="sort_by_gridsize-311"><a href="#sort_by_gridsize-311"><span class="linenos">311</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">systems</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">sys</span><span class="p">:</span> <span class="n">sys</span><span class="o">.</span><span class="n">gridsize</span><span class="p">)</span>
+</span><span id="sort_by_gridsize-312"><a href="#sort_by_gridsize-312"><span class="linenos">312</span></a>    <span class="k">return</span> <span class="n">systems</span>
 </span></pre></div>
 
 
@@ -1002,16 +1085,16 @@ Different splitting lengths across systems are allowed - missing values will be 
 
     </div>
     <a class="headerlink" href="#reduce_size"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="reduce_size-270"><a href="#reduce_size-270"><span class="linenos">270</span></a><span class="k">def</span><span class="w"> </span><span class="nf">reduce_size</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="reduce_size-271"><a href="#reduce_size-271"><span class="linenos">271</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard data that takes too much space.</span>
-</span><span id="reduce_size-272"><a href="#reduce_size-272"><span class="linenos">272</span></a>
-</span><span id="reduce_size-273"><a href="#reduce_size-273"><span class="linenos">273</span></a><span class="sd">    Removes eigenvectors, potential values and grids,</span>
-</span><span id="reduce_size-274"><a href="#reduce_size-274"><span class="linenos">274</span></a><span class="sd">    for all System values inside the `systems` list.</span>
-</span><span id="reduce_size-275"><a href="#reduce_size-275"><span class="linenos">275</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="reduce_size-276"><a href="#reduce_size-276"><span class="linenos">276</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="reduce_size-277"><a href="#reduce_size-277"><span class="linenos">277</span></a>    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="reduce_size-278"><a href="#reduce_size-278"><span class="linenos">278</span></a>        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">reduce_size</span><span class="p">()</span>
-</span><span id="reduce_size-279"><a href="#reduce_size-279"><span class="linenos">279</span></a>    <span class="k">return</span> <span class="n">systems</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="reduce_size-315"><a href="#reduce_size-315"><span class="linenos">315</span></a><span class="k">def</span><span class="w"> </span><span class="nf">reduce_size</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+</span><span id="reduce_size-316"><a href="#reduce_size-316"><span class="linenos">316</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Discard data that takes too much space.</span>
+</span><span id="reduce_size-317"><a href="#reduce_size-317"><span class="linenos">317</span></a>
+</span><span id="reduce_size-318"><a href="#reduce_size-318"><span class="linenos">318</span></a><span class="sd">    Removes eigenvectors, potential values and grids,</span>
+</span><span id="reduce_size-319"><a href="#reduce_size-319"><span class="linenos">319</span></a><span class="sd">    for all System values inside the `systems` list.</span>
+</span><span id="reduce_size-320"><a href="#reduce_size-320"><span class="linenos">320</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="reduce_size-321"><a href="#reduce_size-321"><span class="linenos">321</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="reduce_size-322"><a href="#reduce_size-322"><span class="linenos">322</span></a>    <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="reduce_size-323"><a href="#reduce_size-323"><span class="linenos">323</span></a>        <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">reduce_size</span><span class="p">()</span>
+</span><span id="reduce_size-324"><a href="#reduce_size-324"><span class="linenos">324</span></a>    <span class="k">return</span> <span class="n">systems</span>
 </span></pre></div>
 
 
@@ -1034,129 +1117,46 @@ for all System values inside the <code>systems</code> list.</p>
 
     </div>
     <a class="headerlink" href="#summary"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="summary-282"><a href="#summary-282"><span class="linenos">282</span></a><span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span>
-</span><span id="summary-283"><a href="#summary-283"><span class="linenos">283</span></a>        <span class="n">systems</span><span class="p">,</span>
-</span><span id="summary-284"><a href="#summary-284"><span class="linenos">284</span></a>        <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
-</span><span id="summary-285"><a href="#summary-285"><span class="linenos">285</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="summary-286"><a href="#summary-286"><span class="linenos">286</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a summary of a System or list of Systems.</span>
-</span><span id="summary-287"><a href="#summary-287"><span class="linenos">287</span></a><span class="sd">    </span>
-</span><span id="summary-288"><a href="#summary-288"><span class="linenos">288</span></a><span class="sd">    Print extra info with `verbose=True`</span>
-</span><span id="summary-289"><a href="#summary-289"><span class="linenos">289</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="summary-290"><a href="#summary-290"><span class="linenos">290</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
-</span><span id="summary-291"><a href="#summary-291"><span class="linenos">291</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="summary-292"><a href="#summary-292"><span class="linenos">292</span></a>    
-</span><span id="summary-293"><a href="#summary-293"><span class="linenos">293</span></a>    <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="summary-294"><a href="#summary-294"><span class="linenos">294</span></a>        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-</span><span id="summary-295"><a href="#summary-295"><span class="linenos">295</span></a>        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-</span><span id="summary-296"><a href="#summary-296"><span class="linenos">296</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-</span><span id="summary-297"><a href="#summary-297"><span class="linenos">297</span></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s1">&lt;24</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-</span><span id="summary-298"><a href="#summary-298"><span class="linenos">298</span></a>        <span class="k">else</span><span class="p">:</span>
-</span><span id="summary-299"><a href="#summary-299"><span class="linenos">299</span></a>            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
-</span><span id="summary-300"><a href="#summary-300"><span class="linenos">300</span></a>            <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-</span><span id="summary-301"><a href="#summary-301"><span class="linenos">301</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
-</span><span id="summary-302"><a href="#summary-302"><span class="linenos">302</span></a>                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
-</span><span id="summary-303"><a href="#summary-303"><span class="linenos">303</span></a>                <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
-</span><span id="summary-304"><a href="#summary-304"><span class="linenos">304</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;comment         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">comment</span><span class="p">))</span>
-</span><span id="summary-305"><a href="#summary-305"><span class="linenos">305</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZPE             &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="summary-306"><a href="#summary-306"><span class="linenos">306</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E activation    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">E_activation</span><span class="p">))</span>
-</span><span id="summary-307"><a href="#summary-307"><span class="linenos">307</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;V max           &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_max</span><span class="p">))</span>
-</span><span id="summary-308"><a href="#summary-308"><span class="linenos">308</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st splitting   &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">splittings</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="summary-309"><a href="#summary-309"><span class="linenos">309</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st excitation  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</span><span id="summary-310"><a href="#summary-310"><span class="linenos">310</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B               &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">B</span><span class="p">))</span>
-</span><span id="summary-311"><a href="#summary-311"><span class="linenos">311</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eigenvalues     &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eigenvalues</span><span class="p">])</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
-</span><span id="summary-312"><a href="#summary-312"><span class="linenos">312</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tags            &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">tags</span><span class="p">))</span>
-</span><span id="summary-313"><a href="#summary-313"><span class="linenos">313</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;version         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
-</span><span id="summary-314"><a href="#summary-314"><span class="linenos">314</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
-</span><span id="summary-315"><a href="#summary-315"><span class="linenos">315</span></a>    <span class="k">return</span> <span class="kc">None</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="summary-327"><a href="#summary-327"><span class="linenos">327</span></a><span class="k">def</span><span class="w"> </span><span class="nf">summary</span><span class="p">(</span>
+</span><span id="summary-328"><a href="#summary-328"><span class="linenos">328</span></a>        <span class="n">systems</span><span class="p">,</span>
+</span><span id="summary-329"><a href="#summary-329"><span class="linenos">329</span></a>        <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span>
+</span><span id="summary-330"><a href="#summary-330"><span class="linenos">330</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="summary-331"><a href="#summary-331"><span class="linenos">331</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Print a summary of a System or list of Systems.</span>
+</span><span id="summary-332"><a href="#summary-332"><span class="linenos">332</span></a><span class="sd">    </span>
+</span><span id="summary-333"><a href="#summary-333"><span class="linenos">333</span></a><span class="sd">    Print extra info with `verbose=True`</span>
+</span><span id="summary-334"><a href="#summary-334"><span class="linenos">334</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="summary-335"><a href="#summary-335"><span class="linenos">335</span></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
+</span><span id="summary-336"><a href="#summary-336"><span class="linenos">336</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
+</span><span id="summary-337"><a href="#summary-337"><span class="linenos">337</span></a>    
+</span><span id="summary-338"><a href="#summary-338"><span class="linenos">338</span></a>    <span class="k">for</span> <span class="n">system</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
+</span><span id="summary-339"><a href="#summary-339"><span class="linenos">339</span></a>        <span class="n">dictionary</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</span><span id="summary-340"><a href="#summary-340"><span class="linenos">340</span></a>        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span id="summary-341"><a href="#summary-341"><span class="linenos">341</span></a>            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span id="summary-342"><a href="#summary-342"><span class="linenos">342</span></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">key</span><span class="si">:</span><span class="s1">&lt;24</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span><span id="summary-343"><a href="#summary-343"><span class="linenos">343</span></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="summary-344"><a href="#summary-344"><span class="linenos">344</span></a>            <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="k">else</span> <span class="p">[]</span>
+</span><span id="summary-345"><a href="#summary-345"><span class="linenos">345</span></a>            <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span id="summary-346"><a href="#summary-346"><span class="linenos">346</span></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+</span><span id="summary-347"><a href="#summary-347"><span class="linenos">347</span></a>                <span class="n">eigenvalues</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">[:</span><span class="mi">6</span><span class="p">]</span>
+</span><span id="summary-348"><a href="#summary-348"><span class="linenos">348</span></a>                <span class="n">extra</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span>
+</span><span id="summary-349"><a href="#summary-349"><span class="linenos">349</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;comment         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">comment</span><span class="p">))</span>
+</span><span id="summary-350"><a href="#summary-350"><span class="linenos">350</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ZPE             &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">eigenvalues</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="summary-351"><a href="#summary-351"><span class="linenos">351</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E activation    &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">E_activation</span><span class="p">))</span>
+</span><span id="summary-352"><a href="#summary-352"><span class="linenos">352</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;V max           &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">potential_max</span><span class="p">))</span>
+</span><span id="summary-353"><a href="#summary-353"><span class="linenos">353</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st splitting   &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">splittings</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="summary-354"><a href="#summary-354"><span class="linenos">354</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1st excitation  &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">excitations</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span id="summary-355"><a href="#summary-355"><span class="linenos">355</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B               &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">B</span><span class="p">))</span>
+</span><span id="summary-356"><a href="#summary-356"><span class="linenos">356</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;eigenvalues     &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">eigenvalues</span><span class="p">])</span> <span class="o">+</span> <span class="n">extra</span><span class="p">)</span>
+</span><span id="summary-357"><a href="#summary-357"><span class="linenos">357</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tags            &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">tags</span><span class="p">))</span>
+</span><span id="summary-358"><a href="#summary-358"><span class="linenos">358</span></a>            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;version         &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">system</span><span class="o">.</span><span class="n">version</span><span class="p">))</span>
+</span><span id="summary-359"><a href="#summary-359"><span class="linenos">359</span></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--------------------&#39;</span><span class="p">)</span>
+</span><span id="summary-360"><a href="#summary-360"><span class="linenos">360</span></a>    <span class="k">return</span> <span class="kc">None</span>
 </span></pre></div>
 
 
             <div class="docstring"><p>Print a summary of a System or list of Systems.</p>
 
 <p>Print extra info with <code>verbose=True</code></p>
-</div>
-
-
-                </section>
-                <section id="list_tags">
-                            <input id="list_tags-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">list_tags</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">systems</span><span class="p">:</span> <span class="nb">list</span></span><span class="return-annotation">) -> <span class="nb">list</span>:</span></span>
-
-                <label class="view-source-button" for="list_tags-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#list_tags"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="list_tags-318"><a href="#list_tags-318"><span class="linenos">318</span></a><span class="k">def</span><span class="w"> </span><span class="nf">list_tags</span><span class="p">(</span><span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="list_tags-319"><a href="#list_tags-319"><span class="linenos">319</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a list with all system tags.&quot;&quot;&quot;</span>
-</span><span id="list_tags-320"><a href="#list_tags-320"><span class="linenos">320</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="list_tags-321"><a href="#list_tags-321"><span class="linenos">321</span></a>    <span class="n">tags</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="list_tags-322"><a href="#list_tags-322"><span class="linenos">322</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="list_tags-323"><a href="#list_tags-323"><span class="linenos">323</span></a>        <span class="c1"># i.tags is guaranteed to exist and be a string (may be empty)</span>
-</span><span id="list_tags-324"><a href="#list_tags-324"><span class="linenos">324</span></a>        <span class="n">system_tags</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="list_tags-325"><a href="#list_tags-325"><span class="linenos">325</span></a>        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">system_tags</span><span class="p">:</span>
-</span><span id="list_tags-326"><a href="#list_tags-326"><span class="linenos">326</span></a>            <span class="k">if</span> <span class="n">tag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">:</span>
-</span><span id="list_tags-327"><a href="#list_tags-327"><span class="linenos">327</span></a>                <span class="n">tags</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-</span><span id="list_tags-328"><a href="#list_tags-328"><span class="linenos">328</span></a>    <span class="k">return</span> <span class="n">tags</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Returns a list with all system tags.</p>
-</div>
-
-
-                </section>
-                <section id="filter_tags">
-                            <input id="filter_tags-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
-<div class="attr function">
-            
-        <span class="def">def</span>
-        <span class="name">filter_tags</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">systems</span><span class="p">:</span> <span class="nb">list</span>,</span><span class="param">	<span class="n">include</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">exclude</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>,</span><span class="param">	<span class="n">strict</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="nb">list</span>:</span></span>
-
-                <label class="view-source-button" for="filter_tags-view-source"><span>View Source</span></label>
-
-    </div>
-    <a class="headerlink" href="#filter_tags"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="filter_tags-331"><a href="#filter_tags-331"><span class="linenos">331</span></a><span class="k">def</span><span class="w"> </span><span class="nf">filter_tags</span><span class="p">(</span>
-</span><span id="filter_tags-332"><a href="#filter_tags-332"><span class="linenos">332</span></a>        <span class="n">systems</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span>
-</span><span id="filter_tags-333"><a href="#filter_tags-333"><span class="linenos">333</span></a>        <span class="n">include</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-</span><span id="filter_tags-334"><a href="#filter_tags-334"><span class="linenos">334</span></a>        <span class="n">exclude</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-</span><span id="filter_tags-335"><a href="#filter_tags-335"><span class="linenos">335</span></a>        <span class="n">strict</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-</span><span id="filter_tags-336"><a href="#filter_tags-336"><span class="linenos">336</span></a>        <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="filter_tags-337"><a href="#filter_tags-337"><span class="linenos">337</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns a filtered list of systems with or without specific tags.</span>
-</span><span id="filter_tags-338"><a href="#filter_tags-338"><span class="linenos">338</span></a>
-</span><span id="filter_tags-339"><a href="#filter_tags-339"><span class="linenos">339</span></a><span class="sd">    You can `include` or `exclude` any number of tags, separated by blank spaces.</span>
-</span><span id="filter_tags-340"><a href="#filter_tags-340"><span class="linenos">340</span></a><span class="sd">    By default, the filters are triggered if any tag is found, i.e. *tag1 OR tag2*.</span>
-</span><span id="filter_tags-341"><a href="#filter_tags-341"><span class="linenos">341</span></a><span class="sd">    Set `strict=True` to require all tags to match, i.e. *tag1 AND tag2*.</span>
-</span><span id="filter_tags-342"><a href="#filter_tags-342"><span class="linenos">342</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="filter_tags-343"><a href="#filter_tags-343"><span class="linenos">343</span></a>    <span class="n">systems</span> <span class="o">=</span> <span class="n">as_list</span><span class="p">(</span><span class="n">systems</span><span class="p">)</span>
-</span><span id="filter_tags-344"><a href="#filter_tags-344"><span class="linenos">344</span></a>    <span class="n">included_tags</span> <span class="o">=</span> <span class="n">include</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="filter_tags-345"><a href="#filter_tags-345"><span class="linenos">345</span></a>    <span class="n">excluded_tags</span> <span class="o">=</span> <span class="n">exclude</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-</span><span id="filter_tags-346"><a href="#filter_tags-346"><span class="linenos">346</span></a>    <span class="n">filtered_systems</span> <span class="o">=</span> <span class="p">[]</span>
-</span><span id="filter_tags-347"><a href="#filter_tags-347"><span class="linenos">347</span></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">systems</span><span class="p">:</span>
-</span><span id="filter_tags-348"><a href="#filter_tags-348"><span class="linenos">348</span></a>        <span class="n">tags_found</span> <span class="o">=</span> <span class="n">list_tags</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span><span id="filter_tags-349"><a href="#filter_tags-349"><span class="linenos">349</span></a>        <span class="k">if</span> <span class="n">excluded_tags</span><span class="p">:</span>
-</span><span id="filter_tags-350"><a href="#filter_tags-350"><span class="linenos">350</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
-</span><span id="filter_tags-351"><a href="#filter_tags-351"><span class="linenos">351</span></a>                <span class="k">continue</span>
-</span><span id="filter_tags-352"><a href="#filter_tags-352"><span class="linenos">352</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">excluded_tags</span><span class="p">):</span>
-</span><span id="filter_tags-353"><a href="#filter_tags-353"><span class="linenos">353</span></a>                <span class="k">continue</span>
-</span><span id="filter_tags-354"><a href="#filter_tags-354"><span class="linenos">354</span></a>        <span class="k">if</span> <span class="n">included_tags</span><span class="p">:</span>
-</span><span id="filter_tags-355"><a href="#filter_tags-355"><span class="linenos">355</span></a>            <span class="k">if</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
-</span><span id="filter_tags-356"><a href="#filter_tags-356"><span class="linenos">356</span></a>                <span class="k">continue</span>
-</span><span id="filter_tags-357"><a href="#filter_tags-357"><span class="linenos">357</span></a>            <span class="k">elif</span> <span class="ow">not</span> <span class="n">strict</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">tags_found</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">included_tags</span><span class="p">):</span>
-</span><span id="filter_tags-358"><a href="#filter_tags-358"><span class="linenos">358</span></a>                <span class="k">continue</span>
-</span><span id="filter_tags-359"><a href="#filter_tags-359"><span class="linenos">359</span></a>        <span class="n">filtered_systems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-</span><span id="filter_tags-360"><a href="#filter_tags-360"><span class="linenos">360</span></a>    <span class="k">return</span> <span class="n">filtered_systems</span>
-</span></pre></div>
-
-
-            <div class="docstring"><p>Returns a filtered list of systems with or without specific tags.</p>
-
-<p>You can <code>include</code> or <code>exclude</code> any number of tags, separated by blank spaces.
-By default, the filters are triggered if any tag is found, i.e. <em>tag1 OR tag2</em>.
-Set <code>strict=True</code> to require all tags to match, i.e. <em>tag1 AND tag2</em>.</p>
 </div>
 
 

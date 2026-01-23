@@ -100,6 +100,45 @@ def rotate_qe(
     return outputs
 
 
+def _save_qe(
+        filename,
+        output:str,
+        lines:list,
+        positions:list
+    ) -> str:
+    """Copies `filename` to `output`, updating the old `lines` with the new `positions`.
+    
+    The angle will be appended at the end of the input prefix to avoid overlapping calculations.
+    """
+    shutil.copy(filename, output)
+    for i, line in enumerate(lines):
+        strings = line.split()
+        atom = strings[0]
+        new_line = f"  {atom}   {positions[i][0]:.15f}   {positions[i][1]:.15f}   {positions[i][2]:.15f}"
+        #print(f'OLD LINE: {line}')  # DEBUG
+        #print(f'NEW_LINE: {new_line}')  # DEBUG
+        edit.replace_line(output, line, new_line, raise_errors=True)
+    if len(lines) + 2 == len(positions):  # In case show_axis=True
+        additional_positions = positions[-2:]
+        for pos in additional_positions:
+            pos.insert(0, 'He')
+            api.pwx.add_atom(output, pos)
+    elif len(lines) != len(positions):
+        raise ValueError(f"What?!  len(lines)={len(lines)} and len(positions)={len(positions)}")
+    # Add angle to calculation prefix
+    output_name = os.path.basename(output)
+    splits = output_name.split('_')
+    angle_str = splits[-1].replace('.in', '')
+    prefix = ''
+    content = api.pwx.read_in(output)
+    if 'prefix' in content.keys():
+        prefix = content['prefix']
+        prefix = prefix.strip("'")
+    prefix = "'" + prefix + angle_str + "'"
+    api.pwx.set_value(output, 'prefix', prefix)
+    return output
+
+
 def rotate_coords(
         positions:list,
         angle:float,
@@ -160,43 +199,4 @@ def rotate_coords(
         rotated_positions.append(center.tolist())
         rotated_positions.append((center + axis).tolist())
     return rotated_positions
-
-
-def _save_qe(
-        filename,
-        output:str,
-        lines:list,
-        positions:list
-    ) -> str:
-    """Copies `filename` to `output`, updating the old `lines` with the new `positions`.
-    
-    The angle will be appended at the end of the input prefix to avoid overlapping calculations.
-    """
-    shutil.copy(filename, output)
-    for i, line in enumerate(lines):
-        strings = line.split()
-        atom = strings[0]
-        new_line = f"  {atom}   {positions[i][0]:.15f}   {positions[i][1]:.15f}   {positions[i][2]:.15f}"
-        #print(f'OLD LINE: {line}')  # DEBUG
-        #print(f'NEW_LINE: {new_line}')  # DEBUG
-        edit.replace_line(output, line, new_line, raise_errors=True)
-    if len(lines) + 2 == len(positions):  # In case show_axis=True
-        additional_positions = positions[-2:]
-        for pos in additional_positions:
-            pos.insert(0, 'He')
-            api.pwx.add_atom(output, pos)
-    elif len(lines) != len(positions):
-        raise ValueError(f"What?!  len(lines)={len(lines)} and len(positions)={len(positions)}")
-    # Add angle to calculation prefix
-    output_name = os.path.basename(output)
-    splits = output_name.split('_')
-    angle_str = splits[-1].replace('.in', '')
-    prefix = ''
-    content = api.pwx.read_in(output)
-    if 'prefix' in content.keys():
-        prefix = content['prefix']
-        prefix = prefix.strip("'")
-    prefix = "'" + prefix + angle_str + "'"
-    api.pwx.set_value(output, 'prefix', prefix)
-    return output
 
