@@ -111,17 +111,21 @@ in a [cosine potential](https://pablogila.github.io/qrotor/qrotor/potential.html
 
 ```python
 import qrotor as qr
+import numpy as np
 system = qr.System()
 system.gridsize = 200000
 system.B = qr.B_CH3  # Rotational inertia of a methyl group
 system.potential_name = 'cosine'
-system.potential_constants = [0, 30, 3, 0]  # Offset, max, freq, phase (for cosine potential)
+system.potential_constants = [0, 30, 3, np.pi]  # Offset, max, freq, phase (for cosine potential)
 system.solve()
 # Plot potential and eigenvalues
 qr.plot.energies(system)
-# Plot the first wavefunctions
-qr.plot.wavefunction(system, levels=[0,1,2], square=True)
+# Plot the first squared wavefunction
+qr.plot.wavefunction(system, levels=0, square=True)
 ```
+
+<p align="center"><img width="60.0%" src="pics/eigenvalues.png"></p>
+<p align="center"><img width="60.0%" src="pics/eigenvectors.png"></p>
 
 
 ## Rotational PES from custom structures
@@ -165,12 +169,14 @@ qr.plot.energies(system)
 ## Other quantum observables
 
 
-The Zero-Point Energies (ZPEs), quantum tunnel splittings, excitations and energy level degeneracy
+The Zero-Point Energies (ZPEs), activation energies,
+quantum tunnel splittings, excitations and energy level degeneracy
 below the potential maximum are also calculated upon solving the [system](https://pablogila.github.io/qrotor/qrotor/system.html):
 
 ```python
 system.solve()
 print(system.eigenvalues[0])
+print(system.E_activation)
 print(system.splittings)
 print(system.excitations)
 print(system.deg)

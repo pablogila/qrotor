@@ -252,8 +252,8 @@ def wavefunction(
         system:System,
         title:str=None,
         square:bool=True,
-        levels=[0, 1, 2],
-        overlap=False,
+        levels:list|int=[0, 1, 2],
+        overlap:bool|int=False,
         yticks:bool=False,
         rc:dict={},
         ) -> None:
@@ -292,8 +292,8 @@ def wavefunction(
             ax2.set_yticks([])
         ax2.set_ylabel('Squared wavefunction' if square else 'Wavefunction')
         # Set levels list
-        if isinstance(levels, int) or isinstance(levels, float):
-            levels = [x for x in range(int(levels))]
+        if isinstance(levels, int):
+            levels = [levels]
         if not isinstance(levels, list):
             raise ValueError('levels must be an int or a list of ints')
         # Set overlap if requested
@@ -310,8 +310,10 @@ def wavefunction(
             eigenvectors = [np.sum([eigenvectors[i] for i in overlap], axis=0)]
             levels = [0]
             show_legend = False
-        else:
+        if len(levels) > 1:
             show_legend = True
+        else:
+            show_legend = False
         # Square values if so
         if square:
             eigenvectors = [vec**2 for vec in eigenvectors]
