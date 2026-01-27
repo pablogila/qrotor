@@ -12,6 +12,9 @@ import numpy as np
 import periodictable
 import scipy.constants as const
 
+# Aliases for scipy.constants
+_hbar = const.physical_constants['reduced Planck constant'][0]
+_meV_to_K = const.e/(const.Boltzmann*1000)
 
 # Quick conversion factors
 Ry_to_eV = const.physical_constants['Rydberg constant times hc in eV'][0]
@@ -114,7 +117,6 @@ I_CD3ND3_dis_amu = I_CD3ND3_dis / (amu_to_kg * 1e-20)
 """Inertia of the disrotatory torsion of CD3ND3+, in amu·AA^2."""
 
 # Rotational energy
-_hbar = const.physical_constants['reduced Planck constant'][0]
 B_CH3 = ((_hbar**2) / (2 * I_CH3)) * (1000 / const.eV)
 """Kinetic rotational energy of CH3, in meV·s/kg·m^2."""
 B_CD3 = ((_hbar**2) / (2 * I_CD3)) * (1000 / const.eV)

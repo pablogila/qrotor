@@ -97,7 +97,9 @@ class System:
         self.deg: float = None
         """Estimated degeneracy of the `E_levels` found below `potential_max`."""
         self.E_activation: float = None
-        """Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`"""
+        """Activation energy or energy barrier, from the ground torsional state to the top of the potential barrier, `max(V) - min(eigenvalues)`. In meV."""
+        self.E_activation_K: float = None
+        """Same as `E_activation`, in Kelvin."""
         self.excitations: list = []
         """Torsional excitations, as the difference between each energy level with respect to the ground state.
 
