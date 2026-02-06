@@ -33,7 +33,6 @@ This documentation page is left for reference and advanced users only.
 from .system import System
 from .potential import solve as solve_potential
 from .potential import interpolate
-from .constants import _meV_to_K
 import time
 import numpy as np
 from scipy import sparse
@@ -102,7 +101,6 @@ def schrodinger(system:System) -> System:
     system.runtime = time.time() - time_start
     system.eigenvalues = eigenvalues
     system.E_activation = max(V) - min(eigenvalues)
-    system.E_activation_K = system.E_activation * _meV_to_K
     # Solve excitations and tunnel splittings, assuming triplet degeneracy
     system = excitations(system)
     # Do we really need to save eigenvectors?

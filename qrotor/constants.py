@@ -14,7 +14,7 @@ import scipy.constants as const
 
 # Aliases for scipy.constants
 _hbar = const.physical_constants['reduced Planck constant'][0]
-_meV_to_K = const.e/(const.Boltzmann*1000)
+#_meV_to_K = const.e/(const.Boltzmann*1000)
 
 # Quick conversion factors
 Ry_to_eV = const.physical_constants['Rydberg constant times hc in eV'][0]

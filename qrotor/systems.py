@@ -165,7 +165,6 @@ def save_summary(
             first_excitation = float('nan')
         system_comment = getattr(s, 'comment', None)
         E_activation = getattr(s, 'E_activation', None)
-        E_activation_K = getattr(s, 'E_activation_K', None)
         B = getattr(s, 'B', None)
         tags = getattr(s, 'tags', None)
         deg = getattr(s, 'deg', None)
@@ -177,7 +176,6 @@ def save_summary(
             'ZPE': zpe,
             'potential_max': potential_max,
             'E_activation': E_activation,
-            'E_activation_K': E_activation_K,
             '1st_splitting': first_splitting,
             '1st_excitation': first_excitation,
             'B': B,
