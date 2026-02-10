@@ -26,3 +26,18 @@ def test_solve_potential():
     system.solve_potential()
     assert round(system.potential_max, 2) == 1.0
 
+def test_degeneracy_fail_point():
+    import numpy as np
+    from qrotor.system import System
+    degrees = np.arange(0, 360, 10)
+    energies = (1-np.cos(3*np.radians(degrees - 30.)))*2 + np.sin(20*np.radians(degrees - 30.))
+    energies -= np.min(energies)
+    system = System()
+    positions = np.radians(degrees)
+    potentials = np.array(energies) * 1000
+    system.grid = np.array(positions)
+    system.gridsize = len(positions)
+    system.potential_values = np.array(potentials)
+    system.searched_E = 400
+    system.solve(500)
+
