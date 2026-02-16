@@ -256,7 +256,7 @@ This runs Pdoc, updating links and pictures, and using the custom theme CSS temp
 
 QRotor is currently under development.
 Please cite it if you use it in your research,
-> Gila-Herranz, P. (2024). QRotor: Solving one-dimensional hindered-rotor quantum systems. https://pablogila.github.io/qrotor
+> Pablo Gila-Herranz. QRotor: a library to solve one-dimensional hindered-rotor quantum systems. https://pablogila.github.io/qrotor (2026).
 
 
 ---

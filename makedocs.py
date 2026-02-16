@@ -6,6 +6,9 @@ Run this script as `python3 makedocs.py`.
 
 import shutil
 import aton
+from datetime import datetime
+
+date = datetime.today().strftime('%Y-%m-%d')
 
 readme = './README.md'
 temp_readme = './_README_temp.md'
@@ -38,4 +41,7 @@ aton.file.remove(temp_readme)
 # Include google search verification  ## TO-UPDATE
 #search_verification_tag = '    <meta name="google-site-verification" content="u0Be1NUH4ztGm5rr5f_YFt6hqoqMJ-j9h7rk3wEJAUo" />'
 #aton.txt.edit.insert_under('docs/aton.html', '<head>', search_verification_tag)
+# Fix citation version CFF
+aton.txt.edit.replace_line(filepath='./CITATION.cff', key='version:', text=f'version: {__version__}', replacements=-1)
+aton.txt.edit.replace_line(filepath='./CITATION.cff', key='date-released:', text=f'date-released: {date}', replacements=-1)
 
