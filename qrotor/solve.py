@@ -227,7 +227,7 @@ def E_levels(eigenvalues, vmax:float=None) -> list:
             levels, degeneracy = _get_E_levels_by_gap(eigenvalues, scale)
             if (degeneracy > 1) and (degeneracy % 1 == 0):
                 break
-    if not (degeneracy > 1) and not (degeneracy % 1) == 0:
+    if not (degeneracy > 1) or not (degeneracy % 1) == 0:
         return levels, degeneracy  # I give up
     # Correct the last two levels
     if len(levels) >= 2 and len(levels[-2]) != degeneracy:
