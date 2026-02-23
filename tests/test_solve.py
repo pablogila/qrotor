@@ -34,10 +34,11 @@ def test_degeneracy_fail_point():
     energies -= np.min(energies)
     system = System()
     positions = np.radians(degrees)
-    potentials = np.array(energies) * 1000
+    potentials = np.array(energies) * 10
     system.grid = np.array(positions)
     system.gridsize = len(positions)
     system.potential_values = np.array(potentials)
-    system.searched_E = 400
+    system.searched_E = 10
     system.solve(500)
+    assert round(system.eigenvalues[0], 0) == 16
 
