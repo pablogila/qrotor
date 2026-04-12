@@ -1,5 +1,7 @@
 cff-version: 1.2.0
-title: "QRotor: a library to solve one-dimensional hindered-rotor quantum systems"
+title: >-
+  QRotor: a library to solve one-dimensional hindered-rotor
+  quantum systems
 message: >-
   If you use this software, please cite it using the
   metadata from this file.
@@ -8,10 +10,15 @@ authors:
   - given-names: Pablo
     family-names: Gila-Herranz
     email: pgila001@ikasle.ehu.eus
-    affiliation: 'Centro de Física de Materiales (CFM-MPC), CSIC-UPV/EHU'
+    affiliation: 'Centro de Física de Materiales (CFM-MPC), CSIC-EHU'
     orcid: 'https://orcid.org/0000-0002-9480-9876'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.19535466
+    description: Zenodo
 repository-code: 'https://github.com/pablogila/qrotor'
 url: 'https://pablogila.github.io/qrotor'
+repository: 'https://doi.org/10.5281/zenodo.19535466'
 abstract: >-
   QRotor is a Python package used to study molecular
   rotations, such as those of methyl and amine groups. It
@@ -30,6 +37,8 @@ keywords:
   - Tunnel splitting
   - One-dimensional hindered-rotor
   - Hindered molecular rotor
+  - Quantum
+  - Python
 license: AGPL-3.0-or-later
-version: v4.7.4
-date-released: 2026-02-23
+version: v4.7.5
+date-released: 2026-04-12

@@ -254,9 +254,21 @@ This runs Pdoc, updating links and pictures, and using the custom theme CSS temp
 
 # Citation
 
-QRotor is currently under development.
-Please cite it if you use it in your research,
-> Pablo Gila-Herranz. QRotor: a library to solve one-dimensional hindered-rotor quantum systems. https://pablogila.github.io/qrotor (2026).
+Please cite QRotor if you use it in your research,
+
+> Pablo Gila-Herranz (2026). QRotor: a library to solve one-dimensional hindered-rotor quantum systems. doi:10.5281/zenodo.19535466.
+
+```bibtex
+@article{qrotor,
+  title = {{{QRotor}}: A Library to Solve One-Dimensional Hindered-Rotor Quantum Systems},
+  shorttitle = {pablogila/qrotor},
+  author = {{Gila-Herranz}, Pablo},
+  year = 2026,
+  publisher = {Zenodo},
+  doi = {10.5281/zenodo.19535466},
+  url = {https://doi.org/10.5281/zenodo.19535466},
+}
+```
 
 
 ---
